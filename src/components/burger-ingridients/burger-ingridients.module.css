@@ -1,0 +1,72 @@
+@import url('../../fonts/fonts/fonts.css');
+
+.maintitle{
+    font-family: 'JetBrains';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    margin: 40px auto 0 auto;
+    width: 62.15%;
+}
+
+.optionselection{
+    margin: 36px auto 0 auto;
+    width: 62.15%;
+    font-family: 'JetBrains';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.title{
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 40px 0 24px 0;
+    padding: 0;
+    font-family: 'JetBrains';
+    max-width: 600px;
+    width: 62.15%;
+}
+
+.optionssection{
+    display: grid;
+    grid-template-columns: repeat(2, 600px);
+    grid-gap: 61.5px;
+    margin: 0 auto;
+    width: 62.15%;
+}
+
+.options{
+    max-height: 716px;
+    max-width: 608px;
+    overflow-y: scroll;
+    scrollbar-color: #8585AD;
+} 
+
+.optionscards{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(272px, 272px));
+    grid-gap: 24px;
+}
+
+.optioncard{
+    display: flex;
+    flex-direction: column;
+    width: 272px;
+    height: 208px;
+}
+
+.optiontext{
+    font-family: 'JetBrains';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}

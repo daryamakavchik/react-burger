@@ -1,0 +1,109 @@
+.components{
+    height: 680px;
+}
+
+.componentlist{
+    display: grid;
+    grid-gap: 15px;
+    list-style-type: none;
+    margin: 16px 0 px 0;
+    padding: 0;
+    height: 464px;
+    overflow-y: scroll;
+}
+
+.componentlistitem{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.component{
+    display: flex;
+    flex-direction: row;
+    width: 536px;
+    height: 80px;
+    box-sizing: border-box;
+    border-radius: 40px;
+    background-color: #1C1C21;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 8px 0 13.5px;
+    padding: 16px 35px 16px 24px;
+}
+
+.component:nth-child(1){
+    margin-left: 36px;
+    border-radius: 88px 88px 40px 40px;
+}
+
+.component:nth-child(3){
+    margin-left: 36px;
+    border-radius: 40px 40px 88px 88px;
+}
+
+
+.componentname{
+    font-family: 'JetBrains';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0 20px 0 20px;
+    padding: 0;
+    max-width: 254px;
+}
+
+.componentcount{
+    width: 30px;
+    height: 24px;
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 24px;
+    margin: 0;
+    padding: 0;
+}
+
+.componentcount:nth-child(3){
+    width: 59px;
+}
+
+.componentimg{
+    width: 80px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+}
+
+.componentdelete{
+    float: right;
+    margin: 0 0 0 24px;
+    padding: 0;
+}
+
+.componenticon{
+    margin-left: 9px;
+}
+
+.total{
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    margin-top: 54px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.button{
+    margin-left: 40px;
+    margin-right: 16px;
+}
+
+.text{
+    margin-right: 9.5px;
+}
