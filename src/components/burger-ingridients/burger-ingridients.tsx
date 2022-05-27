@@ -1,103 +1,105 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './burger-ingridients.module.css';
-import bunone from '../../images/bun-01.svg';
-import buntwo from '../../images/bun-02.svg';
-import sauceone from '../../images/sauce-01.svg';
-import saucetwo from '../../images/sauce-02.svg';
-import saucethree from '../../images/sauce-03.svg';
-import saucefour from '../../images/sauce-04.svg';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import BurgerComponents from '../burger-components/burger-components';
+import React from "react";
+import styles from "./burger-ingridients.module.css";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-interface BurgerIngridientsProps{
-  namebun1: string,
-  namebun2: string,
-  namesauce1: string,
-  namesauce2: string,
-  namesauce3: string, 
-  namesauce4: string,
-  meat: string, 
-  fruit: string, 
-  rings: string,
-  pricebun1: number,
-  pricebun2: number,
-  pricesauce1: number,
-  pricesauce2: number,
-  pricesauce3: number,
-  pricemeat: number,
-  pricefruit: number,
-  pricerings: number
+interface BurgerIngridientsData {
+  name: string;
+  image: string;
 }
 
+interface BurgerIngridientsProps {
+  data: BurgerIngridientsData[];
+}
 
-export default function BurgerIngridients(props: BurgerIngridientsProps) {
-    const [current, setCurrent] = React.useState('one');
-  return ( 
-      <>
+export default function BurgerIngridients({ data }: BurgerIngridientsProps) {
+  const [current, setCurrent] = React.useState("one");
+  return (
+    <>
       <section className={styles.ingridients}>
-  <div style={{ backgroundColor: '#131316' }} className={styles.maintitle}>
-        Соберите бургер
-    </div>
-    <div style={{ display: 'flex' }} className={styles.optionselection} >
-      <Tab value="one" active={current === 'one'} onClick={setCurrent}>Булки</Tab>
-      <Tab value="two" active={current === 'two'} onClick={setCurrent}>Соусы</Tab>
-      <Tab value="three" active={current === 'three'} onClick={setCurrent}>Начинки</Tab>
-    </div>
-    <section className={styles.optionssection}>
-    <div className={styles.options}>
-    <div style={{ backgroundColor: '#131316' }} className={styles.title}>
-       Булки
-    </div>
-  <div className={styles.optionscards}>
-    <div className={styles.optioncard}>
-        <img src={bunone}/>
-        <p className={styles.optiontext}>{props.namebun1}</p>
-    </div>
-    <div className={styles.optioncard}>
-        <img src={buntwo}/>
-        <p className={styles.optiontext}>{props.namebun2}</p>
-    </div>
-  </div>
-  <div style={{ backgroundColor: '#131316' }} className={styles.title}>
-       Соусы
-    </div>
-  <div className={styles.optionscards}>
-    <div className={styles.optioncard}>
-        <img src={sauceone}/>
-        <p className={styles.optiontext}>{props.namesauce1}</p>
-    </div>
-    <div className={styles.optioncard}>
-        <img src={saucetwo}/>
-        <p className={styles.optiontext}>{props.namesauce2}</p>
-    </div>
-    <div className={styles.optioncard}>
-        <img src={saucethree}/>
-        <p className={styles.optiontext}>{props.namesauce3}</p>
-    </div>
-    <div className={styles.optioncard}>
-        <img src={saucefour}/>
-        <p className={styles.optiontext}>{props.namesauce4}</p>
-    </div>
-  </div>
-  </div>
-  <BurgerComponents 
-    namebun1={props.namebun2} 
-    namesauce1={props.namesauce3} 
-    meat={props.meat} 
-    fruit={props.fruit} 
-    rings={props.rings}
-    pricebun1={props.pricebun1}
-    pricebun2={props.pricebun1}
-    pricesauce1={props.pricesauce1}
-    pricesauce2={props.pricesauce2}
-    pricesauce3={props.pricesauce3}
-    pricemeat={props.pricemeat}
-    pricefruit={props.pricefruit}
-    pricerings={props.pricerings}
-    />
-  </section>
-  </section>
-  </>
-);
+        <div className={styles.maintitle}>Соберите бургер</div>
+        <div className={styles.optionselection}>
+          <Tab value="one" active={current === "one"} onClick={setCurrent}>
+            Булки
+          </Tab>
+          <Tab value="two" active={current === "two"} onClick={setCurrent}>
+            Соусы
+          </Tab>
+          <Tab value="three" active={current === "three"} onClick={setCurrent}>
+            Начинки
+          </Tab>
+        </div>
+        <section className={styles.options}>
+          <div className={styles.title}>Булки</div>
+          <div className={styles.optionscards}>
+            <div className={styles.optioncard}>
+              <img src={data[14].image} />
+              <p className={styles.optiontext}>{data[14].name}</p>
+            </div>
+            <div className={styles.optioncard}>
+              <img src={data[0].image} />
+              <p className={styles.optiontext}>{data[0].name}</p>
+            </div>
+          </div>
+          <div className={styles.title}>Соусы</div>
+          <div className={styles.optionscards}>
+            <div className={styles.optioncard}>
+              <img src={data[3].image} />
+              <p className={styles.optiontext}>{data[3].name}</p>
+            </div>
+            <div className={styles.optioncard}>
+              <img src={data[6].image} />
+              <p className={styles.optiontext}>{data[6].name}</p>
+            </div>
+            <div className={styles.optioncard}>
+              <img src={data[5].image} />
+              <p className={styles.optiontext}>{data[5].name}</p>
+            </div>
+            <div className={styles.optioncard}>
+              <img src={data[9].image} />
+              <p className={styles.optiontext}>{data[9].name}</p>
+            </div>
+          </div>
+          <div className={styles.title}>Начинки</div>
+          <div className={styles.optionscards}>
+            <div className={styles.optioncard}>
+              <img src={data[1].image} />
+              <p className={styles.optiontext}>{data[1].name}</p>
+            </div>
+            <div className={styles.optioncard}>
+              <img src={data[2].image} />
+              <p className={styles.optiontext}>{data[2].name}</p>
+            </div>
+            <div className={styles.optioncard}>
+              <img src={data[4].image} />
+              <p className={styles.optiontext}>{data[4].name}</p>
+            </div>
+            <div className={styles.optioncard}>
+              <img src={data[7].image} />
+              <p className={styles.optiontext}>{data[7].name}</p>
+            </div>
+            <div className={styles.optioncard}>
+              <img src={data[8].image} />
+              <p className={styles.optiontext}>{data[8].name}</p>
+            </div>
+            <div className={styles.optioncard}>
+              <img src={data[10].image} />
+              <p className={styles.optiontext}>{data[10].name}</p>
+            </div>
+            <div className={styles.optioncard}>
+              <img src={data[11].image} />
+              <p className={styles.optiontext}>{data[11].name}</p>
+            </div>
+            <div className={styles.optioncard}>
+              <img src={data[12].image} />
+              <p className={styles.optiontext}>{data[12].name}</p>
+            </div>
+            <div className={styles.optioncard}>
+              <img src={data[13].image} />
+              <p className={styles.optiontext}>{data[13].name}</p>
+            </div>
+          </div>
+        </section>
+      </section>
+    </>
+  );
 }
