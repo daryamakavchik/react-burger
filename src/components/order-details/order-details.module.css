@@ -1,0 +1,8 @@
+.check{
+    width: 107px;
+    height: 102px;
+    background-image: url('../../images/graphics.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}

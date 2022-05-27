@@ -1,0 +1,16 @@
+.modal{
+    display: none;
+    flex-direction: column;
+    position: relative;
+    width: 720px;
+    height: 539px;
+    margin: 0 auto;
+    padding: 40px 40px 60px;
+    align-self: center;
+}
+
+.closebutton{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
