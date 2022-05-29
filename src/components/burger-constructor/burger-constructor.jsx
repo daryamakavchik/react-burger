@@ -6,13 +6,10 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import PropTypes from "prop-types";
 import bun from "../../images/bun-02.svg";
 import ModalOverlay from "../modal-overlay/modal-overlay";
+import IngredientsDetails from "../ingredients-details/ingredients-details";
 
 export default function BurgerConstructor({ data }) {
-  const [isOpen, setState] = React.useState({ isOpen: false });
-
-  function handleOpen() {
-    setState({ isOpen: true });
-  }
+  const [isOpen, setState] = React.useState(false); 
   const mainArr = data.filter((el) => el.type === "main");
   const ingredients = Array.from(mainArr);
   return (
@@ -50,13 +47,13 @@ export default function BurgerConstructor({ data }) {
             <p className="text text_type_digits-medium">5772</p>
           </div>
           <CurrencyIcon type="primary" />
-          <div className={styles.button} onClick={handleOpen}>
-            <Button type="primary" size="medium">
+          <div className={styles.button}>
+            <Button type="primary" size="medium" onClick={() => setState(true)}>
               Оформить заказ
             </Button>
           </div>
         </div>
-        {isOpen ? mainArr.map((item, ind) => <ModalOverlay key={ind} props={item.image} /> ) : !isOpen}
+        { isOpen === true && <ModalOverlay /> }
       </div>
     </>
   );

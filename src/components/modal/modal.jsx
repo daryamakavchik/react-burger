@@ -1,22 +1,18 @@
-import React from "react";
+import OrderDetails from "../order-details/order-details";
 import styles from "./modal.module.css";
-import IngredientsDetails from "../ingredients-details/ingredients-details";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export default function Modal({ props }){
-const [isOpen, setState] = React.useState();
+export default function Modal(props) { 
 
-function handleClose(){
-    setState(!isOpen);
-}
-
-    return (
-        <>
-        <div className={styles.modal}></div>
-        <IngredientsDetails props={props}/>
-        <button className={styles.closebutton} onClick={handleClose}>
-            <CloseIcon />
+  return (
+    <>
+      <div className={props.className}>
+        <h2 className={styles.title}></h2>
+        <button className={styles.closebutton} onClick={props.handleClose}>
+          <CloseIcon />
         </button>
-        </>
-    )
+        <OrderDetails />
+      </div>
+    </>
+  );
 }

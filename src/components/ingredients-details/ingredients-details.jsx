@@ -3,7 +3,7 @@ import styles from './ingredients-details.module.css';
 export default function IngredientsDetails(props){
     return(
         <>
-        <h2 className={styles.title}>Детали ингридиента</h2>
+        <h2 className={styles.title}>{props.title}</h2>
             <img className={styles.image} src={props.image}/>
             <h3 className={styles.name}>{props.name}</h3>
             <ul className={styles.values}>

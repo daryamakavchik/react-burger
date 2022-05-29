@@ -1,11 +1,23 @@
-import React from "react";
+import { forwardRef, useRef } from "react";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
+import styles from "./ingridients-category.module.css";
 
-export default function IngredientsCategory( {props} ) {
-    return ( props.map((el, ind) => <BurgerIngredient key={ind} name={el.name} image={el.image} calories={el.calories} proteins={el.proteins} fat={el.fat} carbohydrates={el.carbohydrates} />)) ;
-}
 
-IngredientsCategory.propTypes = {
-    props: PropTypes.array,
-};
+export const IngredientsCategory = forwardRef(({ title, ingredients}, ref) => {
+  
+  return (
+    <>
+        <h2 className={styles.title} ref={ref} >
+            {title}
+        </h2>
+        <div className={styles.optionscards}>
+            <BurgerIngredient ingredients={ingredients}/>
+        </div>
+    </>
+  );
+});
+
+// IngredientsCategory.propTypes = {
+//     props: PropTypes.array,
+// };

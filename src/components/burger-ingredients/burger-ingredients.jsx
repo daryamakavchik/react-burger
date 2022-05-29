@@ -1,66 +1,55 @@
-import React from "react";
+import { useRef } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import IngredientsCategory from "../ingredients-category/ingredients-category";
+import { IngredientsCategory } from "../ingredients-category/ingredients-category";
 
 export default function BurgerIngredients({ data }) {
-  const [current, setCurrent] = React.useState("bun");
   const bunsArr = data.filter((el) => el.type === "bun");
   const mainArr = data.filter((el) => el.type === "main");
   const sauceArr = data.filter((el) => el.type === "sauce");
 
+  const containerRef = useRef(null);
+
+  const bunsRef = useRef(null);
+  const sauceRef = useRef(null);
+  const mainRef = useRef(null);
+
+  const scroll = (ref) => containerRef.current.scroll({
+    behavior: 'smooth',
+    top: ref.current.offsetTop - containerRef.current.offsetTop - 25
+  });
+
   return (
     <>
       <section className={styles.ingridients}>
-        <div className={styles.maintitle}>Соберите бургер</div>
+      <p className="text text_type_main-large">Соберите бургер</p>
         <div className={styles.optionselection}>
           <Tab
             value="bun"
-            active={current === "bun"}
-            onClick={() => setCurrent("bun")}
+            onClick={() => scroll(bunsRef)}
           >
             Булки
           </Tab>
           <Tab
             value="sauce"
-            active={current === "sauce"}
-            onClick={() => setCurrent("sauce")}
+            onClick={() => scroll(sauceRef)}
           >
             Соусы
           </Tab>
           <Tab
             value="main"
-            active={current === "main"}
-            onClick={() => setCurrent("main")}
+            onClick={() => scroll(mainRef)}
           >
             Начинки
           </Tab>
         </div>
-        <section className={styles.options}>
-          { current === "bun" ? (
+        <section className={styles.options} ref={containerRef}>
             <>
-              <div className={styles.title}>Булки</div>
-              <div className={styles.optionscards}>
-                <IngredientsCategory props={bunsArr} />
-              </div>
+            <IngredientsCategory title='Булки' ingredients={bunsArr} ref={bunsRef} />
+            <IngredientsCategory title='Соусы' ingredients={sauceArr} ref={sauceRef} />
+            <IngredientsCategory title='Начинки' ingredients={mainArr} ref={mainRef} />
             </>
-          ) : current === "sauce" ? (
-            <>
-              <div className={styles.title}>Соусы</div>
-              <div className={styles.optionscards}>
-                <IngredientsCategory props={sauceArr} />
-              </div>
-            </>
-          ) : current === "main" ? (
-            <>
-              <div className={styles.title}>Начинки</div>
-              <div className={styles.optionscards}>
-                <IngredientsCategory props={mainArr} />
-              </div>
-            </>
-          ) : ( current === "bun" )
-        }
         </section>
       </section>
     </>
