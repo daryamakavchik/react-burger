@@ -110,3 +110,7 @@
 .text {
   margin-right: 9.5px;
 }
+
+.modal{
+  width: 720px;
+}

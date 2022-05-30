@@ -3,21 +3,22 @@ import PropTypes from "prop-types";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./ingridients-category.module.css";
 
-
-export const IngredientsCategory = forwardRef(({ title, ingredients}, ref) => {
-  
+export const IngredientsCategory = forwardRef(({ title, ingredients }, ref) => {
   return (
     <>
-        <h2 className={styles.title} ref={ref} >
-            {title}
-        </h2>
-        <div className={styles.optionscards}>
-            <BurgerIngredient ingredients={ingredients}/>
-        </div>
+      <h2 className={styles.title} ref={ref}>
+        {title}
+      </h2>
+      <div className={styles.optionscards}>
+        {ingredients.map((el, ind) => (
+          <BurgerIngredient key={ind} {...el} />
+        ))}
+      </div>
     </>
   );
 });
 
-// IngredientsCategory.propTypes = {
-//     props: PropTypes.array,
-// };
+IngredientsCategory.propTypes = {
+  title: PropTypes.string.isRequired,
+  ingredients: PropTypes.array.isRequired,
+};

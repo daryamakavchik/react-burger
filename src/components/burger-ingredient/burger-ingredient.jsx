@@ -1,28 +1,39 @@
-import React from "react";
+import { useModal } from "../modal/modal";
+import IngredientsDetails from "../ingredients-details/ingredients-details";
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 import PropTypes from "prop-types";
-import ModalOverlay from "../modal-overlay/modal-overlay";
 
 export default function BurgerIngredient(props) {
+  const [Modal, setOpen] = useModal();
 
-   const [isOpen, setState] = React.useState({ isOpen: false });
-
-//    function handleOpen() {
-//      setState({ isOpen: true });
-//   }
-
-  return props.ingredients.map((el, ind) =>
+  return (
     <>
-      <div key={ind} className={styles.optioncard} >
-        <img src={el.image} />
-        <p className={styles.optiontext}>{el.name}</p>
-        {isOpen === true ? <ModalOverlay props={props.ingredients} /> : !isOpen}
+      <div className={styles.optioncard} onClick={() => setOpen(true)}>
+        <img src={props.image} />
+        <p className={styles.optiontext}>{props.name}</p>
       </div>
+      <Modal title="Детали ингридиента">
+        <IngredientsDetails {...props} />
+      </Modal>
     </>
   );
 }
 
-// BurgerIngredient.propTypes = {
-//   name: PropTypes.string,
-//   image: PropTypes.string,
-// };
+const BurgerIngredientPropTypes = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  proteins: PropTypes.number.isRequired,
+  fat: PropTypes.number.isRequired,
+  carbohydrates: PropTypes.number.isRequired,
+  calories: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+  image_mobile: PropTypes.string.isRequired,
+  image_large: PropTypes.string.isRequired,
+  __v: PropTypes.number.isRequired,
+});
+
+BurgerIngredient.propTypes = {
+  props: BurgerIngredientPropTypes,
+};

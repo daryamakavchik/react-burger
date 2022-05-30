@@ -1,15 +1,15 @@
-import React from "react";
-import styles from "./burger-constructor.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useModal } from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+import styles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
-import bun from "../../images/bun-02.svg";
-import ModalOverlay from "../modal-overlay/modal-overlay";
-import IngredientsDetails from "../ingredients-details/ingredients-details";
+import bunimg from "../../images/bun-02.svg";
 
 export default function BurgerConstructor({ data }) {
-  const [isOpen, setState] = React.useState(false); 
+  const [Modal, setOpen] = useModal();
+
   const mainArr = data.filter((el) => el.type === "main");
   const ingredients = Array.from(mainArr);
   return (
@@ -20,7 +20,7 @@ export default function BurgerConstructor({ data }) {
           isLocked={true}
           text="Краторная булка N-200i (верх)"
           price={data[0].price}
-          thumbnail={bun}
+          thumbnail={bunimg}
         />
         <ul className={styles.componentlist}>
           {ingredients.map((item, index) => (
@@ -40,7 +40,7 @@ export default function BurgerConstructor({ data }) {
           isLocked={true}
           text="Краторная булка N-200i (низ)"
           price={data[data.length - 1].price}
-          thumbnail={bun}
+          thumbnail={bunimg}
         />
         <div className={styles.total}>
           <div className={styles.text}>
@@ -48,18 +48,34 @@ export default function BurgerConstructor({ data }) {
           </div>
           <CurrencyIcon type="primary" />
           <div className={styles.button}>
-            <Button type="primary" size="medium" onClick={() => setState(true)}>
+            <Button type="primary" size="medium" onClick={() => setOpen(true)}>
               Оформить заказ
             </Button>
           </div>
         </div>
-        { isOpen === true && <ModalOverlay /> }
+        <Modal>
+          <OrderDetails />
+        </Modal>
       </div>
     </>
   );
 }
 
+const BurgerConstructorDataPropTypes = PropTypes.arrayOf(PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  proteins: PropTypes.number.isRequired,
+  fat: PropTypes.number.isRequired,
+  carbohydrates: PropTypes.number.isRequired,
+  calories: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+  image_mobile: PropTypes.string.isRequired,
+  image_large: PropTypes.string.isRequired,
+  __v: PropTypes.number.isRequired,
+}));
+
 BurgerConstructor.propTypes = {
-  name: PropTypes.string,
-  price: PropTypes.number,
+  data: BurgerConstructorDataPropTypes,
 };

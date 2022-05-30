@@ -12,6 +12,7 @@ function App() {
     hasError: false,
     isLoading: true,
   });
+
   React.useEffect(() => {
     getIngredients();
   }, []);
