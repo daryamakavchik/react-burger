@@ -1,10 +1,25 @@
-import { useModal } from "../modal/modal";
+// import { useModal } from "../modal/modal";
+import React from "react";
 import IngredientsDetails from "../ingredients-details/ingredients-details";
 import styles from "../burger-ingredients/burger-ingredients.module.css";
-import PropTypes from "prop-types";
+import { ingredientsPropTypes } from "../../utils/proptypes";
+import Modal from "../modal/modal";
 
 export default function BurgerIngredient(props) {
-  const [Modal, openModal] = useModal();
+  const [isIngredientsDetailsOpened, setIsIngredientsDetailsOpened] =
+    React.useState(false);
+
+  const openModal = () => {
+    setIsIngredientsDetailsOpened(true);
+  };
+
+  const closeAllModals = () => {
+    setIsIngredientsDetailsOpened(false);
+  };
+
+  const handleEscKeydown = (event) => {
+    event.key === "Escape" && closeAllModals();
+  };
 
   return (
     <>
@@ -12,28 +27,17 @@ export default function BurgerIngredient(props) {
         <img src={props.image} />
         <p className={styles.optiontext}>{props.name}</p>
       </div>
-      <Modal title="Детали ингридиента">
-        <IngredientsDetails {...props} />
-      </Modal>
+      {isIngredientsDetailsOpened && (
+        <Modal
+          title="Детали ингридиента"
+          onOverlayClick={closeAllModals}
+          onEscKeyDown={handleEscKeydown}
+        >
+          <IngredientsDetails {...props} />
+        </Modal>
+      )}
     </>
   );
 }
 
-const BurgerIngredientPropTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_mobile: PropTypes.string.isRequired,
-  image_large: PropTypes.string.isRequired,
-  __v: PropTypes.number.isRequired,
-});
-
-BurgerIngredient.propTypes = {
-  props: BurgerIngredientPropTypes,
-};
+BurgerIngredient.propTypes = ingredientsPropTypes.isRequired;

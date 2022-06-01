@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const ingredientsPropTypes = PropTypes.arrayOf(PropTypes.shape({
+export const ingredientsPropTypes = PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
@@ -13,11 +13,6 @@ const ingredientsPropTypes = PropTypes.arrayOf(PropTypes.shape({
     image_mobile: PropTypes.string.isRequired,
     image_large: PropTypes.string.isRequired,
     __v: PropTypes.number.isRequired,
-  }));
+  });
 
-  const ArrayPropTypes = PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired;
-  
-  export const propTypeCheck = () => 
-    ArrayPropTypes.propTypes = {
-      data: ingredientsPropTypes,
-  };
+  export const ArrayPropTypes = PropTypes.arrayOf(ingredientsPropTypes.isRequired).isRequired;

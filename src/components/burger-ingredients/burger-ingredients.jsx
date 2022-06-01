@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsCategory } from "../ingredients-category/ingredients-category";
 import styles from "./burger-ingredients.module.css";
-import { propTypeCheck } from "../../utils/proptypes";
+import { ArrayPropTypes } from "../../utils/proptypes";
 
 export default function BurgerIngredients({ data }) {
   const [current, setCurrent] = useState('bun')
@@ -70,4 +70,6 @@ export default function BurgerIngredients({ data }) {
   );
 }
 
-propTypeCheck();
+BurgerIngredients.propTypes = {
+  data: ArrayPropTypes
+}
