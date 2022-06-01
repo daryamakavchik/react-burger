@@ -26,6 +26,8 @@
   align-items: center;
   height: 56px;
   background: #1c1c21;
+  color: #8585ad;
+  text-decoration: none;
 }
 
 .headernav:nth-child(2) {
@@ -36,6 +38,11 @@
 .headernav:nth-child(4) {
   margin-left: 311.85px;
   color: #8585ad;
+}
+
+.link{
+  margin: 0;
+  padding: 0;
 }
 
 .headerlogo {

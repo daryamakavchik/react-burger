@@ -8,46 +8,43 @@ const modalsContainer = document.querySelector("#modals");
 
 export const useModal = () => {
   const [isOpen, setOpen] = useState(false);
-  const closeModal = () => setOpen(false);
   return [
     (props) =>
       isOpen ? (
         <Modal
-          isOpen={isOpen}
-          onOverlayClick={closeModal}
-          onEscKeydown={closeModal}
+          setOpen={setOpen}
           {...props}
         />
       ) : null,
-    setOpen,
+    () => setOpen(true)
   ];
 };
 
 export default function Modal({
   title,
-  onOverlayClick,
-  onEscKeydown,
+  setOpen,
   children,
 }) {
+  const closeModal = () => setOpen(false);
 
   useEffect(() => {
-    document.addEventListener("keydown", onEscKeydown);
+    document.addEventListener("keydown", closeModal);
 
     return () => {
-      document.removeEventListener("keydown", onEscKeydown);
+      document.removeEventListener("keydown", closeModal);
     };
   }, []);
   
   return ReactDOM.createPortal(
     <>
       <div className={styles.modal}> 
-        <button className={styles.closebutton} onClick={onOverlayClick}>
+        <button className={styles.closebutton} onClick={closeModal}>
           <CloseIcon />
         </button>
         <h3 className={styles.title}>{title}</h3>
         {children}
       </div>
-      <ModalOverlay onClick={onOverlayClick} />
+      <ModalOverlay onClick={closeModal} />
     </>,
     modalsContainer
   );

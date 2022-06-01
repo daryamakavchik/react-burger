@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./ingridients-category.module.css";
 
-export const IngredientsCategory = forwardRef(({ title, ingredients }, ref) => {
+export const IngredientsCategory = forwardRef(({ title, ingredients, id }, ref) => {
   return (
     <>
-      <h2 className={styles.title} ref={ref}>
+      <h2 id={id} className={styles.title} ref={ref}>
         {title}
       </h2>
       <div className={styles.optionscards}>

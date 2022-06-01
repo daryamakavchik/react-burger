@@ -10,15 +10,18 @@ function AppHeader() {
     <div style={{ display: "flex" }} className={styles.header}>
       <ul className={styles.headernavigation}>
         <li className={styles.headernav}>
-          <BurgerIcon type="primary" />
+          <a className={styles.headernav} href='#'>
+          <BurgerIcon type="secondary" />
           <div
             style={{ backgroundColor: "#1C1C21", fontFamily: "JetBrains" }}
             className="p-2"
           >
             Конструктор
           </div>
+          </a>
         </li>
         <li className={styles.headernav}>
+        <a className={styles.headernav} href='#'>
           <ListIcon type="secondary" />
           <div
             style={{ backgroundColor: "#1C1C21", fontFamily: "JetBrains" }}
@@ -26,11 +29,13 @@ function AppHeader() {
           >
             Лента заказов
           </div>
+          </a>
         </li>
         <li className={styles.headernav + " " + styles.headerlogo}>
           <Logo />
         </li>
         <li className={styles.headernav}>
+          <a className={styles.headernav} href='#'>
           <ProfileIcon type="secondary" />
           <div
             style={{ backgroundColor: "#1C1C21", fontFamily: "JetBrains" }}
@@ -38,6 +43,7 @@ function AppHeader() {
           >
             Личный кабинет
           </div>
+          </a>
         </li>
       </ul>
     </div>

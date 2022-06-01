@@ -4,11 +4,11 @@ import styles from "../burger-ingredients/burger-ingredients.module.css";
 import PropTypes from "prop-types";
 
 export default function BurgerIngredient(props) {
-  const [Modal, setOpen] = useModal();
+  const [Modal, openModal] = useModal();
 
   return (
     <>
-      <div className={styles.optioncard} onClick={() => setOpen(true)}>
+      <div className={styles.optioncard} onClick={openModal}>
         <img src={props.image} />
         <p className={styles.optiontext}>{props.name}</p>
       </div>

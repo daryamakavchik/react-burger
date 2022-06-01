@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsCategory } from "../ingredients-category/ingredients-category";
 import styles from "./burger-ingredients.module.css";
-import PropTypes from "prop-types";
+import { propTypeCheck } from "../../utils/proptypes";
 
 export default function BurgerIngredients({ data }) {
   const [current, setCurrent] = useState('bun')
@@ -24,7 +24,8 @@ export default function BurgerIngredients({ data }) {
 
   const onTabClick = (tab, categoryRef) => () => {
     setCurrent(tab);
-    scroll(categoryRef);
+    const element = document.getElementById(tab);
+    if (element) element.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -45,16 +46,19 @@ export default function BurgerIngredients({ data }) {
         <section className={styles.options} ref={containerRef}>
           <>
             <IngredientsCategory
+              id="bun"
               title="Булки"
               ingredients={bunsArr}
               ref={bunsRef}
             />
             <IngredientsCategory
+              id="sauce"
               title="Соусы"
               ingredients={sauceArr}
               ref={sauceRef}
             />
             <IngredientsCategory
+              id="main"
               title="Начинки"
               ingredients={mainArr}
               ref={mainRef}
@@ -66,21 +70,4 @@ export default function BurgerIngredients({ data }) {
   );
 }
 
-const BurgerIngredientsPropTypes = PropTypes.arrayOf(PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_mobile: PropTypes.string.isRequired,
-  image_large: PropTypes.string.isRequired,
-  __v: PropTypes.number.isRequired,
-}));
-
-BurgerIngredients.propTypes = {
-  data: BurgerIngredientsPropTypes,
-};
+propTypeCheck();

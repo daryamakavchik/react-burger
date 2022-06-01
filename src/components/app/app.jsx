@@ -1,29 +1,31 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import styles from "./app.module.css";
+import { fetchData } from "../../utils/api";
 
 const apiUrl = "https://norma.nomoreparties.space/api/ingredients";
 
 function App() {
-  const [state, setState] = React.useState({
+  const [state, setLoadedDataState] = useState({
     data: [],
     hasError: false,
     isLoading: true,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     getIngredients();
   }, []);
 
   function getIngredients() {
-    setState({ ...state, hasError: false, isLoading: true });
-    fetch(apiUrl)
-      .then((res) => res.json())
-      .then((obj) => setState({ ...state, data: obj.data, isLoading: false }))
+    setLoadedDataState({ ...state, hasError: false, isLoading: true });
+    fetchData()
+      .then((obj) =>
+        setLoadedDataState({ ...state, data: obj.data, isLoading: false })
+      )
       .catch((e) => {
-        setState({ ...state, hasError: true, isLoading: false });
+        setLoadedDataState({ ...state, hasError: true, isLoading: false });
       });
   }
 
