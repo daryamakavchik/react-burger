@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useReducer, useEffect } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,12 +7,20 @@ import styles from "./burger-constructor.module.css";
 import { ArrayPropTypes } from "../../utils/proptypes";
 import bunimg from "../../images/bun-02.svg";
 import Modal from "../modal/modal";
+import {
+  BurgerConstructorContext,
+  TotalPriceContext,
+} from "../../services/BurgerConstructorContext";
+import { apiPostOrder } from "../../utils/api";
 
-export default function BurgerConstructor({ data }) {
+export default function BurgerConstructor() {
+  const { data } = useContext(BurgerConstructorContext);
+  const { totalPrice, setTotalPrice } = useContext(TotalPriceContext);
+
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
-  const openModal = () => {
-    setIsOrderDetailsOpened(true);
+  const postOrder = (orderData) => {
+    apiPostOrder(orderData).then((res) => console.log(res));
   };
 
   const closeAllModals = () => {
@@ -23,9 +31,28 @@ export default function BurgerConstructor({ data }) {
     event.key === "Escape" && closeAllModals();
   };
 
-  const mainArr = data.filter((el) => el.type === "main");
+  const mainArr = data.filter((el) => el.type !== "bun");
   const ingredients = Array.from(mainArr);
-  const bunName = Array.from(data.filter((el) => el.type === "bun"))[0].name;
+
+  const bunArr = data.filter((el) => el.type === "bun");
+  const bun = bunArr[0];
+  const bunIdArr = [`${bunArr[0]._id}`];
+  bunIdArr.push(`${bunArr[0]._id}`);
+
+  const orderData = Array.from(ingredients.map((el) => el._id)).concat(
+    bunIdArr
+  );
+
+  const openModal = () => {
+    setIsOrderDetailsOpened(true);
+    postOrder(orderData);
+  };
+
+  useEffect(() => {
+    let total = 0 + bun.price * 2;
+    ingredients.map((item) => (total += item.price));
+    setTotalPrice(total);
+  }, [totalPrice, setTotalPrice]);
 
   return (
     <>
@@ -33,13 +60,17 @@ export default function BurgerConstructor({ data }) {
         <ConstructorElement
           type="top"
           isLocked={true}
-          text={bunName + " (верх)"}
-          price={data[0].price}
+          text={bun.name + " (верх)"}
+          price={bun.price}
           thumbnail={bunimg}
         />
         <ul className={styles.componentlist}>
           {ingredients.map((item, index) => (
-            <li key={index}>
+            <li
+              key={index}
+              style={{ minWidth: 488 }}
+              className={styles.component}
+            >
               <ConstructorElement
                 text={item.name}
                 price={item.price}
@@ -52,13 +83,13 @@ export default function BurgerConstructor({ data }) {
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={bunName + " (низ)"}
-          price={data[data.length - 1].price}
+          text={bun.name + " (низ)"}
+          price={bun.price}
           thumbnail={bunimg}
         />
         <div className={styles.total}>
           <div className={styles.text}>
-            <p className="text text_type_digits-medium">5772</p>
+            <p className="text text_type_digits-medium">{totalPrice}</p>
           </div>
           <CurrencyIcon type="primary" />
           <div className={styles.button}>

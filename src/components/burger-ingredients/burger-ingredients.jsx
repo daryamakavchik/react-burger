@@ -5,7 +5,8 @@ import styles from "./burger-ingredients.module.css";
 import { ArrayPropTypes } from "../../utils/proptypes";
 
 export default function BurgerIngredients({ data }) {
-  const [current, setCurrent] = useState('bun')
+  const [current, setCurrent] = useState("bun");
+
   const bunsArr = data.filter((el) => el.type === "bun");
   const mainArr = data.filter((el) => el.type === "main");
   const sauceArr = data.filter((el) => el.type === "sauce");
@@ -33,13 +34,19 @@ export default function BurgerIngredients({ data }) {
       <section className={styles.ingridients}>
         <p className="text text_type_main-large">Соберите бургер</p>
         <div className={styles.optionselection}>
-          <Tab active={current === 'bun'} onClick={onTabClick('bun', bunsRef)}>
+          <Tab active={current === "bun"} onClick={onTabClick("bun", bunsRef)}>
             Булки
           </Tab>
-          <Tab active={current === 'sauce'} onClick={onTabClick('sauce', sauceRef)}>
+          <Tab
+            active={current === "sauce"}
+            onClick={onTabClick("sauce", sauceRef)}
+          >
             Соусы
           </Tab>
-          <Tab active={current === 'main'} onClick={onTabClick('main', mainRef)}>
+          <Tab
+            active={current === "main"}
+            onClick={onTabClick("main", mainRef)}
+          >
             Начинки
           </Tab>
         </div>
@@ -71,5 +78,5 @@ export default function BurgerIngredients({ data }) {
 }
 
 BurgerIngredients.propTypes = {
-  data: ArrayPropTypes
-}
+  data: ArrayPropTypes,
+};
