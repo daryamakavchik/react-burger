@@ -1,26 +1,31 @@
-import React, { useContext, useReducer, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+import { BurgerConstructorContext, TotalPriceContext, OrderNumContext } from "../../services/BurgerConstructorContext";
+import { apiPostOrder } from "../../utils/api";
+import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
-import { ArrayPropTypes } from "../../utils/proptypes";
 import bunimg from "../../images/bun-02.svg";
-import Modal from "../modal/modal";
-import {
-  BurgerConstructorContext,
-  TotalPriceContext,
-} from "../../services/BurgerConstructorContext";
-import { apiPostOrder } from "../../utils/api";
 
 export default function BurgerConstructor() {
   const { data } = useContext(BurgerConstructorContext);
-  const { totalPrice, setTotalPrice } = useContext(TotalPriceContext);
-
+  const [ totalPrice, setTotalPrice ] = useState(0);
+  const [ orderNum, setOrderNum] = useState('');
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
-  const postOrder = (orderData) => {
-    apiPostOrder(orderData).then((res) => console.log(res));
+  const mainArr = data.filter((el) => el.type !== "bun");
+  const ingredients = Array.from(mainArr);
+  const bunArr = data.filter((el) => el.type === "bun");
+  const bun = bunArr[0];
+  const bunIdArr = [`${bunArr[0]._id}`]; bunIdArr.push(`${bunArr[0]._id}`);
+
+  const orderData = Array.from(ingredients.map((el) => el._id)).concat( bunIdArr );
+
+  const openModal = () => {
+    setIsOrderDetailsOpened(true);
+    apiPostOrder(orderData).then((res) => setOrderNum(res.order.number));
   };
 
   const closeAllModals = () => {
@@ -31,31 +36,15 @@ export default function BurgerConstructor() {
     event.key === "Escape" && closeAllModals();
   };
 
-  const mainArr = data.filter((el) => el.type !== "bun");
-  const ingredients = Array.from(mainArr);
-
-  const bunArr = data.filter((el) => el.type === "bun");
-  const bun = bunArr[0];
-  const bunIdArr = [`${bunArr[0]._id}`];
-  bunIdArr.push(`${bunArr[0]._id}`);
-
-  const orderData = Array.from(ingredients.map((el) => el._id)).concat(
-    bunIdArr
-  );
-
-  const openModal = () => {
-    setIsOrderDetailsOpened(true);
-    postOrder(orderData);
-  };
-
   useEffect(() => {
     let total = 0 + bun.price * 2;
-    ingredients.map((item) => (total += item.price));
+    total = ingredients.reduce(function (acc, obj) { return acc + obj.price; }, total);
     setTotalPrice(total);
   }, [totalPrice, setTotalPrice]);
 
   return (
     <>
+      <TotalPriceContext.Provider value={{ totalPrice, setTotalPrice }}>
       <div className={styles.components}>
         <ConstructorElement
           type="top"
@@ -68,7 +57,6 @@ export default function BurgerConstructor() {
           {ingredients.map((item, index) => (
             <li
               key={index}
-              style={{ minWidth: 488 }}
               className={styles.component}
             >
               <ConstructorElement
@@ -103,14 +91,13 @@ export default function BurgerConstructor() {
             onOverlayClick={closeAllModals}
             onEscKeyDown={handleEscKeydown}
           >
-            <OrderDetails />
+              <OrderNumContext.Provider value={orderNum}>
+                <OrderDetails />
+              </OrderNumContext.Provider>
           </Modal>
         )}
       </div>
+      </TotalPriceContext.Provider>
     </>
   );
 }
-
-BurgerConstructor.propTypes = {
-  data: ArrayPropTypes,
-};

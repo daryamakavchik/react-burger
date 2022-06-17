@@ -4,10 +4,7 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import styles from "./app.module.css";
 import { fetchData } from "../../utils/api";
-import {
-  BurgerConstructorContext,
-  TotalPriceContext,
-} from "../../services/BurgerConstructorContext";
+import { BurgerConstructorContext } from "../../services/BurgerConstructorContext";
 
 const apiUrl = "https://norma.nomoreparties.space/api/ingredients";
 
@@ -17,7 +14,6 @@ function App() {
     hasError: false,
     isLoading: true,
   });
-  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     setLoadedDataState({ ...state, hasError: false, isLoading: true });
@@ -31,25 +27,23 @@ function App() {
   }, []);
 
   return (
-    <BurgerConstructorContext.Provider value={state}>
-      <TotalPriceContext.Provider value={{ totalPrice, setTotalPrice }}>
         <div className={styles.page}>
           <section className={styles.App}>
             <AppHeader />
+            <BurgerConstructorContext.Provider value={state}>
             <main className={styles.content}>
               {state.isLoading && "Загрузка..."}
               {state.hasError && "Произошла ошибка"}
               {!state.isLoading && !state.hasError && (
                 <>
-                  <BurgerIngredients data={state.data} />
-                  <BurgerConstructor data={state.data} />
+                  <BurgerIngredients />
+                  <BurgerConstructor />
                 </>
               )}
             </main>
+            </BurgerConstructorContext.Provider>
           </section>
         </div>
-      </TotalPriceContext.Provider>
-    </BurgerConstructorContext.Provider>
   );
 }
 

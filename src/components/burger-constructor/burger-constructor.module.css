@@ -18,6 +18,7 @@
 
 .component {
   display: flex;
+  min-width: 488px;
 }
 
 .total {
