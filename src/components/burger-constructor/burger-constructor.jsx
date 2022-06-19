@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+import { BurgerConstructorContext, TotalPriceContext, OrderNumContext } from "../../services/BurgerConstructorContext";
+import { apiPostOrder } from "../../utils/api";
+import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
-import { ArrayPropTypes } from "../../utils/proptypes";
 import bunimg from "../../images/bun-02.svg";
-import Modal from "../modal/modal";
 
-export default function BurgerConstructor({ data }) {
+export default function BurgerConstructor() {
+  const { data } = useContext(BurgerConstructorContext);
+  const [ totalPrice, setTotalPrice ] = useState(0);
+  const [ orderNum, setOrderNum] = useState('');
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
+
+  const mainArr = data.filter((el) => el.type !== "bun");
+  const ingredients = Array.from(mainArr);
+  const bunArr = data.filter((el) => el.type === "bun");
+  const bun = bunArr[0];
+  const bunIdArr = [`${bunArr[0]._id}`]; bunIdArr.push(`${bunArr[0]._id}`);
+
+  const orderData = Array.from(ingredients.map((el) => el._id)).concat( bunIdArr );
 
   const openModal = () => {
     setIsOrderDetailsOpened(true);
+    apiPostOrder(orderData).then((res) => setOrderNum(res.order.number));
   };
 
   const closeAllModals = () => {
@@ -23,23 +36,29 @@ export default function BurgerConstructor({ data }) {
     event.key === "Escape" && closeAllModals();
   };
 
-  const mainArr = data.filter((el) => el.type === "main");
-  const ingredients = Array.from(mainArr);
-  const bunName = Array.from(data.filter((el) => el.type === "bun"))[0].name;
+  useEffect(() => {
+    let total = 0 + bun.price * 2;
+    total = ingredients.reduce(function (acc, obj) { return acc + obj.price; }, total);
+    setTotalPrice(total);
+  }, [totalPrice, setTotalPrice]);
 
   return (
     <>
+      <TotalPriceContext.Provider value={{ totalPrice, setTotalPrice }}>
       <div className={styles.components}>
         <ConstructorElement
           type="top"
           isLocked={true}
-          text={bunName + " (верх)"}
-          price={data[0].price}
+          text={bun.name + " (верх)"}
+          price={bun.price}
           thumbnail={bunimg}
         />
         <ul className={styles.componentlist}>
           {ingredients.map((item, index) => (
-            <li key={index}>
+            <li
+              key={index}
+              className={styles.component}
+            >
               <ConstructorElement
                 text={item.name}
                 price={item.price}
@@ -52,13 +71,13 @@ export default function BurgerConstructor({ data }) {
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={bunName + " (низ)"}
-          price={data[data.length - 1].price}
+          text={bun.name + " (низ)"}
+          price={bun.price}
           thumbnail={bunimg}
         />
         <div className={styles.total}>
           <div className={styles.text}>
-            <p className="text text_type_digits-medium">5772</p>
+            <p className="text text_type_digits-medium">{totalPrice}</p>
           </div>
           <CurrencyIcon type="primary" />
           <div className={styles.button}>
@@ -72,14 +91,13 @@ export default function BurgerConstructor({ data }) {
             onOverlayClick={closeAllModals}
             onEscKeyDown={handleEscKeydown}
           >
-            <OrderDetails />
+              <OrderNumContext.Provider value={orderNum}>
+                <OrderDetails />
+              </OrderNumContext.Provider>
           </Modal>
         )}
       </div>
+      </TotalPriceContext.Provider>
     </>
   );
 }
-
-BurgerConstructor.propTypes = {
-  data: ArrayPropTypes,
-};

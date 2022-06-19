@@ -7,14 +7,13 @@ import styles from "./app-header.module.css";
 function AppHeader() {
 
   return (
-    <div style={{ display: "flex" }} className={styles.header}>
+    <div className={styles.header}>
       <ul className={styles.headernavigation}>
         <li className={styles.headernav}>
           <a className={styles.headernav} href='#'>
           <BurgerIcon type="secondary" />
           <div
-            style={{ backgroundColor: "#1C1C21", fontFamily: "JetBrains" }}
-            className="p-2"
+            className={`${styles.icon} p-2`}
           >
             Конструктор
           </div>
@@ -24,8 +23,7 @@ function AppHeader() {
         <a className={styles.headernav} href='#'>
           <ListIcon type="secondary" />
           <div
-            style={{ backgroundColor: "#1C1C21", fontFamily: "JetBrains" }}
-            className="p-2"
+            className={`${styles.icon} p-2`}
           >
             Лента заказов
           </div>
@@ -38,8 +36,7 @@ function AppHeader() {
           <a className={styles.headernav} href='#'>
           <ProfileIcon type="secondary" />
           <div
-            style={{ backgroundColor: "#1C1C21", fontFamily: "JetBrains" }}
-            className="p-2"
+            className={`${styles.icon} p-2`}
           >
             Личный кабинет
           </div>
