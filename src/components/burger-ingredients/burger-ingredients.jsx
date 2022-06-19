@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRef, useState, useContext } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsCategory } from "../ingredients-category/ingredients-category";

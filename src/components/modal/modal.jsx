@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDOM from "react-dom";
 import { useEffect, useState } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";

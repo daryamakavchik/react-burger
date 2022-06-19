@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { BurgerConstructorContext, TotalPriceContext, OrderNumContext } from "../../services/BurgerConstructorContext";
+import { BurgerConstructorContext, OrderNumContext } from "../../services/BurgerConstructorContext";
 import { apiPostOrder } from "../../utils/api";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
@@ -30,6 +30,7 @@ export default function BurgerConstructor() {
 
   const closeAllModals = () => {
     setIsOrderDetailsOpened(false);
+    setOrderNum(null);
   };
 
   const handleEscKeydown = (event) => {
@@ -44,7 +45,6 @@ export default function BurgerConstructor() {
 
   return (
     <>
-      <TotalPriceContext.Provider value={{ totalPrice, setTotalPrice }}>
       <div className={styles.components}>
         <ConstructorElement
           type="top"
@@ -97,7 +97,6 @@ export default function BurgerConstructor() {
           </Modal>
         )}
       </div>
-      </TotalPriceContext.Provider>
     </>
   );
 }
