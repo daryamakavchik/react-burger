@@ -5,15 +5,34 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import styles from "./app.module.css";
 import { fetchData } from "../../utils/api";
 import { BurgerConstructorContext } from "../../services/BurgerConstructorContext";
+import { compose, configureStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { rootReducer } from "../../services/reducers/rootReducer";
+
+const initialState = {
+  data: [],
+  currentConstructorData: [],
+  currentIngredientData: [],
+  currentOrderData: [],
+  hasError: false,
+  isLoading: true,
+}
+
+const enhancer = composeEnhancers(applyMiddleware(thunk));
+const store = configureStore(rootReducer, initialState, enhancer); 
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose; 
 
 const apiUrl = "https://norma.nomoreparties.space/api/ingredients";
 
 function App() {
-  const [state, setLoadedDataState] = useState({
-    data: [],
-    hasError: false,
-    isLoading: true,
-  });
+  // const [state, setLoadedDataState] = useState({
+  //   data: [],
+  //   hasError: false,
+  //   isLoading: true,
+  // });
 
   useEffect(() => {
     setLoadedDataState({ ...state, hasError: false, isLoading: true });
