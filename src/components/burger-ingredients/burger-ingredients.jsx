@@ -1,14 +1,16 @@
 import React from 'react';
-import { useRef, useState, useContext } from "react";
+import { useRef, useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsCategory } from "../ingredients-category/ingredients-category";
 import styles from "./burger-ingredients.module.css";
-import {
-  BurgerConstructorContext,
-} from "../../services/BurgerConstructorContext";
+import { getData, setIngredientsData } from '../../services/actions/actions';
 
 export default function BurgerIngredients() {
-  const { data } = useContext(BurgerConstructorContext);
+  const dispatch = useDispatch();
+  useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);   
+
+  const data = useSelector(store => store.data.data);
 
   const [current, setCurrent] = useState("bun");
 

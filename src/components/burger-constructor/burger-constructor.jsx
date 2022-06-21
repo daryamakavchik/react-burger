@@ -1,27 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { BurgerConstructorContext, OrderNumContext } from "../../services/BurgerConstructorContext";
+import { OrderNumContext } from "../../services/BurgerConstructorContext";
 import { apiPostOrder } from "../../utils/api";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import bunimg from "../../images/bun-02.svg";
+import { setIngredientsData } from '../../services/actions/actions';
 
 export default function BurgerConstructor() {
-  const { data } = useContext(BurgerConstructorContext);
+  const dispatch = useDispatch();
+  useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);   // Api request to set ingredients
+  const { bun, content, count } = useSelector(store => ({bun: store.data.constructorData.bun, content: store.data.constructorData.content}));
+  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
   const [ totalPrice, setTotalPrice ] = useState(0);
   const [ orderNum, setOrderNum] = useState('');
-  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-
-  const mainArr = data.filter((el) => el.type !== "bun");
-  const ingredients = Array.from(mainArr);
-  const bunArr = data.filter((el) => el.type === "bun");
-  const bun = bunArr[0];
-  const bunIdArr = [`${bunArr[0]._id}`]; bunIdArr.push(`${bunArr[0]._id}`);
-
-  const orderData = Array.from(ingredients.map((el) => el._id)).concat( bunIdArr );
 
   const openModal = () => {
     setIsOrderDetailsOpened(true);
@@ -36,12 +32,23 @@ export default function BurgerConstructor() {
   const handleEscKeydown = (event) => {
     event.key === "Escape" && closeAllModals();
   };
-
+  
   useEffect(() => {
     let total = 0 + bun.price * 2;
-    total = ingredients.reduce(function (acc, obj) { return acc + obj.price; }, total);
+    total = content.reduce(function (acc, obj) { return acc + obj.price; }, total);
     setTotalPrice(total);
   }, [totalPrice, setTotalPrice]);
+
+  const bunIdArr = [`${bun._id}`]; bunIdArr.push(`${bun._id}`);
+  const orderData = Array.from(content.map((el) => el._id)).concat( bunIdArr );
+
+
+  // const mainArr = data.filter((el) => el.type !== "bun");
+  // const ingredients = Array.from(mainArr);
+  // const bunArr = data.filter((el) => el.type === "bun");
+  // // const bun = bunArr[0];
+
+
 
   return (
     <>
@@ -54,7 +61,7 @@ export default function BurgerConstructor() {
           thumbnail={bunimg}
         />
         <ul className={styles.componentlist}>
-          {ingredients.map((item, index) => (
+          {content.map((item, index) => (
             <li
               key={index}
               className={styles.component}
