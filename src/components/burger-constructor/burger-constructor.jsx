@@ -14,7 +14,8 @@ import { setIngredientsData } from '../../services/actions/actions';
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
   useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);   // Api request to set ingredients
-  const { bun, content, count } = useSelector(store => ({bun: store.data.constructorData.bun, content: store.data.constructorData.content}));
+  const { data, bun, content, count } = useSelector(store => ({data: store.data.data, bun: store.data.bun, content: store.data.constructorcontent}));
+  console.log(bun);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
   const [ totalPrice, setTotalPrice ] = useState(0);
   const [ orderNum, setOrderNum] = useState('');
@@ -41,14 +42,6 @@ export default function BurgerConstructor() {
 
   const bunIdArr = [`${bun._id}`]; bunIdArr.push(`${bun._id}`);
   const orderData = Array.from(content.map((el) => el._id)).concat( bunIdArr );
-
-
-  // const mainArr = data.filter((el) => el.type !== "bun");
-  // const ingredients = Array.from(mainArr);
-  // const bunArr = data.filter((el) => el.type === "bun");
-  // // const bun = bunArr[0];
-
-
 
   return (
     <>

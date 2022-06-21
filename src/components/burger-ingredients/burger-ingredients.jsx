@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsCategory } from "../ingredients-category/ingredients-category";
 import styles from "./burger-ingredients.module.css";
-import { getData, setIngredientsData } from '../../services/actions/actions';
+import { setIngredientsData } from '../../services/actions/actions';
 
 export default function BurgerIngredients() {
   const dispatch = useDispatch();
