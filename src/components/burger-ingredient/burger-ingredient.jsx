@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { openCurrentIngredient, closeCurrentIngredient } from "../../services/actions/actions";
 
 export default function BurgerIngredient(props) {
-  // console.log(props);
   const dispatch = useDispatch();
   const modalOpen = useSelector(store => store.ingr.isModalOpen);
 

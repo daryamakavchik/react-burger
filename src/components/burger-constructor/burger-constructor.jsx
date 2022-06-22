@@ -3,45 +3,56 @@ import { useDispatch, useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { OrderNumContext } from "../../services/BurgerConstructorContext";
-import { apiPostOrder } from "../../utils/api";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import bunimg from "../../images/bun-02.svg";
-import { setIngredientsData } from '../../services/actions/actions';
+import {
+  openOrderModal,
+  closeOrderModal,
+  setIngredientsData,
+} from "../../services/actions/actions";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
-  useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);   // Api request to set ingredients
-  const { data, bun, content, count } = useSelector(store => ({data: store.data.data, bun: store.data.bun, content: store.data.constructorcontent}));
+  useEffect(() => {
+    dispatch(setIngredientsData());
+  }, [dispatch]);
 
-  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-  const [ totalPrice, setTotalPrice ] = useState(0);
-  const [ orderNum, setOrderNum] = useState('');
+  const { data, bun, content, count } = useSelector((store) => ({
+    data: store.data.data,
+    bun: store.data.bun,
+    content: store.data.constructorcontent,
+  }));
+
+  const orderNum = useSelector((store) => store.ord.orderNum);
+  const modalOpen = useSelector((store) => store.ord.isModalOpen);
+
+  const bunIdArr = [`${bun._id}`];
+  bunIdArr.push(`${bun._id}`);
+  const orderData = Array.from(content.map((el) => el._id)).concat(bunIdArr);
+
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const openModal = () => {
-    setIsOrderDetailsOpened(true);
-    apiPostOrder(orderData).then((res) => setOrderNum(res.order.number));
+    dispatch(openOrderModal(orderData), [dispatch]);
   };
 
   const closeAllModals = () => {
-    setIsOrderDetailsOpened(false);
-    setOrderNum(null);
+    dispatch(closeOrderModal(), [dispatch]);
   };
 
   const handleEscKeydown = (event) => {
     event.key === "Escape" && closeAllModals();
   };
-  
+
   useEffect(() => {
     let total = 0 + bun.price * 2;
-    total = content.reduce(function (acc, obj) { return acc + obj.price; }, total);
+    total = content.reduce(function(acc, obj) {
+      return acc + obj.price;
+    }, total);
     setTotalPrice(total);
   }, [totalPrice, setTotalPrice]);
-
-  const bunIdArr = [`${bun._id}`]; bunIdArr.push(`${bun._id}`);
-  const orderData = Array.from(content.map((el) => el._id)).concat( bunIdArr );
 
   return (
     <>
@@ -55,10 +66,7 @@ export default function BurgerConstructor() {
         />
         <ul className={styles.componentlist}>
           {content.map((item, index) => (
-            <li
-              key={index}
-              className={styles.component}
-            >
+            <li key={index} className={styles.component}>
               <ConstructorElement
                 text={item.name}
                 price={item.price}
@@ -86,14 +94,12 @@ export default function BurgerConstructor() {
             </Button>
           </div>
         </div>
-        {isOrderDetailsOpened && (
+        {modalOpen && (
           <Modal
             onOverlayClick={closeAllModals}
             onEscKeyDown={handleEscKeydown}
           >
-              <OrderNumContext.Provider value={orderNum}>
-                <OrderDetails />
-              </OrderNumContext.Provider>
+            <OrderDetails />
           </Modal>
         )}
       </div>
