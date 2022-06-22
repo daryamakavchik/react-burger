@@ -5,6 +5,7 @@ import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./ingridients-category.module.css";
 
 export const IngredientsCategory = forwardRef(({ title, ingredients, id }, ref) => {
+  // console.log({title, ingredients});
   return (
     <>
       <h2 id={id} className={styles.title} ref={ref}>

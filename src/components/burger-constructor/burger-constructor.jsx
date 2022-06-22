@@ -15,7 +15,7 @@ export default function BurgerConstructor() {
   const dispatch = useDispatch();
   useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);   // Api request to set ingredients
   const { data, bun, content, count } = useSelector(store => ({data: store.data.data, bun: store.data.bun, content: store.data.constructorcontent}));
-  console.log(bun);
+
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
   const [ totalPrice, setTotalPrice ] = useState(0);
   const [ orderNum, setOrderNum] = useState('');

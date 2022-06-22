@@ -4,17 +4,20 @@ import IngredientsDetails from "../ingredients-details/ingredients-details";
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 import { ingredientsPropTypes } from "../../utils/proptypes";
 import Modal from "../modal/modal";
+import { useDispatch, useSelector } from "react-redux";
+import { openCurrentIngredient, closeCurrentIngredient } from "../../services/actions/actions";
 
 export default function BurgerIngredient(props) {
-  const [isIngredientsDetailsOpened, setIsIngredientsDetailsOpened] =
-    React.useState(false);
+  // console.log(props);
+  const dispatch = useDispatch();
+  const modalOpen = useSelector(store => store.ingr.isModalOpen);
 
   const openModal = () => {
-    setIsIngredientsDetailsOpened(true);
+    dispatch(openCurrentIngredient(props), [dispatch]);
   };
 
   const closeAllModals = () => {
-    setIsIngredientsDetailsOpened(false);
+    dispatch(closeCurrentIngredient(props), [dispatch]);
   };
 
   const handleEscKeydown = (event) => {
@@ -24,10 +27,10 @@ export default function BurgerIngredient(props) {
   return (
     <>
       <div className={styles.optioncard} onClick={openModal}>
-        <img src={props.image} />
+        <img src={props.image} /> 
         <p className={styles.optiontext}>{props.name}</p>
       </div>
-      {isIngredientsDetailsOpened && (
+      {modalOpen && (
         <Modal
           title="Детали ингридиента"
           onOverlayClick={closeAllModals}
