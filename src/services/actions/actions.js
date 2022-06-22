@@ -100,7 +100,13 @@ export const openIngredientReducer = (state = initialState, action) => {
     case CURRENT_INGREDIENT_CLOSED: {
       return {
         ...state,
-        isModalOpen: false
+        isModalOpen: false,
+        currentIngredientImage: null,
+        currentIngredientName: null,
+        currentIngredientCalories: null,
+        currentIngredientProteins: null,
+        currentIngredientFat: null,
+        currentIngredientCarbohydrates: null,
       }
     }
     default: {
