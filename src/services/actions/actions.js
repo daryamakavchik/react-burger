@@ -14,6 +14,7 @@ export const initialState = {
   hasError: false,
   isLoading: true,
   isModalOpen: false,
+  currentIngredientImage: null,
   currentIngredientName: null,
   currentIngredientCalories: null,
   currentIngredientProteins: null,
@@ -85,10 +86,10 @@ export const closeCurrentIngredient = () => {
 export const openIngredientReducer = (state = initialState, action) => {
   switch (action.type) {
     case CURRENT_INGREDIENT_OPENED: {
-      console.log(action.payload.name);
       return {
         ...state,
           isModalOpen: true,
+          currentIngredientImage: action.payload.image,
           currentIngredientName: action.payload.name,
           currentIngredientCalories: action.payload.calories,
           currentIngredientProteins: action.payload.proteins,

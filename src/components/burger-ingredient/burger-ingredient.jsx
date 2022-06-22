@@ -36,7 +36,7 @@ export default function BurgerIngredient(props) {
           onOverlayClick={closeAllModals}
           onEscKeyDown={handleEscKeydown}
         >
-          <IngredientsDetails {...props} />
+          <IngredientsDetails />
         </Modal>
       )}
     </>

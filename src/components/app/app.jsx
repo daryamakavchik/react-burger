@@ -6,6 +6,7 @@ import styles from "./app.module.css";
 import { rootReducer } from "../../services/actions/actions";
 import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import { useSelector } from "react-redux";
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -21,14 +22,10 @@ function App() {
       <section className={styles.App}>
         <AppHeader />
         <main className={styles.content}>
-          {/* {initialState.isLoading && "Загрузка..."}
-            {initialState.hasError && "Произошла ошибка"}
-            {!initialState.isLoading && !initialState.hasError && ( */}
           <>
             <BurgerIngredients />
             <BurgerConstructor />
           </>
-          {/* )} */}
         </main>
       </section>
     </div>
