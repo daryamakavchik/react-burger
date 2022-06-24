@@ -8,12 +8,15 @@ export const CURRENT_INGREDIENT_CLOSED = "CURRENT_INGREDIENT_CLOSED";
 export const ORDER_MODAL_CLOSED = "ORDER_MODAL_CLOSED";
 export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
 export const POST_ORDER_FAILED = "POST_ORDER_FAILED";
+export const UPDATE_TYPE = "UPDATE_TYPE";
 
 export const initialState = {
   data: [],
-  bun: {},
-  constructorcontent: [],
-  count: {},
+  burgerIngredients: {
+    bun: {},
+    otherIngredients: [],
+    counts: {},
+  },
   hasError: false,
   isLoading: true,
   isModalOpen: false,
@@ -34,7 +37,7 @@ export const setIngredientsData = () => {
           type: GET_DATA_SUCCESS,
           data: res.data,
           bun: res.data.filter((el) => el.type === "bun")[0],
-          constructorcontent: Array.from(
+          otherIngredients: Array.from(
             res.data.filter((el) => el.type !== "bun")
           ),
         });
@@ -53,8 +56,11 @@ export const setDataReducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.data,
-        bun: action.bun,
-        constructorcontent: action.constructorcontent,
+        burgerIngredients: {
+          ...state.burgerIngredients,
+          bun: action.bun,
+          otherIngredients: action.otherIngredients,
+        },
       };
     }
     case GET_DATA_FAILED: {
@@ -170,8 +176,27 @@ export const makeOrderReducer = (state = initialState, action) => {
   }
 };
 
+export const dropItemsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case UPDATE_TYPE: {
+      return {
+        ...state,
+        burgerIngredients: {
+          ...state.burgerIngredients,
+          otherIngredients: state.burgerIngredients.otherIngredients.forEach(
+            (ing) => ing._id === action.item._id ? state.burgerIngredients.otherIngredients.push(action.item) : null
+          ),
+        },
+      };
+    }
+    default:
+      return state;
+  }
+};
+
 export const rootReducer = combineReducers({
   data: setDataReducer,
   ingr: openIngredientReducer,
   ord: makeOrderReducer,
+  drop: dropItemsReducer,
 });

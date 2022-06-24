@@ -32,6 +32,7 @@
 .optioncard {
   display: flex;
   flex-direction: column;
+  position: relative;
   width: 272px;
   height: 208px;
   cursor: pointer;
@@ -48,6 +49,19 @@
   text-align: center;
 }
 
-.smallsection{
-  
+.count{
+  display: none;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #F2F2F3;
+  font-family: 'Iceland';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 24px;
+  background: #4C4CFF;
+  border-radius: 16px;
 }

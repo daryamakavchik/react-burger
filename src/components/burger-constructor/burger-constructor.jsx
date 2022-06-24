@@ -12,6 +12,8 @@ import {
   closeOrderModal,
   setIngredientsData,
 } from "../../services/actions/actions";
+import { useDrop } from "react-dnd";
+import { UPDATE_TYPE } from "../../services/actions/actions";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -19,11 +21,24 @@ export default function BurgerConstructor() {
     dispatch(setIngredientsData());
   }, [dispatch]);
 
-  const { data, bun, content, count } = useSelector((store) => ({
+  const { bun, content, count } = useSelector((store) => ({
     data: store.data.data,
-    bun: store.data.bun,
-    content: store.data.constructorcontent,
+    bun: store.data.burgerIngredients.bun,
+    content: store.data.burgerIngredients.otherIngredients,
   }));
+
+  const [{isHover}, dropTarget] = useDrop({
+    accept: "ingredient",
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+  }),
+    drop(item) {
+      dispatch({
+          type: UPDATE_TYPE,
+          item,
+      })
+    },
+  });
 
   const orderNum = useSelector((store) => store.ord.orderNum);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
@@ -56,7 +71,7 @@ export default function BurgerConstructor() {
 
   return (
     <>
-      <div className={styles.components}>
+      <div className={styles.components} >
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -66,7 +81,7 @@ export default function BurgerConstructor() {
         />
         <ul className={styles.componentlist}>
           {content.map((item, index) => (
-            <li key={index} className={styles.component}>
+            <li key={index} className={styles.component} ref={dropTarget}>
               <ConstructorElement
                 text={item.name}
                 price={item.price}

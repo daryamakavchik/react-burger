@@ -1,4 +1,3 @@
-// import { useModal } from "../modal/modal";
 import React from "react";
 import IngredientsDetails from "../ingredients-details/ingredients-details";
 import styles from "../burger-ingredients/burger-ingredients.module.css";
@@ -6,6 +5,7 @@ import { ingredientsPropTypes } from "../../utils/proptypes";
 import Modal from "../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
 import { openCurrentIngredient, closeCurrentIngredient } from "../../services/actions/actions";
+import { useDrag } from "react-dnd";
 
 export default function BurgerIngredient(props) {
   const dispatch = useDispatch();
@@ -23,10 +23,21 @@ export default function BurgerIngredient(props) {
     event.key === "Escape" && closeAllModals();
   };
 
+  const item = props;
+
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingredient",
+    item: item,
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
+
   return (
     <>
-      <div className={styles.optioncard} onClick={openModal}>
+      <div className={styles.optioncard} onClick={openModal} ref={dragRef}>
         <img src={props.image} /> 
+        <div className={styles.count}><p className="text text_type_digits-medium">{props.count}</p></div>
         <p className={styles.optiontext}>{props.name}</p>
       </div>
       {modalOpen && (
