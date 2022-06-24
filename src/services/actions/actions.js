@@ -8,14 +8,14 @@ export const CURRENT_INGREDIENT_CLOSED = "CURRENT_INGREDIENT_CLOSED";
 export const ORDER_MODAL_CLOSED = "ORDER_MODAL_CLOSED";
 export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
 export const POST_ORDER_FAILED = "POST_ORDER_FAILED";
-export const UPDATE_TYPE = "UPDATE_TYPE";
+export const ADD_ITEM = "ADD_ITEM";
 
 export const initialState = {
   data: [],
   burgerIngredients: {
     bun: {},
     otherIngredients: [],
-    counts: {},
+    count: 0,
   },
   hasError: false,
   isLoading: true,
@@ -117,6 +117,15 @@ export const closeOrderModal = () => {
   };
 };
 
+export const onDropHandler = (item) => {
+  return function(dispatch) {
+    dispatch({
+      type: ADD_ITEM,
+      item: item,
+    });
+  };
+};
+
 export const openIngredientReducer = (state = initialState, action) => {
   switch (action.type) {
     case CURRENT_INGREDIENT_OPENED: {
@@ -178,19 +187,18 @@ export const makeOrderReducer = (state = initialState, action) => {
 
 export const dropItemsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_TYPE: {
+    case ADD_ITEM: {
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          otherIngredients: state.burgerIngredients.otherIngredients.forEach(
-            (ing) => ing._id === action.item._id ? state.burgerIngredients.otherIngredients.push(action.item) : null
-          ),
+          count: 1,
         },
       };
     }
-    default:
+    default: {
       return state;
+    }
   }
 };
 

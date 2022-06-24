@@ -6,7 +6,6 @@ import styles from "./app.module.css";
 import { rootReducer } from "../../services/actions/actions";
 import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { useSelector } from "react-redux";
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__

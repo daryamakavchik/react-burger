@@ -10,6 +10,7 @@ import { useDrag } from "react-dnd";
 export default function BurgerIngredient(props) {
   const dispatch = useDispatch();
   const modalOpen = useSelector(store => store.ingr.isModalOpen);
+  const count = useSelector(store => store.drop.burgerIngredients.count);
 
   const openModal = () => {
     dispatch(openCurrentIngredient(props), [dispatch]);
@@ -23,21 +24,21 @@ export default function BurgerIngredient(props) {
     event.key === "Escape" && closeAllModals();
   };
 
-  const item = props;
-
-  const [{ isDrag }, dragRef] = useDrag({
+  const [{ isDragging }, dragRef] = useDrag(() => ({
     type: "ingredient",
-    item: item,
+    item: props,
     collect: (monitor) => ({
-      isDrag: monitor.isDragging(),
+      isDragging: !!monitor.isDragging(),
     }),
-  });
+  }),
+  [props]
+  );
 
   return (
     <>
       <div className={styles.optioncard} onClick={openModal} ref={dragRef}>
         <img src={props.image} /> 
-        <div className={styles.count}><p className="text text_type_digits-medium">{props.count}</p></div>
+        <div className={styles.count}><p className="text text_type_digits-default">{count}</p></div>
         <p className={styles.optiontext}>{props.name}</p>
       </div>
       {modalOpen && (

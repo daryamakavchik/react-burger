@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from "prop-types";
 import { ingredientsPropTypes } from "../../utils/proptypes";
 import styles from "./ingredients-details.module.css";
 import { useSelector } from 'react-redux';
@@ -16,7 +15,7 @@ export default function IngredientsDetails() {
 
   return (
     <>
-      <img className={styles.image} src={image} />
+      <img className={styles.image} src={image} alt='' />
       <h3 className={styles.name}>{name}</h3>
       <ul className={styles.values}>
         <li className={styles.value}>

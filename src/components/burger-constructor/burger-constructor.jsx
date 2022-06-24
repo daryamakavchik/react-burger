@@ -11,9 +11,10 @@ import {
   openOrderModal,
   closeOrderModal,
   setIngredientsData,
+  setDraggedIngredientsData
 } from "../../services/actions/actions";
 import { useDrop } from "react-dnd";
-import { UPDATE_TYPE } from "../../services/actions/actions";
+import { onDropHandler } from "../../services/actions/actions";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -21,24 +22,26 @@ export default function BurgerConstructor() {
     dispatch(setIngredientsData());
   }, [dispatch]);
 
-  const { bun, content, count } = useSelector((store) => ({
-    data: store.data.data,
+  const { bun, content, drcontent } = useSelector((store) => ({
     bun: store.data.burgerIngredients.bun,
     content: store.data.burgerIngredients.otherIngredients,
+    // drcontent: store.drop.burgerIngredients.otherIngredients
   }));
 
-  const [{isHover}, dropTarget] = useDrop({
+  console.log(drcontent);
+
+  const dropHandler = (item) => { dispatch(onDropHandler(item)) };
+
+  const [{ isHover }, dropTarget] = useDrop(()=> ({
     accept: "ingredient",
-    collect: monitor => ({
-      isHover: monitor.isOver(),
-  }),
-    drop(item) {
-      dispatch({
-          type: UPDATE_TYPE,
-          item,
-      })
+    drop: (item) => { 
+      dropHandler(item)
     },
-  });
+    collect: (monitor) => ({
+      isHover: !!monitor.isOver(),
+    })
+  })
+  );
 
   const orderNum = useSelector((store) => store.ord.orderNum);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
@@ -71,7 +74,7 @@ export default function BurgerConstructor() {
 
   return (
     <>
-      <div className={styles.components} >
+      <div className={styles.components} ref={dropTarget}>
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -81,7 +84,7 @@ export default function BurgerConstructor() {
         />
         <ul className={styles.componentlist}>
           {content.map((item, index) => (
-            <li key={index} className={styles.component} ref={dropTarget}>
+            <li key={index} className={styles.component}>
               <ConstructorElement
                 text={item.name}
                 price={item.price}
@@ -89,7 +92,17 @@ export default function BurgerConstructor() {
                 isLocked={false}
               />
             </li>
-          ))}
+          ))} 
+          {/* {drcontent.map((item, index) => (
+            <li key={index} className={styles.component}>
+              <ConstructorElement
+                text={item.name}
+                price={item.price}
+                thumbnail={item.image}
+                isLocked={false}
+              />
+            </li>
+          ))} */}
         </ul>
         <ConstructorElement
           type="bottom"

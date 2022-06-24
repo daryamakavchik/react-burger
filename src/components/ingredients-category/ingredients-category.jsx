@@ -1,5 +1,5 @@
 import React from 'react';
-import { forwardRef, useRef } from "react";
+import { forwardRef } from "react";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./ingridients-category.module.css";
