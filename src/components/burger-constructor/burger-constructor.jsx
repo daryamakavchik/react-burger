@@ -11,7 +11,6 @@ import {
   openOrderModal,
   closeOrderModal,
   setIngredientsData,
-  setDraggedIngredientsData
 } from "../../services/actions/actions";
 import { useDrop } from "react-dnd";
 import { onDropHandler } from "../../services/actions/actions";
@@ -22,13 +21,10 @@ export default function BurgerConstructor() {
     dispatch(setIngredientsData());
   }, [dispatch]);
 
-  const { bun, content, drcontent } = useSelector((store) => ({
+  const { bun, content } = useSelector((store) => ({
     bun: store.data.burgerIngredients.bun,
     content: store.data.burgerIngredients.otherIngredients,
-    // drcontent: store.drop.burgerIngredients.otherIngredients
   }));
-
-  console.log(drcontent);
 
   const dropHandler = (item) => { dispatch(onDropHandler(item)) };
 
@@ -49,6 +45,7 @@ export default function BurgerConstructor() {
   const bunIdArr = [`${bun._id}`];
   bunIdArr.push(`${bun._id}`);
   const orderData = Array.from(content.map((el) => el._id)).concat(bunIdArr);
+
 
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -93,16 +90,6 @@ export default function BurgerConstructor() {
               />
             </li>
           ))} 
-          {/* {drcontent.map((item, index) => (
-            <li key={index} className={styles.component}>
-              <ConstructorElement
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image}
-                isLocked={false}
-              />
-            </li>
-          ))} */}
         </ul>
         <ConstructorElement
           type="bottom"

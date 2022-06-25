@@ -69,6 +69,16 @@ export const setDataReducer = (state = initialState, action) => {
         hasError: true,
       };
     }
+    case ADD_ITEM: {
+      return {
+        ...state,
+        burgerIngredients: {
+          ...state.burgerIngredients,
+          otherIngredients: [...state.burgerIngredients.otherIngredients, action.item],
+          count: 1
+        },
+      };
+    }
     default: {
       return state;
     }
@@ -185,26 +195,9 @@ export const makeOrderReducer = (state = initialState, action) => {
   }
 };
 
-export const dropItemsReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_ITEM: {
-      return {
-        ...state,
-        burgerIngredients: {
-          ...state.burgerIngredients,
-          count: 1,
-        },
-      };
-    }
-    default: {
-      return state;
-    }
-  }
-};
 
 export const rootReducer = combineReducers({
   data: setDataReducer,
   ingr: openIngredientReducer,
   ord: makeOrderReducer,
-  drop: dropItemsReducer,
 });

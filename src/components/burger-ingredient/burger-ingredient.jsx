@@ -10,7 +10,7 @@ import { useDrag } from "react-dnd";
 export default function BurgerIngredient(props) {
   const dispatch = useDispatch();
   const modalOpen = useSelector(store => store.ingr.isModalOpen);
-  const count = useSelector(store => store.drop.burgerIngredients.count);
+  const count = useSelector(store => store.data.burgerIngredients.count);
 
   const openModal = () => {
     dispatch(openCurrentIngredient(props), [dispatch]);
