@@ -11,6 +11,8 @@ import {
   openOrderModal,
   closeOrderModal,
   setIngredientsData,
+  DECREASE_INGREDIENT,
+  DELETE_ITEM
 } from "../../services/actions/actions";
 import { useDrop } from "react-dnd";
 import { onDropHandler } from "../../services/actions/actions";
@@ -46,7 +48,6 @@ export default function BurgerConstructor() {
   bunIdArr.push(`${bun._id}`);
   const orderData = Array.from(content.map((el) => el._id)).concat(bunIdArr);
 
-
   const [totalPrice, setTotalPrice] = useState(0);
 
   const openModal = () => {
@@ -81,7 +82,7 @@ export default function BurgerConstructor() {
         />
         <ul className={styles.componentlist}>
           {content.map((item, index) => (
-            <li key={index} className={styles.component}>
+              <li key={index} className={styles.component}>
               <ConstructorElement
                 text={item.name}
                 price={item.price}

@@ -10,7 +10,7 @@ export default function BurgerIngredients() {
   const dispatch = useDispatch();
   useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);   
 
-  const data = useSelector(store => store.data.data);
+  const { data } = useSelector(store => store.data);
 
   const [current, setCurrent] = useState("bun");
 
