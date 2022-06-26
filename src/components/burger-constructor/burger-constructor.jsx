@@ -11,11 +11,10 @@ import {
   openOrderModal,
   closeOrderModal,
   setIngredientsData,
-  DECREASE_INGREDIENT,
-  DELETE_ITEM
+  onDropHandler, 
+  deleteItem
 } from "../../services/actions/actions";
 import { useDrop } from "react-dnd";
-import { onDropHandler } from "../../services/actions/actions";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -29,6 +28,7 @@ export default function BurgerConstructor() {
   }));
 
   const dropHandler = (item) => { dispatch(onDropHandler(item)) };
+  const deleteThis = (item) => { dispatch(deleteItem(item)) };
 
   const [{ isHover }, dropTarget] = useDrop(()=> ({
     accept: "ingredient",
@@ -88,6 +88,7 @@ export default function BurgerConstructor() {
                 price={item.price}
                 thumbnail={item.image}
                 isLocked={false}
+                handleClose={() => deleteThis(item)}
               />
             </li>
           ))} 

@@ -9,9 +9,7 @@ export const ORDER_MODAL_CLOSED = "ORDER_MODAL_CLOSED";
 export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
 export const POST_ORDER_FAILED = "POST_ORDER_FAILED";
 export const ADD_ITEM = "ADD_ITEM";
-export const INCREASE_INGREDIENT = "INCREASE_INGREDIENT";
-export const DELETE_ITEM = "ADD_ITEM";
-export const DECREASE_INGREDIENT = "DECREASE_INGREDIENT";
+export const DELETE_ITEM = "DELETE_ITEM";
 
 export const initialState = {
   data: [],
@@ -76,34 +74,23 @@ export const setDataReducer = (state = initialState, action) => {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          otherIngredients: state.burgerIngredients.otherIngredients.some(
-            (el) => el._id === action.item._id
-          )
-            ? state.burgerIngredients.otherIngredients
-            : [...state.burgerIngredients.otherIngredients, action.item],
+          otherIngredients: [
+            ...state.burgerIngredients.otherIngredients.map(item => ({...item, count: (item.count || 1) + (item._id === action.item._id)})),
+            ...(state.burgerIngredients.otherIngredients.some(item => item._id === action.item._id) ? [] : [{...action.item, count: 1}])
+          ],
         },
       };
     }
-    case INCREASE_INGREDIENT: {
+    case DELETE_ITEM: {
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          otherIngredients: [...state.burgerIngredients.otherIngredients].map(
-            function(item) {
-              if (item._id === action.item._id && !item.count) {     // if item with same id is dropped and there is no count property yet
-                return ({ ...item, count: 0 });                      // return this item with new property 'count' set to 0
-              } else if (item._id === action.item._id && item.count) { // if item with same id is dropped and there is count property already
-                return ({ ...item, count: 1 })                         // return this item with its count property set to 1
-              }
-              else if (item._id !== action.item._id) {
-                return item
-              }
-            }
-          ),
+           otherIngredients: 
+             state.burgerIngredients.otherIngredients.map(item => item._id === action.item._id && item.count >= 1 ? ({...item, count: item.count - 1}) : item),
         },
-      };
     }
+  }
     default: {
       return state;
     }
@@ -158,21 +145,17 @@ export const onDropHandler = (item) => {
       type: ADD_ITEM,
       item: item,
     });
-    dispatch({
-      type: INCREASE_INGREDIENT,
-      item: item,
-    });
   };
 };
 
-export const decreaseItem = (item) => {
-  return function(dispatch) {
+export const deleteItem = (item) => {
+  return function(dispatch){
     dispatch({
-      type: DECREASE_INGREDIENT,
+      type: DELETE_ITEM,
       item: item,
     });
-  };
-};
+  }
+}
 
 export const openIngredientReducer = (state = initialState, action) => {
   switch (action.type) {

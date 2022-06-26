@@ -11,9 +11,6 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 export default function BurgerIngredient(props) {
   const dispatch = useDispatch();
   const modalOpen = useSelector(store => store.ingr.isModalOpen);
-  // const { count } = useSelector(store => store.data);
-  // const isBun = props.type === 'bun';
-  // const isIncreased = !isBun && count !== null;
 
   const openModal = () => {
     dispatch(openCurrentIngredient(props), [dispatch]);
@@ -41,7 +38,6 @@ export default function BurgerIngredient(props) {
     <>
       <div className={styles.optioncard} onClick={openModal} ref={dragRef}>
         <img src={props.image} /> 
-        {/* {isIncreased ? <Counter count={counts} /> : null } */}
         <p className={styles.optiontext}>{props.name}</p>
       </div>
       {modalOpen && (
