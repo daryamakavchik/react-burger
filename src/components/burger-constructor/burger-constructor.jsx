@@ -28,7 +28,9 @@ export default function BurgerConstructor() {
   }));
 
   const dropHandler = (item) => { dispatch(onDropHandler(item)) };
-  const deleteThis = (item) => { dispatch(deleteItem(item)) };
+  const deleteThis = (item) => { 
+    dispatch(deleteItem(item));
+  };
 
   const [{ isHover }, dropTarget] = useDrop(()=> ({
     accept: "ingredient",
@@ -82,6 +84,7 @@ export default function BurgerConstructor() {
         />
         <ul className={styles.componentlist}>
           {content.map((item, index) => (
+            item.count > 0 &&
               <li key={index} className={styles.component}>
               <ConstructorElement
                 text={item.name}

@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { isTemplateMiddle } from "typescript";
 import { apiPostOrder, fetchData } from "../../utils/api";
 
 export const GET_DATA_SUCCESS = "GET_DATA_SUCCESS";
@@ -75,8 +76,8 @@ export const setDataReducer = (state = initialState, action) => {
         burgerIngredients: {
           ...state.burgerIngredients,
           otherIngredients: [
-            ...state.burgerIngredients.otherIngredients.map(item => ({...item, count: (item.count || 1) + (item._id === action.item._id)})),
-            ...(state.burgerIngredients.otherIngredients.some(item => item._id === action.item._id) ? [] : [{...action.item, count: 1}])
+            ...state.burgerIngredients.otherIngredients.map((item) => ({ ...item, count: (item.count || 0) + (item._id === action.item._id) })),
+            ...(state.burgerIngredients.otherIngredients.some((item) => item._id === action.item._id) ? [] : [{ ...action.item, count: 1 }])
           ],
         },
       };
@@ -86,11 +87,12 @@ export const setDataReducer = (state = initialState, action) => {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-           otherIngredients: 
-             state.burgerIngredients.otherIngredients.map(item => item._id === action.item._id && item.count >= 1 ? ({...item, count: item.count - 1}) : item),
+          otherIngredients: state.burgerIngredients.otherIngredients.map(
+            (item) => item._id === action.item._id && item.count > 1 ? { ...item, count: item.count - 1 } : item
+          ),
         },
+      };
     }
-  }
     default: {
       return state;
     }
@@ -149,13 +151,13 @@ export const onDropHandler = (item) => {
 };
 
 export const deleteItem = (item) => {
-  return function(dispatch){
+  return function(dispatch) {
     dispatch({
       type: DELETE_ITEM,
       item: item,
     });
-  }
-}
+  };
+};
 
 export const openIngredientReducer = (state = initialState, action) => {
   switch (action.type) {
