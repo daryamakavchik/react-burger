@@ -6,7 +6,6 @@ import Modal from "../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
 import { openCurrentIngredient, closeCurrentIngredient } from "../../services/actions/actions";
 import { useDrag } from "react-dnd";
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export default function BurgerIngredient(props) {
   const dispatch = useDispatch();

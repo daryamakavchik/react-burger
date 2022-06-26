@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
-import { isTemplateMiddle } from "typescript";
 import { apiPostOrder, fetchData } from "../../utils/api";
 
+export const GET_DATA_REQUEST = "GET_DATA_REQUEST";
 export const GET_DATA_SUCCESS = "GET_DATA_SUCCESS";
 export const GET_DATA_FAILED = "GET_DATA_FAILED";
 export const CURRENT_INGREDIENT_OPENED = "CURRENT_INGREDIENT_OPENED";
@@ -10,16 +10,17 @@ export const ORDER_MODAL_CLOSED = "ORDER_MODAL_CLOSED";
 export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
 export const POST_ORDER_FAILED = "POST_ORDER_FAILED";
 export const ADD_ITEM = "ADD_ITEM";
+export const ADD_BUN = "ADD_BUN";
 export const DELETE_ITEM = "DELETE_ITEM";
 
 export const initialState = {
+  isLoading: true,
   data: [],
   burgerIngredients: {
-    bun: {},
+    buns: [],
     otherIngredients: [],
   },
   hasError: false,
-  isLoading: true,
   isModalOpen: false,
   currentIngredientImage: null,
   currentIngredientName: null,
@@ -32,13 +33,17 @@ export const initialState = {
 
 export const setIngredientsData = () => {
   return function(dispatch) {
-    fetchData().then((res) => {
-      if (res && res.success) {
+    dispatch({
+      type: GET_DATA_REQUEST
+    })
+    fetchData().then(
+      (res) => { 
+        if (res && res.success) {
         dispatch({
           type: GET_DATA_SUCCESS,
           data: res.data,
-          bun: res.data.filter((el) => el.type === "bun")[0],
-          otherIngredients: []
+          buns: res.data.filter((el) => el.type === "bun"),
+          otherIngredients: [],
         });
       } else {
         dispatch({
@@ -51,13 +56,20 @@ export const setIngredientsData = () => {
 
 export const setDataReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_DATA_REQUEST: {
+      return {
+        ...state,
+        isLoading: true,
+    }
+  }
     case GET_DATA_SUCCESS: {
       return {
         ...state,
+        isLoading: false,
         data: action.data,
         burgerIngredients: {
           ...state.burgerIngredients,
-          bun: action.bun,
+          buns: action.buns,
           otherIngredients: action.otherIngredients,
         },
       };
@@ -73,10 +85,21 @@ export const setDataReducer = (state = initialState, action) => {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          otherIngredients: [
-            ...state.burgerIngredients.otherIngredients.map((item) => ({ ...item, count: (item.count || 1) + (item._id === action.item._id) })),
-            ...(state.burgerIngredients.otherIngredients.some((item) => item._id === action.item._id) ? [] : [{ ...action.item, count: 1 }])
-          ],
+          otherIngredients: [ ...state.burgerIngredients.otherIngredients.map((item) => ({ ...item, count: (item.count || 1) + (item._id === action.item._id)})),
+          ...(state.burgerIngredients.otherIngredients.some((item) => item._id === action.item._id) ? [] : [{ ...action.item, count: 1 }])],
+        },
+      };
+    }
+    case ADD_BUN: {
+      return {
+        ...state,
+        burgerIngredients: {
+          ...state.burgerIngredients,
+          buns: state.burgerIngredients.buns
+          .map((bun) => bun._id !== action.bun._id ? action.bun : bun)
+          
+          // [ ...state.burgerIngredients.bun.map((bun) => ({ ...bun, count: (bun.count || 1) + (bun._id === action.bun._id)})),
+          // ...(state.burgerIngredients.bun.some((bun) => bun._id === action.bun._id) ? [] : [{ ...action.bun, count: 1 }])],
         },
       };
     }
@@ -86,8 +109,8 @@ export const setDataReducer = (state = initialState, action) => {
         burgerIngredients: {
           ...state.burgerIngredients,
           otherIngredients: state.burgerIngredients.otherIngredients
-          .map((item) => item._id === action.item._id ? { ...item, count: item.count - 1 } : item)
-          .filter((item) => item.count > 0)
+            .map((item) => item._id === action.item._id ? { ...item, count: item.count - 1 } : item)
+            .filter((item) => item.count > 0),
         },
       };
     }
@@ -141,10 +164,15 @@ export const closeOrderModal = () => {
 
 export const onDropHandler = (item) => {
   return function(dispatch) {
-    dispatch({
-      type: ADD_ITEM,
-      item: item,
-    });
+    item.type !== "bun" ? 
+      dispatch({
+        type: ADD_ITEM,
+        item: item,
+      }) : 
+      dispatch({
+        type: ADD_BUN,
+        bun: item,
+      });
   };
 };
 
