@@ -97,9 +97,6 @@ export const setDataReducer = (state = initialState, action) => {
           ...state.burgerIngredients,
           buns: state.burgerIngredients.buns
           .map((bun) => bun._id !== action.bun._id ? action.bun : bun)
-          
-          // [ ...state.burgerIngredients.bun.map((bun) => ({ ...bun, count: (bun.count || 1) + (bun._id === action.bun._id)})),
-          // ...(state.burgerIngredients.bun.some((bun) => bun._id === action.bun._id) ? [] : [{ ...action.bun, count: 1 }])],
         },
       };
     }

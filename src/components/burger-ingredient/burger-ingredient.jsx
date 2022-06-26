@@ -4,12 +4,22 @@ import styles from "../burger-ingredients/burger-ingredients.module.css";
 import { ingredientsPropTypes } from "../../utils/proptypes";
 import Modal from "../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
-import { openCurrentIngredient, closeCurrentIngredient } from "../../services/actions/actions";
+import {
+  openCurrentIngredient,
+  closeCurrentIngredient,
+} from "../../services/actions/actions";
 import { useDrag } from "react-dnd";
+import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export default function BurgerIngredient(props) {
   const dispatch = useDispatch();
-  const modalOpen = useSelector(store => store.ingr.isModalOpen);
+  const modalOpen = useSelector((store) => store.ingr.isModalOpen);
+
+  let count;
+  const ingredients = useSelector(
+    (store) => store.data.burgerIngredients.otherIngredients
+  );
+  ingredients.map((el) => (el._id === props._id ? (count = el.count) : null));
 
   const openModal = () => {
     dispatch(openCurrentIngredient(props), [dispatch]);
@@ -23,20 +33,22 @@ export default function BurgerIngredient(props) {
     event.key === "Escape" && closeAllModals();
   };
 
-  const [{ isDragging }, dragRef] = useDrag(() => ({
-    type: "ingredient",
-    item: props,
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
+  const [{ isDragging }, dragRef] = useDrag(
+    () => ({
+      type: "ingredient",
+      item: props,
+      collect: (monitor) => ({
+        isDragging: !!monitor.isDragging(),
+      }),
     }),
-  }),
-  [props]
+    [props]
   );
 
   return (
     <>
       <div className={styles.optioncard} onClick={openModal} ref={dragRef}>
-        <img src={props.image} /> 
+        {count && <Counter count={count} />}
+        <img src={props.image} />
         <p className={styles.optiontext}>{props.name}</p>
       </div>
       {modalOpen && (
