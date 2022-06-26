@@ -75,6 +75,7 @@ export default function BurgerConstructor() {
   return (
     <>
       <div className={styles.components} ref={dropTarget}>
+        <div className={styles.component}>
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -82,6 +83,7 @@ export default function BurgerConstructor() {
           price={bun.price}
           thumbnail={bunimg}
         />
+        </div>
         <ul className={styles.componentlist}>
           {content.map((item, index) => (
             item.count > 0 &&
@@ -96,6 +98,7 @@ export default function BurgerConstructor() {
             </li>
           ))} 
         </ul>
+        <div className={styles.component}>
         <ConstructorElement
           type="bottom"
           isLocked={true}
@@ -103,6 +106,7 @@ export default function BurgerConstructor() {
           price={bun.price}
           thumbnail={bunimg}
         />
+        </div>
         <div className={styles.total}>
           <div className={styles.text}>
             <p className="text text_type_digits-medium">{totalPrice}</p>

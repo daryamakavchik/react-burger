@@ -12,13 +12,15 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-  height: 464px;
+  height: fit-content;
+  max-height: 464px;
   overflow-y: scroll;
 }
 
 .component {
   display: flex;
   min-width: 488px;
+  height: 80px;
 }
 
 .total {

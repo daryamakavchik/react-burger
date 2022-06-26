@@ -38,9 +38,7 @@ export const setIngredientsData = () => {
           type: GET_DATA_SUCCESS,
           data: res.data,
           bun: res.data.filter((el) => el.type === "bun")[0],
-          otherIngredients: Array.from(
-            res.data.filter((el) => el.type !== "bun")
-          ),
+          otherIngredients: []
         });
       } else {
         dispatch({
@@ -76,7 +74,7 @@ export const setDataReducer = (state = initialState, action) => {
         burgerIngredients: {
           ...state.burgerIngredients,
           otherIngredients: [
-            ...state.burgerIngredients.otherIngredients.map((item) => ({ ...item, count: (item.count || 0) + (item._id === action.item._id) })),
+            ...state.burgerIngredients.otherIngredients.map((item) => ({ ...item, count: (item.count || 1) + (item._id === action.item._id) })),
             ...(state.burgerIngredients.otherIngredients.some((item) => item._id === action.item._id) ? [] : [{ ...action.item, count: 1 }])
           ],
         },
@@ -87,9 +85,9 @@ export const setDataReducer = (state = initialState, action) => {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          otherIngredients: state.burgerIngredients.otherIngredients.map(
-            (item) => item._id === action.item._id && item.count > 1 ? { ...item, count: item.count - 1 } : item
-          ),
+          otherIngredients: state.burgerIngredients.otherIngredients
+          .map((item) => item._id === action.item._id ? { ...item, count: item.count - 1 } : item)
+          .filter((item) => item.count > 0)
         },
       };
     }
