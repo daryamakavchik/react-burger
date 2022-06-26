@@ -16,7 +16,7 @@ import { useDrop } from "react-dnd";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
-
+  const [totalPrice, setTotalPrice] = useState(0);
   const { buns, content } = useSelector((store) => ({
     buns: store.data.burgerIngredients.buns,
     content: store.data.burgerIngredients.otherIngredients,
@@ -29,9 +29,10 @@ export default function BurgerConstructor() {
     dispatch(deleteItem(item));
   };
 
-  const bun = buns.length && buns[0] || undefined; 
+  const bun = (buns.length && buns[0]) || undefined;
   const bunIdArr = buns.length && [`${bun._id}, ${bun._id}`];
   const orderData = buns.length && Array.from(content.map((el) => el._id)).concat(bunIdArr);
+  const bunsPrice = buns.length && bun && bun.price * 2;
 
   const [{ isHover }, dropTarget] = useDrop(() => ({
     accept: "ingredient",
@@ -46,8 +47,6 @@ export default function BurgerConstructor() {
   const orderNum = useSelector((store) => store.ord.orderNum);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
 
-  const [totalPrice, setTotalPrice] = useState(0);
-
   const openModal = () => {
     dispatch(openOrderModal(orderData), [dispatch]);
   };
@@ -60,71 +59,68 @@ export default function BurgerConstructor() {
     event.key === "Escape" && closeAllModals();
   };
 
-  //  useEffect(() => {
-  //    let total = 0 + bun.price * 2;
-  //    total = content.reduce(function(acc, obj) {
-  //      return acc + obj.price;
-  //    }, total);
-  //    setTotalPrice(total);
-  //  }, [totalPrice, setTotalPrice]);
+  let total = buns.length && bun && bunsPrice && content.reduce(function(acc, obj) { return acc + (obj.price * obj.count) }, bunsPrice);
+  useEffect(() => { setTotalPrice(total) }, [totalPrice, setTotalPrice]);
 
-  return ( buns.length &&
-    <>
-      <div className={styles.components} ref={dropTarget}>
-        <div className={styles.component}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={bun.name + " (верх)"}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </div>
-        <ul className={styles.componentlist}>
-          {content.map(
-            (item, index) =>
-              item.count > 0 && (
-                <li key={index} className={styles.component}>
-                  <ConstructorElement
-                    text={item.name}
-                    price={item.price}
-                    thumbnail={item.image}
-                    isLocked={false}
-                    handleClose={() => deleteThis(item)}
-                  />
-                </li>
-              )
+  return (
+    buns.length && (
+      <>
+        <div className={styles.components} ref={dropTarget}>
+          <div className={styles.component}>
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={bun.name + " (верх)"}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>
+          <ul className={styles.componentlist}>
+            {content.map(
+              (item, index) =>
+                item.count > 0 && (
+                  <li key={index} className={styles.component}>
+                    <ConstructorElement
+                      text={item.name}
+                      price={item.price}
+                      thumbnail={item.image}
+                      isLocked={false}
+                      handleClose={() => deleteThis(item)}
+                    />
+                  </li>
+                )
+            )}
+          </ul>
+          <div className={styles.component}>
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={bun.name + " (низ)"}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>
+          <div className={styles.total}>
+            <div className={styles.text}>
+              <p className="text text_type_digits-medium">{total}</p>
+            </div>
+            <CurrencyIcon type="primary" />
+            <div className={styles.button}>
+              <Button type="primary" size="medium" onClick={openModal}>
+                Оформить заказ
+              </Button>
+            </div>
+          </div>
+          {modalOpen && (
+            <Modal
+              onOverlayClick={closeAllModals}
+              onEscKeyDown={handleEscKeydown}
+            >
+              <OrderDetails />
+            </Modal>
           )}
-        </ul>
-        <div className={styles.component}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={bun.name + " (низ)"}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
         </div>
-        <div className={styles.total}>
-          <div className={styles.text}>
-            <p className="text text_type_digits-medium">{totalPrice}</p>
-          </div>
-          <CurrencyIcon type="primary" />
-          <div className={styles.button}>
-            <Button type="primary" size="medium" onClick={openModal}>
-              Оформить заказ
-            </Button>
-          </div>
-        </div>
-        {modalOpen && (
-          <Modal
-            onOverlayClick={closeAllModals}
-            onEscKeyDown={handleEscKeydown}
-          >
-            <OrderDetails />
-          </Modal>
-        )}
-      </div>
-    </>
+      </>
+    )
   );
 }
