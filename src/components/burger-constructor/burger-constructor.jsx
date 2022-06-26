@@ -6,7 +6,6 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
-import bunimg from "../../images/bun-02.svg";
 import {
   openOrderModal,
   closeOrderModal,
@@ -61,13 +60,13 @@ export default function BurgerConstructor() {
     event.key === "Escape" && closeAllModals();
   };
 
-   useEffect(() => {
-     let total = buns.length && 0 + bun.price * 2;
-     total = content.reduce(function(acc, obj) {
-       return acc + obj.price;
-     }, total);
-     setTotalPrice(total);
-   }, [totalPrice, setTotalPrice]);
+  //  useEffect(() => {
+  //    let total = 0 + bun.price * 2;
+  //    total = content.reduce(function(acc, obj) {
+  //      return acc + obj.price;
+  //    }, total);
+  //    setTotalPrice(total);
+  //  }, [totalPrice, setTotalPrice]);
 
   return ( buns.length &&
     <>
@@ -78,7 +77,7 @@ export default function BurgerConstructor() {
             isLocked={true}
             text={bun.name + " (верх)"}
             price={bun.price}
-            thumbnail={bunimg}
+            thumbnail={bun.image}
           />
         </div>
         <ul className={styles.componentlist}>
@@ -103,7 +102,7 @@ export default function BurgerConstructor() {
             isLocked={true}
             text={bun.name + " (низ)"}
             price={bun.price}
-            thumbnail={bunimg}
+            thumbnail={bun.image}
           />
         </div>
         <div className={styles.total}>
