@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -11,8 +11,7 @@ import {
   closeOrderModal,
   onDropHandler,
   deleteItem,
-  setDragItem,
-  moveItem
+  UPDATE_ITEMS
 } from "../../services/actions/actions";
 import { useDrop } from "react-dnd";
 import BurgerElement from "../burger-element/burger-element";
@@ -23,13 +22,11 @@ export default function BurgerConstructor() {
 
   const { buns, content } = useSelector((store) => ({
     buns: store.data.burgerIngredients.buns,
-    content: store.data.burgerIngredients.otherIngredients,
+    content: store.constr.burgerIngredients.otherIngredients,
   }));
 
   const dropHandler = (item) => {dispatch(onDropHandler(item))};
   const deleteThis = (item) => {dispatch(deleteItem(item))};
-  const setDragProperty = (item) => {dispatch(setDragItem(item))};
-  const moveThis = (item) => {dispatch(moveItem(item))};
 
   const bun = (buns.length && buns[0]) || undefined;
   const bunIdArr = buns.length && [`${bun._id}, ${bun._id}`];
@@ -38,14 +35,21 @@ export default function BurgerConstructor() {
 
   const [{ isHover }, dropTarget] = useDrop(() => ({
     accept: "ingredient",
-    drop: (item, monitor) => {
+    drop: (item, monitor) => { 
       dropHandler(item);
-      console.log(monitor.getItem());
     },
     collect: (monitor) => ({
-      isHover: !!monitor.isOver(),
+      isHover: monitor.isOver()
     }),
   }));
+
+  const moveItem = useCallback((dragIndex, hoverIndex) => {
+      dispatch({
+        type: UPDATE_ITEMS,
+        fromIndex: dragIndex,
+        toIndex: hoverIndex,
+      });
+    }, [dispatch] );
 
   const orderNum = useSelector((store) => store.ord.orderNum);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
@@ -65,24 +69,6 @@ export default function BurgerConstructor() {
   let total = buns.length && bun && bunsPrice && content.reduce(function(acc, obj) { return acc + (obj.price * obj.count) }, bunsPrice);
   useEffect(() => { setTotalPrice(total) }, [totalPrice, setTotalPrice]);
 
-  const onDragStartHandler = (e, item) => {
-    e.stopPropagation();
-    setDragProperty(item);
-  }
-
-  const onDragEndHandler = (e, item) => {
-    e.stopPropagation();
-    moveThis(item);
-  }
-
-  const sortCards = (a, b) => {
-    if (a.order > b.order) {
-      return 1
-    } else {
-      return -1
-    }
-  }
-
   return (
     buns.length && (
       <>
@@ -97,16 +83,15 @@ export default function BurgerConstructor() {
             />
           </div>
           <ul className={styles.componentlist}>
-            {content.sort(sortCards).map(
+            {content.map(
               (item, index) =>
                 item.count > 0 && (
                   <BurgerElement 			        
                   key={item._id}
                   item={item}
                   handleClose={() => deleteThis(item)}
-                  index={index} 
-                  onDragStartHandler={onDragStartHandler}
-                  onDragEndHandler={onDragEndHandler}
+                  moveItem={moveItem}
+                  index={index}
                   />
                 )
             )}
@@ -143,4 +128,7 @@ export default function BurgerConstructor() {
       </>
     )
   );
-}
+      
+}   
+
+ 

@@ -12,9 +12,7 @@ export const POST_ORDER_FAILED = "POST_ORDER_FAILED";
 export const ADD_ITEM = "ADD_ITEM";
 export const ADD_BUN = "ADD_BUN";
 export const DELETE_ITEM = "DELETE_ITEM";
-export const MOVE_ITEM = "MOVE_ITEM";
-export const SET_DRAG = "SET_DRAG";
-export const REMOVE_DRAG = "REMOVE_DRAG";
+export const UPDATE_ITEMS = "UPDATE_ITEMS";
 
 export const initialState = {
   isLoading: true,
@@ -83,6 +81,14 @@ export const setDataReducer = (state = initialState, action) => {
         hasError: true,
       };
     }
+    default: {
+      return state;
+    }
+  }
+};
+
+export const setConstructorReducer = (state = initialState, action) => {
+  switch(action.type){
     case ADD_ITEM: {
       let ingredients = state.burgerIngredients.otherIngredients;
       return {
@@ -94,7 +100,11 @@ export const setDataReducer = (state = initialState, action) => {
               count: (item.count || 1) + (item._id === action.item._id)
             })
             ),
-          ...(ingredients.some((item) => item._id === action.item._id) ? [] : [{ ...action.item, count: 1, order: ingredients.length + 1 }])],
+          ...(ingredients.some((item) => item._id === action.item._id)
+            ? []
+            : [{...action.item,
+              count: 1,
+            }])],
         },
       };
     }
@@ -120,31 +130,24 @@ export const setDataReducer = (state = initialState, action) => {
         },
       };
     }
-    case SET_DRAG: {
-      let ingredients = state.burgerIngredients.otherIngredients;
+     case UPDATE_ITEMS: {
+      const ingredients = [...state.burgerIngredients.otherIngredients];
+      ingredients.splice(
+        action.toIndex, 0, ingredients.splice(action.fromIndex, 1)[0]
+      );
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          otherIngredients: ingredients.map((item) => ({ ...item, dragged: true }))
-        }
-      }
-    }  
-    case MOVE_ITEM: {
-      let ingredients = state.burgerIngredients.otherIngredients;
-      return {
-        ...state,
-        burgerIngredients: {
-          ...state.burgerIngredients,
-          otherIngredients: ingredients.map((item) => item._id !== action.item._id ? ({ ...item, order: action.item.order }) : item)
-        }
-      }
-    }
-    default: {
-      return state;
-    }
+          otherIngredients: ingredients,
+        },
+      };
+    } 
+     default: {
+       return state;
+     }
   }
-};
+}
 
 export const openCurrentIngredient = (props) => {
   return function(dispatch) {
@@ -190,41 +193,25 @@ export const closeOrderModal = () => {
 
 export const onDropHandler = (item) => {
   return function(dispatch) {
-  item.type !== "bun" ? 
+  if (item.type !== "bun" && item.dragged === undefined) { 
       dispatch({
         type: ADD_ITEM,
         item: item,
       })
-    : 
+    }
+  if (item.type === "bun") {
       dispatch({
         type: ADD_BUN,
         bun: item,
       });
+    }
   }
-};
+}
 
 export const deleteItem = (item) => {
   return function(dispatch) {
     dispatch({
       type: DELETE_ITEM,
-      item: item,
-    });
-  };
-};
-
-export const setDragItem = (item) => {
-  return function(dispatch) {
-    dispatch({
-      type: SET_DRAG,
-      item: item,
-    });
-  };
-};
-
-export const moveItem = (item) => {
-  return function(dispatch) {
-    dispatch({
-      type: MOVE_ITEM,
       item: item,
     });
   };
@@ -291,6 +278,7 @@ export const makeOrderReducer = (state = initialState, action) => {
 
 export const rootReducer = combineReducers({
   data: setDataReducer,
+  constr: setConstructorReducer,
   ingr: openIngredientReducer,
   ord: makeOrderReducer,
 });
