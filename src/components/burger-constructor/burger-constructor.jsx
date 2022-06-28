@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -12,7 +12,7 @@ import {
   onDropHandler,
   deleteItem,
   setDragItem,
-  removeDragItem,
+  moveItem
 } from "../../services/actions/actions";
 import { useDrop } from "react-dnd";
 import BurgerElement from "../burger-element/burger-element";
@@ -29,13 +29,14 @@ export default function BurgerConstructor() {
   const dropHandler = (item) => {dispatch(onDropHandler(item))};
   const deleteThis = (item) => {dispatch(deleteItem(item))};
   const setDragProperty = (item) => {dispatch(setDragItem(item))};
+  const moveThis = (item) => {dispatch(moveItem(item))};
 
   const bun = (buns.length && buns[0]) || undefined;
   const bunIdArr = buns.length && [`${bun._id}, ${bun._id}`];
   const orderData = buns.length && Array.from(content.map((el) => el._id)).concat(bunIdArr);
   const bunsPrice = buns.length && bun && bun.price * 2;
 
-  const [{ isHover }, dropTarget] = useDrop((e) => ({
+  const [{ isHover }, dropTarget] = useDrop(() => ({
     accept: "ingredient",
     drop: (item, monitor) => {
       dropHandler(item);
@@ -65,23 +66,22 @@ export default function BurgerConstructor() {
   useEffect(() => { setTotalPrice(total) }, [totalPrice, setTotalPrice]);
 
   const onDragStartHandler = (e, item) => {
+    e.stopPropagation();
     setDragProperty(item);
   }
 
   const onDragEndHandler = (e, item) => {
+    e.stopPropagation();
+    moveThis(item);
   }
 
-  const onDragOverHandler = (e) => {
-
+  const sortCards = (a, b) => {
+    if (a.order > b.order) {
+      return 1
+    } else {
+      return -1
+    }
   }
-
-  const onDragLeaveHandler = (e, item) => {
-
-  }
-
-  const onDropDropHandler = (e, item) => {
-  }
-
 
   return (
     buns.length && (
@@ -97,7 +97,7 @@ export default function BurgerConstructor() {
             />
           </div>
           <ul className={styles.componentlist}>
-            {content.map(
+            {content.sort(sortCards).map(
               (item, index) =>
                 item.count > 0 && (
                   <BurgerElement 			        
@@ -107,8 +107,6 @@ export default function BurgerConstructor() {
                   index={index} 
                   onDragStartHandler={onDragStartHandler}
                   onDragEndHandler={onDragEndHandler}
-                  onDragOverHandler={onDragOverHandler}
-                  onDragLeaveHandler={onDragLeaveHandler}
                   />
                 )
             )}

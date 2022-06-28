@@ -109,43 +109,34 @@ export const setDataReducer = (state = initialState, action) => {
       };
     }
     case DELETE_ITEM: {
+      let ingredients = state.burgerIngredients.otherIngredients;
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          otherIngredients: state.burgerIngredients.otherIngredients
+          otherIngredients: ingredients
             .map((item) => item._id === action.item._id ? { ...item, count: item.count - 1 } : item)
             .filter((item) => item.count > 0),
         },
       };
     }
     case SET_DRAG: {
+      let ingredients = state.burgerIngredients.otherIngredients;
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          otherIngredients: state.burgerIngredients.otherIngredients.map((item) => ({ ...item, dragged: true }))
+          otherIngredients: ingredients.map((item) => ({ ...item, dragged: true }))
         }
       }
     }  
- 
     case MOVE_ITEM: {
       let ingredients = state.burgerIngredients.otherIngredients;
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          otherIngredients: ingredients.map(
-            function(el){
-              el.dragged = false;
-              if (el._id === action.item._id) {
-                return ({ ...el, order: action.item.order });
-              // } else if (el._id === action.ingr._id) {
-              //   return ({...el, order: action.ingr.order }) 
-              } else { 
-                return el 
-              }
-            })
+          otherIngredients: ingredients.map((item) => item._id !== action.item._id ? ({ ...item, order: action.item.order }) : item)
         }
       }
     }
@@ -199,22 +190,16 @@ export const closeOrderModal = () => {
 
 export const onDropHandler = (item) => {
   return function(dispatch) {
-     if (item.type !== "bun" && item.dragged) {
-      dispatch({
-        type: MOVE_ITEM,
-        item: item
-      })
-  } else if (item.type !== "bun") {
+  item.type !== "bun" ? 
       dispatch({
         type: ADD_ITEM,
         item: item,
       })
-    } else { 
+    : 
       dispatch({
         type: ADD_BUN,
         bun: item,
       });
-    }
   }
 };
 
@@ -231,6 +216,15 @@ export const setDragItem = (item) => {
   return function(dispatch) {
     dispatch({
       type: SET_DRAG,
+      item: item,
+    });
+  };
+};
+
+export const moveItem = (item) => {
+  return function(dispatch) {
+    dispatch({
+      type: MOVE_ITEM,
       item: item,
     });
   };
