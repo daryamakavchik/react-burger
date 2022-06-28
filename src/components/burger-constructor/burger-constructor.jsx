@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -11,33 +11,35 @@ import {
   closeOrderModal,
   onDropHandler,
   deleteItem,
+  setDragItem,
+  removeDragItem,
 } from "../../services/actions/actions";
 import { useDrop } from "react-dnd";
+import BurgerElement from "../burger-element/burger-element";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
+
   const { buns, content } = useSelector((store) => ({
     buns: store.data.burgerIngredients.buns,
     content: store.data.burgerIngredients.otherIngredients,
   }));
 
-  const dropHandler = (item) => {
-    dispatch(onDropHandler(item));
-  };
-  const deleteThis = (item) => {
-    dispatch(deleteItem(item));
-  };
+  const dropHandler = (item) => {dispatch(onDropHandler(item))};
+  const deleteThis = (item) => {dispatch(deleteItem(item))};
+  const setDragProperty = (item) => {dispatch(setDragItem(item))};
 
   const bun = (buns.length && buns[0]) || undefined;
   const bunIdArr = buns.length && [`${bun._id}, ${bun._id}`];
   const orderData = buns.length && Array.from(content.map((el) => el._id)).concat(bunIdArr);
   const bunsPrice = buns.length && bun && bun.price * 2;
 
-  const [{ isHover }, dropTarget] = useDrop(() => ({
+  const [{ isHover }, dropTarget] = useDrop((e) => ({
     accept: "ingredient",
-    drop: (item) => {
+    drop: (item, monitor) => {
       dropHandler(item);
+      console.log(monitor.getItem());
     },
     collect: (monitor) => ({
       isHover: !!monitor.isOver(),
@@ -62,6 +64,25 @@ export default function BurgerConstructor() {
   let total = buns.length && bun && bunsPrice && content.reduce(function(acc, obj) { return acc + (obj.price * obj.count) }, bunsPrice);
   useEffect(() => { setTotalPrice(total) }, [totalPrice, setTotalPrice]);
 
+  const onDragStartHandler = (e, item) => {
+    setDragProperty(item);
+  }
+
+  const onDragEndHandler = (e, item) => {
+  }
+
+  const onDragOverHandler = (e) => {
+
+  }
+
+  const onDragLeaveHandler = (e, item) => {
+
+  }
+
+  const onDropDropHandler = (e, item) => {
+  }
+
+
   return (
     buns.length && (
       <>
@@ -79,15 +100,16 @@ export default function BurgerConstructor() {
             {content.map(
               (item, index) =>
                 item.count > 0 && (
-                  <li key={index} className={styles.component}>
-                    <ConstructorElement
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image}
-                      isLocked={false}
-                      handleClose={() => deleteThis(item)}
-                    />
-                  </li>
+                  <BurgerElement 			        
+                  key={item._id}
+                  item={item}
+                  handleClose={() => deleteThis(item)}
+                  index={index} 
+                  onDragStartHandler={onDragStartHandler}
+                  onDragEndHandler={onDragEndHandler}
+                  onDragOverHandler={onDragOverHandler}
+                  onDragLeaveHandler={onDragLeaveHandler}
+                  />
                 )
             )}
           </ul>
