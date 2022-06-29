@@ -3,9 +3,9 @@ import {
   GET_DATA_REQUEST,
   GET_DATA_SUCCESS,
   GET_DATA_FAILED,
-  CURRENT_INGREDIENT_OPENED,
-  CURRENT_INGREDIENT_CLOSED,
-  ORDER_MODAL_CLOSED,
+  OPEN_CURRENT_INGREDIENT,
+  CLOSE_CURRENT_INGREDIENT,
+  CLOSE_ORDER_MODAL,
   POST_ORDER_REQUEST,
   POST_ORDER_SUCCESS,
   POST_ORDER_FAILED,
@@ -16,7 +16,7 @@ import {
 } from "../actions";
 
 export const initialState = {
-  isLoading: true,
+  isLoading: false,
   hasError: false,
   data: [],
   burgerIngredients: {
@@ -137,7 +137,7 @@ export const constructorReducer = (state = initialState, action) => {
 
 export const currentIngredientReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CURRENT_INGREDIENT_OPENED: {
+    case OPEN_CURRENT_INGREDIENT: {
       return {
         ...state,
         isModalOpen: true,
@@ -152,7 +152,7 @@ export const currentIngredientReducer = (state = initialState, action) => {
         },
       };
     }
-    case CURRENT_INGREDIENT_CLOSED: {
+    case CLOSE_CURRENT_INGREDIENT: {
       return {
         ...state,
         isModalOpen: false,
@@ -185,6 +185,7 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         isModalOpen: true,
+        isLoading: false,
         orderNum: action.orderNum,
       };
     }
@@ -192,9 +193,10 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         hasError: true,
+        isLoading: false,
       };
     }
-    case ORDER_MODAL_CLOSED: {
+    case CLOSE_ORDER_MODAL: {
       return {
         ...state,
         isModalOpen: false,

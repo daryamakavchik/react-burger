@@ -6,11 +6,11 @@ import styles from "../burger-constructor/burger-constructor.module.css";
 export default function BurgerElement({ item, index, handleClose, moveItem }) {
   const ref = useRef(null);
 
-  const [{ isDrag }, drag] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     type: "item",
     item: { index },
     collect: (monitor) => ({
-      isDrag: monitor.isDragging(),
+      isDragging: monitor.isDragging(),
     }),
   });
 
@@ -36,7 +36,7 @@ export default function BurgerElement({ item, index, handleClose, moveItem }) {
     },
   });
 
-  const opacity = isDrag ? 0 : 1;
+  const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
 
   return (

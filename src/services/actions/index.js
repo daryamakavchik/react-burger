@@ -6,9 +6,9 @@ export const ADD_ITEM = "ADD_ITEM";
 export const ADD_BUN = "ADD_BUN";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const UPDATE_ITEMS = "UPDATE_ITEMS";
-export const CURRENT_INGREDIENT_OPENED = "CURRENT_INGREDIENT_OPENED";
-export const CURRENT_INGREDIENT_CLOSED = "CURRENT_INGREDIENT_CLOSED";
-export const ORDER_MODAL_CLOSED = "ORDER_MODAL_CLOSED";
+export const OPEN_CURRENT_INGREDIENT = "OPEN_CURRENT_INGREDIENT";
+export const CLOSE_CURRENT_INGREDIENT = "CLOSE_CURRENT_INGREDIENT";
+export const CLOSE_ORDER_MODAL = "CLOSE_ORDER_MODAL";
 export const POST_ORDER_REQUEST = "POST_ORDER_REQUEST";
 export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
 export const POST_ORDER_FAILED = "POST_ORDER_FAILED";
@@ -35,7 +35,7 @@ export const setIngredientsData = () => {
   };
 };
 
-export const onDropHandler = (item) => {
+export const handleDrop = (item) => {
   return function(dispatch) {
     if (item.type !== "bun" && item.dragged === undefined) {
       dispatch({
@@ -64,7 +64,7 @@ export const deleteItem = (item) => {
 export const openCurrentIngredient = (props) => {
   return function(dispatch) {
     dispatch({
-      type: CURRENT_INGREDIENT_OPENED,
+      type: OPEN_CURRENT_INGREDIENT,
       payload: props,
     });
   };
@@ -73,7 +73,7 @@ export const openCurrentIngredient = (props) => {
 export const closeCurrentIngredient = () => {
   return function(dispatch) {
     dispatch({
-      type: CURRENT_INGREDIENT_CLOSED,
+      type: CLOSE_CURRENT_INGREDIENT,
     });
   };
 };
@@ -101,7 +101,7 @@ export const openOrderModal = (orderData) => {
 export const closeOrderModal = () => {
   return function(dispatch) {
     dispatch({
-      type: ORDER_MODAL_CLOSED,
+      type: CLOSE_ORDER_MODAL,
     });
   };
 };

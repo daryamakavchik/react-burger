@@ -7,7 +7,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import {
-  onDropHandler,
+  handleDrop,
   deleteItem,
   UPDATE_ITEMS,
   openOrderModal,
@@ -18,6 +18,7 @@ import BurgerElement from "../burger-element/burger-element";
 
 export default function BurgerConstructor() {
   const [totalPrice, setTotalPrice] = useState(0);
+  const isLoading = useSelector((store) => store.ord.isLoading);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
 
   const { buns, content } = useSelector((store) => ({
@@ -26,7 +27,7 @@ export default function BurgerConstructor() {
   }));
 
   const dispatch = useDispatch();
-  const dropHandler = (item) => {dispatch(onDropHandler(item))};
+  const dropHandler = (item) => {dispatch(handleDrop(item))};
   const deleteHandler = (item) => {dispatch(deleteItem(item))};
 
   const bun = (buns.length && buns[0]) || undefined;
@@ -58,14 +59,11 @@ export default function BurgerConstructor() {
   let total = buns.length && bun && bunsPrice && content.reduce(function(acc, obj) { return acc + (obj.price * obj.count) }, bunsPrice);
   useEffect(() => { setTotalPrice(total) }, [totalPrice, setTotalPrice]);
 
-  const [{ isHover }, dropTarget] = useDrop(() => ({
+  const [, dropTarget] = useDrop(() => ({
     accept: "ingredient",
-    drop: (item, monitor) => { 
+    drop: (item) => { 
       dropHandler(item);
     },
-    collect: (monitor) => ({
-      isHover: monitor.isOver()
-    }),
   }));
 
   return (
@@ -111,7 +109,7 @@ export default function BurgerConstructor() {
             <CurrencyIcon type="primary" />
             <div className={styles.button}>
               <Button type="primary" size="medium" onClick={openModal}>
-                Оформить заказ
+                {!isLoading ? 'Оформить заказ' : 'Загрузка...'}
               </Button>
             </div>
           </div>

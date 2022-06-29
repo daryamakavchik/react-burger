@@ -31,13 +31,10 @@ export default function BurgerIngredient(props) {
     event.key === "Escape" && closeAllModals();
   };
 
-  const [{ isDragging }, dragRef] = useDrag(
+  const [, dragRef] = useDrag(
     () => ({
       type: "ingredient",
       item: props,
-      collect: (monitor) => ({
-        isDragging: !!monitor.isDragging(),
-      }),
     }),
     [props]
   );

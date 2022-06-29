@@ -8,6 +8,7 @@ import { setIngredientsData } from '../../services/actions';
 
 export default function BurgerIngredients() {
   const [current, setCurrent] = useState("bun");
+  const isLoading = useSelector(store => store.data.isLoading);
 
   const dispatch = useDispatch();
   useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);   
@@ -46,6 +47,7 @@ export default function BurgerIngredients() {
 	}
 
   return (
+    !isLoading &&
     <>
       <section className={styles.ingridients}>
         <p className="text text_type_main-large">Соберите бургер</p>
