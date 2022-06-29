@@ -3,12 +3,14 @@ import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../burger-constructor/burger-constructor.module.css";
 
-export default function BurgerElement({ item, index, handleClose, moveItem}) {
+export default function BurgerElement({ item, index, handleClose, moveItem }) {
+
   const ref = useRef(null);
 
   const [, drop] = useDrop({
     accept: 'item',
     hover(item, monitor) {
+
       if (!ref.current) { return }
 
       const dragIndex = item.index;
@@ -26,7 +28,7 @@ export default function BurgerElement({ item, index, handleClose, moveItem}) {
       if (dragIndex > hoverIndex && userCursorOffset > elementMiddle) { return }
 
       moveItem(dragIndex, hoverIndex);
-      item.index = hoverIndex;
+      item = ({...item, index: hoverIndex});
     },
   });
 

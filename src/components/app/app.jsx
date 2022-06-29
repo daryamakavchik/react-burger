@@ -3,7 +3,7 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import styles from "./app.module.css";
-import { rootReducer } from "../../services/actions/actions";
+import { rootReducer } from "../../services/reducers";
 import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 

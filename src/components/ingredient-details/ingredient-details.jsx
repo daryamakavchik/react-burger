@@ -1,16 +1,16 @@
 import React from 'react';
 import { ingredientsPropTypes } from "../../utils/proptypes";
-import styles from "./ingredients-details.module.css";
+import styles from "./ingredient-details.module.css";
 import { useSelector } from 'react-redux';
 
-export default function IngredientsDetails() {
+export default function IngredientDetails() {
   const {image, name, calories, fat, proteins, carbohydrates} = useSelector(store => ({
-    image: store.ingr.currentIngredientImage,
-    name: store.ingr.currentIngredientName,
-    calories: store.ingr.currentIngredientCalories,
-    fat: store.ingr.currentIngredientFat,
-    proteins: store.ingr.currentIngredientProteins,
-    carbohydrates: store.ingr.currentIngredientCarbohydrates,
+    image: store.ingr.currentIngredient.image,
+    name: store.ingr.currentIngredient.name,
+    calories: store.ingr.currentIngredient.calories,
+    fat: store.ingr.currentIngredient.fat,
+    proteins: store.ingr.currentIngredient.proteins,
+    carbohydrates: store.ingr.currentIngredient.carbohydrates,
   }));
 
   return (
@@ -40,4 +40,4 @@ export default function IngredientsDetails() {
 }
 
 
-IngredientsDetails.propTypes = ingredientsPropTypes.isRequired;
+IngredientDetails.propTypes = ingredientsPropTypes.isRequired;

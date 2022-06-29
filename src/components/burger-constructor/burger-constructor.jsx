@@ -12,7 +12,7 @@ import {
   onDropHandler,
   deleteItem,
   UPDATE_ITEMS
-} from "../../services/actions/actions";
+} from "../../services/actions";
 import { useDrop } from "react-dnd";
 import BurgerElement from "../burger-element/burger-element";
 
@@ -26,7 +26,7 @@ export default function BurgerConstructor() {
   }));
 
   const dropHandler = (item) => {dispatch(onDropHandler(item))};
-  const deleteThis = (item) => {dispatch(deleteItem(item))};
+  const deleteHandler = (item) => {dispatch(deleteItem(item))};
 
   const bun = (buns.length && buns[0]) || undefined;
   const bunIdArr = buns.length && [`${bun._id}, ${bun._id}`];
@@ -51,7 +51,6 @@ export default function BurgerConstructor() {
       });
     }, [dispatch] );
 
-  const orderNum = useSelector((store) => store.ord.orderNum);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
 
   const openModal = () => {
@@ -89,7 +88,7 @@ export default function BurgerConstructor() {
                   <BurgerElement 			        
                   key={item._id}
                   item={item}
-                  handleClose={() => deleteThis(item)}
+                  handleClose={() => deleteHandler(item)}
                   moveItem={moveItem}
                   index={index}
                   />
