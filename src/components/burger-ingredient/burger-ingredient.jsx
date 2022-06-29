@@ -16,8 +16,9 @@ export default function BurgerIngredient(props) {
   const modalOpen = useSelector((store) => store.ingr.isModalOpen);
 
   let count;
-  const fillings = useSelector((store) => store.constr.burgerIngredients.fillings);
-  fillings.map((el) => (el._id === props._id ? (count = el.count) : null));
+  const { bun, fillings } = useSelector((store) => ({ bun: store.constr.burgerIngredients.bun, fillings: store.constr.burgerIngredients.fillings }));
+  fillings && fillings.map((el) => (el._id === props._id ? (count = el.count) : null));
+  let buncount = bun && bun._id === props._id && bun.count;
 
   const openModal = () => {
     dispatch(openCurrentIngredient(props), [dispatch]);
@@ -25,10 +26,6 @@ export default function BurgerIngredient(props) {
 
   const closeAllModals = () => {
     dispatch(closeCurrentIngredient(props), [dispatch]);
-  };
-
-  const handleEscKeydown = (event) => {
-    event.key === "Escape" && closeAllModals();
   };
 
   const [, dragRef] = useDrag(
@@ -43,14 +40,14 @@ export default function BurgerIngredient(props) {
     <>
       <div className={styles.optioncard} onClick={openModal} ref={dragRef}>
         {count && <Counter count={count} />}
+        {buncount && <Counter count={buncount} />}
         <img src={props.image} alt='' />
         <p className={styles.optiontext}>{props.name}</p>
       </div>
       {modalOpen && (
         <Modal
           title="Детали ингридиента"
-          onOverlayClick={closeAllModals}
-          onEscKeyDown={handleEscKeydown}
+          onClose={closeAllModals}
         >
           <IngredientDetails />
         </Modal>

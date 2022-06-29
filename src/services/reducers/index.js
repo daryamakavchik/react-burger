@@ -20,8 +20,8 @@ export const initialState = {
   hasError: false,
   data: [],
   burgerIngredients: {
-    buns: [],
-    fillings: [],
+    bun: null,
+    fillings: []
   },
   isModalOpen: false,
   currentIngredient: {
@@ -50,7 +50,7 @@ export const dataReducer = (state = initialState, action) => {
         data: action.data,
         burgerIngredients: {
           ...state.burgerIngredients,
-          buns: action.buns,
+          bun: action.bun,
           fillings: action.fillings,
         },
       };
@@ -59,17 +59,6 @@ export const dataReducer = (state = initialState, action) => {
       return {
         ...state,
         hasError: true,
-      };
-    }
-    case ADD_BUN: {
-      return {
-        ...state,
-        burgerIngredients: {
-          ...state.burgerIngredients,
-          buns: state.burgerIngredients.buns.map((bun) =>
-            bun._id !== action.bun._id ? action.bun : bun
-          ),
-        },
       };
     }
     default: {
@@ -94,11 +83,22 @@ export const constructorReducer = (state = initialState, action) => {
               (item) => item._id === action.item._id
             )
               ? []
-              : [{ ...action.item, count: 1 }]),
+              : 
+              [{ ...action.item, count: 1 }]),
           ],
         },
       };
     }
+    case ADD_BUN: {
+      return {
+        ...state,
+        burgerIngredients: {
+          ...state.burgerIngredients,
+          bun: {...action.item, count: 1}
+        }
+      }
+    }
+ 
     case DELETE_ITEM: {
       return {
         ...state,

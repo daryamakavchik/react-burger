@@ -23,7 +23,7 @@ export const setIngredientsData = () => {
         dispatch({
           type: GET_DATA_SUCCESS,
           data: res.data,
-          buns: res.data.filter((el) => el.type === "bun"),
+          bun: {},
           fillings: [],
         });
       } else {
@@ -37,27 +37,25 @@ export const setIngredientsData = () => {
 
 export const handleDrop = (item) => {
   return function(dispatch) {
-    if (item.type !== "bun" && item.dragged === undefined) {
+    if (item.type !== 'bun' && item.dragged === undefined) {
       dispatch({
         type: ADD_ITEM,
         item: item,
       });
     }
-    if (item.type === "bun") {
+    else {
       dispatch({
         type: ADD_BUN,
-        bun: item,
-      });
+        item: item
+      })
     }
   };
 };
 
 export const deleteItem = (item) => {
-  return function(dispatch) {
-    dispatch({
-      type: DELETE_ITEM,
-      item: item,
-    });
+  return {
+    type: DELETE_ITEM,
+    item: item,
   };
 };
 

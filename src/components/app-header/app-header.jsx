@@ -8,7 +8,7 @@ import styles from "./app-header.module.css";
 function AppHeader() {
 
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <ul className={styles.headernavigation}>
         <li className={styles.headernav}>
           <a className={styles.headernav} href='#top'>
@@ -44,7 +44,7 @@ function AppHeader() {
           </a>
         </li>
       </ul>
-    </div>
+    </header>
   );
 }
 

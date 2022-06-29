@@ -15,34 +15,40 @@ import {
 } from "../../services/actions";
 import { useDrop } from "react-dnd";
 import BurgerElement from "../burger-element/burger-element";
+import { v4 as uuidv4 } from "uuid";
 
 export default function BurgerConstructor() {
   const [totalPrice, setTotalPrice] = useState(0);
   const isLoading = useSelector((store) => store.ord.isLoading);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
 
-  const { buns, content } = useSelector((store) => ({
-    buns: store.data.burgerIngredients.buns,
+  const { bun, content } = useSelector((store) => ({
+    bun: store.constr.burgerIngredients.bun,
     content: store.constr.burgerIngredients.fillings,
   }));
 
   const dispatch = useDispatch();
-  const dropHandler = (item) => {dispatch(handleDrop(item))};
-  const deleteHandler = (item) => {dispatch(deleteItem(item))};
+  const dropHandler = (item) => {
+    dispatch(handleDrop(item));
+  };
+  const deleteHandler = (item) => {
+    dispatch(deleteItem(item));
+  };
 
-  const bun = (buns.length && buns[0]) || undefined;
-  const bunsPrice = buns.length && bun && bun.price * 2;
-  const bunIdArr = buns.length && [`${bun._id}, ${bun._id}`];
-  const orderData = buns.length && Array.from(content.map((el) => el._id)).concat(bunIdArr);
+  const bunsPrice = bun && bun.price * 2;
+  const bunIdArr = bun && [`${bun._id}, ${bun._id}`];
+  const orderData = Array.from(content.map((el) => el._id)).concat(bunIdArr);
 
-
-  const moveItem = useCallback((dragIndex, hoverIndex) => {
+  const moveItem = useCallback(
+    (dragIndex, hoverIndex) => {
       dispatch({
         type: UPDATE_ITEMS,
         fromIndex: dragIndex,
         toIndex: hoverIndex,
       });
-    }, [dispatch] );
+    },
+    [dispatch]
+  );
 
   const openModal = () => {
     dispatch(openOrderModal(orderData), [dispatch]);
@@ -52,24 +58,45 @@ export default function BurgerConstructor() {
     dispatch(closeOrderModal(), [dispatch]);
   };
 
-  const handleEscKeydown = (event) => {
-    event.key === "Escape" && closeAllModals();
-  };
+  let total =
+    bun && bunsPrice
+      ? content.reduce(function(acc, obj) {
+          return acc + obj.price * obj.count;
+        }, bunsPrice)
+      : content.reduce(function(acc, obj) {
+          return acc + obj.price * obj.count;
+        }, 0);
 
-  let total = buns.length && bun && bunsPrice && content.reduce(function(acc, obj) { return acc + (obj.price * obj.count) }, bunsPrice);
-  useEffect(() => { setTotalPrice(total) }, [totalPrice, setTotalPrice]);
+  useEffect(() => {
+    setTotalPrice(total);
+  }, [totalPrice, setTotalPrice]);
 
   const [, dropTarget] = useDrop(() => ({
     accept: "ingredient",
-    drop: (item) => { 
+    drop: (item) => {
       dropHandler(item);
     },
   }));
 
   return (
-    buns.length && (
-      <>
-        <div className={styles.components} ref={dropTarget}>
+    <>
+      <div className={styles.components} ref={dropTarget}>
+        {!bun && content.length === 0 && (
+          <p className="text text_type_main-medium">
+            Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
+          </p>
+        )}
+        {!bun && content.length > 0 && (
+          <p className={`${styles.subtitle} text text_type_main-medium`}>
+            Осталось добавить булку 👀
+          </p>
+        )}
+        {bun && content.length === 0 && (
+          <p className={`${styles.subtitle} text text_type_main-medium`}>
+            Осталось добавить начинку 👀
+          </p>
+        )}
+        {bun && (
           <div className={styles.component}>
             <ConstructorElement
               type="top"
@@ -79,52 +106,55 @@ export default function BurgerConstructor() {
               thumbnail={bun.image}
             />
           </div>
-          <ul className={styles.componentlist}>
-            {content.map(
-              (item, index) =>
-                item.count > 0 && (
-                  <BurgerElement 			        
-                  key={item._id}
+        )}
+        <ul className={styles.componentlist}>
+          {content.map(
+            (item, index) =>
+              item.count > 0 && (
+                <BurgerElement
+                  key={uuidv4()}
                   item={item}
                   handleClose={() => deleteHandler(item)}
                   moveItem={moveItem}
                   index={index}
-                  />
-                )
-            )}
-          </ul>
-          <div className={styles.component}>
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={bun.name + " (низ)"}
-              price={bun.price}
-              thumbnail={bun.image}
-            />
-          </div>
-          <div className={styles.total}>
-            <div className={styles.text}>
-              <p className="text text_type_digits-medium">{total}</p>
-            </div>
-            <CurrencyIcon type="primary" />
-            <div className={styles.button}>
-              <Button type="primary" size="medium" onClick={openModal}>
-                {!isLoading ? 'Оформить заказ' : 'Загрузка...'}
-              </Button>
-            </div>
-          </div>
-          {modalOpen && (
-            <Modal
-              onOverlayClick={closeAllModals}
-              onEscKeyDown={handleEscKeydown}
-            >
-              <OrderDetails />
-            </Modal>
+                />
+              )
           )}
-        </div>
-      </>
-    )
-  );     
-}   
-
- 
+        </ul>
+        {bun && (
+          <>
+            <div className={styles.component}>
+              <ConstructorElement
+                type="bottom"
+                isLocked={true}
+                text={bun.name + " (низ)"}
+                price={bun.price}
+                thumbnail={bun.image}
+              />
+            </div>
+          </>
+        )}
+        {content.length > 0 && bun && (
+          <>
+            <div className={styles.total}>
+              <div className={styles.text}>
+                <p className="text text_type_digits-medium">{total}</p>
+              </div>
+              <CurrencyIcon type="primary" />
+              <div className={styles.button}>
+                <Button type="primary" size="medium" onClick={openModal}>
+                  {!isLoading ? "Оформить заказ" : "Загрузка..."}
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
+        {modalOpen && (
+          <Modal onClose={closeAllModals}>
+            <OrderDetails />
+          </Modal>
+        )}
+      </div>
+    </>
+  );
+}

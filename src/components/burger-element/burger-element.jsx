@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 import styles from "../burger-constructor/burger-constructor.module.css";
 
 export default function BurgerElement({ item, index, handleClose, moveItem }) {
@@ -57,3 +58,10 @@ export default function BurgerElement({ item, index, handleClose, moveItem }) {
     </li>
   );
 }
+
+BurgerElement.propTypes = {
+  item: PropTypes.object, 
+  index: PropTypes.number,
+  handleClose: PropTypes.func,
+  moveItem: PropTypes.func
+};
