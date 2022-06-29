@@ -2,9 +2,9 @@ import React from 'react';
 import { forwardRef } from "react";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import styles from "./ingridients-category.module.css";
+import styles from "./ingredient-category.module.css";
 
-export const IngredientsCategory = forwardRef(({ title, ingredients, id }, ref) => {
+export const IngredientCategory = forwardRef(({ title, ingredients, id }, ref) => {
   return (
     <>
       <h2 id={id} className={styles.title} ref={ref}>
@@ -19,7 +19,7 @@ export const IngredientsCategory = forwardRef(({ title, ingredients, id }, ref) 
   );
 });
 
-IngredientsCategory.propTypes = {
+IngredientCategory.propTypes = {
   title: PropTypes.string.isRequired,
   ingredients: PropTypes.array.isRequired,
 };

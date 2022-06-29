@@ -2,7 +2,7 @@ import React from 'react';
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IngredientsCategory } from "../ingredients-category/ingredients-category";
+import { IngredientCategory } from "../ingredient-category/ingredient-category";
 import styles from "./burger-ingredients.module.css";
 import { setIngredientsData } from '../../services/actions';
 
@@ -70,21 +70,21 @@ export default function BurgerIngredients() {
         </div>
         <section className={styles.options} ref={containerRef} onScroll={handleScroll}>
           <>
-            <IngredientsCategory
+            <IngredientCategory
               id="bun"
               title="Булки"
               ingredients={bunsArr}
               ref={bunsRef}
               className={styles.smallsection}
             />
-            <IngredientsCategory
+            <IngredientCategory
               id="sauce"
               title="Соусы"
               ingredients={sauceArr}
               ref={sauceRef}
               className={styles.smallsection}
             />
-            <IngredientsCategory
+            <IngredientCategory
               id="main"
               title="Начинки"
               ingredients={mainArr}
