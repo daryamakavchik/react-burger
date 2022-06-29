@@ -16,10 +16,8 @@ export default function BurgerIngredient(props) {
   const modalOpen = useSelector((store) => store.ingr.isModalOpen);
 
   let count;
-  const ingredients = useSelector(
-    (store) => store.constr.burgerIngredients.otherIngredients
-  );
-  ingredients.map((el) => (el._id === props._id ? (count = el.count) : null));
+  const fillings = useSelector((store) => store.constr.burgerIngredients.fillings);
+  fillings.map((el) => (el._id === props._id ? (count = el.count) : null));
 
   const openModal = () => {
     dispatch(openCurrentIngredient(props), [dispatch]);

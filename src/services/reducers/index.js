@@ -1,27 +1,41 @@
 import { combineReducers } from "redux";
-import { GET_DATA_REQUEST, GET_DATA_SUCCESS, GET_DATA_FAILED, CURRENT_INGREDIENT_OPENED, CURRENT_INGREDIENT_CLOSED, ORDER_MODAL_CLOSED, POST_ORDER_SUCCESS, POST_ORDER_FAILED, ADD_ITEM, ADD_BUN, DELETE_ITEM, UPDATE_ITEMS } from "../actions";
+import {
+  GET_DATA_REQUEST,
+  GET_DATA_SUCCESS,
+  GET_DATA_FAILED,
+  CURRENT_INGREDIENT_OPENED,
+  CURRENT_INGREDIENT_CLOSED,
+  ORDER_MODAL_CLOSED,
+  POST_ORDER_REQUEST,
+  POST_ORDER_SUCCESS,
+  POST_ORDER_FAILED,
+  ADD_ITEM,
+  ADD_BUN,
+  DELETE_ITEM,
+  UPDATE_ITEMS,
+} from "../actions";
 
 export const initialState = {
   isLoading: true,
+  hasError: false,
   data: [],
   burgerIngredients: {
     buns: [],
-    otherIngredients: [],
+    fillings: [],
   },
-  hasError: false,
   isModalOpen: false,
   currentIngredient: {
     image: null,
     name: null,
-    calories: null, 
-    proteins: null, 
-    fat: null, 
-    carbohydrates: null
+    calories: null,
+    proteins: null,
+    fat: null,
+    carbohydrates: null,
   },
   orderNum: {},
 };
 
-export const setDataReducer = (state = initialState, action) => {
+export const dataReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_DATA_REQUEST: {
       return {
@@ -37,7 +51,7 @@ export const setDataReducer = (state = initialState, action) => {
         burgerIngredients: {
           ...state.burgerIngredients,
           buns: action.buns,
-          otherIngredients: action.otherIngredients,
+          fillings: action.fillings,
         },
       };
     }
@@ -64,20 +78,21 @@ export const setDataReducer = (state = initialState, action) => {
   }
 };
 
-export const setConstructorReducer = (state = initialState, action) => {
+export const constructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ITEM: {
-      let ingredients = state.burgerIngredients.otherIngredients;
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          otherIngredients: [
-            ...ingredients.map((item) => ({
+          fillings: [
+            ...state.burgerIngredients.fillings.map((item) => ({
               ...item,
               count: (item.count || 1) + (item._id === action.item._id),
             })),
-            ...(ingredients.some((item) => item._id === action.item._id)
+            ...(state.burgerIngredients.fillings.some(
+              (item) => item._id === action.item._id
+            )
               ? []
               : [{ ...action.item, count: 1 }]),
           ],
@@ -85,12 +100,11 @@ export const setConstructorReducer = (state = initialState, action) => {
       };
     }
     case DELETE_ITEM: {
-      let ingredients = state.burgerIngredients.otherIngredients;
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          otherIngredients: ingredients
+          fillings: state.burgerIngredients.fillings
             .map((item) =>
               item._id === action.item._id
                 ? { ...item, count: item.count - 1 }
@@ -101,17 +115,17 @@ export const setConstructorReducer = (state = initialState, action) => {
       };
     }
     case UPDATE_ITEMS: {
-      const ingredients = [...state.burgerIngredients.otherIngredients];
-      ingredients.splice(
+      const fillings = [...state.burgerIngredients.fillings];
+      fillings.splice(
         action.toIndex,
         0,
-        ingredients.splice(action.fromIndex, 1)[0]
+        fillings.splice(action.fromIndex, 1)[0]
       );
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          otherIngredients: ingredients,
+          fillings: fillings,
         },
       };
     }
@@ -121,7 +135,7 @@ export const setConstructorReducer = (state = initialState, action) => {
   }
 };
 
-export const openIngredientReducer = (state = initialState, action) => {
+export const currentIngredientReducer = (state = initialState, action) => {
   switch (action.type) {
     case CURRENT_INGREDIENT_OPENED: {
       return {
@@ -135,7 +149,7 @@ export const openIngredientReducer = (state = initialState, action) => {
           proteins: action.payload.proteins,
           fat: action.payload.fat,
           carbohydrates: action.payload.carbohydrates,
-        }
+        },
       };
     }
     case CURRENT_INGREDIENT_CLOSED: {
@@ -145,12 +159,12 @@ export const openIngredientReducer = (state = initialState, action) => {
         currentIngredient: {
           ...state.currentIngredient,
           image: null,
-          name: null, 
-          calories: null, 
-          proteins: null, 
+          name: null,
+          calories: null,
+          proteins: null,
           fat: null,
-          carbohydrates: null
-        }
+          carbohydrates: null,
+        },
       };
     }
     default: {
@@ -159,13 +173,19 @@ export const openIngredientReducer = (state = initialState, action) => {
   }
 };
 
-export const makeOrderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action) => {
   switch (action.type) {
+    case POST_ORDER_REQUEST: {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
     case POST_ORDER_SUCCESS: {
       return {
         ...state,
         isModalOpen: true,
-        orderNum: action.ordernum,
+        orderNum: action.orderNum,
       };
     }
     case POST_ORDER_FAILED: {
@@ -187,8 +207,8 @@ export const makeOrderReducer = (state = initialState, action) => {
 };
 
 export const rootReducer = combineReducers({
-  data: setDataReducer,
-  constr: setConstructorReducer,
-  ingr: openIngredientReducer,
-  ord: makeOrderReducer,
+  data: dataReducer,
+  constr: constructorReducer,
+  ingr: currentIngredientReducer,
+  ord: orderReducer,
 });

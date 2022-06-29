@@ -7,19 +7,17 @@ import styles from "./burger-ingredients.module.css";
 import { setIngredientsData } from '../../services/actions';
 
 export default function BurgerIngredients() {
+  const [current, setCurrent] = useState("bun");
+
   const dispatch = useDispatch();
   useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);   
 
   const { data } = useSelector(store => store.data);
-
-  const [current, setCurrent] = useState("bun");
-
   const bunsArr = data.filter((el) => el.type === "bun");
   const mainArr = data.filter((el) => el.type === "main");
   const sauceArr = data.filter((el) => el.type === "sauce");
 
   const containerRef = useRef(null);
-
   const bunsRef = useRef(null);
   const sauceRef = useRef(null);
   const mainRef = useRef(null);

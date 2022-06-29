@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 export default function OrderDetails() {
   const orderNum = useSelector((store) => store.ord.orderNum);
+  
   return (
     <>
       <p className={`${styles.title} text text_type_digits_large`}>

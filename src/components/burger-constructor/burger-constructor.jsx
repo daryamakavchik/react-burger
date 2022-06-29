@@ -7,41 +7,33 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import {
-  openOrderModal,
-  closeOrderModal,
   onDropHandler,
   deleteItem,
-  UPDATE_ITEMS
+  UPDATE_ITEMS,
+  openOrderModal,
+  closeOrderModal,
 } from "../../services/actions";
 import { useDrop } from "react-dnd";
 import BurgerElement from "../burger-element/burger-element";
 
 export default function BurgerConstructor() {
-  const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
+  const modalOpen = useSelector((store) => store.ord.isModalOpen);
 
   const { buns, content } = useSelector((store) => ({
     buns: store.data.burgerIngredients.buns,
-    content: store.constr.burgerIngredients.otherIngredients,
+    content: store.constr.burgerIngredients.fillings,
   }));
 
+  const dispatch = useDispatch();
   const dropHandler = (item) => {dispatch(onDropHandler(item))};
   const deleteHandler = (item) => {dispatch(deleteItem(item))};
 
   const bun = (buns.length && buns[0]) || undefined;
+  const bunsPrice = buns.length && bun && bun.price * 2;
   const bunIdArr = buns.length && [`${bun._id}, ${bun._id}`];
   const orderData = buns.length && Array.from(content.map((el) => el._id)).concat(bunIdArr);
-  const bunsPrice = buns.length && bun && bun.price * 2;
 
-  const [{ isHover }, dropTarget] = useDrop(() => ({
-    accept: "ingredient",
-    drop: (item, monitor) => { 
-      dropHandler(item);
-    },
-    collect: (monitor) => ({
-      isHover: monitor.isOver()
-    }),
-  }));
 
   const moveItem = useCallback((dragIndex, hoverIndex) => {
       dispatch({
@@ -50,8 +42,6 @@ export default function BurgerConstructor() {
         toIndex: hoverIndex,
       });
     }, [dispatch] );
-
-  const modalOpen = useSelector((store) => store.ord.isModalOpen);
 
   const openModal = () => {
     dispatch(openOrderModal(orderData), [dispatch]);
@@ -67,6 +57,16 @@ export default function BurgerConstructor() {
 
   let total = buns.length && bun && bunsPrice && content.reduce(function(acc, obj) { return acc + (obj.price * obj.count) }, bunsPrice);
   useEffect(() => { setTotalPrice(total) }, [totalPrice, setTotalPrice]);
+
+  const [{ isHover }, dropTarget] = useDrop(() => ({
+    accept: "ingredient",
+    drop: (item, monitor) => { 
+      dropHandler(item);
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver()
+    }),
+  }));
 
   return (
     buns.length && (
@@ -126,8 +126,7 @@ export default function BurgerConstructor() {
         </div>
       </>
     )
-  );
-      
+  );     
 }   
 
  

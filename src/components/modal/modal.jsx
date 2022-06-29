@@ -8,15 +8,9 @@ import PropTypes from "prop-types";
 
 const modalsContainer = document.querySelector("#modals");
 
-export default function Modal({
-  title,
-  onOverlayClick,
-  onEscKeyDown,
-  children,
-}) {
-  useEffect(() => {
-    document.addEventListener("keydown", onEscKeyDown);
+export default function Modal({ title, onOverlayClick, onEscKeyDown, children }) {
 
+  useEffect(() => { document.addEventListener("keydown", onEscKeyDown);
     return () => {
       document.removeEventListener("keydown", onEscKeyDown);
     };
