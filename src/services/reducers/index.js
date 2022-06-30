@@ -70,21 +70,15 @@ export const dataReducer = (state = initialState, action) => {
 export const constructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ITEM: {
+      let ingredientAmount = state.burgerIngredients.fillings.filter(function(item){return item._id === action.item._id}).length + 1; 
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
-          fillings: [
-            ...state.burgerIngredients.fillings.map((item) => ({
-              ...item,
-              count: (item.count || 1) + (item._id === action.item._id),
-            })),
-            ...(state.burgerIngredients.fillings.some(
-              (item) => item._id === action.item._id
-            )
-              ? []
-              : 
-              [{ ...action.item, count: 1 }]),
+          fillings: 
+          [...state.burgerIngredients.fillings.map((item) => 
+            ({...item, added: ingredientAmount})),
+            ...[{ ...action.item, added: 1, count: ingredientAmount }],
           ],
         },
       };
