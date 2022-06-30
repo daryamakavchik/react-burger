@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -22,7 +22,7 @@ export default function BurgerConstructor() {
   const isLoading = useSelector((store) => store.ord.isLoading);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
   
-  const { bun, content, dragcontent } = useSelector((store) => ({
+  const { bun, content } = useSelector((store) => ({
     bun: store.constr.burgerIngredients.bun,
     content: store.constr.burgerIngredients.fillings
   }));
@@ -34,14 +34,11 @@ export default function BurgerConstructor() {
     dispatch(deleteItem(item));
   };
 
-  const [{ isHover }, dropTarget] = useDrop(() => ({
+  const [, dropTarget] = useDrop(() => ({
     accept: "ingredient",
     drop: (item, monitor) => { 
       dropHandler(item);
     },
-    collect: (monitor) => ({
-      isHover: monitor.isOver()
-    }),
   }));
 
 
@@ -74,18 +71,20 @@ export default function BurgerConstructor() {
     <>
       <div className={styles.components} ref={dropTarget}>
         {!bun && content.length === 0 && (
-          <p className="text text_type_main-medium">
+          <div className={styles.subtitle}>
+            <p className="text text_type_main-medium">
             Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
-          </p>
+            </p>
+          </div>
         )}
         {!bun && content.length > 0 && (
-          <p className={`${styles.subtitle} text text_type_main-medium`}>
-            Осталось добавить булку 👀
+          <p className={`${styles.subtitlebun} text text_type_main-medium`}>
+            Осталось добавить булку <span role="img" aria-label="eyes">👀</span>
           </p>
         )}
         {bun && content.length === 0 && (
-          <p className={`${styles.subtitle} text text_type_main-medium`}>
-            Осталось добавить начинку 👀
+          <p className={`${styles.subtitlemain} text text_type_main-medium`}>
+            Осталось добавить начинку <span role="img" aria-label="eyes">👀</span>
           </p>
         )}
         {bun && (

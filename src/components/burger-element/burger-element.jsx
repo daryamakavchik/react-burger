@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -52,7 +52,7 @@ export default function BurgerElement({ item, index, handleClose }) {
     },
   });
 
-  const opacity = isDrag ? 0 : 1;
+  const opacity = isDrag ? 0.5 : 1;
   drag(drop(ref));
 
   return (
