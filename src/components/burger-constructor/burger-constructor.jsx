@@ -7,48 +7,47 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import {
-  handleDrop,
-  deleteItem,
-  UPDATE_ITEMS,
-  openOrderModal,
-  closeOrderModal,
+    onDropHandler,
+    deleteItem,
+    openOrderModal,
+    closeOrderModal,
 } from "../../services/actions";
 import { useDrop } from "react-dnd";
 import BurgerElement from "../burger-element/burger-element";
 import { v4 as uuidv4 } from "uuid";
 
 export default function BurgerConstructor() {
+  const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
   const isLoading = useSelector((store) => store.ord.isLoading);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
-
-  const { bun, content } = useSelector((store) => ({
+  
+  const { bun, content, dragcontent } = useSelector((store) => ({
     bun: store.constr.burgerIngredients.bun,
-    content: store.constr.burgerIngredients.fillings,
+    content: store.constr.burgerIngredients.fillings
   }));
 
-  const dispatch = useDispatch();
   const dropHandler = (item) => {
-    dispatch(handleDrop(item));
+    dispatch(onDropHandler(item));
   };
   const deleteHandler = (item) => {
     dispatch(deleteItem(item));
   };
 
+  const [{ isHover }, dropTarget] = useDrop(() => ({
+    accept: "ingredient",
+    drop: (item, monitor) => { 
+      dropHandler(item);
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver()
+    }),
+  }));
+
+
   const bunsPrice = bun && bun.price * 2;
   const bunIdArr = bun && [`${bun._id}, ${bun._id}`];
   const orderData = Array.from(content.map((el) => el._id)).concat(bunIdArr);
-
-  const moveItem = useCallback(
-    (dragIndex, hoverIndex) => {
-      dispatch({
-        type: UPDATE_ITEMS,
-        fromIndex: dragIndex,
-        toIndex: hoverIndex,
-      });
-    },
-    [dispatch]
-  );
 
   const openModal = () => {
     dispatch(openOrderModal(orderData), [dispatch]);
@@ -70,13 +69,6 @@ export default function BurgerConstructor() {
   useEffect(() => {
     setTotalPrice(total);
   }, [totalPrice, setTotalPrice]);
-
-  const [, dropTarget] = useDrop(() => ({
-    accept: "ingredient",
-    drop: (item) => {
-      dropHandler(item);
-    },
-  }));
 
   return (
     <>
@@ -115,7 +107,6 @@ export default function BurgerConstructor() {
                   key={uuidv4()}
                   item={item}
                   handleClose={() => deleteHandler(item)}
-                  moveItem={moveItem}
                   index={index}
                 />
               )

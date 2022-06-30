@@ -35,7 +35,7 @@ export const setIngredientsData = () => {
   };
 };
 
-export const handleDrop = (item) => {
+export const onDropHandler = (item) => {
   return function(dispatch) {
     if (item.type !== 'bun' && item.dragged === undefined) {
       dispatch({
@@ -103,3 +103,11 @@ export const closeOrderModal = () => {
     });
   };
 };
+
+export const updateItems = () => {
+  return function(dispatch) {
+    dispatch({
+      type: UPDATE_ITEMS
+    })
+  }
+}

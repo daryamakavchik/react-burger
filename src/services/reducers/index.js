@@ -92,7 +92,6 @@ export const constructorReducer = (state = initialState, action) => {
         }
       }
     }
- 
     case DELETE_ITEM: {
       return {
         ...state,
@@ -206,5 +205,5 @@ export const rootReducer = combineReducers({
   data: dataReducer,
   constr: constructorReducer,
   ingr: currentIngredientReducer,
-  ord: orderReducer,
+  ord: orderReducer
 });
