@@ -12,12 +12,12 @@ export const fetchData = async () => {
   checkResponse(res));
 };
 
-export const apiPostOrder = (orderData) => {
-  return fetch(`${baseUrl}orders`, {
+export const apiPostOrder = async (orderData) => {
+  return await fetch(`${baseUrl}orders`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      ingredients: orderData,
+      "ingredients": orderData
     }),
   }).then(res => 
   checkResponse(res));

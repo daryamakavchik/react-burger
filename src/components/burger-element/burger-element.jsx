@@ -5,7 +5,6 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import { UPDATE_ITEMS } from "../../services/actions";
 import PropTypes from "prop-types";
 import styles from "../burger-constructor/burger-constructor.module.css";
-import { v4 as uuidv4 } from "uuid";
 
 export default function BurgerElement({ item, index, handleClose }) {
   const dispatch = useDispatch();
@@ -57,7 +56,6 @@ export default function BurgerElement({ item, index, handleClose }) {
 
   return (
     <li
-      key={uuidv4()}
       className={styles.component}
       ref={ref}
       style={{ opacity }}

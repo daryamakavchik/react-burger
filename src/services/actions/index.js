@@ -1,4 +1,5 @@
 import { apiPostOrder, fetchData } from "../../utils/api";
+import { v4 as uuidv4 } from "uuid";
 export const GET_DATA_REQUEST = "GET_DATA_REQUEST";
 export const GET_DATA_SUCCESS = "GET_DATA_SUCCESS";
 export const GET_DATA_FAILED = "GET_DATA_FAILED";
@@ -41,12 +42,13 @@ export const onDropHandler = (item) => {
       dispatch({
         type: ADD_ITEM,
         item: item,
+        key: uuidv4()
       });
     }
     else {
       dispatch({
         type: ADD_BUN,
-        item: item
+        item: item,
       })
     }
   };

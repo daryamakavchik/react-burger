@@ -78,7 +78,7 @@ export const constructorReducer = (state = initialState, action) => {
           fillings: 
           [...state.burgerIngredients.fillings.map((item) => 
             ({...item, added: ingredientAmount})),
-            ...[{ ...action.item, added: 1, count: ingredientAmount }],
+            ...[{ ...action.item, added: 1, key: action.key, count: ingredientAmount }],
           ],
         },
       };

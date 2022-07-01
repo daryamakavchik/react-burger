@@ -14,11 +14,12 @@ import {
 } from "../../services/actions";
 import { useDrop } from "react-dnd";
 import BurgerElement from "../burger-element/burger-element";
-import { v4 as uuidv4 } from "uuid";
+
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
+
   const isLoading = useSelector((store) => store.ord.isLoading);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
   
@@ -41,10 +42,9 @@ export default function BurgerConstructor() {
     },
   }));
 
-
   const bunsPrice = bun && bun.price * 2;
-  const bunIdArr = bun && [`${bun._id}, ${bun._id}`];
-  const orderData = Array.from(content.map((el) => el._id)).concat(bunIdArr);
+  const bunIdArr = bun && [`${bun._id}`];
+  const orderData = bun && content && Array.from(content.map((el) => el._id)).concat(bunIdArr).concat(bunIdArr);
 
   const openModal = () => {
     dispatch(openOrderModal(orderData), [dispatch]);
@@ -103,7 +103,7 @@ export default function BurgerConstructor() {
             (item, index) =>
               item.count > 0 && (
                 <BurgerElement
-                  key={uuidv4()}
+                  key={item.key}
                   item={item}
                   handleClose={() => deleteHandler(item)}
                   index={index}

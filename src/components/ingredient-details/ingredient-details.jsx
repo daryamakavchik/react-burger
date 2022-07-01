@@ -1,5 +1,4 @@
 import React from 'react';
-import { ingredientsPropTypes } from "../../utils/proptypes";
 import styles from "./ingredient-details.module.css";
 import { useSelector } from 'react-redux';
 
@@ -38,6 +37,3 @@ export default function IngredientDetails() {
     </>
   );
 }
-
-
-IngredientDetails.propTypes = ingredientsPropTypes.isRequired;
