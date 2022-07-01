@@ -1,3 +1,4 @@
+import React from 'react';
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BurgerIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ListIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,10 +8,10 @@ import styles from "./app-header.module.css";
 function AppHeader() {
 
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <ul className={styles.headernavigation}>
         <li className={styles.headernav}>
-          <a className={styles.headernav} href='#'>
+          <a className={styles.headernav} href='#top'>
           <BurgerIcon type="secondary" />
           <div
             className={`${styles.icon} p-2`}
@@ -20,7 +21,7 @@ function AppHeader() {
           </a>
         </li>
         <li className={styles.headernav}>
-        <a className={styles.headernav} href='#'>
+        <a className={styles.headernav} href='#top'>
           <ListIcon type="secondary" />
           <div
             className={`${styles.icon} p-2`}
@@ -33,7 +34,7 @@ function AppHeader() {
           <Logo />
         </li>
         <li className={styles.headernav}>
-          <a className={styles.headernav} href='#'>
+          <a className={styles.headernav} href='#top'>
           <ProfileIcon type="secondary" />
           <div
             className={`${styles.icon} p-2`}
@@ -43,7 +44,7 @@ function AppHeader() {
           </a>
         </li>
       </ul>
-    </div>
+    </header>
   );
 }
 
