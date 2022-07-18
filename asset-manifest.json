@@ -1,0 +1,18 @@
+{
+  "main.css": "./static/css/main.fe584b46.chunk.css",
+  "main.js": "./static/js/main.abb4a1c8.chunk.js",
+  "main.js.map": "./static/js/main.abb4a1c8.chunk.js.map",
+  "static/css/1.1cdba2ab.chunk.css": "./static/css/1.1cdba2ab.chunk.css",
+  "static/js/1.aa28d493.chunk.js": "./static/js/1.aa28d493.chunk.js",
+  "static/js/1.aa28d493.chunk.js.map": "./static/js/1.aa28d493.chunk.js.map",
+  "runtime~main.js": "./static/js/runtime~main.4a686d48.js",
+  "runtime~main.js.map": "./static/js/runtime~main.4a686d48.js.map",
+  "static/media/burger-ingredients.module.css": "./static/media/Iceland-Regular.b2cd5834.woff",
+  "static/media/order-details.module.css": "./static/media/graphics.0c0abc28.svg",
+  "static/media/fonts.css": "./static/media/iceland.44e2d48c.woff2",
+  "static/css/1.1cdba2ab.chunk.css.map": "./static/css/1.1cdba2ab.chunk.css.map",
+  "static/css/main.fe584b46.chunk.css.map": "./static/css/main.fe584b46.chunk.css.map",
+  "index.html": "./index.html",
+  "precache-manifest.688c784ee9c5be83790940d29ce97acd.js": "./precache-manifest.688c784ee9c5be83790940d29ce97acd.js",
+  "service-worker.js": "./service-worker.js"
+}
