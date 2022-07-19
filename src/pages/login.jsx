@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import styles from './login.module.css';
-import { EmailInput, Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
+import { RegisterPage } from './register';
 
 export function LoginPage() {
-  const [emailValue, setEmailValue] = useState('E-mail')
-  const [passwordValue, setPasswordValue] = useState('password')
+  const [emailValue, setEmailValue] = useState('E-mail');
+  const [passwordValue, setPasswordValue] = useState('password');
   const onPasswordChange = e => {
     setPasswordValue(e.target.value)
   }
@@ -15,17 +17,17 @@ export function LoginPage() {
    <div className={styles.container}>
       <p className="text text_type_main-medium">Вход</p>
       <div className={styles.email}>
-      <Input style={{width: 480, color: '#8585AD'}}  onChange={onEmailChange} value={emailValue} name={'email'} />
+      <EmailInput onChange={onEmailChange} name={'email'} />
       </div>
       <div className={styles.password}>
-      <PasswordInput style={{width: 480}} className={styles.password} onChange={onPasswordChange} value={passwordValue} name={'password'} />
+      <PasswordInput className={styles.password} onChange={onPasswordChange} name={'password'} />
       </div>
       <div className={styles.button}>
-      <Button className={styles.button} type="primary" size="large">Войти</Button>
+      <Button type="primary" size="large">Войти</Button>
       </div>
       <div className={styles.textcontainer}>
       <p className={`${styles.text} text text_type_main-default text_color_inactive`}>Вы - новый пользователь?</p>
-      <p className={`${styles.activetext} text text_type_main-default`}>Зарегистрироваться</p>
+      <Link to='/register' className={`${styles.activetext} text text_type_main-default`}>Зарегистрироваться</Link>
       </div>
       <div className={styles.textcontainer}>
         <p className={`${styles.text} text text_type_main-default text_color_inactive`}>Забыли пароль?</p>
