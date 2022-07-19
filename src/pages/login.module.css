@@ -1,0 +1,47 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    text-align: center;
+    width: 480px;
+    align-items: center;
+}
+
+.email{
+    margin: 24px 0 0 0;
+}
+
+.password{
+    margin: 24px 0 24px 0;
+}
+.button{
+    margin-bottom: 80px;
+}
+.text{
+    margin-right: 8px;
+    margin-bottom: 16px;
+    line-height: 1;
+}
+
+.activetext{
+    color: #4C4CFF;
+}
+.textcontainer{
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.input_size_default{
+    width: 480px;
+}
+
+.input__container{
+    width: 480px;
+}
