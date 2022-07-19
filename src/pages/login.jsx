@@ -31,7 +31,7 @@ export function LoginPage() {
       </div>
       <div className={styles.textcontainer}>
         <p className={`${styles.text} text text_type_main-default text_color_inactive`}>Забыли пароль?</p>
-        <p className={`${styles.activetext} text text_type_main-default`}>Восстановить пароль</p>
+        <Link to='/forgot-password' className={`${styles.activetext} text text_type_main-default`}>Восстановить пароль</Link>
       </div>
    </div>
   );
