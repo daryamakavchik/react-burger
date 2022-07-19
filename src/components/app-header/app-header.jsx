@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BurgerIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ListIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
+import { useHistory } from 'react-router-dom';
 
 function AppHeader() {
-
+  const history = useHistory();
+  const onClick = useCallback(() => {
+    history.replace({ pathname: '/login' });
+},
+[history]
+);
   return (
     <header className={styles.header}>
       <ul className={styles.headernavigation}>
@@ -37,7 +43,9 @@ function AppHeader() {
           <a className={styles.headernav} href='#top'>
           <ProfileIcon type="secondary" />
           <div
+            to='/login'
             className={`${styles.icon} p-2`}
+            onClick={onClick}
           >
             Личный кабинет
           </div>
