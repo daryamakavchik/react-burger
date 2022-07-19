@@ -20,5 +20,5 @@ code {
   border: 3px solid #8585AD;
 } 
 ::-webkit-scrollbar{ 
-	width: 8px;  /*Толщина скролла*/
+	width: 8px;
 }
