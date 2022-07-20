@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import styles from './login.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { RegisterPage } from './register';
 
 export function LoginPage() {
   const [emailValue, setEmailValue] = useState('E-mail');

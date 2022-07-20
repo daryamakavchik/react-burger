@@ -1,0 +1,38 @@
+.container{
+    display: flex;
+    max-width: 1280px;
+    margin: 80px auto 0 auto;
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+    max-width: 860px;
+    flex-wrap: wrap;
+}
+
+.navigation{
+    display: flex;
+    flex-direction: column;
+}
+
+.text{
+    line-height: 64px;
+    color: #8585AD;
+}
+
+.text:nth-child(1){
+    color: white;
+}
+
+.inputs{
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 24px;
+    margin-left: 60px;
+}
+
+.subtext{
+    margin-top: 32px;
+    max-width: 320px;
+}

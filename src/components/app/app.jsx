@@ -5,12 +5,16 @@ import { HomePage } from "../../pages/home";
 import { LoginPage } from "../../pages/login";
 import { RegisterPage } from "../../pages/register";
 import { ResetPasswordPage } from "../../pages/reset-password";
+import { ProfilePage } from "../../pages/profile";
 
 function App() {
   return (
     <>
           <Router>
             <Switch>
+            <Route path="/profile">
+                <ProfilePage />
+              </Route>
               <Route path="/login">
                 <LoginPage />
               </Route>

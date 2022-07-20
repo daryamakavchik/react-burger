@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 function AppHeader() {
   const history = useHistory();
   const onClick = useCallback(() => {
-    history.replace({ pathname: '/login' });
+    history.replace({ pathname: '/profile' });
 },
 [history]
 );
@@ -43,7 +43,7 @@ function AppHeader() {
           <a className={styles.headernav} href='#top'>
           <ProfileIcon type="secondary" />
           <div
-            to='/login'
+            to='/profile'
             className={`${styles.icon} p-2`}
             onClick={onClick}
           >
