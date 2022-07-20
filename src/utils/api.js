@@ -46,6 +46,18 @@ export const apiPasswordSave = async (password, token) => {
   checkResponse(res)).then((fin) => console.log(fin));
 };
 
+export const apiLoginUser = async (email, password) => {
+  return await fetch(`${baseUrl}auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      "email": email, 
+      "password": password
+  }),
+  }).then(res => 
+  checkResponse(res));
+};
+
 export const apiSetNewUser= async (name, email, password) => {
   return await fetch(`${baseUrl}auth/register`, {
     method: "POST",
