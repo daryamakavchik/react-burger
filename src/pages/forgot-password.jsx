@@ -1,19 +1,28 @@
 import React, {useState} from 'react';
 import styles from './forgotpassword.module.css';
 import {EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { apiPasswordReset } from '../utils/api';
 
 export function ForgotPasswordPage() {
   const [emailValue, setEmailValue] = useState('');
+  const history = useHistory();
 
   const onEmailChange = e => {
     setEmailValue(e.target.value)
   }
 
+  const redirectOnSuccess = () => {
+    history.replace({ 
+      pathname: '/reset-password',
+      state: { from: '/forgot-password' }
+    });
+  }
+
   const resetPassword = (e) => {
     e.preventDefault();
-    apiPasswordReset(emailValue);
+    apiPasswordReset(emailValue, redirectOnSuccess);
+    setEmailValue('');
   }
 
   return (

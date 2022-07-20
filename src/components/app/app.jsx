@@ -4,6 +4,7 @@ import { ForgotPasswordPage } from "../../pages/forgot-password";
 import { HomePage } from "../../pages/home";
 import { LoginPage } from "../../pages/login";
 import { RegisterPage } from "../../pages/register";
+import { ResetPasswordPage } from "../../pages/reset-password";
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
               </Route>
               <Route path="/forgot-password">
                 <ForgotPasswordPage />
+              </Route>
+              <Route path="/reset-password">
+                <ResetPasswordPage />
               </Route>
               <Route path="/" exact={true}>
                 <HomePage />
