@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 import styles from './register.module.css';
 import {Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { apiSetNewUser } from '../utils/api';
+import { registerUser } from '../services/actions/auth';
+import { useDispatch } from 'react-redux';
 
 export function RegisterPage() {
+  const dispatch = useDispatch();
   const [emailValue, setEmailValue] = useState('E-mail');
   const [passwordValue, setPasswordValue] = useState('password');
   const [nameValue, setNameValue] = useState('');
@@ -17,9 +19,6 @@ export function RegisterPage() {
   }
   const onEmailChange = e => {
     setEmailValue(e.target.value)
-  }
-  const register = () => {
-    apiSetNewUser(nameValue, emailValue, passwordValue);
   }
 
   return (
@@ -42,7 +41,7 @@ export function RegisterPage() {
       <PasswordInput className={styles.password} onChange={onPasswordChange} name={'password'} />
       </div>
       <div className={styles.button}>
-      <Button type="primary" size="large" onClick={register}>Зарегистрироваться</Button>
+      <Button type="primary" size="large" onClick={() => dispatch(registerUser(nameValue, emailValue, passwordValue))}>Зарегистрироваться</Button>
       </div>
       <div className={styles.textcontainer}>
       <p className={`${styles.text} text text_type_main-default text_color_inactive`}>Уже зарегистрированы?</p>
