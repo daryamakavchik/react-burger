@@ -7,11 +7,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import AppHeader from "../components/app-header/app-header";
+import { useSelector } from "react-redux";
 
 export function ProfilePage() {
-  const [loginValue, setLoginValue] = useState("mail@stellar.burgers");
-  const [passwordValue, setPasswordValue] = useState("password");
-  const [nameValue, setNameValue] = useState("");
+  const userName = useSelector(store => store.user.user.name);
+  const userLogin = useSelector(store => store.user.user.email);
+  const userPassword = useSelector(store => store.user.user.password);
+
+  const [nameValue, setNameValue] = useState(userName);
+  const [loginValue, setLoginValue] = useState(userLogin);
+  const [passwordValue, setPasswordValue] = useState(userPassword);
 
   const onNameChange = (e) => {
     setNameValue(e.target.value);
@@ -37,7 +42,7 @@ export function ProfilePage() {
       <div className={styles.inputs}>
         <Input
           type={"text"}
-          placeholder={"Имя"}
+          // placeholder={"Имя"}
           onChange={onNameChange}
           value={nameValue}
           name={"name"}
@@ -57,7 +62,7 @@ export function ProfilePage() {
             className={styles.password}
             onChange={onPasswordChange}
             name={"password"}
-            // value={passwordValue}
+            value={passwordValue}
           />
         </div>
       </div>

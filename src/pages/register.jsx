@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom';
 import { registerUser } from '../services/actions/auth';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useCallback } from 'react';
 
 export function RegisterPage() {
   const dispatch = useDispatch();
   const history = useHistory();
+
   const [emailValue, setEmailValue] = useState('E-mail');
   const [passwordValue, setPasswordValue] = useState('password');
   const [nameValue, setNameValue] = useState('');
@@ -31,6 +33,13 @@ export function RegisterPage() {
     });
   }
 
+  const onRegisterClick = useCallback((e) => {
+    e.preventDefault();
+    dispatch(registerUser(nameValue, emailValue, passwordValue, redirectOnSuccess));
+  }, [emailValue, nameValue, passwordValue]);
+
+
+
   return (
    <div className={styles.container}>
       <p className={`${styles.title} text text_type_main-medium`}>Регистрация</p>
@@ -51,7 +60,7 @@ export function RegisterPage() {
       <PasswordInput className={styles.password} onChange={onPasswordChange} name={'password'} />
       </div>
       <div className={styles.button}>
-      <Button type="primary" size="large" onClick={() => dispatch(registerUser(nameValue, emailValue, passwordValue, redirectOnSuccess))}>Зарегистрироваться</Button>
+      <Button type="primary" size="large" onClick={onRegisterClick}>Зарегистрироваться</Button>
       </div>
       <div className={styles.textcontainer}>
       <p className={`${styles.text} text text_type_main-default text_color_inactive`}>Уже зарегистрированы?</p>
