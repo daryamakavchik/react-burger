@@ -1,4 +1,5 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER, GET_USER } from "../actions/auth";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER, GET_USERINFO_REQUEST, GET_USERINFO_SUCCESS, GET_USERINFO_FAILED, REFRESH_TOKEN_REQUEST, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_FAILED, refreshToken } from "../actions/auth";
+import { refreshTokenAction } from "../actions/auth";
 
 const initialUserState = {
     login: false,
@@ -52,8 +53,46 @@ export const userReducer = (state = initialUserState, action) => {
           hasError: true
         };
       }
-      case GET_USER: {
-        console.log('success');
+      case GET_USERINFO_REQUEST: {
+        return {
+          ...state,
+          isLoading: true
+        }
+      }
+      case GET_USERINFO_SUCCESS: {
+        return {
+          ...state,
+          isLoading: false
+        }
+      }
+      case GET_USERINFO_FAILED: {
+        refreshTokenAction(action.refreshToken);
+        return {
+          ...state,
+          isLoading: false,
+          hasError: true
+        }
+      }
+      case REFRESH_TOKEN_REQUEST: {
+        return {
+          ...state,
+          isLoading: true
+      }
+      }
+      case REFRESH_TOKEN_SUCCESS: {
+        return {
+          ...state,
+          isLoading: false,
+          accessToken: action.accessToken,
+          refreshToken: action.refreshToken,
+      }
+    }
+      case REFRESH_TOKEN_FAILED: {
+        return {
+          ...state,
+          isLoading: false,
+          hasError: true
+      }
       }
     default: {
       return state;

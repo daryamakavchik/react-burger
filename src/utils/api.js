@@ -79,8 +79,23 @@ export const apiUserRequest = async (token) =>
     credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: token
+      'Authorization': token
     },
     redirect: 'follow',
     referrerPolicy: 'no-referrer'
-  }); 
+  }).then((res) => checkResponse(res)); 
+
+  export const apiRefreshToken = async (token) => {
+    await fetch(`${baseUrl}auth/token`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        "token": token
+      }
+  })
+}
