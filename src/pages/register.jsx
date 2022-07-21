@@ -4,9 +4,11 @@ import {Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-dev
 import { Link } from 'react-router-dom';
 import { registerUser } from '../services/actions/auth';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 export function RegisterPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [emailValue, setEmailValue] = useState('E-mail');
   const [passwordValue, setPasswordValue] = useState('password');
   const [nameValue, setNameValue] = useState('');
@@ -20,6 +22,13 @@ export function RegisterPage() {
   }
   const onEmailChange = e => {
     setEmailValue(e.target.value)
+  }
+
+  const redirectOnSuccess = () => {
+    history.replace({ 
+      pathname: '/',
+      state: { from: '/register' }
+    });
   }
 
   return (
@@ -42,7 +51,7 @@ export function RegisterPage() {
       <PasswordInput className={styles.password} onChange={onPasswordChange} name={'password'} />
       </div>
       <div className={styles.button}>
-      <Button type="primary" size="large" onClick={() => dispatch(registerUser(nameValue, emailValue, passwordValue))}>Зарегистрироваться</Button>
+      <Button type="primary" size="large" onClick={() => dispatch(registerUser(nameValue, emailValue, passwordValue, redirectOnSuccess))}>Зарегистрироваться</Button>
       </div>
       <div className={styles.textcontainer}>
       <p className={`${styles.text} text text_type_main-default text_color_inactive`}>Уже зарегистрированы?</p>

@@ -3,7 +3,9 @@ import { apiLoginUser, apiRegisterUser, apiUserRequest, apiRefreshToken } from "
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
-export const REGISTER = "REGISTER";
+export const REGISTER_REQUEST = "REGISTER_REQUEST";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAILED = "REGISTER_FAILED";
 export const GET_USERINFO_REQUEST = "GET_USERINFO_REQUEST";
 export const GET_USERINFO_SUCCESS = "GET_USERINFO_SUCCESS";
 export const GET_USERINFO_FAILED = "GET_USERINFO_FAILED";
@@ -39,20 +41,29 @@ export const loginUser = (email, password, redirectFunc) => {
   };
 };
 
-export const registerUser = (name, email, password) => {
+export const registerUser = (name, email, password, redirectFunc) => {
   return function(dispatch) {
-    return apiRegisterUser(name, email, password).then((res) => {
+    dispatch({
+      type: REGISTER_REQUEST,
+    });
+    apiRegisterUser(name, email, password).then((res) => {
       if (res && res.success) {
         const authToken = res.accessToken.split("Bearer ")[1];
         const refreshToken = res.refreshToken;
         setCookie("token", authToken);
         localStorage.setItem("refreshToken", refreshToken);
         dispatch({
-          type: REGISTER,
+          type: REGISTER_SUCCESS,
           name: name,
           email: email,
           password: password,
+          accessToken: res.accessToken,
           refreshToken: res.refreshToken,
+        });
+        redirectFunc();
+      } else {
+        dispatch({
+          type: REGISTER_FAILED,
         });
       }
     });

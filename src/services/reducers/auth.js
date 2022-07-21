@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER, GET_USERINFO_REQUEST, GET_USERINFO_SUCCESS, GET_USERINFO_FAILED, REFRESH_TOKEN_REQUEST, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_FAILED, refreshToken } from "../actions/auth";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILED, GET_USERINFO_REQUEST, GET_USERINFO_SUCCESS, GET_USERINFO_FAILED, REFRESH_TOKEN_REQUEST, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_FAILED, refreshToken } from "../actions/auth";
 import { refreshTokenAction } from "../actions/auth";
 
 const initialUserState = {
@@ -10,23 +10,35 @@ const initialUserState = {
     },
     isLoading: false,
     hasError: false,
-    accessToken: '',
-    refreshToken: ''
 }
 
 export const userReducer = (state = initialUserState, action) => {
   switch (action.type) {
-    case REGISTER: {
+    case REGISTER_REQUEST: {
+      return {
+        ...state,
+        isLoading: true
+        }
+      }
+    case REGISTER_SUCCESS: {
       return {
         ...state,
         user: {
           name: action.name,
           email: action.email,
           password: action.password,
-          accessToken: action.refreshToken
+          refreshToken: action.refreshToken,
+          accessToken: action.accessToken
         }
       };
     }
+    case REGISTER_FAILED: {
+      return {
+        ...state,
+        isLoading: false,
+        hasError: true
+        }
+      }
     case LOGIN_REQUEST: {
       return {
         ...state,
@@ -37,12 +49,12 @@ export const userReducer = (state = initialUserState, action) => {
         return {
           ...state,
           isLoading: false,
-          accessToken: action.accessToken,
-          refreshToken: action.refreshToken,
           user: {
             ...state.user,
             email: action.email,
-            password: action.password
+            password: action.password,
+            accessToken: action.accessToken,
+            refreshToken: action.refreshToken,
           }
         };
       }
@@ -83,8 +95,10 @@ export const userReducer = (state = initialUserState, action) => {
         return {
           ...state,
           isLoading: false,
-          accessToken: action.accessToken,
-          refreshToken: action.refreshToken,
+          user: {
+            accessToken: action.accessToken,
+            refreshToken: action.refreshToken
+          }
       }
     }
       case REFRESH_TOKEN_FAILED: {
