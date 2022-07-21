@@ -35,7 +35,7 @@ export const userReducer = (state = initialState, action) => {
         };
       }
       case GET_USER: {
-     console.log('success');
+        console.log('success');
       }
     default: {
       return state;

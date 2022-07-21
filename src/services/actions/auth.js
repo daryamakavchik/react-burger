@@ -38,9 +38,9 @@ export const registerUser = (name, email, password) => {
   };
 };
 
-export const getUser = (redirectOnSuccess) => {
+export const getUserInfo = () => {
   return function(dispatch) {
-    return apiUserRequest(redirectOnSuccess).then((res) => {
+    return apiUserRequest().then((res) => {
     if (res && res.success) {
         dispatch({
           type: GET_USER
