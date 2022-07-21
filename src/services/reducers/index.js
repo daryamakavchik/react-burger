@@ -14,7 +14,7 @@ import {
   DELETE_ITEM,
   UPDATE_ITEMS,
 } from "../actions";
-import { userReducer } from './auth';
+import { userReducer } from "./auth";
 
 export const initialState = {
   isLoading: false,

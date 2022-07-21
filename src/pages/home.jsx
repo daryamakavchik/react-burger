@@ -10,8 +10,10 @@ import { getUserInfo } from "../services/actions/auth";
 export function HomePage() {
   const dispatch = useDispatch();
   const isLoading = useSelector((store) => store.data.isLoading);
+  const accessToken = useSelector(store => store.user.accessToken);
+  console.log(accessToken);
 
-  useEffect(() => dispatch(getUserInfo()), [dispatch]);
+  useEffect(() => dispatch(getUserInfo(accessToken)), [dispatch]);
 
   return (
     <div className={styles.page}>

@@ -10,6 +10,7 @@ export function RegisterPage() {
   const [emailValue, setEmailValue] = useState('E-mail');
   const [passwordValue, setPasswordValue] = useState('password');
   const [nameValue, setNameValue] = useState('');
+  
   const onNameChange = e => {
     setNameValue(e.target.value)
   }

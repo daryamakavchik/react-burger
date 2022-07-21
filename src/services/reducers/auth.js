@@ -1,18 +1,19 @@
-import { LOGIN, REGISTER, GET_USER } from "../actions/auth";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER, GET_USER } from "../actions/auth";
 
-const initialState = {
+const initialUserState = {
     login: false,
     user: {
         name: '',
         email: '',
         password: '',
-        accessToken: ''
     },
     isLoading: false,
-    hasError: false
+    hasError: false,
+    accessToken: '',
+    refreshToken: ''
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialUserState, action) => {
   switch (action.type) {
     case REGISTER: {
       return {
@@ -21,17 +22,34 @@ export const userReducer = (state = initialState, action) => {
           name: action.name,
           email: action.email,
           password: action.password,
-          accessToken: action.accessToken
+          accessToken: action.refreshToken
         }
       };
     }
-    case LOGIN: {
+    case LOGIN_REQUEST: {
+      return {
+        ...state,
+        isLoading: true
+        }
+      }
+    case LOGIN_SUCCESS: {
         return {
           ...state,
+          isLoading: false,
+          accessToken: action.accessToken,
+          refreshToken: action.refreshToken,
           user: {
+            ...state.user,
             email: action.email,
             password: action.password
           }
+        };
+      }
+      case LOGIN_FAILED: {
+        return {
+          ...state,
+          isLoading: false,
+          hasError: true
         };
       }
       case GET_USER: {
