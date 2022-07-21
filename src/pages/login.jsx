@@ -6,7 +6,7 @@ import { loginUser } from '../services/actions/auth';
 import { useDispatch } from 'react-redux';
 
 export function LoginPage() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [emailValue, setEmailValue] = useState('E-mail');
   const [passwordValue, setPasswordValue] = useState('password');
 
