@@ -2,7 +2,7 @@ import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_REQUEST, REGISTER_
 import { refreshTokenAction } from "../actions/auth";
 
 const initialUserState = {
-    login: false,
+    isUserAuthorized: false,
     user: {
         name: '',
         email: '',
@@ -10,6 +10,7 @@ const initialUserState = {
     },
     isLoading: false,
     hasError: false,
+    isTokenUpdated: false
 }
 
 export const userReducer = (state = initialUserState, action) => {
@@ -49,6 +50,7 @@ export const userReducer = (state = initialUserState, action) => {
         return {
           ...state,
           isLoading: false,
+          isUserAuthorized: true,
           user: {
             ...state.user,
             email: action.email,
@@ -101,6 +103,7 @@ export const userReducer = (state = initialUserState, action) => {
         return {
           ...state,
           isLoading: false,
+          isTokenUpdated: true,
           user: {
             accessToken: action.accessToken,
             refreshToken: action.refreshToken

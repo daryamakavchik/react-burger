@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { ProtectedRoute } from "../protected-route";
 import { ForgotPasswordPage } from "../../pages/forgot-password";
 import { HomePage } from "../../pages/home";
 import { LoginPage } from "../../pages/login";
@@ -12,9 +13,9 @@ function App() {
     <>
           <Router>
             <Switch>
-            <Route path="/profile" exact={true}>
+            <ProtectedRoute path="/profile" exact={true}>
                 <ProfilePage />
-              </Route>
+              </ProtectedRoute>
               <Route path="/login" exact={true}>
                 <LoginPage />
               </Route>
