@@ -74,15 +74,10 @@ export const apiRegisterUser= async (name, email, password) => {
 export const apiUserRequest = async (token) =>
   await fetch(`${baseUrl}auth/user`, {
     method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': token
-    },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer'
+    }
   }).then((res) => checkResponse(res)); 
 
   export const apiRefreshToken = async (token) => {

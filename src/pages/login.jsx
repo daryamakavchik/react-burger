@@ -10,8 +10,8 @@ import { useEffect } from 'react';
 export function LoginPage() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [emailValue, setEmailValue] = useState('E-mail');
-  const [passwordValue, setPasswordValue] = useState('password');
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
 
   const onPasswordChange = e => {
     setPasswordValue(e.target.value)
@@ -31,10 +31,10 @@ export function LoginPage() {
    <div className={styles.container}>
       <p className="text text_type_main-medium">Вход</p>
       <div className={styles.email}>
-      <EmailInput onChange={onEmailChange} name={'email'} />
+      <EmailInput onChange={onEmailChange} name={'email'} value={emailValue}/>
       </div>
       <div className={styles.password}>
-      <PasswordInput className={styles.password} onChange={onPasswordChange} name={'password'} />
+      <PasswordInput className={styles.password} onChange={onPasswordChange} name={'password'} value={passwordValue}/>
       </div>
       <div className={styles.button}>
       <Button type="primary" size="large" onClick={() => dispatch(loginUser(emailValue, passwordValue, redirectOnSuccess))}>Войти</Button>

@@ -1,32 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./profile.module.css";
 import {
   Input,
   EmailInput,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
 import AppHeader from "../components/app-header/app-header";
 import { useSelector } from "react-redux";
+import { useRef } from "react";
+import { NavLink } from "react-router-dom";
 
 export function ProfilePage() {
+  const [state, setState] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
   const userName = useSelector(store => store.user.user.name);
   const userLogin = useSelector(store => store.user.user.email);
   const userPassword = useSelector(store => store.user.user.password);
 
-  const [nameValue, setNameValue] = useState(userName);
-  const [loginValue, setLoginValue] = useState(userLogin);
-  const [passwordValue, setPasswordValue] = useState(userPassword);
+  useEffect(() => {
+    setState((state) => {
+      return {
+        ...state,
+        name: userName,
+        email: userLogin,
+        password: userPassword
+      };
+    });
+  }, [userName, userLogin, userPassword]);
 
   const onNameChange = (e) => {
-    setNameValue(e.target.value);
+    setState({ ...state, name: e.target.value });
   };
 
   const onPasswordChange = (e) => {
-    setPasswordValue(e.target.value);
+    setState({ ...state, password: e.target.value });
   };
   const onLoginChange = (e) => {
-    setLoginValue(e.target.value);
+    setState({ ...state, email: e.target.value });
   };
 
   return (
@@ -34,27 +48,71 @@ export function ProfilePage() {
     <AppHeader />
     <div className={styles.container}>
       <div className={styles.content}>
-      <div className={styles.navigation}>
-        <p className={`${styles.text} text text_type_main-medium`}>Профиль</p>
-        <p className={`${styles.text} text text_type_main-medium`}>История заказов</p>
-        <p className={`${styles.text} text text_type_main-medium`}>Выход</p>
-      </div>
+      <ul className={styles.navigation}>
+        <li>
+          <NavLink
+            exact
+            to='/profile'
+            className={`${styles.text} 
+              'pt-4',
+              'pb-4',
+              'pr-5',
+              'mr-2',
+              'text text_type_main-medium text_color_inactive`}
+            activeClassName={styles.textactive}
+          >
+            <span className={'ml-2'}>Профиль</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            exact
+            to='/profile/orders'
+            className={`${styles.text} 
+              'pt-4',
+              'pb-4',
+              'pr-5',
+              'mr-2',
+              'text text_type_main-medium text_color_inactive`}
+            activeClassName={styles.textactive}
+          >
+            <span className={'ml-2'}>История заказов</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            exact
+            to='/login'
+            className={`${styles.text} 
+              'pt-4',
+              'pb-4',
+              'pr-5',
+              'mr-2',
+              'text text_type_main-medium text_color_inactive`}
+            activeClassName={styles.textactive}
+          >
+            <span className={'ml-2'}>
+              Выход
+            </span>
+          </NavLink>
+        </li>
+      </ul>
       <div className={styles.inputs}>
         <Input
+          style={{ color: '#8585AD'}}
           type={"text"}
-          // placeholder={"Имя"}
+          placeholder={"Имя"}
           onChange={onNameChange}
-          value={nameValue}
+          value={state.name}
           name={"name"}
-          error={false}
-          errorText={"Ошибка"}
-          size={"default"}
+          icon={'EditIcon'}
         />
         <div className={styles.email}>
           <EmailInput
             onChange={onLoginChange}
             name={"login"}
-            value={loginValue}
+            value={state.email}
+            icon={'EditIcon'}
           />
         </div>
         <div className={styles.password}>
@@ -62,13 +120,21 @@ export function ProfilePage() {
             className={styles.password}
             onChange={onPasswordChange}
             name={"password"}
-            value={passwordValue}
+            value={state.password}
           />
         </div>
       </div>
       <p className={`${styles.subtext} text text_type_main-default text_color_inactive`}>В этом разделе вы можете изменить свои персональные данные.</p>
       </div>
       </div>
-    </>
+      </>
   );
 }
+
+
+
+      {/* <div className={styles.navigation}>
+        <p className={`${styles.text} text text_type_main-medium`}>Профиль</p>
+        <p className={`${styles.text} text text_type_main-medium`}>История заказов</p>
+        <p className={`${styles.text} text text_type_main-medium`}>Выход</p>
+      </div> */}

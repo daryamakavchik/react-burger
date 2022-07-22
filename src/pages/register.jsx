@@ -4,7 +4,7 @@ import {Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-dev
 import { Link } from 'react-router-dom';
 import { registerUser } from '../services/actions/auth';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import { useCallback } from 'react';
 
 export function RegisterPage() {
@@ -26,6 +26,16 @@ export function RegisterPage() {
     setEmailValue(e.target.value)
   }
 
+  const hasToken = localStorage.getItem('refreshToken')
+  if (hasToken) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
   const redirectOnSuccess = () => {
     history.replace({ 
       pathname: '/',

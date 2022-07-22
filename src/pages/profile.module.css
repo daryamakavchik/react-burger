@@ -14,14 +14,16 @@
 .navigation{
     display: flex;
     flex-direction: column;
+    list-style-type: none;
 }
 
 .text{
     line-height: 64px;
     color: #8585AD;
+    text-decoration: none;
 }
 
-.text:nth-child(1){
+.textactive{
     color: white;
 }
 

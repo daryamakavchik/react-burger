@@ -74,7 +74,13 @@ export const userReducer = (state = initialUserState, action) => {
       case GET_USERINFO_SUCCESS: {
         return {
           ...state,
-          isLoading: false
+          isLoading: false,
+          user: {
+            ...state.user,
+            name: action.name,
+            email: action.email,
+            password: action.password
+          }
         }
       }
       case GET_USERINFO_FAILED: {

@@ -12,19 +12,19 @@ function App() {
     <>
           <Router>
             <Switch>
-            <Route path="/profile">
+            <Route path="/profile" exact={true}>
                 <ProfilePage />
               </Route>
-              <Route path="/login">
+              <Route path="/login" exact={true}>
                 <LoginPage />
               </Route>
-              <Route path="/register">
+              <Route path="/register" exact={true}>
                 <RegisterPage />
               </Route>
-              <Route path="/forgot-password">
+              <Route path="/forgot-password" exact={true}>
                 <ForgotPasswordPage />
               </Route>
-              <Route path="/reset-password">
+              <Route path="/reset-password" exact={true}>
                 <ResetPasswordPage />
               </Route>
               <Route path="/" exact={true}>

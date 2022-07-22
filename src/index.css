@@ -22,3 +22,7 @@ code {
 ::-webkit-scrollbar{ 
 	width: 8px;
 }
+
+.input__textfield {
+  color: #8585AD !important;
+}

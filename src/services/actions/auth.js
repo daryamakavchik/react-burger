@@ -79,7 +79,10 @@ export const getUserInfo = (token) => {
       if (res && res.success) {
         dispatch({
           type: GET_USERINFO_SUCCESS,
+          name: res.user.name,
+          email: res.user.email
         });
+        console.log(res)
       } else {
         dispatch({
           type: GET_USERINFO_FAILED,
