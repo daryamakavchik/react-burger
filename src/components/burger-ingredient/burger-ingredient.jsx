@@ -24,9 +24,9 @@ export default function BurgerIngredient(props) {
     dispatch(openCurrentIngredient(props), [dispatch]);
   };
 
-  const closeAllModals = () => {
-    dispatch(closeCurrentIngredient(props), [dispatch]);
-  };
+  // const closeAllModals = () => {
+  //   dispatch(closeCurrentIngredient(props), [dispatch]);
+  // };
 
   const [, dragRef] = useDrag(
     () => ({
@@ -44,14 +44,14 @@ export default function BurgerIngredient(props) {
         <img src={props.image} alt='' />
         <p className={styles.optiontext}>{props.name}</p>
       </div>
-      {modalOpen && (
+      {/* {modalOpen && (
         <Modal
           title="Детали ингридиента"
           onClose={closeAllModals}
         >
           <IngredientDetails />
         </Modal>
-      )}
+      )} */}
     </>
   );
 }
