@@ -1,15 +1,17 @@
 import React from 'react';
 import styles from "./ingredient-details.module.css";
 import { useSelector } from 'react-redux';
+import { Route } from 'react-router-dom';
 
 export default function IngredientDetails() {
-  const {image, name, calories, fat, proteins, carbohydrates} = useSelector(store => ({
+  const {image, name, calories, fat, proteins, carbohydrates, _id} = useSelector(store => ({
     image: store.ingr.currentIngredient.image,
     name: store.ingr.currentIngredient.name,
     calories: store.ingr.currentIngredient.calories,
     fat: store.ingr.currentIngredient.fat,
     proteins: store.ingr.currentIngredient.proteins,
     carbohydrates: store.ingr.currentIngredient.carbohydrates,
+    _id: store.ingr.currentIngredient._id,
   }));
 
   return (
