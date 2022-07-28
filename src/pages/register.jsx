@@ -4,7 +4,7 @@ import {Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-dev
 import { Link } from 'react-router-dom';
 import { registerUser } from '../services/actions/auth';
 import { useDispatch } from 'react-redux';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useCallback } from 'react';
 
 export function RegisterPage() {

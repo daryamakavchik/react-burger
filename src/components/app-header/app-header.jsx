@@ -13,6 +13,13 @@ function AppHeader() {
 },
 [history]
 );
+
+const onConstructorClick = useCallback(() => {
+  history.replace({ pathname: '/' });
+},
+[history]
+);
+
   return (
     <header className={styles.header}>
       <ul className={styles.headernavigation}>
@@ -21,6 +28,7 @@ function AppHeader() {
           <BurgerIcon type="secondary" />
           <div
             className={`${styles.icon} p-2`}
+            onClick = {onConstructorClick}
           >
             Конструктор
           </div>

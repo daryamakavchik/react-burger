@@ -58,14 +58,14 @@ export const apiLoginUser = async (email, password) => {
   }).then(res => checkResponse(res))
 }
 
-export const apiLogoutUser = async () => {
+export const apiLogoutUser = async (token) => {
     return await fetch(`${baseUrl}auth/logout`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            token: localStorage.getItem('refreshToken')
+            token: token
         })
       }).then(res => checkResponse(res))
 }

@@ -49,6 +49,13 @@ const token = localStorage.getItem('accessToken');
     setState({ ...state, email: e.target.value });
   };
   const onSave = () => dispatch(updateUser(state.email, state.name, getCookie('token')));
+  const onCancel = () => { setState((state) => {
+    return {
+      ...state,
+      name: userName,
+      email: userLogin,
+      password: userPassword
+    }})};
 
   return (
     <>
@@ -135,7 +142,7 @@ const token = localStorage.getItem('accessToken');
       <div className={styles.footer}>
       <p className={`${styles.subtext} text text_type_main-default text_color_inactive`}>В этом разделе вы можете изменить свои персональные данные.</p>
       <span >
-        <Button size='medium' type='secondary'>Отмена</Button>
+        <Button size='medium' type='secondary' onClick={onCancel}>Отмена</Button>
         <Button onClick={onSave}>Сохранить</Button>
       </span>
       </div>

@@ -53,7 +53,7 @@ export const logoutUser = () => {
     dispatch({
       type: LOGOUT_REQUEST,
     });
-    apiLogoutUser().then((res) => {
+    apiLogoutUser(localStorage.getItem('refreshToken')).then((res) => {
       if (res && res.success) {
         const refreshToken = res.refreshToken;
         localStorage.removeItem("refreshToken", refreshToken);
