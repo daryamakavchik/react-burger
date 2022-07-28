@@ -26,16 +26,6 @@ export function RegisterPage() {
     setEmailValue(e.target.value)
   }
 
-  const hasToken = localStorage.getItem('refreshToken')
-  if (hasToken) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/'
-        }}
-      />
-    );
-  }
   const redirectOnSuccess = () => {
     history.replace({ 
       pathname: '/',

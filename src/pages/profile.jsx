@@ -7,7 +7,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../components/app-header/app-header";
 import { useDispatch, useSelector } from "react-redux";
-import { useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { logoutUser } from "../services/actions/auth";
 
@@ -125,7 +124,7 @@ const logout = () => dispatch(logoutUser());
             className={styles.password}
             onChange={onPasswordChange}
             name={"password"}
-            value={state.password}
+            value={userPassword}
           />
         </div>
       </div>
@@ -135,11 +134,3 @@ const logout = () => dispatch(logoutUser());
       </>
   );
 }
-
-
-
-      {/* <div className={styles.navigation}>
-        <p className={`${styles.text} text text_type_main-medium`}>Профиль</p>
-        <p className={`${styles.text} text text_type_main-medium`}>История заказов</p>
-        <p className={`${styles.text} text text_type_main-medium`}>Выход</p>
-      </div> */}

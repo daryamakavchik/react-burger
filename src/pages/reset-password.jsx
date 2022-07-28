@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from './resetpassword.module.css';
 import {Button, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { apiPasswordSave } from '../utils/api';
 
 export function ResetPasswordPage() {

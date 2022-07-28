@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./ingredient-category.module.css";
 import { ingredientsPropTypes } from '../../utils/proptypes';
-import { Link, Switch, Route } from 'react-router-dom';
 
 export const IngredientCategory = forwardRef(({ title, ingredients, id }, ref) => {
   return (

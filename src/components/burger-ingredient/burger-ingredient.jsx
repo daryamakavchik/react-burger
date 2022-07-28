@@ -10,7 +10,7 @@ import {
 } from "../../services/actions";
 import { useDrag } from "react-dnd";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Route, useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default function BurgerIngredient(props) {
@@ -18,6 +18,7 @@ export default function BurgerIngredient(props) {
   const modalOpen = useSelector((store) => store.ingr.isModalOpen);
 const location = useLocation();
 const history = useHistory();
+const data = useSelector(store => store.data.data);
 
   let count;
   const { bun, fillings } = useSelector((store) => ({
@@ -33,8 +34,8 @@ const history = useHistory();
   };
 
   const closeAllModals = () => {
-    dispatch(closeCurrentIngredient(props), [dispatch]);
     history.goBack();
+    dispatch(closeCurrentIngredient(props), [dispatch]);
   };
 
   const [, dragRef] = useDrag(
@@ -64,7 +65,7 @@ const history = useHistory();
       {modalOpen && (
         <>
           <Modal title="Детали ингридиента" onClose={closeAllModals}>
-            <IngredientDetails />
+            <IngredientDetails data={data} />
           </Modal>
         </>
       )}

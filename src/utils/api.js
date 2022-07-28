@@ -66,11 +66,11 @@ export const apiLogoutUser = async () => {
         },
         body: JSON.stringify({
             token: localStorage.getItem('refreshToken')
-        }),
+        })
       }).then(res => checkResponse(res))
 }
 
-export const apiRegisterUser= async (name, email, password) => {
+export const apiRegisterUser = async (name, email, password) => {
   return await fetch(`${baseUrl}auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -78,9 +78,8 @@ export const apiRegisterUser= async (name, email, password) => {
       "email": email, 
       "password": password,
       "name": name
-  }),
-  }).then(res => 
-  checkResponse(res))
+  })
+}).then(res => checkResponse(res))
 };
 
 export const apiUserRequest = async (token) => {

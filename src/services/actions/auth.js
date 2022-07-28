@@ -72,16 +72,15 @@ export const registerUser = (name, email, password, redirectFunc) => {
       type: REGISTER_REQUEST,
     });
     apiRegisterUser(name, email, password).then((res) => {
-      if (res && res.success) {
+      if (res.success) {
         const authToken = res.accessToken.split("Bearer ")[1];
         const refreshToken = res.refreshToken;
         setCookie("token", authToken);
         localStorage.setItem("refreshToken", refreshToken);
         dispatch({
           type: REGISTER_SUCCESS,
-          name: name,
-          email: email,
-          password: password,
+          name: res.user.name,
+          email: res.user.email,
           accessToken: res.accessToken,
           refreshToken: res.refreshToken,
         });

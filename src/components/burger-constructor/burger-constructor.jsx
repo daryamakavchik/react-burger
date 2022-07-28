@@ -14,13 +14,12 @@ import {
 } from "../../services/actions";
 import { useDrop } from "react-dnd";
 import BurgerElement from "../burger-element/burger-element";
-import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
   const [totalPrice, setTotalPrice] = useState(0);
   const hasToken = localStorage.getItem('refreshToken');
   

@@ -11,11 +11,24 @@ import DetailsModal from "../details-modal/details-modal";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { useDispatch, useSelector } from "react-redux";
+import { closeCurrentIngredient } from "../../services/actions";
+import { useEffect } from "react";
+import { setIngredientsData } from "../../services/actions";
 
 function App() {
   const location = useLocation();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const ingr = useSelector(store => store.ingr.currentIngredient);
   let background = location.state && location.state.background;
+  const closeAllModals = () => {
+    history.goBack();
+    dispatch(closeCurrentIngredient(ingr), [dispatch]);
+  };
+  useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]); 
+  const data = useSelector(store => store.data.data);
+  console.log(data);
 
   return (
     <>
@@ -37,7 +50,7 @@ function App() {
           </Route>
           <Route path="/ingredients/:id" exact={true}>
             <DetailsModal title="Детали ингредиента">
-          <IngredientDetails />
+          <IngredientDetails data={data} />
           </DetailsModal>
           </Route>
           <Route path="/" exact={true}>
@@ -47,7 +60,7 @@ function App() {
         {background &&
 				(<>
 					<Route path='/' exact={true} children={<Modal ><OrderDetails /></Modal>} />
-					<Route path='/ingredients/:id' children={<Modal title="Детали ингредиента"><IngredientDetails /></Modal>} />
+					<Route path='/ingredients/:id' children={<Modal title="Детали ингредиента" onClose={closeAllModals}><IngredientDetails data={data} /></Modal>} />
 				</>
 				)}
     </>
