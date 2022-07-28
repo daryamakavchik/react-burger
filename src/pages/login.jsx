@@ -36,6 +36,7 @@ export function LoginPage() {
   return (
     <div className={styles.container}>
       <p className="text text_type_main-medium">Вход</p>
+      <form>
       <div className={styles.email}>
         <EmailInput
           onChange={onEmailChange}
@@ -56,6 +57,7 @@ export function LoginPage() {
           Войти
         </Button>
       </div>
+      </form>
       <div className={styles.textcontainer}>
         <p
           className={`${styles.text} text text_type_main-default text_color_inactive`}

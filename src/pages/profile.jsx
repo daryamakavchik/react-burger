@@ -118,6 +118,7 @@ export function ProfilePage() {
               </NavLink>
             </li>
           </ul>
+          <form>
           <div className={styles.inputs}>
             <Input
               style={{ color: "#8585AD" }}
@@ -145,6 +146,7 @@ export function ProfilePage() {
               />
             </div>
           </div>
+          </form>
           <div className={styles.footer}>
             <p
               className={`${styles.subtext} text text_type_main-default text_color_inactive`}

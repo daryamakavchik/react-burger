@@ -32,6 +32,7 @@ export function ResetPasswordPage() {
       <p className={`${styles.title} text text_type_main-medium`}>
         Восстановление пароля
       </p>
+      <form>
       <div className={styles.password}>
         <PasswordInput
           placeholder={"Введите новый пароль"}
@@ -55,6 +56,7 @@ export function ResetPasswordPage() {
           Сохранить
         </Button>
       </div>
+      </form>
       <div className={styles.textcontainer}>
         <p
           className={`${styles.text} text text_type_main-default text_color_inactive`}
