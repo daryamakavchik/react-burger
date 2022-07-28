@@ -21,7 +21,7 @@ export const apiPostOrder = async (orderData) => {
   }).then((res) => checkResponse(res));
 };
 
-export const apiPasswordReset = async (email, redirectFunc) => {
+export const apiPasswordReset = async (email) => {
   return await fetch(`${baseUrl}password-reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -30,7 +30,6 @@ export const apiPasswordReset = async (email, redirectFunc) => {
     }),
   })
     .then((res) => checkResponse(res))
-    .then((fin) => fin.success && redirectFunc());
 };
 
 export const apiPasswordSave = async (password, token) => {
@@ -43,7 +42,6 @@ export const apiPasswordSave = async (password, token) => {
     }),
   })
     .then((res) => checkResponse(res))
-    .then((fin) => console.log(fin));
 };
 
 export const apiLoginUser = async (email, password) => {

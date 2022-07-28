@@ -11,6 +11,12 @@ import {
   REFRESH_TOKEN_REQUEST,
   REFRESH_TOKEN_SUCCESS,
   REFRESH_TOKEN_FAILED,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILED,
+  SAVE_PASSWORD_REQUEST,
+  SAVE_PASSWORD_SUCCESS,
+  SAVE_PASSWORD_FAILED,
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
@@ -30,6 +36,7 @@ const initialUserState = {
   isLoading: false,
   hasError: false,
   isTokenUpdated: false,
+  isForgotPassword: false
 };
 
 export const userReducer = (state = initialUserState, action) => {
@@ -131,6 +138,48 @@ export const userReducer = (state = initialUserState, action) => {
       };
     }
     case REFRESH_TOKEN_FAILED: {
+      return {
+        ...state,
+        isLoading: false,
+        hasError: true,
+      };
+    }
+    case RESET_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        isLoading: true,
+        isForgotPassword: true
+      };
+    }
+    case RESET_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        isForgotPassword: true
+      };
+    }
+    case RESET_PASSWORD_FAILED: {
+      return {
+        ...state,
+        isLoading: false,
+        isForgotPassword: false,
+        hasError: true,
+      };
+    }
+    case SAVE_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        isLoading: true,
+        isForgotPassword: false
+      };
+    }
+    case SAVE_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+    case SAVE_PASSWORD_FAILED: {
       return {
         ...state,
         isLoading: false,

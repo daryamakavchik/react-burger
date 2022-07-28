@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styles from "./resetpassword.module.css";
 import {
   Button,
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { apiPasswordSave } from "../utils/api";
-import { skipPartiallyEmittedExpressions } from "typescript";
+import { savePassword } from "../services/actions/auth";
+import { useDispatch } from "react-redux";
 
 export function ResetPasswordPage() {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [passwordValue, setPasswordValue] = useState("");
   const [codeValue, setCodeValue] = useState("");
 
@@ -21,9 +23,16 @@ export function ResetPasswordPage() {
     setCodeValue(e.target.value);
   };
 
-  const savePassword = (e) => {
+  const redirectOnSuccess = () => {
+    history.replace({
+      pathname: "/login",
+      state: { from: "/reset-password" },
+    });
+  };
+
+  const saveUserPassword = (e) => {
     e.preventDefault();
-    apiPasswordSave(passwordValue, codeValue);
+    dispatch(savePassword(passwordValue, codeValue, redirectOnSuccess), [dispatch]);
     setPasswordValue("");
     setCodeValue("");
   };
@@ -33,7 +42,7 @@ export function ResetPasswordPage() {
       <p className={`${styles.title} text text_type_main-medium`}>
         Восстановление пароля
       </p>
-      <form className={styles.form} onSubmit={(e) => savePassword(e)}>
+      <form className={styles.form} onSubmit={(e) => saveUserPassword(e)}>
       <div className={styles.password}>
         <PasswordInput
           placeholder={"Введите новый пароль"}

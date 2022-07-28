@@ -26,6 +26,7 @@ function App() {
 
   const ingr = useSelector((store) => store.ingr.currentIngredient);
   const data = useSelector((store) => store.data.data);
+  const isForgotPassword = useSelector((store) => store.user.isForgotPassword);
   const background = location.state && location.state.background;
 
   const closeAllModals = () => {
@@ -54,9 +55,9 @@ function App() {
         <Route path="/forgot-password" exact={true}>
           <ForgotPasswordPage />
         </Route>
-        <Route path="/reset-password" exact={true}>
+        { isForgotPassword && <Route path="/reset-password" exact={true}>
           <ResetPasswordPage />
-        </Route>
+        </Route> }
         <Route path="/ingredients/:id" exact={true}>
           <DetailsModal title="Детали ингредиента">
             <IngredientDetails data={data} />

@@ -5,6 +5,8 @@ import {
   apiUpdateUser,
   apiUserRequest,
   apiRefreshToken,
+  apiPasswordReset,
+  apiPasswordSave,
 } from "../../utils/api";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -19,6 +21,12 @@ export const GET_USERINFO_FAILED = "GET_USERINFO_FAILED";
 export const REFRESH_TOKEN_REQUEST = "REFRESH_TOKEN_REQUEST";
 export const REFRESH_TOKEN_SUCCESS = "REFRESH_TOKEN_SUCCESS";
 export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED";
+export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
+export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
+export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
+export const SAVE_PASSWORD_REQUEST = "SAVE_PASSWORD_REQUEST";
+export const SAVE_PASSWORD_SUCCESS = "SAVE_PASSWORD_SUCCESS";
+export const SAVE_PASSWORD_FAILED = "SAVE_PASSWORD_FAILED";
 export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILED = "LOGOUT_FAILED";
@@ -226,3 +234,51 @@ export const refreshTokenAction = (token) => {
       });
   };
 };
+
+export const resetPassword = (email, redirectFunc) => {
+  return function(dispatch) {
+    dispatch({
+      type: RESET_PASSWORD_REQUEST,
+    });
+    apiPasswordReset(email)
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({
+            type: RESET_PASSWORD_SUCCESS,
+          });
+          redirectFunc();
+        } else {
+          dispatch({
+            type: RESET_PASSWORD_FAILED,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+export const savePassword = (password, code, redirectFunc) => {
+  return function(dispatch) {
+    dispatch({
+      type: SAVE_PASSWORD_REQUEST,
+    });
+    apiPasswordSave(password, code)
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({
+            type: SAVE_PASSWORD_SUCCESS,
+          });
+          redirectFunc();
+        } else {
+          dispatch({
+            type: SAVE_PASSWORD_FAILED,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}

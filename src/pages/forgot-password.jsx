@@ -1,16 +1,20 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
 import styles from "./forgotpassword.module.css";
 import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
-import { apiPasswordReset } from "../utils/api";
+import { resetPassword } from "../services/actions/auth";
+
 
 export function ForgotPasswordPage() {
   const [emailValue, setEmailValue] = useState("");
   const history = useHistory();
-
+  const dispatch = useDispatch();
   const onEmailChange = (e) => {
     setEmailValue(e.target.value);
   };
@@ -22,18 +26,42 @@ export function ForgotPasswordPage() {
     });
   };
 
-  const resetPassword = (e) => {
+  const resetUserPassword = (e, emailValue) => {
     e.preventDefault();
-    apiPasswordReset(emailValue, redirectOnSuccess);
+    dispatch(resetPassword(emailValue, redirectOnSuccess), [dispatch]);
     setEmailValue("");
   };
+
+
+  const isforgotPassword = useSelector((store) => store.user.isforgotPassword);
+  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
+
+  if (isUserAuthorized) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
+
+  if (!isUserAuthorized && isforgotPassword) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/reset-password'
+        }}
+      />
+    );
+  }
 
   return (
     <div className={styles.container}>
       <p className={`${styles.title} text text_type_main-medium`}>
         Восстановление пароля
       </p>
-      <form className={styles.form} onSubmit={(e) => resetPassword(e)}>
+      <form className={styles.form} onSubmit={(e) => resetUserPassword(e)}>
         <div className={styles.email}>
           <EmailInput
             onChange={onEmailChange}
