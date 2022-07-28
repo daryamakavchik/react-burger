@@ -14,8 +14,10 @@ import {
 } from "../../services/actions";
 import DetailsModal from "../details-modal/details-modal";
 import Modal from "../modal/modal";
+import AppHeader from "../app-header/app-header";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import styles from './app.module.css';
 
 function App() {
   const location = useLocation();
@@ -36,6 +38,9 @@ function App() {
 
   return (
     <>
+      <div className={styles.page}>
+      <section className={styles.App}>
+      <AppHeader />
       <Switch location={background || location}>
         <ProtectedRoute path="/profile" exact={true}>
           <ProfilePage />
@@ -82,6 +87,8 @@ function App() {
           />
         </>
       )}
+      </section>
+      </div>
     </>
   );
 }

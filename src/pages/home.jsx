@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AppHeader from "../components/app-header/app-header";
 import styles from "./home.module.css";
 import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
@@ -16,9 +15,6 @@ export function HomePage() {
     useEffect(() => dispatch(getUserInfo(accessToken)), [dispatch]);
 
   return (
-    <div className={styles.page}>
-      <section className={styles.App}>
-        <AppHeader />
         <main className={styles.content}>
           {isLoading && (
             <p className="text text_type_main-large">Загрузка...</p>
@@ -28,7 +24,5 @@ export function HomePage() {
             <BurgerConstructor />
           </>
         </main>
-      </section>
-    </div>
   );
 }

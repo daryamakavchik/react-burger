@@ -29,14 +29,15 @@ export function LoginPage() {
     });
   };
 
-  const login = () => {
+  const login = (e, emailValue, passwordValue) => {
+    e.preventDefault();
     dispatch(loginUser(emailValue, passwordValue, redirectOnSuccess));
   };
 
   return (
     <div className={styles.container}>
       <p className="text text_type_main-medium">Вход</p>
-      <form>
+      <form className={styles.form} onSubmit={(e) => login(e, emailValue, passwordValue)}>
       <div className={styles.email}>
         <EmailInput
           onChange={onEmailChange}
@@ -53,7 +54,7 @@ export function LoginPage() {
         />
       </div>
       <div className={styles.button}>
-        <Button type="primary" size="large" onClick={login}>
+        <Button type="primary" size="large">
           Войти
         </Button>
       </div>

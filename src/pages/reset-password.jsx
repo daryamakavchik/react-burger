@@ -7,6 +7,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { apiPasswordSave } from "../utils/api";
+import { skipPartiallyEmittedExpressions } from "typescript";
 
 export function ResetPasswordPage() {
   const [passwordValue, setPasswordValue] = useState("");
@@ -32,7 +33,7 @@ export function ResetPasswordPage() {
       <p className={`${styles.title} text text_type_main-medium`}>
         Восстановление пароля
       </p>
-      <form>
+      <form className={styles.form} onSubmit={(e) => savePassword(e)}>
       <div className={styles.password}>
         <PasswordInput
           placeholder={"Введите новый пароль"}
@@ -52,7 +53,7 @@ export function ResetPasswordPage() {
         size={"default"}
       />
       <div className={styles.button}>
-        <Button type="primary" size="large" onClick={savePassword}>
+        <Button type="primary" size="large">
           Сохранить
         </Button>
       </div>

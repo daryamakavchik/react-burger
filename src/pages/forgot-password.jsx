@@ -33,7 +33,7 @@ export function ForgotPasswordPage() {
       <p className={`${styles.title} text text_type_main-medium`}>
         Восстановление пароля
       </p>
-      <form>
+      <form className={styles.form} onSubmit={(e) => resetPassword(e)}>
         <div className={styles.email}>
           <EmailInput
             onChange={onEmailChange}
@@ -42,7 +42,7 @@ export function ForgotPasswordPage() {
           />
         </div>
         <div className={styles.button}>
-          <Button type="primary" size="large" onClick={resetPassword}>
+          <Button type="primary" size="large">
             Восстановить
           </Button>
         </div>

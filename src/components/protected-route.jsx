@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { refreshTokenAction } from "../services/actions/auth";
 

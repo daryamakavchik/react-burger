@@ -8,7 +8,6 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import AppHeader from "../components/app-header/app-header";
 import { logoutUser, updateUser } from "../services/actions/auth";
 import { getCookie } from "../services/actions/auth";
 
@@ -50,8 +49,10 @@ export function ProfilePage() {
   const onLoginChange = (e) => {
     setState({ ...state, email: e.target.value, isValueChanged: true });
   };
-  const onSave = () =>
+  const onSave = (e) => {
+    e.preventDefault();
     dispatch(updateUser(state.email, state.name, getCookie("token")));
+  }
 
   const onCancel = () => {
     setState((state) => {
@@ -67,7 +68,6 @@ export function ProfilePage() {
 
   return (
     <>
-      <AppHeader />
       <div className={styles.container}>
         <div className={styles.content}>
           <ul className={styles.navigation}>
@@ -83,7 +83,7 @@ export function ProfilePage() {
               'text text_type_main-medium text_color_inactive`}
                 activeClassName={styles.textactive}
               >
-                <span className={"ml-2"}>Профиль</span>
+                <span>Профиль</span>
               </NavLink>
             </li>
             <li>
@@ -98,7 +98,7 @@ export function ProfilePage() {
               'text text_type_main-medium text_color_inactive`}
                 activeClassName={styles.textactive}
               >
-                <span className={"ml-2"}>История заказов</span>
+                <span>История заказов</span>
               </NavLink>
             </li>
             <li>
@@ -114,12 +114,11 @@ export function ProfilePage() {
                 activeClassName={styles.textactive}
                 onClick={logout}
               >
-                <span className={"ml-2"}>Выход</span>
+                <span>Выход</span>
               </NavLink>
             </li>
           </ul>
-          <form>
-          <div className={styles.inputs}>
+          <form className={styles.form} onSubmit={(e) => onSave(e)}>
             <Input
               style={{ color: "#8585AD" }}
               type={"text"}
@@ -132,6 +131,7 @@ export function ProfilePage() {
             <div className={styles.email}>
               <EmailInput
                 onChange={onLoginChange}
+                style={{ marginTop: '24px', marginBottom: '24px' }}
                 name={"login"}
                 value={state.email}
                 icon={"EditIcon"}
@@ -145,20 +145,19 @@ export function ProfilePage() {
                 value={userPassword}
               />
             </div>
-          </div>
-          </form>
+            <span className={state.isValueChanged ? styles.visible: styles.hidden}>
+              <Button size="medium" type="secondary" onClick={onCancel}>
+                Отмена
+              </Button>
+              <Button size="medium" type="primary">Сохранить</Button>
+            </span>
+            </form>
           <div className={styles.footer}>
             <p
               className={`${styles.subtext} text text_type_main-default text_color_inactive`}
             >
               В этом разделе вы можете изменить свои персональные данные.
             </p>
-            <span className={state.isValueChanged ? styles.visible: styles.hidden}>
-              <Button size="medium" type="secondary" onClick={onCancel}>
-                Отмена
-              </Button>
-              <Button onClick={onSave}>Сохранить</Button>
-            </span>
           </div>
         </div>
       </div>

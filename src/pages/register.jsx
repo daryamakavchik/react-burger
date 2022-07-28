@@ -46,7 +46,7 @@ export function RegisterPage() {
       <p className={`${styles.title} text text_type_main-medium`}>
         Регистрация
       </p>
-      <form>
+      <form className={styles.form} onSubmit={(e) => onRegisterClick(e)}>
       <Input
         type={"text"}
         placeholder={"Имя"}
@@ -68,7 +68,7 @@ export function RegisterPage() {
         />
       </div>
       <div className={styles.button}>
-        <Button type="primary" size="large" onClick={onRegisterClick}>
+        <Button type="primary" size="large">
           Зарегистрироваться
         </Button>
       </div>

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import styles from "./ingredient-details.module.css";
 
 export default function IngredientDetails(ingrdata) {
-  const location = useLocation();
- const [ingr, setIngredient] = useState(null);
-
-  let id = location.pathname.slice(13);
+  const [ingr, setIngredient] = useState(null);
+  let { id } = useParams();
   let currentIngredient = {};
 
    useEffect(()=>{
