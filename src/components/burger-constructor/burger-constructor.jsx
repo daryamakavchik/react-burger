@@ -21,7 +21,7 @@ export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [totalPrice, setTotalPrice] = useState(0);
-  const hasToken = localStorage.getItem('refreshToken');
+  const isUserAuthorized = useSelector(store => store.user.isUserAuthorized);
   
   const isLoading = useSelector((store) => store.ord.isLoading);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
@@ -50,11 +50,14 @@ export default function BurgerConstructor() {
   const orderData = bun && content && Array.from(content.map((el) => el._id)).concat(bunIdArr).concat(bunIdArr);
 
   const openModal = () => {
-    if (hasToken && bun) {
+    if (isUserAuthorized && bun) {
     dispatch(openOrderModal(orderData), [dispatch]);
   } else {
     history.replace({ pathname: '/login' });
   }
+}
+const redirectFunc = () => {
+  history.replace({ pathname: '/login' });
 }
 
   const closeAllModals = () => {
@@ -139,7 +142,7 @@ export default function BurgerConstructor() {
               </div>
               <CurrencyIcon type="primary" />
               <div className={styles.button}>
-                <Button type="primary" size="medium" onClick={openModal}>
+                <Button type="primary" size="medium" onClick={isUserAuthorized ? openModal : redirectFunc}>
                   {!isLoading ? "Оформить заказ" : "Загрузка..."}
                 </Button>
               </div>
