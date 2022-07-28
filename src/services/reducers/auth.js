@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILED, GET_USERINFO_REQUEST, GET_USERINFO_SUCCESS, GET_USERINFO_FAILED, REFRESH_TOKEN_REQUEST, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_FAILED } from "../actions/auth";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILED, GET_USERINFO_REQUEST, GET_USERINFO_SUCCESS, GET_USERINFO_FAILED, REFRESH_TOKEN_REQUEST, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_FAILED, LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILED } from "../actions/auth";
 import { refreshTokenAction } from "../actions/auth";
 
 const initialUserState = {
@@ -54,11 +54,12 @@ export const userReducer = (state = initialUserState, action) => {
           user: {
             ...state.user,
             email: action.email,
+            name: action.name,
             password: action.password,
             accessToken: action.accessToken,
             refreshToken: action.refreshToken,
           }
-        };
+        }
       }
       case LOGIN_FAILED: {
         return {
@@ -86,7 +87,7 @@ export const userReducer = (state = initialUserState, action) => {
         }
       }
       case GET_USERINFO_FAILED: {
-        refreshTokenAction(action.refreshToken);
+        refreshTokenAction(localStorage.getItem('refreshToken'));
         return {
           ...state,
           isLoading: false,
@@ -117,6 +118,33 @@ export const userReducer = (state = initialUserState, action) => {
           hasError: true
       }
       }
+      case LOGOUT_REQUEST: {
+        return {
+          ...state,
+          isLoading: true
+          }
+        }
+      case LOGOUT_SUCCESS: {
+          return {
+            ...state,
+            isLoading: false,
+            isUserAuthorized: false,
+            user: {
+              email: '',
+              name: '',
+              password: '',
+              accessToken: '',
+              refreshToken: '',
+            }
+          }
+        }
+        case LOGOUT_FAILED: {
+          return {
+            ...state,
+            isLoading: false,
+            hasError: true
+          };
+        }
     default: {
       return state;
     }

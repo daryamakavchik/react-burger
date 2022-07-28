@@ -6,9 +6,10 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../components/app-header/app-header";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import { NavLink } from "react-router-dom";
+import { logoutUser } from "../services/actions/auth";
 
 export function ProfilePage() {
   const [state, setState] = useState({
@@ -16,6 +17,7 @@ export function ProfilePage() {
     email: '',
     password: '',
   });
+  const dispatch = useDispatch();
 
   const userName = useSelector(store => store.user.user.name);
   const userLogin = useSelector(store => store.user.user.email);
@@ -31,6 +33,8 @@ export function ProfilePage() {
       };
     });
   }, [userName, userLogin, userPassword]);
+
+const logout = () => dispatch(logoutUser());
 
   const onNameChange = (e) => {
     setState({ ...state, name: e.target.value });
@@ -90,6 +94,7 @@ export function ProfilePage() {
               'mr-2',
               'text text_type_main-medium text_color_inactive`}
             activeClassName={styles.textactive}
+            onClick={logout}
           >
             <span className={'ml-2'}>
               Выход

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch, useHistory, useLocation } from "react-router-dom";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "../protected-route";
 import { ForgotPasswordPage } from "../../pages/forgot-password";
 import { HomePage } from "../../pages/home";
@@ -15,7 +15,8 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 function App() {
   const location = useLocation();
   const history = useHistory();
-  let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
+  let background = location.state && location.state.background;
+
   return (
     <>
         <Switch location={background || location}>
@@ -34,20 +35,19 @@ function App() {
           <Route path="/reset-password" exact={true}>
             <ResetPasswordPage />
           </Route>
-          <Route path="/" exact={true}>
-            <HomePage />
-          </Route>
           <Route path="/ingredients/:id" exact={true}>
             <DetailsModal title="Детали ингредиента">
           <IngredientDetails />
           </DetailsModal>
           </Route>
+          <Route path="/" exact={true}>
+            <HomePage />
+          </Route>
         </Switch>
         {background &&
 				(<>
-					<Route path='/' exact={true} children={<Modal><OrderDetails /></Modal>} />
-					<Route path='/ingredients/:id' children={<Modal><IngredientDetails /></Modal>} />
-					{/* <ProtectedRoute path='/profile/orders/:id' children={<Modal><Order /></Modal>} /> */}
+					<Route path='/' exact={true} children={<Modal ><OrderDetails /></Modal>} />
+					<Route path='/ingredients/:id' children={<Modal title="Детали ингредиента"><IngredientDetails /></Modal>} />
 				</>
 				)}
     </>

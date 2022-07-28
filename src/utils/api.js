@@ -58,6 +58,18 @@ export const apiLoginUser = async (email, password) => {
   }).then(res => checkResponse(res))
 }
 
+export const apiLogoutUser = async () => {
+    return await fetch(`${baseUrl}auth/logout`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            token: localStorage.getItem('refreshToken')
+        }),
+      }).then(res => checkResponse(res))
+}
+
 export const apiRegisterUser= async (name, email, password) => {
   return await fetch(`${baseUrl}auth/register`, {
     method: "POST",
@@ -71,23 +83,37 @@ export const apiRegisterUser= async (name, email, password) => {
   checkResponse(res))
 };
 
-export const apiUserRequest = async (token) =>
-  await fetch(`${baseUrl}auth/user`, {
+export const apiUserRequest = async (token) => {
+  return await fetch(`${baseUrl}auth/user`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': token
+      'Authorization': 'Bearer ' + token
     }
   }).then((res) => checkResponse(res)); 
+}
+
 
   export const apiRefreshToken = async (token) => {
-    await fetch(`${baseUrl}auth/token`, {
+    return await fetch(`${baseUrl}auth/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: {
-        "token": token
-      }
+        "token": token     }
   })
 }
+
+export const updateUser = async (email, name, token) => {
+  return await fetch(`${baseUrl}auth/user`, {
+      method : 'PATCH',
+      headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({email, name})
+  })
+      .then(checkResponse);
+};
+

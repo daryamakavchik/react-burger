@@ -14,12 +14,16 @@ import {
 } from "../../services/actions";
 import { useDrop } from "react-dnd";
 import BurgerElement from "../burger-element/burger-element";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
 
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
   const [totalPrice, setTotalPrice] = useState(0);
-
+  const hasToken = localStorage.getItem('refreshToken');
+  
   const isLoading = useSelector((store) => store.ord.isLoading);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
   
@@ -47,8 +51,12 @@ export default function BurgerConstructor() {
   const orderData = bun && content && Array.from(content.map((el) => el._id)).concat(bunIdArr).concat(bunIdArr);
 
   const openModal = () => {
+    if (hasToken && bun) {
     dispatch(openOrderModal(orderData), [dispatch]);
-  };
+  } else {
+    history.replace({ pathname: '/login' });
+  }
+}
 
   const closeAllModals = () => {
     dispatch(closeOrderModal(), [dispatch]);

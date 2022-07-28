@@ -11,9 +11,10 @@ export function HomePage() {
   const dispatch = useDispatch();
   const isLoading = useSelector((store) => store.data.isLoading);
   const accessToken = useSelector(store => store.user.user.accessToken);
-  console.log(accessToken);
+  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
+  // console.log(accessToken);
 
-  accessToken && useEffect(() => dispatch(getUserInfo(accessToken)), [dispatch]);
+  isUserAuthorized && useEffect(() => dispatch(getUserInfo(accessToken)), [dispatch]);
 
   return (
     <div className={styles.page}>

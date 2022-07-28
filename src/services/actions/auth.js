@@ -1,4 +1,4 @@
-import { apiLoginUser, apiRegisterUser, apiUserRequest, apiRefreshToken } from "../../utils/api";
+import { apiLoginUser, apiLogoutUser, apiRegisterUser, apiUserRequest, apiRefreshToken } from "../../utils/api";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -12,13 +12,16 @@ export const GET_USERINFO_FAILED = "GET_USERINFO_FAILED";
 export const REFRESH_TOKEN_REQUEST = "REFRESH_TOKEN_REQUEST";
 export const REFRESH_TOKEN_SUCCESS = "REFRESH_TOKEN_SUCCESS";
 export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED";
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED = "LOGOUT_FAILED";
 
 export const loginUser = (email, password, redirectFunc) => {
   return function(dispatch) {
     dispatch({
       type: LOGIN_REQUEST,
     });
-    apiLoginUser(email, password, redirectFunc).then((res) => {
+    apiLoginUser(email, password).then((res) => {
       if (res && res.success) {
         const authToken = res.accessToken.split("Bearer ")[1];
         const refreshToken = res.refreshToken;
@@ -26,6 +29,7 @@ export const loginUser = (email, password, redirectFunc) => {
         localStorage.setItem("refreshToken", refreshToken);
         dispatch({
           type: LOGIN_SUCCESS,
+          name: res.user.name,
           email: email,
           password: password,
           accessToken: res.accessToken,
@@ -35,6 +39,27 @@ export const loginUser = (email, password, redirectFunc) => {
       } else {
         dispatch({
           type: LOGIN_FAILED,
+        });
+      }
+    });
+  };
+};
+
+export const logoutUser = () => {
+  return function(dispatch) {
+    dispatch({
+      type: LOGOUT_REQUEST,
+    });
+    apiLogoutUser().then((res) => {
+      if (res && res.success) {
+        const refreshToken = res.refreshToken;
+        localStorage.removeItem("refreshToken", refreshToken);
+        dispatch({
+          type: LOGOUT_SUCCESS,
+        });
+      } else {
+        dispatch({
+          type: LOGOUT_FAILED,
         });
       }
     });
@@ -70,12 +95,12 @@ export const registerUser = (name, email, password, redirectFunc) => {
   };
 };
 
-export const getUserInfo = (token) => {
+export const getUserInfo = () => {
   return function(dispatch) {
     dispatch({
       type: GET_USERINFO_REQUEST,
     });
-    apiUserRequest(token).then((res) => {
+    apiUserRequest(getCookie('token')).then((res) => {
       if (res && res.success) {
         dispatch({
           type: GET_USERINFO_SUCCESS,
@@ -86,12 +111,12 @@ export const getUserInfo = (token) => {
       } else {
         dispatch({
           type: GET_USERINFO_FAILED,
-          refreshToken: res.refreshToken
         });
-      }
-    });
-  };
-};
+        console.log(localStorage.getItem('refreshToken'));
+    }
+  })
+  }
+}
 
 export const setCookie = (name, value, options) => {
   options = options || {};
@@ -125,12 +150,12 @@ export function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : "";
 }
 
-export const refreshTokenAction = (refreshToken) => {
+export const refreshTokenAction = (token) => {
   return function(dispatch) {
     dispatch({
       type: REFRESH_TOKEN_REQUEST,
     });
-    apiRefreshToken(refreshToken).then((res) => {
+    apiRefreshToken(token).then((res) => {
       if (res && res.success) {
         dispatch({
           type: REFRESH_TOKEN_SUCCESS,

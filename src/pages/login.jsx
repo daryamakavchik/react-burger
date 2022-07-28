@@ -1,17 +1,20 @@
 import React, {useState} from 'react';
 import styles from './login.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { loginUser } from '../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../services/actions/auth';
 import { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 
 export function LoginPage() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
+
 
   const onPasswordChange = e => {
     setPasswordValue(e.target.value)
@@ -27,6 +30,10 @@ export function LoginPage() {
     });
   }
 
+const login = () => {
+  dispatch(loginUser(emailValue, passwordValue, redirectOnSuccess));
+}
+
   return (
    <div className={styles.container}>
       <p className="text text_type_main-medium">Вход</p>
@@ -37,7 +44,7 @@ export function LoginPage() {
       <PasswordInput className={styles.password} onChange={onPasswordChange} name={'password'} value={passwordValue}/>
       </div>
       <div className={styles.button}>
-      <Button type="primary" size="large" onClick={() => dispatch(loginUser(emailValue, passwordValue, redirectOnSuccess))}>Войти</Button>
+      <Button type="primary" size="large" onClick={login}>Войти</Button>
       </div>
       <div className={styles.textcontainer}>
       <p className={`${styles.text} text text_type_main-default text_color_inactive`}>Вы - новый пользователь?</p>
