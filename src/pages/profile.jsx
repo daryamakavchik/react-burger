@@ -4,11 +4,13 @@ import {
   Input,
   EmailInput,
   PasswordInput,
+  Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../components/app-header/app-header";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { logoutUser } from "../services/actions/auth";
+import { logoutUser, updateUser } from "../services/actions/auth";
+import { getCookie } from "../services/actions/auth";
 
 export function ProfilePage() {
   const [state, setState] = useState({
@@ -34,6 +36,7 @@ export function ProfilePage() {
   }, [userName, userLogin, userPassword]);
 
 const logout = () => dispatch(logoutUser());
+const token = localStorage.getItem('accessToken');
 
   const onNameChange = (e) => {
     setState({ ...state, name: e.target.value });
@@ -45,6 +48,7 @@ const logout = () => dispatch(logoutUser());
   const onLoginChange = (e) => {
     setState({ ...state, email: e.target.value });
   };
+  const onSave = () => dispatch(updateUser(state.email, state.name, getCookie('token')));
 
   return (
     <>
@@ -128,7 +132,13 @@ const logout = () => dispatch(logoutUser());
           />
         </div>
       </div>
+      <div className={styles.footer}>
       <p className={`${styles.subtext} text text_type_main-default text_color_inactive`}>В этом разделе вы можете изменить свои персональные данные.</p>
+      <span >
+        <Button size='medium' type='secondary'>Отмена</Button>
+        <Button onClick={onSave}>Сохранить</Button>
+      </span>
+      </div>
       </div>
       </div>
       </>

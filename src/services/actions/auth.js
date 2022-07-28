@@ -1,4 +1,4 @@
-import { apiLoginUser, apiLogoutUser, apiRegisterUser, apiUserRequest, apiRefreshToken } from "../../utils/api";
+import { apiLoginUser, apiLogoutUser, apiRegisterUser, apiUpdateUser, apiUserRequest, apiRefreshToken } from "../../utils/api";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -15,6 +15,9 @@ export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED";
 export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILED = "LOGOUT_FAILED";
+export const UPDATE_REQUEST = "UPDATE_REQUEST";
+export const UPDATE_SUCCESS = "UPDATE_SUCCESS";
+export const UPDATE_FAILED = "UPDATE_FAILED";
 
 export const loginUser = (email, password, redirectFunc) => {
   return function(dispatch) {
@@ -60,6 +63,29 @@ export const logoutUser = () => {
       } else {
         dispatch({
           type: LOGOUT_FAILED,
+        });
+      }
+    });
+  };
+};
+
+export const updateUser = (email, name, token) => {
+  return function(dispatch) {
+    dispatch({
+      type: UPDATE_REQUEST,
+    });
+    apiUpdateUser(email, name, token).then((res) => {
+      if (res && res.success) {
+        const refreshToken = res.refreshToken;
+        localStorage.setItem("refreshToken", refreshToken);
+        dispatch({
+          type: UPDATE_SUCCESS,
+          email: res.user.email,
+          name: res.user.name
+        });
+      } else {
+        dispatch({
+          type: UPDATE_FAILED,
         });
       }
     });

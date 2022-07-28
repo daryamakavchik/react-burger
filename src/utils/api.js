@@ -104,7 +104,7 @@ export const apiUserRequest = async (token) => {
   })
 }
 
-export const updateUser = async (email, name, token) => {
+export const apiUpdateUser = async (email, name, token) => {
   return await fetch(`${baseUrl}auth/user`, {
       method : 'PATCH',
       headers: {
@@ -113,6 +113,6 @@ export const updateUser = async (email, name, token) => {
       },
       body: JSON.stringify({email, name})
   })
-      .then(checkResponse);
+      .then(res => checkResponse(res));
 };
 

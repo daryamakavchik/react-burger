@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILED, GET_USERINFO_REQUEST, GET_USERINFO_SUCCESS, GET_USERINFO_FAILED, REFRESH_TOKEN_REQUEST, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_FAILED, LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILED } from "../actions/auth";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILED, GET_USERINFO_REQUEST, GET_USERINFO_SUCCESS, GET_USERINFO_FAILED, REFRESH_TOKEN_REQUEST, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_FAILED, LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILED, UPDATE_REQUEST, UPDATE_SUCCESS, UPDATE_FAILED } from "../actions/auth";
 import { refreshTokenAction } from "../actions/auth";
 
 const initialUserState = {
@@ -145,6 +145,30 @@ export const userReducer = (state = initialUserState, action) => {
             hasError: true
           };
         }
+        case UPDATE_REQUEST: {
+          return {
+            ...state,
+            isLoading: true
+            }
+          }
+        case UPDATE_SUCCESS: {
+            return {
+              ...state,
+              isLoading: false,
+              user: {
+                ...state.user,
+                name: action.name,
+                email: action.email,
+              }
+            }
+          }
+          case UPDATE_FAILED: {
+            return {
+              ...state,
+              isLoading: false,
+              hasError: true
+            };
+          }
     default: {
       return state;
     }

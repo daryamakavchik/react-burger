@@ -7,8 +7,9 @@
 .content{
     display: flex;
     flex-direction: row;
-    max-width: 860px;
+    width: 860px;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .navigation{
@@ -34,8 +35,15 @@
     margin-left: 60px;
 }
 
-.subtext{
-    margin-top: 32px;
+.footer{
+    display: flex;
+    flex-direction: row;
     margin-left: 48px;
+    margin-top: 32px;
+    width: 860px;
+    justify-content: space-between;
+}
+
+.subtext{
     max-width: 320px;
 }
