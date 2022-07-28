@@ -33,9 +33,12 @@ export const setIngredientsData = () => {
           type: GET_DATA_FAILED,
         });
       }
-    });
-  };
+    })
+    .catch((err) => {
+      console.log(err);
+  });
 };
+}
 
 export const onDropHandler = (item) => {
   return function(dispatch) {
@@ -95,9 +98,12 @@ export const openOrderModal = (orderData) => {
           type: POST_ORDER_FAILED,
         });
       }
-    });
-  };
+    })
+    .catch((err) => {
+      console.log(err);
+  });
 };
+}
 
 export const closeOrderModal = () => {
   return function(dispatch) {

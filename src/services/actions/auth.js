@@ -31,27 +31,31 @@ export const loginUser = (email, password, redirectFunc) => {
     dispatch({
       type: LOGIN_REQUEST,
     });
-    apiLoginUser(email, password).then((res) => {
-      if (res && res.success) {
-        const authToken = res.accessToken.split("Bearer ")[1];
-        const refreshToken = res.refreshToken;
-        setCookie("token", authToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        dispatch({
-          type: LOGIN_SUCCESS,
-          name: res.user.name,
-          email: email,
-          password: password,
-          accessToken: res.accessToken,
-          refreshToken: res.refreshToken,
-        });
-        redirectFunc();
-      } else {
-        dispatch({
-          type: LOGIN_FAILED,
-        });
-      }
-    });
+    apiLoginUser(email, password)
+      .then((res) => {
+        if (res && res.success) {
+          const authToken = res.accessToken.split("Bearer ")[1];
+          const refreshToken = res.refreshToken;
+          setCookie("token", authToken);
+          localStorage.setItem("refreshToken", refreshToken);
+          dispatch({
+            type: LOGIN_SUCCESS,
+            name: res.user.name,
+            email: email,
+            password: password,
+            accessToken: res.accessToken,
+            refreshToken: res.refreshToken,
+          });
+          redirectFunc();
+        } else {
+          dispatch({
+            type: LOGIN_FAILED,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
 
@@ -60,19 +64,23 @@ export const logoutUser = () => {
     dispatch({
       type: LOGOUT_REQUEST,
     });
-    apiLogoutUser(localStorage.getItem("refreshToken")).then((res) => {
-      if (res && res.success) {
-        const refreshToken = res.refreshToken;
-        localStorage.removeItem("refreshToken", refreshToken);
-        dispatch({
-          type: LOGOUT_SUCCESS,
-        });
-      } else {
-        dispatch({
-          type: LOGOUT_FAILED,
-        });
-      }
-    });
+    apiLogoutUser(localStorage.getItem("refreshToken"))
+      .then((res) => {
+        if (res && res.success) {
+          const refreshToken = res.refreshToken;
+          localStorage.removeItem("refreshToken", refreshToken);
+          dispatch({
+            type: LOGOUT_SUCCESS,
+          });
+        } else {
+          dispatch({
+            type: LOGOUT_FAILED,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
 
@@ -81,21 +89,25 @@ export const updateUser = (email, name, token) => {
     dispatch({
       type: UPDATE_REQUEST,
     });
-    apiUpdateUser(email, name, token).then((res) => {
-      if (res && res.success) {
-        const refreshToken = res.refreshToken;
-        localStorage.setItem("refreshToken", refreshToken);
-        dispatch({
-          type: UPDATE_SUCCESS,
-          email: res.user.email,
-          name: res.user.name,
-        });
-      } else {
-        dispatch({
-          type: UPDATE_FAILED,
-        });
-      }
-    });
+    apiUpdateUser(email, name, token)
+      .then((res) => {
+        if (res && res.success) {
+          const refreshToken = res.refreshToken;
+          localStorage.setItem("refreshToken", refreshToken);
+          dispatch({
+            type: UPDATE_SUCCESS,
+            email: res.user.email,
+            name: res.user.name,
+          });
+        } else {
+          dispatch({
+            type: UPDATE_FAILED,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
 
@@ -104,26 +116,30 @@ export const registerUser = (name, email, password, redirectFunc) => {
     dispatch({
       type: REGISTER_REQUEST,
     });
-    apiRegisterUser(name, email, password).then((res) => {
-      if (res.success) {
-        const authToken = res.accessToken.split("Bearer ")[1];
-        const refreshToken = res.refreshToken;
-        setCookie("token", authToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        dispatch({
-          type: REGISTER_SUCCESS,
-          name: res.user.name,
-          email: res.user.email,
-          accessToken: res.accessToken,
-          refreshToken: res.refreshToken,
-        });
-        redirectFunc();
-      } else {
-        dispatch({
-          type: REGISTER_FAILED,
-        });
-      }
-    });
+    apiRegisterUser(name, email, password)
+      .then((res) => {
+        if (res.success) {
+          const authToken = res.accessToken.split("Bearer ")[1];
+          const refreshToken = res.refreshToken;
+          setCookie("token", authToken);
+          localStorage.setItem("refreshToken", refreshToken);
+          dispatch({
+            type: REGISTER_SUCCESS,
+            name: res.user.name,
+            email: res.user.email,
+            accessToken: res.accessToken,
+            refreshToken: res.refreshToken,
+          });
+          redirectFunc();
+        } else {
+          dispatch({
+            type: REGISTER_FAILED,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
 
@@ -132,21 +148,25 @@ export const getUserInfo = () => {
     dispatch({
       type: GET_USERINFO_REQUEST,
     });
-    apiUserRequest(getCookie("token")).then((res) => {
-      if (res && res.success) {
-        dispatch({
-          type: GET_USERINFO_SUCCESS,
-          name: res.user.name,
-          email: res.user.email,
-        });
-        console.log(res);
-      } else {
-        dispatch({
-          type: GET_USERINFO_FAILED,
-        });
-        console.log(localStorage.getItem("refreshToken"));
-      }
-    });
+    apiUserRequest(getCookie("token"))
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({
+            type: GET_USERINFO_SUCCESS,
+            name: res.user.name,
+            email: res.user.email,
+          });
+          console.log(res);
+        } else {
+          dispatch({
+            type: GET_USERINFO_FAILED,
+          });
+          console.log(localStorage.getItem("refreshToken"));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
 
@@ -187,18 +207,22 @@ export const refreshTokenAction = (token) => {
     dispatch({
       type: REFRESH_TOKEN_REQUEST,
     });
-    apiRefreshToken(token).then((res) => {
-      if (res && res.success) {
-        dispatch({
-          type: REFRESH_TOKEN_SUCCESS,
-          accessToken: res.accessToken,
-          refreshToken: res.refreshToken,
-        });
-      } else {
-        dispatch({
-          type: REFRESH_TOKEN_FAILED,
-        });
-      }
-    });
+    apiRefreshToken(token)
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({
+            type: REFRESH_TOKEN_SUCCESS,
+            accessToken: res.accessToken,
+            refreshToken: res.refreshToken,
+          });
+        } else {
+          dispatch({
+            type: REFRESH_TOKEN_FAILED,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
