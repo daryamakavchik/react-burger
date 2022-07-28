@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import ReactDOM from "react-dom";
 import styles from "./details-modal.module.css";
 import PropTypes from "prop-types";
@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 const modalsContainer = document.querySelector("#modals");
 
 export default function DetailsModal({ title, children }) {
-
   return ReactDOM.createPortal(
     <>
       <div className={styles.modal}>
@@ -19,6 +18,6 @@ export default function DetailsModal({ title, children }) {
 }
 
 DetailsModal.propTypes = {
-  title: PropTypes.string, 
-  children: PropTypes.element.isRequired
+  title: PropTypes.string,
+  children: PropTypes.element.isRequired,
 };

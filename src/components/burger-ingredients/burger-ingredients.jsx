@@ -3,8 +3,8 @@ import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientCategory } from "../ingredient-category/ingredient-category";
-import styles from "./burger-ingredients.module.css";
 import { setIngredientsData } from '../../services/actions';
+import styles from "./burger-ingredients.module.css";
 
 export default function BurgerIngredients() {
   const [current, setCurrent] = useState("bun");

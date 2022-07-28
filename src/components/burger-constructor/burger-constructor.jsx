@@ -1,34 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useHistory } from "react-router-dom";
+import { useDrop } from "react-dnd";
+import {
+  CurrencyIcon,
+  Button,
+  ConstructorElement,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import {
-    onDropHandler,
-    deleteItem,
-    openOrderModal,
-    closeOrderModal,
+  onDropHandler,
+  deleteItem,
+  openOrderModal,
+  closeOrderModal,
 } from "../../services/actions";
-import { useDrop } from "react-dnd";
 import BurgerElement from "../burger-element/burger-element";
-import { useHistory } from "react-router-dom";
-
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [totalPrice, setTotalPrice] = useState(0);
-  const isUserAuthorized = useSelector(store => store.user.isUserAuthorized);
-  
+  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
+
   const isLoading = useSelector((store) => store.ord.isLoading);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
-  
+
   const { bun, content } = useSelector((store) => ({
     bun: store.constr.burgerIngredients.bun,
-    content: store.constr.burgerIngredients.fillings
+    content: store.constr.burgerIngredients.fillings,
   }));
 
   const dropHandler = (item) => {
@@ -40,25 +41,30 @@ export default function BurgerConstructor() {
 
   const [, dropTarget] = useDrop(() => ({
     accept: "ingredient",
-    drop: (item, monitor) => { 
+    drop: (item, monitor) => {
       dropHandler(item);
     },
   }));
 
   const bunsPrice = bun && bun.price * 2;
   const bunIdArr = bun && [`${bun._id}`];
-  const orderData = bun && content && Array.from(content.map((el) => el._id)).concat(bunIdArr).concat(bunIdArr);
+  const orderData =
+    bun &&
+    content &&
+    Array.from(content.map((el) => el._id))
+      .concat(bunIdArr)
+      .concat(bunIdArr);
 
   const openModal = () => {
     if (isUserAuthorized && bun) {
-    dispatch(openOrderModal(orderData), [dispatch]);
-  } else {
-    history.replace({ pathname: '/login' });
-  }
-}
-const redirectFunc = () => {
-  history.replace({ pathname: '/login' });
-}
+      dispatch(openOrderModal(orderData), [dispatch]);
+    } else {
+      history.replace({ pathname: "/login" });
+    }
+  };
+  const redirectFunc = () => {
+    history.replace({ pathname: "/login" });
+  };
 
   const closeAllModals = () => {
     dispatch(closeOrderModal(), [dispatch]);
@@ -83,18 +89,25 @@ const redirectFunc = () => {
         {!bun && content.length === 0 && (
           <div className={styles.subtitle}>
             <p className="text text_type_main-medium">
-            Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
+              Пожалуйста, перенесите сюда булку и ингредиенты для создания
+              заказа
             </p>
           </div>
         )}
         {!bun && content.length > 0 && (
           <p className={`${styles.subtitlebun} text text_type_main-medium`}>
-            Осталось добавить булку <span role="img" aria-label="eyes">👀</span>
+            Осталось добавить булку{" "}
+            <span role="img" aria-label="eyes">
+              👀
+            </span>
           </p>
         )}
         {bun && content.length === 0 && (
           <p className={`${styles.subtitlemain} text text_type_main-medium`}>
-            Осталось добавить начинку <span role="img" aria-label="eyes">👀</span>
+            Осталось добавить начинку{" "}
+            <span role="img" aria-label="eyes">
+              👀
+            </span>
           </p>
         )}
         {bun && (
@@ -142,7 +155,11 @@ const redirectFunc = () => {
               </div>
               <CurrencyIcon type="primary" />
               <div className={styles.button}>
-                <Button type="primary" size="medium" onClick={isUserAuthorized ? openModal : redirectFunc}>
+                <Button
+                  type="primary"
+                  size="medium"
+                  onClick={isUserAuthorized ? openModal : redirectFunc}
+                >
                   {!isLoading ? "Оформить заказ" : "Загрузка..."}
                 </Button>
               </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import ReactDOM from "react-dom";
 import { useEffect } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -9,12 +9,11 @@ import PropTypes from "prop-types";
 const modalsContainer = document.querySelector("#modals");
 
 export default function Modal({ title, onClose, children }) {
-
   const handleEscKeydown = (event) => {
     event.key === "Escape" && onClose();
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     document.addEventListener("keydown", handleEscKeydown);
     return () => {
       document.removeEventListener("keydown", handleEscKeydown);
@@ -37,7 +36,7 @@ export default function Modal({ title, onClose, children }) {
 }
 
 Modal.propTypes = {
-  title: PropTypes.string, 
+  title: PropTypes.string,
   onClose: PropTypes.func,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
 };

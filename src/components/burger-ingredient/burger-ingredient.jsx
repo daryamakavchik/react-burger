@@ -1,24 +1,20 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation, Link } from "react-router-dom";
+import { useDrag } from "react-dnd";
+import { ingredientsPropTypes } from "../../utils/proptypes";
+import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/modal";
+import { openCurrentIngredient, closeCurrentIngredient } from "../../services/actions";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import styles from "../burger-ingredients/burger-ingredients.module.css";
-import { ingredientsPropTypes } from "../../utils/proptypes";
-import Modal from "../modal/modal";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  openCurrentIngredient,
-  closeCurrentIngredient,
-} from "../../services/actions";
-import { useDrag } from "react-dnd";
-import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useHistory, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 export default function BurgerIngredient(props) {
   const dispatch = useDispatch();
   const modalOpen = useSelector((store) => store.ingr.isModalOpen);
-const location = useLocation();
-const history = useHistory();
-const data = useSelector(store => store.data.data);
+  const location = useLocation();
+  const history = useHistory();
+  const data = useSelector((store) => store.data.data);
 
   let count;
   const { bun, fillings } = useSelector((store) => ({

@@ -47,3 +47,11 @@
 .subtext{
     max-width: 320px;
 }
+
+.hidden{
+    display: none;
+}
+
+.visible{
+    display: flex;
+}

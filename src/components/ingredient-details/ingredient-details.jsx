@@ -1,8 +1,7 @@
-import React from 'react';
-import styles from "./ingredient-details.module.css";
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import styles from "./ingredient-details.module.css";
+
 export default function IngredientDetails(ingrdata) {
   const location = useLocation();
  const [ingr, setIngredient] = useState(null);

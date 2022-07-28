@@ -55,11 +55,7 @@ export default function BurgerElement({ item, index, handleClose }) {
   drag(drop(ref));
 
   return (
-    <li
-      className={styles.component}
-      ref={ref}
-      style={{ opacity }}
-    >
+    <li className={styles.component} ref={ref} style={{ opacity }}>
       <ConstructorElement
         text={item.name}
         price={item.price}

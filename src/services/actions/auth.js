@@ -1,4 +1,11 @@
-import { apiLoginUser, apiLogoutUser, apiRegisterUser, apiUpdateUser, apiUserRequest, apiRefreshToken } from "../../utils/api";
+import {
+  apiLoginUser,
+  apiLogoutUser,
+  apiRegisterUser,
+  apiUpdateUser,
+  apiUserRequest,
+  apiRefreshToken,
+} from "../../utils/api";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -53,7 +60,7 @@ export const logoutUser = () => {
     dispatch({
       type: LOGOUT_REQUEST,
     });
-    apiLogoutUser(localStorage.getItem('refreshToken')).then((res) => {
+    apiLogoutUser(localStorage.getItem("refreshToken")).then((res) => {
       if (res && res.success) {
         const refreshToken = res.refreshToken;
         localStorage.removeItem("refreshToken", refreshToken);
@@ -81,7 +88,7 @@ export const updateUser = (email, name, token) => {
         dispatch({
           type: UPDATE_SUCCESS,
           email: res.user.email,
-          name: res.user.name
+          name: res.user.name,
         });
       } else {
         dispatch({
@@ -125,23 +132,23 @@ export const getUserInfo = () => {
     dispatch({
       type: GET_USERINFO_REQUEST,
     });
-    apiUserRequest(getCookie('token')).then((res) => {
+    apiUserRequest(getCookie("token")).then((res) => {
       if (res && res.success) {
         dispatch({
           type: GET_USERINFO_SUCCESS,
           name: res.user.name,
-          email: res.user.email
+          email: res.user.email,
         });
-        console.log(res)
+        console.log(res);
       } else {
         dispatch({
           type: GET_USERINFO_FAILED,
         });
-        console.log(localStorage.getItem('refreshToken'));
-    }
-  })
-  }
-}
+        console.log(localStorage.getItem("refreshToken"));
+      }
+    });
+  };
+};
 
 export const setCookie = (name, value, options) => {
   options = options || {};
@@ -185,7 +192,7 @@ export const refreshTokenAction = (token) => {
         dispatch({
           type: REFRESH_TOKEN_SUCCESS,
           accessToken: res.accessToken,
-          refreshToken: res.refreshToken
+          refreshToken: res.refreshToken,
         });
       } else {
         dispatch({
