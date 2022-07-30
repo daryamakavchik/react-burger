@@ -11,11 +11,11 @@ import styles from "./app-header.module.css";
 function AppHeader() {
   const history = useHistory();
 
-  const onClick = useCallback(() => {
+  const onProfileClick = useCallback(() => {
     history.replace({ pathname: "/profile" });
   }, [history]);
 
-  const onConstructorClick = useCallback(() => {
+  const onClick = useCallback(() => {
     history.replace({ pathname: "/" });
   }, [history]);
 
@@ -25,7 +25,7 @@ function AppHeader() {
         <li className={styles.headernav}>
           <a className={styles.headernav} href="#top">
             <BurgerIcon type="secondary" />
-            <div className={`${styles.icon} p-2`} onClick={onConstructorClick}>
+            <div className={`${styles.icon} p-2`} onClick={onClick}>
               Конструктор
             </div>
           </a>
@@ -36,7 +36,7 @@ function AppHeader() {
             <div className={`${styles.icon} p-2`}>Лента заказов</div>
           </a>
         </li>
-        <li className={styles.headernav + " " + styles.headerlogo}>
+        <li onClick={onClick} className={styles.headernav + " " + styles.headerlogo}>
           <Logo />
         </li>
         <li className={styles.headernav}>
@@ -45,7 +45,7 @@ function AppHeader() {
             <div
               to="/profile"
               className={`${styles.icon} p-2`}
-              onClick={onClick}
+              onClick={onProfileClick}
             >
               Личный кабинет
             </div>
