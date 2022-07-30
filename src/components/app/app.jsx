@@ -39,7 +39,7 @@ function App() {
 
   const hasToken = localStorage.getItem('refreshToken');
 
-  // useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);
+  useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);
   useEffect(() => { dispatch(getUserInfo(), [dispatch])});
 
   return (

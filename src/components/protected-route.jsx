@@ -8,13 +8,13 @@ export const ProtectedRoute = ({ children, ...rest }) => {
   const location = useLocation();
   const isTokenUpdated = useSelector((store) => store.user.isTokenUpdated);
   const hasToken = !!localStorage.getItem("refreshToken");
-  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
+  // const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
 
-  useEffect(() => {
-    if (!isTokenUpdated && hasToken) {
-      dispatch(refreshTokenAction());
-    }
-  }, [dispatch, hasToken, isTokenUpdated]);
+  // useEffect(() => {
+  //   if (!isTokenUpdated && hasToken) {
+  //     dispatch(refreshTokenAction());
+  //   }
+  // }, [dispatch, hasToken, isTokenUpdated]);
 
   return (
     <Route

@@ -6,6 +6,7 @@ export default function IngredientDetails(ingrdata) {
   const [ingr, setIngredient] = useState(null);
   let { id } = useParams();
   let currentIngredient = {};
+  console.log(ingrdata);
 
    useEffect(()=>{
 		currentIngredient = ingrdata && ingrdata.data.find(el => el._id === id);
