@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -121,7 +122,6 @@ export const userReducer = (state = initialUserState, action) => {
       };
     }
     case GET_USERINFO_FAILED: {
-      refreshTokenAction();
       return {
         ...state,
         isLoading: false,

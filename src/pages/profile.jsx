@@ -124,7 +124,7 @@ export function ProfilePage() {
               type={"text"}
               placeholder={"Имя"}
               onChange={onNameChange}
-              value={state.name}
+              value={state.name || ''}
               name={"name"}
               icon={"EditIcon"}
             />
@@ -133,7 +133,7 @@ export function ProfilePage() {
                 onChange={onLoginChange}
                 style={{ marginTop: '24px', marginBottom: '24px' }}
                 name={"login"}
-                value={state.email}
+                value={state.email || ''}
                 icon={"EditIcon"}
               />
             </div>
@@ -142,7 +142,7 @@ export function ProfilePage() {
                 className={styles.password}
                 onChange={onPasswordChange}
                 name={"password"}
-                value={userPassword}
+                value={state.password || ''}
               />
             </div>
             <span className={state.isValueChanged ? styles.visible: styles.hidden}>

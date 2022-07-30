@@ -17,6 +17,7 @@ import {
   closeOrderModal,
 } from "../../services/actions";
 import BurgerElement from "../burger-element/burger-element";
+import Loader from "../loader/loader";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -163,6 +164,7 @@ export default function BurgerConstructor() {
                   {!isLoading ? "Оформить заказ" : "Загрузка..."}
                 </Button>
               </div>
+              <Loader />
             </div>
           </>
         )}

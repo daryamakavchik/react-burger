@@ -93,7 +93,7 @@ export const apiUserRequest = async () => {
   .then((res) => checkResponse(res))
   .catch((err) => { 
     if (err) {
-          return apiRefreshToken().then(res => checkResponse(res))
+          apiRefreshToken().then(res => checkResponse(res))
           .then((fin) => {
               return fetch(`${baseUrl}auth/user`, {
                 method: "GET",
@@ -116,6 +116,7 @@ export const apiUserRequest = async () => {
 
 export const apiRefreshToken = async () => {
   console.log(localStorage.getItem('refreshToken'));
+  console.log(localStorage);
   return await fetch(`${baseUrl}auth/token`, {
     method: "POST",
     headers: {

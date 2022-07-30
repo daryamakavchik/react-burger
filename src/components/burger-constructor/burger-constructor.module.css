@@ -67,3 +67,11 @@
 .modal {
   width: 720px;
 }
+
+.visible{
+  display: block;
+}
+
+.hidden{
+  display: none
+}

@@ -170,6 +170,31 @@ export const getUserInfo = () => {
           dispatch({
             type: GET_USERINFO_FAILED,
           });
+          dispatch({
+            type: REFRESH_TOKEN_REQUEST,
+          });
+          apiRefreshToken()
+            .then((res) => {
+              if (res && res.success) {
+                localStorage.setItem("refreshToken", res.refreshToken);
+                const authToken = res.accessToken.split("Bearer ")[1];
+                setCookie("token", authToken);
+                dispatch({
+                  type: REFRESH_TOKEN_SUCCESS,
+                });
+              } else {
+                dispatch({
+                  type: REFRESH_TOKEN_FAILED,
+                });
+              }
+            })
+            .catch((err) => {
+              deleteCookie("token");
+              localStorage.removeItem("refreshToken");
+              dispatch({
+                type: REFRESH_TOKEN_FAILED,
+              });
+            });
         }
       })
       .finally(() => {
