@@ -51,7 +51,7 @@ export function ProfilePage() {
   };
   const onSave = (e) => {
     e.preventDefault();
-    dispatch(updateUser(state.email, state.name, getCookie("token")));
+    dispatch(updateUser(state.email, state.name));
   }
 
   const onCancel = () => {

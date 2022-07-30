@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "../protected-route";
 import { ForgotPasswordPage } from "../../pages/forgot-password";
 import { HomePage } from "../../pages/home";
@@ -18,6 +18,8 @@ import AppHeader from "../app-header/app-header";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import styles from './app.module.css';
+import { getUserInfo, refreshTokenAction } from "../../services/actions/auth";
+import { getCookie } from "../../services/actions/auth";
 
 function App() {
   const location = useLocation();
@@ -27,15 +29,18 @@ function App() {
   const ingr = useSelector((store) => store.ingr.currentIngredient);
   const data = useSelector((store) => store.data.data);
   const isForgotPassword = useSelector((store) => store.user.isForgotPassword);
+  const isUserAuthorized= useSelector((store) => store.user.isUserAuthorized);
   const background = location.state && location.state.background;
 
   const closeAllModals = () => {
     history.goBack();
     dispatch(closeCurrentIngredient(ingr), [dispatch]);
   };
-  useEffect(() => {
-    dispatch(setIngredientsData());
-  }, [dispatch]);
+
+  const hasToken = localStorage.getItem('refreshToken');
+
+  // useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);
+  useEffect(() => { dispatch(getUserInfo(), [dispatch])});
 
   return (
     <>
@@ -52,9 +57,9 @@ function App() {
         <Route path="/register" exact={true}>
           <RegisterPage />
         </Route>
-        <Route path="/forgot-password" exact={true}>
+        {!isUserAuthorized && <Route path="/forgot-password" exact={true}>
           <ForgotPasswordPage />
-        </Route>
+        </Route> }
         { isForgotPassword && <Route path="/reset-password" exact={true}>
           <ResetPasswordPage />
         </Route> }

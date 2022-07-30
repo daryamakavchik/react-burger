@@ -5,14 +5,14 @@ import { refreshTokenAction } from "../services/actions/auth";
 
 export const ProtectedRoute = ({ children, ...rest }) => {
   const dispatch = useDispatch();
-
+  const location = useLocation();
   const isTokenUpdated = useSelector((store) => store.user.isTokenUpdated);
   const hasToken = !!localStorage.getItem("refreshToken");
   const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
 
   useEffect(() => {
     if (!isTokenUpdated && hasToken) {
-      dispatch(refreshTokenAction);
+      dispatch(refreshTokenAction());
     }
   }, [dispatch, hasToken, isTokenUpdated]);
 
@@ -20,7 +20,7 @@ export const ProtectedRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={({ location }) =>
-        isUserAuthorized ? (
+        hasToken ? (
           children
         ) : (
           <Redirect

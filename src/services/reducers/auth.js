@@ -23,11 +23,11 @@ import {
   UPDATE_REQUEST,
   UPDATE_SUCCESS,
   UPDATE_FAILED,
+  AUTH_CHECKED
 } from "../actions/auth";
 import { refreshTokenAction } from "../actions/auth";
 
 const initialUserState = {
-  isUserAuthorized: false,
   user: {
     name: "",
     email: "",
@@ -35,12 +35,20 @@ const initialUserState = {
   },
   isLoading: false,
   hasError: false,
+  isUserAuthorized: false,
+  isAuthChecked: false,
   isTokenUpdated: false,
   isForgotPassword: false
 };
 
 export const userReducer = (state = initialUserState, action) => {
   switch (action.type) {
+    case AUTH_CHECKED: {
+      return {
+        ...state,
+        isAuthChecked: true
+      };
+    }
     case REGISTER_REQUEST: {
       return {
         ...state,
@@ -113,7 +121,7 @@ export const userReducer = (state = initialUserState, action) => {
       };
     }
     case GET_USERINFO_FAILED: {
-      refreshTokenAction(localStorage.getItem("refreshToken"));
+      refreshTokenAction();
       return {
         ...state,
         isLoading: false,

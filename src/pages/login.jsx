@@ -1,19 +1,23 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useHistory, Redirect, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { loginUser } from "../services/actions/auth";
+import { getUserInfo, loginUser } from "../services/actions/auth";
 import styles from "./login.module.css";
+import { useEffect } from "react";
+import { useCallback } from "react";
 
 export function LoginPage() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
+  const userName = useSelector(store => store.user.user.name);
 
   const onPasswordChange = (e) => {
     setPasswordValue(e.target.value);
@@ -31,7 +35,7 @@ export function LoginPage() {
 
   const login = (e, emailValue, passwordValue) => {
     e.preventDefault();
-    dispatch(loginUser(emailValue, passwordValue, redirectOnSuccess));
+    dispatch(loginUser(emailValue, passwordValue, redirectOnSuccess))
   };
 
   return (

@@ -1,3 +1,6 @@
+import { useLocation } from "react-router-dom";
+import { getCookie, setCookie, deleteCookie, refreshTokenAction } from "../services/actions/auth";
+
 const baseUrl = "https://norma.nomoreparties.space/api/";
 
 function checkResponse(res) {
@@ -79,34 +82,57 @@ export const apiRegisterUser = async (name, email, password) => {
   }).then((res) => checkResponse(res));
 };
 
-export const apiUserRequest = async (token) => {
+export const apiUserRequest = async () => {
   return await fetch(`${baseUrl}auth/user`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
+      Authorization: "Bearer " + getCookie('token'),
     },
-  }).then((res) => checkResponse(res));
-};
+  })
+  .then((res) => checkResponse(res))
+  .catch((err) => { 
+    if (err) {
+          return apiRefreshToken().then(res => checkResponse(res))
+          .then((fin) => {
+              return fetch(`${baseUrl}auth/user`, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: fin.accessToken
+                },
+              })
+            })
+              .then((res) => checkResponse(res))
+        } else {
+          deleteCookie('token');
+          localStorage.removeItem('refreshToken');
+          // eslint-disable-next-line
+          // location.reload()
+          // return Promise.reject(err)
+        }
+      })
+  }
 
-export const apiRefreshToken = async (token) => {
+export const apiRefreshToken = async () => {
+  console.log(localStorage.getItem('refreshToken'));
   return await fetch(`${baseUrl}auth/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: {
-      token: token,
-    },
-  });
+    body: JSON.stringify({
+      token: localStorage.getItem('refreshToken'),
+    }),
+  }).then((res) => checkResponse(res));
 };
 
-export const apiUpdateUser = async (email, name, token) => {
+export const apiUpdateUser = async (email, name) => {
   return await fetch(`${baseUrl}auth/user`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      Authorization: "Bearer " + token,
+      Authorization: "Bearer " + getCookie('token'),
     },
     body: JSON.stringify({ email, name }),
   }).then((res) => checkResponse(res));

@@ -33,6 +33,7 @@ export const LOGOUT_FAILED = "LOGOUT_FAILED";
 export const UPDATE_REQUEST = "UPDATE_REQUEST";
 export const UPDATE_SUCCESS = "UPDATE_SUCCESS";
 export const UPDATE_FAILED = "UPDATE_FAILED";
+export const AUTH_CHECKED = "AUTH_CHECKED";
 
 export const loginUser = (email, password, redirectFunc) => {
   return function(dispatch) {
@@ -75,6 +76,7 @@ export const logoutUser = () => {
     apiLogoutUser(localStorage.getItem("refreshToken"))
       .then((res) => {
         if (res && res.success) {
+          deleteCookie("token");
           const refreshToken = res.refreshToken;
           localStorage.removeItem("refreshToken", refreshToken);
           dispatch({
@@ -92,12 +94,12 @@ export const logoutUser = () => {
   };
 };
 
-export const updateUser = (email, name, token) => {
+export const updateUser = (email, name) => {
   return function(dispatch) {
     dispatch({
       type: UPDATE_REQUEST,
     });
-    apiUpdateUser(email, name, token)
+    apiUpdateUser(email, name)
       .then((res) => {
         if (res && res.success) {
           const refreshToken = res.refreshToken;
@@ -156,7 +158,7 @@ export const getUserInfo = () => {
     dispatch({
       type: GET_USERINFO_REQUEST,
     });
-    apiUserRequest(getCookie("token"))
+    apiUserRequest()
       .then((res) => {
         if (res && res.success) {
           dispatch({
@@ -164,64 +166,65 @@ export const getUserInfo = () => {
             name: res.user.name,
             email: res.user.email,
           });
-          console.log(res);
         } else {
           dispatch({
             type: GET_USERINFO_FAILED,
           });
-          console.log(localStorage.getItem("refreshToken"));
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .finally(() => {
+        dispatch({ type: AUTH_CHECKED });
       });
   };
 };
 
-export const setCookie = (name, value, options) => {
-  options = options || {};
-  let expires = options.expires;
-  if (typeof expires === "number" && expires) {
-    let d = new Date();
-    d.setTime(d.getTime() + expires * 1000);
-    expires = options.expires = d;
+export function setCookie(name, value, props) {
+  props = props || {};
+  let exp = props.expires;
+  if (typeof exp == 'number' && exp) {
+    const d = new Date();
+    d.setTime(d.getTime() + exp * 1000);
+    exp = props.expires = d;
   }
-  if (expires && expires.toUTCString) {
-    options.expires = expires.toUTCString();
+  if (exp && exp.toUTCString) {
+    props.expires = exp.toUTCString();
   }
   value = encodeURIComponent(value);
-  let updatedCookie = name + "=" + value;
-  for (const propName in options) {
-    updatedCookie += "; " + propName;
-    const propValue = options[propName];
+  let updatedCookie = name + '=' + value;
+  for (const propName in props) {
+    updatedCookie += '; ' + propName;
+    const propValue = props[propName];
     if (propValue !== true) {
-      updatedCookie += "=" + propValue;
+      updatedCookie += '=' + propValue;
     }
   }
   document.cookie = updatedCookie;
-};
-
-export function getCookie(name) {
-  const matches = document.cookie.match(
-    new RegExp(
-      "(?:^|; )" + name.replace(/([.$?*|{}()[\]\\/+^])/g, "\\$1") + "=([^;]*)"
-    )
-  );
-  return matches ? decodeURIComponent(matches[1]) : "";
 }
 
-export const refreshTokenAction = (token) => {
+  export function getCookie(name) {
+    const matches = document.cookie.match(
+      new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
+    );
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+
+  export function deleteCookie(name) {
+    setCookie(name, null, { expires: -1 });
+  }
+
+export const refreshTokenAction = () => {
   return function(dispatch) {
     dispatch({
       type: REFRESH_TOKEN_REQUEST,
     });
-    apiRefreshToken(token)
+    apiRefreshToken()
       .then((res) => {
         if (res && res.success) {
+          localStorage.setItem("refreshToken", res.refreshToken);
+          const authToken = res.accessToken.split("Bearer ")[1];
+          setCookie("token", authToken);
           dispatch({
             type: REFRESH_TOKEN_SUCCESS,
-            accessToken: res.accessToken,
-            refreshToken: res.refreshToken,
           });
         } else {
           dispatch({
@@ -230,7 +233,11 @@ export const refreshTokenAction = (token) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        deleteCookie("token");
+        localStorage.removeItem("refreshToken");
+        dispatch({
+          type: REFRESH_TOKEN_FAILED,
+        });
       });
   };
 };
@@ -281,4 +288,4 @@ export const savePassword = (password, code, redirectFunc) => {
         console.log(err);
       });
   };
-}
+};
