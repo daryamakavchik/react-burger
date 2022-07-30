@@ -123,6 +123,15 @@ export const constructorReducer = (state = initialState, action) => {
         },
       };
     }
+    case POST_ORDER_SUCCESS: {
+      return {
+        ...state,
+      burgerIngredients: {
+        bun: null,
+        fillings: []
+      },
+    }
+  }
     default: {
       return state;
     }

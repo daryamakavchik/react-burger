@@ -22,8 +22,7 @@ export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [totalPrice, setTotalPrice] = useState(0);
-  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
-
+  const userName = useSelector((store) => store.user.user.name);
   const isLoading = useSelector((store) => store.ord.isLoading);
   const modalOpen = useSelector((store) => store.ord.isModalOpen);
 
@@ -56,11 +55,12 @@ export default function BurgerConstructor() {
       .concat(bunIdArr);
 
   const openModal = () => {
-    if (isUserAuthorized && bun) {
+    // if (userName) {
       dispatch(openOrderModal(orderData), [dispatch]);
-    } else {
-      history.replace({ pathname: "/login" });
-    }
+    // } 
+    // else {
+    //   history.replace({ pathname: "/login" });
+    // }
   };
   const redirectFunc = () => {
     history.replace({ pathname: "/login" });
@@ -158,7 +158,7 @@ export default function BurgerConstructor() {
                 <Button
                   type="primary"
                   size="medium"
-                  onClick={isUserAuthorized ? openModal : redirectFunc}
+                  onClick={userName.length > 0 ? openModal : redirectFunc}
                 >
                   {!isLoading ? "Оформить заказ" : "Загрузка..."}
                 </Button>
