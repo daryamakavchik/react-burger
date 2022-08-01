@@ -9,7 +9,6 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { logoutUser, updateUser } from "../services/actions/auth";
-import { getCookie } from "../services/actions/auth";
 
 export function ProfilePage() {
   const [state, setState] = useState({
@@ -37,8 +36,7 @@ export function ProfilePage() {
   }, [userName, userLogin, userPassword]);
 
   const logout = () => dispatch(logoutUser());
-  const token = localStorage.getItem("accessToken");
-
+  
   const onNameChange = (e) => {
     setState({ ...state, name: e.target.value, isValueChanged: true });
   };
@@ -70,6 +68,7 @@ export function ProfilePage() {
     <>
       <div className={styles.container}>
         <div className={styles.content}>
+          <div className={styles.navblock}>
           <ul className={styles.navigation}>
             <li>
               <NavLink
@@ -118,6 +117,16 @@ export function ProfilePage() {
               </NavLink>
             </li>
           </ul>
+          <div className={styles.footer}>
+            <p
+              className={`${styles.subtext} text text_type_main-default text_color_inactive`}
+            >
+              В этом разделе вы можете изменить свои персональные данные.
+            </p>
+          </div>
+          </div>
+
+
           <form className={styles.form} onSubmit={(e) => onSave(e)}>
             <Input
               style={{ color: "#8585AD" }}
@@ -152,13 +161,8 @@ export function ProfilePage() {
               <Button size="medium" type="primary">Сохранить</Button>
             </span>
             </form>
-          <div className={styles.footer}>
-            <p
-              className={`${styles.subtext} text text_type_main-default text_color_inactive`}
-            >
-              В этом разделе вы можете изменить свои персональные данные.
-            </p>
-          </div>
+
+
         </div>
       </div>
     </>

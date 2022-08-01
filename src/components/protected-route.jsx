@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { Redirect, Route, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { refreshTokenAction } from "../services/actions/auth";
+import { getCookie } from "../services/actions/auth";
+import { getUserInfo } from "../services/actions/auth";
 
 export const ProtectedRoute = ({ children, ...rest }) => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const isTokenUpdated = useSelector((store) => store.user.isTokenUpdated);
-  const hasToken = !!localStorage.getItem("refreshToken");
-  // const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
+  const hasToken = getCookie('token');
+  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
+
+  useEffect(() => dispatch(getUserInfo()), [dispatch]);
 
   // useEffect(() => {
   //   if (!isTokenUpdated && hasToken) {
@@ -20,7 +22,7 @@ export const ProtectedRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={({ location }) =>
-        hasToken ? (
+        isUserAuthorized ? (
           children
         ) : (
           <Redirect

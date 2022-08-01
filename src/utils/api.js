@@ -1,13 +1,17 @@
 import { useLocation } from "react-router-dom";
-import { getCookie, setCookie, deleteCookie, refreshTokenAction } from "../services/actions/auth";
+import {
+  getCookie,
+  setCookie,
+  deleteCookie,
+} from "../services/actions/auth";
 
-const baseUrl = "https://norma.nomoreparties.space/api/";
+export const baseUrl = "https://norma.nomoreparties.space/api/";
 
-function checkResponse(res) {
+export function checkResponse(res) {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`Ошибка: ${res.status}`);
+  return res.json().then(err => Promise.reject(err));
 }
 
 export const fetchData = async () => {
@@ -31,8 +35,7 @@ export const apiPasswordReset = async (email) => {
     body: JSON.stringify({
       email: email,
     }),
-  })
-    .then((res) => checkResponse(res))
+  }).then((res) => checkResponse(res));
 };
 
 export const apiPasswordSave = async (password, token) => {
@@ -43,8 +46,7 @@ export const apiPasswordSave = async (password, token) => {
       password: password,
       token: token,
     }),
-  })
-    .then((res) => checkResponse(res))
+  }).then((res) => checkResponse(res));
 };
 
 export const apiLoginUser = async (email, password) => {
@@ -85,45 +87,26 @@ export const apiRegisterUser = async (name, email, password) => {
 export const apiUserRequest = async () => {
   return await fetch(`${baseUrl}auth/user`, {
     method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + getCookie('token'),
+      Authorization: "Bearer " + getCookie("token"),
     },
-  })
-  .then((res) => checkResponse(res))
-  .catch((err) => { 
-    if (err) {
-          apiRefreshToken().then(res => checkResponse(res))
-          .then((fin) => {
-              return fetch(`${baseUrl}auth/user`, {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: fin.accessToken
-                },
-              })
-            })
-              .then((res) => checkResponse(res))
-        } else {
-          deleteCookie('token');
-          localStorage.removeItem('refreshToken');
-          // eslint-disable-next-line
-          // location.reload()
-          // return Promise.reject(err)
-        }
-      })
-  }
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  }).then((res) => checkResponse(res))
+};
 
-export const apiRefreshToken = async () => {
-  console.log(localStorage.getItem('refreshToken'));
-  console.log(localStorage);
+export const apiRefreshToken = async (refreshToken) => {
   return await fetch(`${baseUrl}auth/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      token: localStorage.getItem('refreshToken'),
+      token: refreshToken,
     }),
   }).then((res) => checkResponse(res));
 };
@@ -133,7 +116,7 @@ export const apiUpdateUser = async (email, name) => {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      Authorization: "Bearer " + getCookie('token'),
+      Authorization: "Bearer " + getCookie("token"),
     },
     body: JSON.stringify({ email, name }),
   }).then((res) => checkResponse(res));

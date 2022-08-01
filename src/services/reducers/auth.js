@@ -26,7 +26,6 @@ import {
   UPDATE_FAILED,
   AUTH_CHECKED
 } from "../actions/auth";
-import { refreshTokenAction } from "../actions/auth";
 
 const initialUserState = {
   user: {
@@ -59,12 +58,11 @@ export const userReducer = (state = initialUserState, action) => {
     case REGISTER_SUCCESS: {
       return {
         ...state,
+        isUserAuthorized: true,
         user: {
           name: action.name,
           email: action.email,
-          password: action.password,
-          refreshToken: action.refreshToken,
-          accessToken: action.accessToken,
+          password: action.password
         },
       };
     }
@@ -90,9 +88,7 @@ export const userReducer = (state = initialUserState, action) => {
           ...state.user,
           email: action.email,
           name: action.name,
-          password: action.password,
-          accessToken: action.accessToken,
-          refreshToken: action.refreshToken,
+          password: action.password
         },
       };
     }
@@ -119,6 +115,7 @@ export const userReducer = (state = initialUserState, action) => {
           email: action.email,
           password: action.password,
         },
+        isUserAuthorized: true
       };
     }
     case GET_USERINFO_FAILED: {
@@ -138,11 +135,7 @@ export const userReducer = (state = initialUserState, action) => {
       return {
         ...state,
         isLoading: false,
-        isTokenUpdated: true,
-        user: {
-          accessToken: action.accessToken,
-          refreshToken: action.refreshToken,
-        },
+        isTokenUpdated: true
       };
     }
     case REFRESH_TOKEN_FAILED: {
@@ -206,12 +199,11 @@ export const userReducer = (state = initialUserState, action) => {
         isLoading: false,
         isUserAuthorized: false,
         user: {
+          ...state.user,
           email: "",
           name: "",
-          password: "",
-          accessToken: "",
-          refreshToken: "",
-        },
+          password: ""
+        }
       };
     }
     case LOGOUT_FAILED: {

@@ -7,6 +7,8 @@ import {
   apiRefreshToken,
   apiPasswordReset,
   apiPasswordSave,
+  checkResponse,
+  baseUrl,
 } from "../../utils/api";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -43,18 +45,16 @@ export const loginUser = (email, password, redirectFunc) => {
     apiLoginUser(email, password)
       .then((res) => {
         if (res && res.success) {
-          const authToken = res.accessToken.split("Bearer ")[1];
-          const refreshToken = res.refreshToken;
-          setCookie("token", authToken);
-          localStorage.setItem("refreshToken", refreshToken);
           dispatch({
             type: LOGIN_SUCCESS,
             name: res.user.name,
-            email: email,
-            password: password,
-            accessToken: res.accessToken,
-            refreshToken: res.refreshToken,
+            email: res.user.email,
+            password: res.user.password,
           });
+          const accessToken = res.accessToken.split("Bearer ")[1];
+          const refreshToken = res.refreshToken;
+          setCookie("token", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
           redirectFunc();
         } else {
           dispatch({
@@ -76,12 +76,12 @@ export const logoutUser = () => {
     apiLogoutUser(localStorage.getItem("refreshToken"))
       .then((res) => {
         if (res && res.success) {
-          deleteCookie("token");
-          const refreshToken = res.refreshToken;
-          localStorage.removeItem("refreshToken", refreshToken);
           dispatch({
             type: LOGOUT_SUCCESS,
           });
+          deleteCookie("token");
+          const refreshToken = localStorage.getItem("refreshToken");
+          localStorage.removeItem("refreshToken", refreshToken);
         } else {
           dispatch({
             type: LOGOUT_FAILED,
@@ -102,8 +102,6 @@ export const updateUser = (email, name) => {
     apiUpdateUser(email, name)
       .then((res) => {
         if (res && res.success) {
-          const refreshToken = res.refreshToken;
-          localStorage.setItem("refreshToken", refreshToken);
           dispatch({
             type: UPDATE_SUCCESS,
             email: res.user.email,
@@ -129,17 +127,15 @@ export const registerUser = (name, email, password, redirectFunc) => {
     apiRegisterUser(name, email, password)
       .then((res) => {
         if (res.success) {
-          const authToken = res.accessToken.split("Bearer ")[1];
-          const refreshToken = res.refreshToken;
-          setCookie("token", authToken);
-          localStorage.setItem("refreshToken", refreshToken);
           dispatch({
             type: REGISTER_SUCCESS,
             name: res.user.name,
             email: res.user.email,
-            accessToken: res.accessToken,
-            refreshToken: res.refreshToken,
           });
+          const accessToken = res.accessToken.split("Bearer ")[1];
+          const refreshToken = res.refreshToken;
+          setCookie("token", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
           redirectFunc();
         } else {
           dispatch({
@@ -159,6 +155,11 @@ export const getUserInfo = () => {
       type: GET_USERINFO_REQUEST,
     });
     apiUserRequest()
+      .catch((err) => {
+        if (err && err.message === 'jwt expired') {
+          dispatch(refreshTokenAction());
+        }
+      })
       .then((res) => {
         if (res && res.success) {
           dispatch({
@@ -170,31 +171,6 @@ export const getUserInfo = () => {
           dispatch({
             type: GET_USERINFO_FAILED,
           });
-          dispatch({
-            type: REFRESH_TOKEN_REQUEST,
-          });
-          apiRefreshToken()
-            .then((res) => {
-              if (res && res.success) {
-                localStorage.setItem("refreshToken", res.refreshToken);
-                const authToken = res.accessToken.split("Bearer ")[1];
-                setCookie("token", authToken);
-                dispatch({
-                  type: REFRESH_TOKEN_SUCCESS,
-                });
-              } else {
-                dispatch({
-                  type: REFRESH_TOKEN_FAILED,
-                });
-              }
-            })
-            .catch((err) => {
-              deleteCookie("token");
-              localStorage.removeItem("refreshToken");
-              dispatch({
-                type: REFRESH_TOKEN_FAILED,
-              });
-            });
         }
       })
       .finally(() => {
@@ -203,51 +179,25 @@ export const getUserInfo = () => {
   };
 };
 
-export function setCookie(name, value, props) {
-  props = props || {};
-  let exp = props.expires;
-  if (typeof exp == 'number' && exp) {
-    const d = new Date();
-    d.setTime(d.getTime() + exp * 1000);
-    exp = props.expires = d;
-  }
-  if (exp && exp.toUTCString) {
-    props.expires = exp.toUTCString();
-  }
-  value = encodeURIComponent(value);
-  let updatedCookie = name + '=' + value;
-  for (const propName in props) {
-    updatedCookie += '; ' + propName;
-    const propValue = props[propName];
-    if (propValue !== true) {
-      updatedCookie += '=' + propValue;
-    }
-  }
-  document.cookie = updatedCookie;
-}
-
-  export function getCookie(name) {
-    const matches = document.cookie.match(
-      new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
-    );
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-  }
-
-  export function deleteCookie(name) {
-    setCookie(name, null, { expires: -1 });
-  }
 
 export const refreshTokenAction = () => {
   return function(dispatch) {
     dispatch({
       type: REFRESH_TOKEN_REQUEST,
     });
-    apiRefreshToken()
+    apiRefreshToken(localStorage.getItem("refreshToken"))
       .then((res) => {
         if (res && res.success) {
-          localStorage.setItem("refreshToken", res.refreshToken);
-          const authToken = res.accessToken.split("Bearer ")[1];
-          setCookie("token", authToken);
+          const prevRefreshToken = localStorage.getItem("refreshToken");
+
+          const accessToken = res.accessToken.split("Bearer ")[1];
+          const refreshToken = res.refreshToken;
+
+          deleteCookie("token");
+          localStorage.removeItem("refreshToken", prevRefreshToken);
+
+          setCookie("token", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
           dispatch({
             type: REFRESH_TOKEN_SUCCESS,
           });
@@ -256,14 +206,28 @@ export const refreshTokenAction = () => {
             type: REFRESH_TOKEN_FAILED,
           });
         }
+        return res;
       })
-      .catch((err) => {
-        deleteCookie("token");
-        localStorage.removeItem("refreshToken");
-        dispatch({
-          type: REFRESH_TOKEN_FAILED,
+      .then((fin) => {
+        return fetch(`${baseUrl}auth/user`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + getCookie('token'),
+          },
         });
+      })
+      .then((res) => checkResponse(res))
+      .finally(() => {
+        dispatch({ type: AUTH_CHECKED });
       });
+    // .catch((err) => {
+    //   deleteCookie("token");
+    //   localStorage.removeItem("refreshToken");
+    //   dispatch({
+    //     type: REFRESH_TOKEN_FAILED,
+    //   });
+    // });
   };
 };
 
@@ -314,3 +278,41 @@ export const savePassword = (password, code, redirectFunc) => {
       });
   };
 };
+
+export function setCookie(name, value, props) {
+  props = props || {};
+  let exp = props.expires;
+  if (typeof exp == "number" && exp) {
+    const d = new Date();
+    d.setTime(d.getTime() + exp * 1000);
+    exp = props.expires = d;
+  }
+  if (exp && exp.toUTCString) {
+    props.expires = exp.toUTCString();
+  }
+  value = encodeURIComponent(value);
+  let updatedCookie = name + "=" + value;
+  for (const propName in props) {
+    updatedCookie += "; " + propName;
+    const propValue = props[propName];
+    if (propValue !== true) {
+      updatedCookie += "=" + propValue;
+    }
+  }
+  document.cookie = updatedCookie;
+}
+
+export function getCookie(name) {
+  const matches = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+        "=([^;]*)"
+    )
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+export function deleteCookie(name) {
+  setCookie(name, null, { expires: -1 });
+}

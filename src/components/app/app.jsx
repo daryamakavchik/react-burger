@@ -18,7 +18,6 @@ import AppHeader from "../app-header/app-header";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import styles from './app.module.css';
-import { getUserInfo, refreshTokenAction } from "../../services/actions/auth";
 import { getCookie } from "../../services/actions/auth";
 
 function App() {
@@ -37,10 +36,18 @@ function App() {
     dispatch(closeCurrentIngredient(ingr), [dispatch]);
   };
 
-  const hasToken = localStorage.getItem('refreshToken');
-
   useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);
-  useEffect(() => { dispatch(getUserInfo(), [dispatch])});
+
+  const hasToken = getCookie('token');
+  console.log(hasToken);
+  console.log(localStorage.getItem('refreshToken'));
+
+  //  const isTokenUpdated = useSelector((store) => store.user.isTokenUpdated);
+  // useEffect(() => {
+  //   if (!isTokenUpdated && hasToken) {
+  //     dispatch(refreshTokenAction());
+  //   }
+  // }, [dispatch, hasToken, isTokenUpdated]);
 
   return (
     <>
@@ -74,7 +81,7 @@ function App() {
       </Switch>
       {background && (
         <>
-          <Route
+          <ProtectedRoute
             path="/"
             exact={true}
             children={
