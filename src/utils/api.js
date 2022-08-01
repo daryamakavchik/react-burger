@@ -1,8 +1,5 @@
-import { useLocation } from "react-router-dom";
 import {
-  getCookie,
-  setCookie,
-  deleteCookie,
+  getCookie
 } from "../services/actions/auth";
 
 export const baseUrl = "https://norma.nomoreparties.space/api/";

@@ -38,17 +38,6 @@ function App() {
 
   useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);
 
-  const hasToken = getCookie('token');
-  console.log(hasToken);
-  console.log(localStorage.getItem('refreshToken'));
-
-  //  const isTokenUpdated = useSelector((store) => store.user.isTokenUpdated);
-  // useEffect(() => {
-  //   if (!isTokenUpdated && hasToken) {
-  //     dispatch(refreshTokenAction());
-  //   }
-  // }, [dispatch, hasToken, isTokenUpdated]);
-
   return (
     <>
       <div className={styles.page}>
