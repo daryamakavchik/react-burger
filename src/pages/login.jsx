@@ -25,7 +25,7 @@ export function LoginPage() {
   };
 
   const redirectOnSuccess = () => {
-      history.replace({ pathname: location?.state?.from })
+      history.replace({ pathname: location?.state?.from.pathname || '/' })
   };
 
   const login = (e, emailValue, passwordValue) => {
