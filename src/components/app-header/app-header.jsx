@@ -28,10 +28,10 @@ function AppHeader() {
           </a>
         </li>
         <li className={styles.headernav}>
-          <a className={styles.headernav} href="#top">
+          <Link className={styles.headernav} href="#top" to='/feed'>
             <ListIcon type="secondary" />
             <div className={`${styles.icon} p-2`}>Лента заказов</div>
-          </a>
+          </Link>
         </li>
         <li onClick={onClick} className={styles.headernav + " " + styles.headerlogo}>
           <Logo />

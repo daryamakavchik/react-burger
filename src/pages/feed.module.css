@@ -1,0 +1,167 @@
+.title{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
+    color: #F2F2F3;
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+}
+
+.orders{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    gap: 16px;
+    max-height: 768px;
+    overflow-y: scroll;
+}
+
+.order{
+    display: flex;
+    flex-direction: column;
+    width: 584px;
+    height: 214px;
+    gap: 24px;
+    margin: 0;
+    padding: 24px 24px;
+    background: #1C1C21;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+}
+
+.orderid{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 16px;
+    width: 536px;
+    height: 24px;
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.id{
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: #F2F2F3;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.timestamp{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+    color: #8585AD;
+    flex: none;
+    order: 1;
+    flex-grow: 1;
+}
+
+.burgername{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    color: #F2F2F3;
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.componentandprice{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 24px;
+    width: 536px;
+    height: 64px;
+    flex: none;
+    order: 2;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.ingredients{
+    width: 304px;
+    height: 64px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    position: relative;
+}
+
+.preview{
+    box-sizing: border-box;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    left: 0px;
+    top: 0px;
+    background: #131316;
+    border-radius: 100px;
+    border: 2px solid;
+    border-image-source: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+}
+
+.illustration{
+    width: 112px;
+    height: 56px;
+    position: absolute;
+    left: -37.5%;
+    right: -37.5%;
+    top: 6.25%;
+    bottom: 6.25%;
+}
+
+.price{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 208px;
+    height: 24px;
+    flex: none;
+    order: 1;
+    flex-grow: 1;
+}
+
+.digit{
+
+}
+
+.icon{
+
+}
+
+.completed{
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 60px;
+}

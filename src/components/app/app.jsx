@@ -11,6 +11,7 @@ import { ForgotPasswordPage } from "../../pages/forgot-password";
 import { HomePage } from "../../pages/home";
 import { LoginPage } from "../../pages/login";
 import { RegisterPage } from "../../pages/register";
+import { FeedPage } from "../../pages/feed";
 import { ResetPasswordPage } from "../../pages/reset-password";
 import { ProfilePage } from "../../pages/profile";
 import {
@@ -57,6 +58,9 @@ function App() {
           </Route>
           <Route path="/register" exact={true}>
             <RegisterPage />
+          </Route>
+          <Route path="/feed" exact={true}>
+            <FeedPage />
           </Route>
           {!isUserAuthorized && (
             <Route path="/forgot-password" exact={true}>
