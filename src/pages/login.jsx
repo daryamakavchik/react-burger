@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory, Redirect, useLocation } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   EmailInput,
@@ -11,8 +11,7 @@ import styles from "./login.module.css";
 
 export function LoginPage() {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const location = useLocation();
+  const { state } = useLocation();
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
@@ -24,17 +23,13 @@ export function LoginPage() {
     setEmailValue(e.target.value);
   };
 
-  const redirectOnSuccess = () => {
-      history.replace({ pathname: location?.state?.from.pathname || '/' })
-  };
-
   const login = (e, emailValue, passwordValue) => {
     e.preventDefault();
-    dispatch(loginUser(emailValue, passwordValue, redirectOnSuccess));
+    dispatch(loginUser(emailValue, passwordValue));
   };
 
   if (isUserAuthorized) {
-    return <Redirect to={location?.state?.from || "/"} />;
+    return <Redirect to={state?.from || "/"} />;
   }
 
   return (

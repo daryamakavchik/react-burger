@@ -82,7 +82,7 @@ export default function BurgerConstructor() {
 
   useEffect(() => {
     setTotalPrice(total);
-  }, [totalPrice, setTotalPrice]);
+  }, [total, totalPrice, setTotalPrice]);
 
   return (
     <>

@@ -7,13 +7,10 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
+import { Link } from "react-router-dom";
 
 function AppHeader() {
   const history = useHistory();
-
-  const onProfileClick = useCallback(() => {
-    history.replace({ pathname: "/profile" });
-  }, [history]);
 
   const onClick = useCallback(() => {
     history.replace({ pathname: "/" });
@@ -40,16 +37,14 @@ function AppHeader() {
           <Logo />
         </li>
         <li className={styles.headernav}>
-          <a className={styles.headernav} href="#top">
+          <Link className={styles.headernav} href="#top" to='/profile'>
             <ProfileIcon type="secondary" />
-            <div
-              to="/profile"
+            <div 
               className={`${styles.icon} p-2`}
-              onClick={onProfileClick}
             >
               Личный кабинет
             </div>
-          </a>
+          </Link>
         </li>
       </ul>
     </header>

@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Redirect,
   Route,
   Switch,
   useHistory,
@@ -24,7 +23,6 @@ import AppHeader from "../app-header/app-header";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import styles from "./app.module.css";
-import { getCookie } from "../../services/actions/auth";
 
 function App() {
   const location = useLocation();
@@ -51,9 +49,9 @@ function App() {
       <section className={styles.App}>
         <AppHeader />
         <Switch location={background || location}>
-          <ProtectedRoute path="/profile" exact={true}>
-            <ProfilePage />
-          </ProtectedRoute>
+        <Route path="/" exact={true}>
+            <HomePage />
+          </Route>
           <Route path="/login" exact={true}>
             <LoginPage />
           </Route>
@@ -75,9 +73,9 @@ function App() {
               <IngredientDetails data={data} />
             </DetailsModal>
           </Route>
-          <Route path="/" exact={true}>
-            <HomePage />
-          </Route>
+          <ProtectedRoute path="/profile" exact={true}>
+            <ProfilePage />
+          </ProtectedRoute>
         </Switch>
         {background && (
           <>

@@ -18,7 +18,7 @@ export default function Modal({ title, onClose, children }) {
     return () => {
       document.removeEventListener("keydown", handleEscKeydown);
     };
-  }, []);
+  }, [handleEscKeydown]);
 
   return ReactDOM.createPortal(
     <>

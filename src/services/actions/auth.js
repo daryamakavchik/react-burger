@@ -37,7 +37,7 @@ export const UPDATE_SUCCESS = "UPDATE_SUCCESS";
 export const UPDATE_FAILED = "UPDATE_FAILED";
 export const AUTH_CHECKED = "AUTH_CHECKED";
 
-export const loginUser = (email, password, redirectFunc) => {
+export const loginUser = (email, password) => {
   return function(dispatch) {
     dispatch({
       type: LOGIN_REQUEST,
@@ -55,7 +55,6 @@ export const loginUser = (email, password, redirectFunc) => {
           const refreshToken = res.refreshToken;
           setCookie("token", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
-          redirectFunc();
         } else {
           dispatch({
             type: LOGIN_FAILED,
