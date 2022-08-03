@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './order.module.css';
+import styles from './orderinfo.module.css';
 import styless from './feed.module.css';
 import preview from '../images/ingredientpreview.png';
 import preview2 from '../images/ingredientpreview2.png';
@@ -7,7 +7,7 @@ import preview3 from '../images/ingredientpreview3.png';
 import preview4 from '../images/ingredientpreview4.png';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function OrderPage(){
+export default function OrderInfoPage(){
     return (
         <div className={styles.content}>
             <p className={`${styless.id} ${styles.id} text text_type_digits-default`}>#034533</p>
