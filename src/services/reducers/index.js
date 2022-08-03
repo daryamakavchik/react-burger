@@ -5,15 +5,13 @@ import {
   GET_DATA_FAILED,
   OPEN_CURRENT_INGREDIENT,
   CLOSE_CURRENT_INGREDIENT,
-  CLOSE_ORDER_MODAL,
-  POST_ORDER_REQUEST,
-  POST_ORDER_SUCCESS,
-  POST_ORDER_FAILED,
   ADD_ITEM,
   ADD_BUN,
   DELETE_ITEM,
   UPDATE_ITEMS,
 } from "../actions";
+import { POST_ORDER_SUCCESS } from "../actions/order";
+import { orderReducer } from "./order";
 import { userReducer } from "./auth";
 import { feedReducer } from "./feed";
 import { wsReducer } from "./ws";
@@ -34,8 +32,7 @@ export const initialState = {
     proteins: null,
     fat: null,
     carbohydrates: null,
-  },
-  orderNum: {},
+  }
 };
 
 export const dataReducer = (state = initialState, action) => {
@@ -178,40 +175,6 @@ export const currentIngredientReducer = (state = initialState, action) => {
   }
 };
 
-export const orderReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case POST_ORDER_REQUEST: {
-      return {
-        ...state,
-        isLoading: true,
-      };
-    }
-    case POST_ORDER_SUCCESS: {
-      return {
-        ...state,
-        isModalOpen: true,
-        isLoading: false,
-        orderNum: action.orderNum,
-      };
-    }
-    case POST_ORDER_FAILED: {
-      return {
-        ...state,
-        hasError: true,
-        isLoading: false,
-      };
-    }
-    case CLOSE_ORDER_MODAL: {
-      return {
-        ...state,
-        isModalOpen: false,
-      };
-    }
-    default: {
-      return state;
-    }
-  }
-};
 
 export const rootReducer = combineReducers({
   data: dataReducer,

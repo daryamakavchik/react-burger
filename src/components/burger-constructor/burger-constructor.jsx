@@ -12,10 +12,9 @@ import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import {
   onDropHandler,
-  deleteItem,
-  openOrderModal,
-  closeOrderModal,
+  deleteItem
 } from "../../services/actions";
+import { openOrderModal, closeOrderModal } from "../../services/actions/order";
 import BurgerElement from "../burger-element/burger-element";
 import Loader from "../loader/loader";
 
@@ -56,12 +55,7 @@ export default function BurgerConstructor() {
       .concat(bunIdArr);
 
   const openModal = () => {
-    // if (userName) {
       dispatch(openOrderModal(orderData), [dispatch]);
-    // } 
-    // else {
-    //   history.replace({ pathname: "/login" });
-    // }
   };
   const redirectFunc = () => {
     history.replace({ pathname: "/login" });

@@ -1,4 +1,4 @@
-import { apiPostOrder, fetchData } from "../../utils/api";
+import { fetchData } from "../../utils/api";
 import { v4 as uuidv4 } from "uuid";
 export const GET_DATA_REQUEST = "GET_DATA_REQUEST";
 export const GET_DATA_SUCCESS = "GET_DATA_SUCCESS";
@@ -10,10 +10,6 @@ export const UPDATE_ITEMS = "UPDATE_ITEMS";
 export const OPEN_CURRENT_INGREDIENT = "OPEN_CURRENT_INGREDIENT";
 export const SET_CURRENT_INGREDIENT = "SET_CURRENT_INGREDIENT";
 export const CLOSE_CURRENT_INGREDIENT = "CLOSE_CURRENT_INGREDIENT";
-export const CLOSE_ORDER_MODAL = "CLOSE_ORDER_MODAL";
-export const POST_ORDER_REQUEST = "POST_ORDER_REQUEST";
-export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
-export const POST_ORDER_FAILED = "POST_ORDER_FAILED";
 
 export const setIngredientsData = () => {
   return function(dispatch) {
@@ -82,36 +78,6 @@ export const closeCurrentIngredient = () => {
   };
 };
 
-export const openOrderModal = (orderData) => {
-  return function(dispatch) {
-    dispatch({
-      type: POST_ORDER_REQUEST,
-    });
-    apiPostOrder(orderData).then((res) => {
-      if (res && res.success) {
-        dispatch({
-          type: POST_ORDER_SUCCESS,
-          orderNum: res.order.number,
-        });
-      } else {
-        dispatch({
-          type: POST_ORDER_FAILED,
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-  });
-};
-}
-
-export const closeOrderModal = () => {
-  return function(dispatch) {
-    dispatch({
-      type: CLOSE_ORDER_MODAL,
-    });
-  };
-};
 
 export const updateItems = () => {
   return function(dispatch) {
