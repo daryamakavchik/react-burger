@@ -15,6 +15,8 @@ import {
   UPDATE_ITEMS,
 } from "../actions";
 import { userReducer } from "./auth";
+import { feedReducer } from "./feed";
+import { wsReducer } from "./ws";
 
 export const initialState = {
   isLoading: false,
@@ -216,5 +218,7 @@ export const rootReducer = combineReducers({
   constr: constructorReducer,
   ingr: currentIngredientReducer,
   ord: orderReducer, 
-  user: userReducer
+  user: userReducer,
+  feed: feedReducer,
+  ws: wsReducer
 });
