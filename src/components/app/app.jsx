@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Route,
-  Switch,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "../protected-route";
 import { ForgotPasswordPage } from "../../pages/forgot-password";
 import { HomePage } from "../../pages/home";
@@ -51,7 +46,7 @@ function App() {
       <section className={styles.App}>
         <AppHeader />
         <Switch location={background || location}>
-        <Route path="/" exact={true}>
+          <Route path="/" exact={true}>
             <HomePage />
           </Route>
           <Route path="/login" exact={true}>
@@ -78,14 +73,13 @@ function App() {
               <IngredientDetails data={data} />
             </DetailsModal>
           </Route>
-          <Route
-              path="/feed/:id"
-              exact={true}
-              children={
-                <OrderInfoPage />
-              }
-            />
-          <ProtectedRoute path="/profile" exact={true}>
+          <Route path="/profile/orders/:id" exact={true}>
+            <OrderInfoPage />
+          </Route>
+          <Route path="/feed/:id" exact={true}>
+            <OrderInfoPage />
+            </Route>
+          <ProtectedRoute path="/profile">
             <ProfilePage />
           </ProtectedRoute>
         </Switch>
@@ -97,6 +91,22 @@ function App() {
               children={
                 <Modal>
                   <OrderDetails />
+                </Modal>
+              }
+            />
+            <Route
+              path="/feed/:id"
+              children={
+                <Modal onClose={closeAllModals}>
+                  <OrderInfoPage />
+                </Modal>
+              }
+            />
+            <ProtectedRoute
+              path="/profile/orders/:id"
+              children={
+                <Modal onClose={closeAllModals}>
+                  <OrderInfoPage />
                 </Modal>
               }
             />
