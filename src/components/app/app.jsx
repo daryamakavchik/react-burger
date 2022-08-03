@@ -24,6 +24,7 @@ import AppHeader from "../app-header/app-header";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import styles from "./app.module.css";
+import OrderPage from "../../pages/order";
 
 function App() {
   const location = useLocation();
@@ -77,6 +78,13 @@ function App() {
               <IngredientDetails data={data} />
             </DetailsModal>
           </Route>
+          <Route
+              path="/feed/:id"
+              exact={true}
+              children={
+                <OrderPage />
+              }
+            />
           <ProtectedRoute path="/profile" exact={true}>
             <ProfilePage />
           </ProtectedRoute>

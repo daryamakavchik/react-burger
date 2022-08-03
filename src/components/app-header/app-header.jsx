@@ -13,7 +13,7 @@ function AppHeader() {
   const history = useHistory();
 
   const onClick = useCallback(() => {
-    history.replace({ pathname: "/" });
+    history.replace({ pathname: "/feed/:id" });
   }, [history]);
 
   return (
