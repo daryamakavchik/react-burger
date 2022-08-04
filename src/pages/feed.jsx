@@ -5,40 +5,14 @@ import OrderCard from "../components/ordercard/ordercard";
 import { useSelector } from 'react-redux';
 import { wsConnectionClosedAction, wsConnectionStartAction } from "../services/actions/ws";
 import { setCorrectOrdersAction, setDoneOrdersAction } from "../services/actions/feed";
+import { v4 as uuidv4 } from "uuid";
 
 export function FeedPage() {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.ws);
-
   const ingredientsData = useSelector(
     (state) => state.data.burgerIngredients.fillings
   );
-
-  const getCorrectOrders = (orders, data) => {
-    const correctOrders = [];
-    orders.forEach((order) => {
-      const { ingredients, ...rest } = order;
-      const correctIngredients = getIngredients(order.ingredients, data);
-      if (correctIngredients.length) {
-        correctOrders.push({ ...rest, ingredients: correctIngredients });
-      }
-    });
-    return correctOrders;
-  };
-  
-  const getDoneInProgressOrders = (orders) => {
-    const done = [];
-    const inProgress = [];
-    orders.forEach((order) => {
-      if (order.status === 'done') {
-        done.push(order.number);
-      } else {
-        inProgress.push(order.number);
-      }
-    });
-    return { done, inProgress };
-  };
-
   const getIngredients = (ids, data) => {
     const result = [];
     const ingredients = new Map();
@@ -53,9 +27,36 @@ export function FeedPage() {
     });
 }
 
+  const getCorrectOrders = (orders, data) => {
+    const correctOrders = [];
+    orders.forEach((order) => {
+      const { ingredients, ...rest } = order;
+      const correctIngredients = getIngredients(order.ingredients, data);
+      if (correctIngredients && correctIngredients.length) {
+        correctOrders.push({ ...rest, ingredients: correctIngredients });
+      }
+    });
+    return correctOrders;
+  };
+
+  const getDoneInProgressOrders = (orders) => {
+    const done = [];
+    const inProgress = [];
+    orders.forEach((order) => {
+      if (order.status === 'done') {
+        done.push(order.number);
+      } else {
+        inProgress.push(order.number);
+      }
+    });
+    return { done, inProgress };
+  };
+
   const correctOrders = orders && getCorrectOrders(orders, ingredientsData);
   const doneInProgressOrders =
   correctOrders && getDoneInProgressOrders(correctOrders);
+
+ 
 
   React.useEffect(() => {
     dispatch(wsConnectionStartAction('wss://norma.nomoreparties.space/orders/all'));
@@ -88,7 +89,7 @@ export function FeedPage() {
       </h2>
       <div className={styles.content}>
         <ul className={styles.orders}>
-            {orders.map(order => <OrderCard order={order} />)}
+            {orders.map(order => <OrderCard order={order} key={uuidv4()} />)}
         </ul>
         <div className={styles.completed}>
           <div className={styles.types}>

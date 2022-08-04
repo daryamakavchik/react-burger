@@ -17,7 +17,7 @@ export default function OrderCard({order}){
   const location = useLocation();
   const { url } = useRouteMatch();
   const { number, ingredients, createdAt, name, _id, status } = order;
-  const date = new Date();
+  const date = 'someDate';
   const cost = React.useMemo(
     () => ingredients.reduce((acc, cur) => acc + cur.price * cur.quantity, 0),
     [ingredients]
