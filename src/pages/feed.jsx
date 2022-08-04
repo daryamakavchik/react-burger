@@ -9,14 +9,14 @@ import { v4 as uuidv4 } from "uuid";
 
 export function FeedPage() {
   const dispatch = useDispatch();
-  const { orders } = useSelector((state) => state.ws);
-  const ingredientsData = useSelector(
-    (state) => state.data.burgerIngredients.fillings
-  );
+  const { orders, total, totalToday } = useSelector((state) => state.ws);
+  const ingredientsData = useSelector((state) => state.data.burgerIngredients.fillings);
+
   const getIngredients = (ids, data) => {
     const result = [];
     const ingredients = new Map();
     const buns = new Set();
+
     ids.forEach((id) => {
       const count = ingredients.get(id);
       if (count) {
@@ -53,10 +53,8 @@ export function FeedPage() {
   };
 
   const correctOrders = orders && getCorrectOrders(orders, ingredientsData);
-  const doneInProgressOrders =
-  correctOrders && getDoneInProgressOrders(correctOrders);
+  const doneInProgressOrders = correctOrders && getDoneInProgressOrders(correctOrders);
 
- 
 
   React.useEffect(() => {
     dispatch(wsConnectionStartAction('wss://norma.nomoreparties.space/orders/all'));
@@ -139,7 +137,7 @@ export function FeedPage() {
               Выполнено за все время:
             </p>
             <p className={`${styles.digitslarge} text text_type_digits-large`}>
-              28752
+              {total}
             </p>
           </div>
           <div>
@@ -147,7 +145,7 @@ export function FeedPage() {
               Выполнено за сегодня:
             </p>
             <p className={`${styles.digitslarge} text text_type_digits-large`}>
-              138
+              {totalToday}
             </p>
           </div>
         </div>

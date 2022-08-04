@@ -24,13 +24,13 @@
     max-height: 768px;
     overflow-y: scroll;
     overflow-x: hidden;
+    list-style-type: none;
 }
 
 .order{
     display: flex;
     flex-direction: column;
     width: 584px;
-    gap: 24px;
     margin: 0 8px 0 0;
     padding: 24px 24px;
     background: #1C1C21;
@@ -43,7 +43,7 @@
     display: flex;
     flex-direction: row;
     padding: 0px;
-    margin: 0;
+    margin: 0 0 24px 0;
     height: 24px;
     justify-content: space-between;
 }
@@ -66,7 +66,65 @@
     display: flex;
     text-align: right;
     color: #8585AD;
+    text-decoration: none;
 }
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    position: relative;
+    background: linear-gradient(45deg, rgba(128, 26, 178, 1), rgba(74, 76, 255, 1));
+    border-radius: 100px;
+    z-index: 1;
+    overflow: hidden;
+  }
+  
+  .container::after {
+    display: block;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    left: 2px;
+    bottom: 2px;
+    border-radius: 100px;
+    background: var(--background);
+    content: '';
+  }
+
+  /* .overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    left: 2px;
+    bottom: 2px;
+    border-radius: 100px;
+    background: rgba(28, 28, 33, .6);
+    z-index: 2;
+  } */
+  
+  .image {
+    height: 56px;
+    z-index: 2;
+  }
+
+/* .img{
+    width: 64px;
+    height: 64px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 50%;
+    border: 1px solid linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+    border-style: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+} */
 
 .burgername{
     font-style: normal;
@@ -80,6 +138,7 @@
     order: 0;
     align-self: stretch;
     flex-grow: 0;
+    margin-bottom: 24px;
 }
 
 .componentandprice{
@@ -103,7 +162,7 @@
     position: relative;
 }
 
-.preview{
+/* .preview{
     box-sizing: border-box;
     position: relative;
     width: 64px;
@@ -111,13 +170,13 @@
     background: #131316;
     border-radius: 100px;
     /* border: 2px solid; */
-    border-image-source: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
-}
+    /* border-image-source: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+} */
 
-.illustration{
+/* .illustration{
     width: 112px;
     height: 56px;
-}
+} */ 
 
 .price{
     display: flex;
@@ -143,12 +202,9 @@
     color: #F2F2F3;
 }
 
-.digit{
-
-}
-
-.icon{
-
+.link{
+    text-decoration: none;
+    color: #F2F2F3;
 }
 
 .completed{

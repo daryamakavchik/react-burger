@@ -9,26 +9,31 @@ import { useRouteMatch } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { selectOrderAction } from "../../services/actions/feed";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
 
 export default function OrderCard({order}){
   const dispatch = useDispatch();
   const location = useLocation();
+
   const { url } = useRouteMatch();
-  const { number, ingredients, createdAt, name, _id, status } = order;
-  const date = 'someDate';
-  const cost = React.useMemo(
-    () => ingredients.reduce((acc, cur) => acc + cur.price * cur.quantity, 0),
-    [ingredients]
-  );
+  const { ingredients, name, _id, status, number, createdAt, updatedAt } = order;
+  const data = useSelector(store => store.data.data);
+
+  let ingrData;
+  let ingrCount;
+  ingredients.forEach((ingr) => {
+    ingrData = data.find(el => el._id === ingr);
+    ingrCount = ingredients.filter(x => x === ingrData._id).length
+  })
+  const cost = React.useMemo(() => ingredients.reduce((acc, cur) =>  acc + ingrData.price * ingrCount, 0), [ingredients]);
 
     return (
         <li
         className={styles.order}
         onClick={() => dispatch(selectOrderAction(order))}
       >
-        <Link
+        <Link className={styles.link}
           to={{ pathname: `${url}/${_id}`, state: { orderCard: location } }}
         >
           <div className={styles.orderid}>
@@ -38,7 +43,7 @@ export default function OrderCard({order}){
             <p
               className={`${styles.timestamp} text text_type_main-small text_color_inactive`}
             >
-              {date}
+              {createdAt}
             </p>
           </div>
           <h3
@@ -61,12 +66,12 @@ export default function OrderCard({order}){
           )}
           <div className={styles.componentandprice}>
             <div className={styles.ingredients}>
-              <div className={styles.preview}>
-                <div className={styles.illustration}>
-                  <img src={preview} />
+              {ingredients.map(ingr => 
+                <div className={styles.container}>
+                  <img className={styles.image} src={data.find(el => el._id === ingr).image} />
                 </div>
-              </div>
-              <div className={styles.preview}>
+              )}
+              {/* <div className={styles.preview}>
                 <div className={styles.illustration}>
                   <img src={preview2} />
                 </div>
@@ -85,13 +90,13 @@ export default function OrderCard({order}){
                 <div className={styles.illustration}>
                   <img src={preview5} />
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className={styles.price}>
               <p
                 className={`${styles.digit} text text_type_digits-default`}
               >
-                480
+                {cost}
               </p>
               <CurrencyIcon type="primary" />
             </div>
