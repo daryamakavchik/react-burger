@@ -1,10 +1,5 @@
 import React from "react";
 import styles from "../../pages/feed.module.css";
-import preview from "../../images/ingredientpreview.png";
-import preview2 from "../../images/ingredientpreview2.png";
-import preview3 from "../../images/ingredientpreview3.png";
-import preview4 from "../../images/ingredientpreview4.png";
-import preview5 from "../../images/ingredientpreview5.png";
 import { useRouteMatch } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { selectOrderAction } from "../../services/actions/feed";
@@ -13,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export default function OrderCard({ order }) {
   const dispatch = useDispatch();
@@ -25,6 +21,26 @@ export default function OrderCard({ order }) {
   let ingrData;
 
   const [price, setPrice] = useState(0);
+  const [count, setCount] = useState(0);
+  const [images, setImages] = useState([]);
+  const imageQuantity = 5;
+
+  useEffect(() => {
+    let bun = false;
+    let targetImages = [];
+    ingredients.forEach(ingredient => {
+      ingrData = data.find((el) => el._id === ingredient);
+        if (ingredient.type === 'bun' && !bun) {
+            bun = true;
+            targetImages.push(ingrData.image_mobile);
+        }
+        if (ingredient.type !== 'bun') {
+            targetImages.push(ingrData.image_mobile)
+        }
+    });
+    setImages(targetImages);
+    setCount(targetImages.length)
+}, [ingredients]);
 
   useEffect(() => {
     if (data.length) {
@@ -43,79 +59,56 @@ export default function OrderCard({ order }) {
         }
       });
       setPrice(totalPrice);
-      // setOrderIngredients(targetIngredients);
     }
   }, [data, order.ingredients]);
 
-  // const cost = React.useMemo(() => ingredients.reduce((acc, cur) =>  acc + ingrData.price * ingrCount, 0), [ingredients]); //works incorectly
-  // ingrCount = ingredients.filter(x => x === ingrData._id).length;
-
   return (
-    <li
-      className={styles.order}
-      onClick={() => dispatch(selectOrderAction(order))}
-    >
-      <Link
-        className={styles.link}
-        to={{ pathname: `${url}/${_id}`, state: { orderCard: location } }}
-      >
+    <li className={styles.order} onClick={() => dispatch(selectOrderAction(order))} >
+      <Link className={styles.link} to={{ pathname: `${url}/${_id}`, state: { orderCard: location } }} >
         <div className={styles.orderid}>
-          <p
-            className={`${styles.id} text text_type_digits-default`}
-          >{`#${number}`}</p>
-          <p
-            className={`${styles.timestamp} text text_type_main-small text_color_inactive`}
-          >
-            {createdAt}
-          </p>
+          <p className={`${styles.id} text text_type_digits-default`}>{`#${number}`}</p>
+          <p className={`${styles.timestamp} text text_type_main-small text_color_inactive`}>{createdAt}</p>
         </div>
-        <h3 className={`${styles.burgername} text text_type_main-default`}>
-          {name}
-        </h3>
+        <h3 className={`${styles.burgername} text text_type_main-default`}>{name}</h3>
         {url === "/profile/order" && (
-          <p
-            className={`text text_type_main-small ${
-              status === "done" && styles.ready
-            }`}
-          >
-            {status === "created"
-              ? "Создан"
-              : status === "pending"
-              ? "Готовится"
-              : "Выполнен"}
+          <p className={`text text_type_main-small ${status === "done" && styles.ready}`}>
+            {status === "created" ? "Создан" : status === "pending" ? "Готовится" : "Выполнен"}
           </p>
         )}
         <div className={styles.componentandprice}>
           <div className={styles.ingredients}>
+            {images.map((image, i) => {
+              let left = -i * 15;
+              if (i <= imageQuantity - 1)
+                return (
+                  <div key={uuidv4()} className={styles.container} style={{ left: left, zIndex: 100 - i }}>
+                    <img className={styles.image} src={image} alt="" />
+                  </div>
+                );
+              if (i === imageQuantity)
+                return (
+                  <div key={uuidv4()} className={styles.container} style={{ left: left, zIndex: 100 - i }}>
+                    <p className={styles.count + " text text_type_digits-default"}>
+                      {"+" + (count - imageQuantity + 1)}
+                    </p>
+                    <img className={styles.image} style={{ opacity: 0.5 }} src={image} alt="" />
+                  </div>
+                );
+              return false;
+            })}
+          </div>
+
+          {/* <div className={styles.ingredients}>
             {ingredients.map((ingr) => (
-              <div className={styles.container}>
+              <div className={styles.container} key={ uuidv4()}>
                 <img
                   className={styles.image}
                   src={data.find((el) => el._id === ingr).image}
                 />
               </div>
             ))}
-            {/* <div className={styles.preview}>
-                <div className={styles.illustration}>
-                  <img src={preview2} />
-                </div>
-              </div>
-              <div className={styles.preview}>
-                <div className={styles.illustration}>
-                  <img src={preview3} />
-                </div>
-              </div>
-              <div className={styles.preview}>
-                <div className={styles.illustration}>
-                  <img src={preview4} />
-                </div>
-              </div>
-              <div className={styles.preview}>
-                <div className={styles.illustration}>
-                  <img src={preview5} />
-                </div>
-              </div> */}
-          </div>
+          </div> */}
+
           <div className={styles.price}>
             <p className={`${styles.digit} text text_type_digits-default`}>
               {price}

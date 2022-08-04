@@ -78,7 +78,6 @@
     position: relative;
     background: linear-gradient(45deg, rgba(128, 26, 178, 1), rgba(74, 76, 255, 1));
     border-radius: 100px;
-    z-index: 1;
     overflow: hidden;
   }
   
@@ -94,37 +93,23 @@
     content: '';
   }
 
-  /* .overlay {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .count {
     position: absolute;
-    top: 2px;
-    right: 2px;
-    left: 2px;
-    bottom: 2px;
-    border-radius: 100px;
-    background: rgba(28, 28, 33, .6);
     z-index: 2;
-  } */
-  
-  .image {
-    height: 56px;
-    z-index: 2;
-  }
+    left: 25%;
+    top: 27%;
+}
 
-/* .img{
-    width: 64px;
-    height: 64px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    box-sizing: border-box;
-    position: relative;
-    border-radius: 50%;
-    border: 1px solid linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
-    border-style: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
-} */
+  .image {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 112px;
+    height: 56px;
+    object-fit: cover;
+    object-position: -23px 2px;
+}
 
 .burgername{
     font-style: normal;
@@ -147,6 +132,7 @@
     align-items: center;
     padding: 0px;
     gap: 24px;
+    max-width: 536px;
     height: 64px;
     flex: none;
     order: 2;
@@ -156,27 +142,7 @@
 
 .ingredients{
     display: flex;
-    flex-direction: row;
-    width: 304px;
-    height: 64px;
-    position: relative;
 }
-
-/* .preview{
-    box-sizing: border-box;
-    position: relative;
-    width: 64px;
-    height: 64px;
-    background: #131316;
-    border-radius: 100px;
-    /* border: 2px solid; */
-    /* border-image-source: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
-} */
-
-/* .illustration{
-    width: 112px;
-    height: 56px;
-} */ 
 
 .price{
     display: flex;
@@ -185,7 +151,6 @@
     align-items: center;
     padding: 0px;
     gap: 8px;
-    width: 208px;
     height: 24px;
     flex: none;
     order: 1;
