@@ -61,10 +61,11 @@ export default function OrderCard({ order }) {
       setPrice(totalPrice);
     }
   }, [data, order.ingredients]);
+  
 
   return (
     <li className={styles.order} onClick={() => dispatch(selectOrderAction(order))} >
-      <Link className={styles.link} to={{ pathname: `${url}/${_id}`, state: { orderCard: location } }} >
+      <Link className={styles.link} to={{ pathname: `${url}/${_id}`, state: { background: location } }} >
         <div className={styles.orderid}>
           <p className={`${styles.id} text text_type_digits-default`}>{`#${number}`}</p>
           <p className={`${styles.timestamp} text text_type_main-small text_color_inactive`}>{createdAt}</p>

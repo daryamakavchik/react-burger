@@ -25,6 +25,7 @@ export const initialState = {
     fillings: []
   },
   isModalOpen: false,
+  isIngredientModal: false,
   currentIngredient: {
     image: null,
     name: null,
@@ -143,6 +144,7 @@ export const currentIngredientReducer = (state = initialState, action) => {
       return {
         ...state,
         isModalOpen: true,
+        isIngredientModal: true,
         currentIngredient: {
           ...state.currentIngredient,
           image: action.payload.image,
@@ -158,6 +160,7 @@ export const currentIngredientReducer = (state = initialState, action) => {
       return {
         ...state,
         isModalOpen: false,
+        isIngredientModal: false,
         currentIngredient: {
           ...state.currentIngredient,
           image: null,

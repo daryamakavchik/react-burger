@@ -8,6 +8,7 @@ import {
 const initialState = {
   orders: [],
   selectedOrder: null,
+  isModalOpen: false,
   done: [],
   inProgress: [],
 };
@@ -31,12 +32,14 @@ export const feedReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedOrder: action.payload,
+        isModalOpen: true
       };
     }
     case UNSELECT_ORDER: {
       return {
         ...state,
         selectedOrder: null,
+        isModalOpen: false
       }
     }
     default: {
