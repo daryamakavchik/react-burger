@@ -97,18 +97,6 @@ export default function OrderCard({ order }) {
               return false;
             })}
           </div>
-
-          {/* <div className={styles.ingredients}>
-            {ingredients.map((ingr) => (
-              <div className={styles.container} key={ uuidv4()}>
-                <img
-                  className={styles.image}
-                  src={data.find((el) => el._id === ingr).image}
-                />
-              </div>
-            ))}
-          </div> */}
-
           <div className={styles.price}>
             <p className={`${styles.digit} text text_type_digits-default`}>
               {price}

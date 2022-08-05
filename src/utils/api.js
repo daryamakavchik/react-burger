@@ -118,3 +118,64 @@ export const apiUpdateUser = async (email, name) => {
     body: JSON.stringify({ email, name }),
   }).then((res) => checkResponse(res));
 };
+
+
+export const getCorrectOrders = (orders, data) => {
+  const correctOrders = [];
+  orders.forEach((order) => {
+    const { ingredients, ...rest } = order;
+    const correctIngredients = getIngredients(order.ingredients, data);
+    if (correctIngredients && correctIngredients.length) {
+      correctOrders.push({ ...rest, ingredients: correctIngredients });
+    }
+  });
+  return correctOrders;
+};
+
+export const getDoneInProgressOrders = (orders) => {
+  const done = [];
+  const inProgress = [];
+  orders.forEach((order) => {
+    if (order.status === 'done') {
+      done.push(order.number);
+    } else {
+      inProgress.push(order.number);
+    }
+  });
+  return { done, inProgress };
+};
+
+
+export const getIngredients = (ids, data) => {
+  const result = [];
+
+  const ingredients = new Map();
+  const buns = new Set();
+
+  ids.forEach((id) => {
+    const count = ingredients.get(id);
+    if (count) {
+      ingredients.set(id, count + 1);
+    } else {
+      ingredients.set(id, 1);
+    }
+  });
+
+  if (data.length) {
+    for (let [id, count] of ingredients) {
+      data.forEach((ingredient) => {
+        if (ingredient._id === id) {
+          if (ingredient.type === 'bun') {
+            buns.add(id);
+            count = 2;
+          }
+          result.push({ ...ingredient, quantity: count });
+        }
+      });
+    }
+  }
+  if (buns.size === 1) {
+    return result;
+  }
+  return [];
+};

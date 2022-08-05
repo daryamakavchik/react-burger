@@ -6,55 +6,16 @@ import { useSelector } from 'react-redux';
 import { wsConnectionClosedAction, wsConnectionStartAction } from "../services/actions/ws";
 import { setCorrectOrdersAction, setDoneOrdersAction } from "../services/actions/feed";
 import { v4 as uuidv4 } from "uuid";
+import StatsList from "../components/statslist/statslist";
+import { getCorrectOrders, getDoneInProgressOrders, getIngredients } from "../utils/api";
 
 export function FeedPage() {
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector((state) => state.ws);
-  const ingredientsData = useSelector((state) => state.data.burgerIngredients.fillings);
-
-  const getIngredients = (ids, data) => {
-    const result = [];
-    const ingredients = new Map();
-    const buns = new Set();
-
-    ids.forEach((id) => {
-      const count = ingredients.get(id);
-      if (count) {
-        ingredients.set(id, count + 1);
-      } else {
-        ingredients.set(id, 1);
-      }
-    });
-}
-
-  const getCorrectOrders = (orders, data) => {
-    const correctOrders = [];
-    orders.forEach((order) => {
-      const { ingredients, ...rest } = order;
-      const correctIngredients = getIngredients(order.ingredients, data);
-      if (correctIngredients && correctIngredients.length) {
-        correctOrders.push({ ...rest, ingredients: correctIngredients });
-      }
-    });
-    return correctOrders;
-  };
-
-  const getDoneInProgressOrders = (orders) => {
-    const done = [];
-    const inProgress = [];
-    orders.forEach((order) => {
-      if (order.status === 'done') {
-        done.push(order.number);
-      } else {
-        inProgress.push(order.number);
-      }
-    });
-    return { done, inProgress };
-  };
-
+  const { done, inProgress } = useSelector((state) => state.feed);
+  const ingredientsData = useSelector((state) => state.data.data);
   const correctOrders = orders && getCorrectOrders(orders, ingredientsData);
   const doneInProgressOrders = correctOrders && getDoneInProgressOrders(correctOrders);
-
 
   React.useEffect(() => {
     dispatch(wsConnectionStartAction('wss://norma.nomoreparties.space/orders/all'));
@@ -68,7 +29,7 @@ export function FeedPage() {
       dispatch(setCorrectOrdersAction(correctOrders));
       dispatch(setDoneOrdersAction(doneInProgressOrders));
     }
-  });
+  }, []);
 
   if (!correctOrders) {
     return (
@@ -89,47 +50,21 @@ export function FeedPage() {
         <ul className={styles.orders}>
             {orders.map(order => <OrderCard order={order} key={uuidv4()} />)}
         </ul>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
         <div className={styles.completed}>
           <div className={styles.types}>
             <div className={styles.type}>
               <p className={`${styles.subtitle} text text_type_main-default`}>
                 Готовы:
               </p>
-              <p className={`${styles.digits} text text_type_digits-default`}>
-                034533
-              </p>
-              <p className={`${styles.digits} text text_type_digits-default`}>
-                034532
-              </p>
-              <p className={`${styles.digits} text text_type_digits-default`}>
-                034530
-              </p>
-              <p className={`${styles.digits} text text_type_digits-default`}>
-                034527
-              </p>
-              <p className={`${styles.digits} text text_type_digits-default`}>
-                034525
-              </p>
-            </div>
+              <StatsList done={true} orders={done} />
+              </div>
             <div className={styles.type}>
               <p className={`${styles.subtitle} text text_type_main-default`}>
                 В работе:
               </p>
-              <p
-                className={`${styles.digits} ${styles.digitsinactive} text text_type_digits-default`}
-              >
-                034533
-              </p>
-              <p
-                className={`${styles.digits} ${styles.digitsinactive} text text_type_digits-default`}
-              >
-                034532
-              </p>
-              <p
-                className={`${styles.digits} ${styles.digitsinactive} text text_type_digits-default`}
-              >
-                034530
-              </p>
+              <StatsList orders={inProgress} />
+              </div>
             </div>
           </div>
           <div>
@@ -149,7 +84,7 @@ export function FeedPage() {
             </p>
           </div>
         </div>
-      </div>
+        </div>
     </>
   );
 }
