@@ -12,32 +12,30 @@ import { Link } from "react-router-dom";
 function AppHeader() {
   const history = useHistory();
 
-  const onClick = useCallback(() => {
-    history.replace({ pathname: "/feed/:id" });
-  }, [history]);
-
   return (
     <header className={styles.header}>
       <ul className={styles.headernavigation}>
         <li className={styles.headernav}>
-          <a className={styles.headernav} href="#top">
+        <Link className={styles.headernav} to='/'>
             <BurgerIcon type="secondary" />
-            <div className={`${styles.icon} p-2`} onClick={onClick}>
+            <div className={`${styles.icon} p-2`}>
               Конструктор
             </div>
-          </a>
+            </Link>
         </li>
         <li className={styles.headernav}>
-          <Link className={styles.headernav} href="#top" to='/feed'>
+          <Link className={styles.headernav} to='/feed'>
             <ListIcon type="secondary" />
             <div className={`${styles.icon} p-2`}>Лента заказов</div>
           </Link>
         </li>
-        <li onClick={onClick} className={styles.headernav + " " + styles.headerlogo}>
+        <Link className={styles.headernav} to='/'>
+        <li className={styles.headernav + " " + styles.headerlogo}>
           <Logo />
         </li>
+        </Link>
         <li className={styles.headernav}>
-          <Link className={styles.headernav} href="#top" to='/profile'>
+          <Link className={styles.headernav} to='/profile'>
             <ProfileIcon type="secondary" />
             <div 
               className={`${styles.icon} p-2`}
