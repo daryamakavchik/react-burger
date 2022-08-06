@@ -13,7 +13,6 @@ export default function Orders() {
   const token = getCookie("token");
   const wsUrl = `wss://norma.nomoreparties.space/orders` + `?token=${token}`;
   const { orders } = useSelector((store) => store.wsAuth);
-  orders && console.log(orders);
 
   useEffect(() => {
     dispatch(wsAuthConnectionStartAction(wsUrl), [dispatch]);

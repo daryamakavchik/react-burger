@@ -28,8 +28,8 @@ export const apiPostOrder = async (orderData) => {
   }).then((res) => checkResponse(res));
 };
 
-export const apiGetOrder = (id) => {
-  return fetch(`${baseUrl}/orders/${id}`, {
+export const apiGetOrder = async (id) => {
+  return await fetch(`${baseUrl}orders/${id}`, {
     method: 'GET',
     mode: 'cors',
     cache: 'no-cache',
@@ -42,8 +42,8 @@ export const apiGetOrder = (id) => {
   }).then((res) => checkResponse(res));
 };
 
-export const apiGetUserOrder = (id) => {
-  return fetch(`${baseUrl}/orders/${id}`, {
+export const apiGetUserOrder = async (id) => {
+  return await fetch(`${baseUrl}orders/${id}`, {
     method: 'GET',
     mode: 'cors',
     cache: 'no-cache',

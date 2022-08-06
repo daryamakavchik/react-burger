@@ -1,14 +1,15 @@
+import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { apiPostOrder, apiGetOrder, apiGetUserOrder } from "../../utils/api";
 export const POST_ORDER_REQUEST = "POST_ORDER_REQUEST";
 export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
 export const POST_ORDER_FAILED = "POST_ORDER_FAILED";
 export const CLOSE_ORDER_MODAL = "CLOSE_ORDER_MODAL";
-export const GET_ORDER_REQUEST = "POST_ORDER_REQUEST";
-export const GET_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
-export const GET_ORDER_FAILED = "POST_ORDER_FAILED";
-export const GET_USER_ORDER_REQUEST = "POST_ORDER_REQUEST";
-export const GET_USER_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
-export const GET_USER_ORDER_FAILED = "POST_ORDER_FAILED";
+export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
+export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
+export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
+export const GET_USER_ORDER_REQUEST = "GET_USER_ORDER_REQUEST";
+export const GET_USER_ORDER_SUCCESS = "GET_USER_ORDER_SUCCESS";
+export const GET_USER_ORDER_FAILED = "GET_USER_ORDER_FAILED";
 
 export const openOrderModal = (orderData) => {
   return function (dispatch) {
@@ -18,7 +19,6 @@ export const openOrderModal = (orderData) => {
     apiPostOrder(orderData)
       .then((res) => {
         if (res && res.success) {
-          console.log(res);
           dispatch({
             type: POST_ORDER_SUCCESS,
             order: res,
