@@ -28,6 +28,36 @@ export const apiPostOrder = async (orderData) => {
   }).then((res) => checkResponse(res));
 };
 
+export const apiGetOrder = (id) => {
+  return fetch(`${baseUrl}/orders/${id}`, {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+  }).then((res) => checkResponse(res));
+};
+
+export const apiGetUserOrder = (id) => {
+  return fetch(`${baseUrl}/orders/${id}`, {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: 'Bearer ' + getCookie("token"),
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+  })
+};
+
+
 export const apiPasswordReset = async (email) => {
   return await fetch(`${baseUrl}password-reset`, {
     method: "POST",

@@ -14,9 +14,7 @@ export default function OrderCard({ order }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const { url } = useRouteMatch();
-console.log(order);
-  const { ingredients, name, _id, status, number, createdAt, updatedAt } =
-    order.order;
+  const { ingredients, name, _id, status, number, createdAt, updatedAt } = order.order;
   const data = useSelector((store) => store.data.data);
   let ingrData;
 
