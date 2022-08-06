@@ -72,7 +72,7 @@ export const getOrder = (id) => {
 };
 
 export const getUserOrder = (id) => {
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch({
       type: GET_USER_ORDER_REQUEST,
     });
