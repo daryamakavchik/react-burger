@@ -4,6 +4,7 @@ export const initialState = {
   isLoading: false,
   hasError: false,
   isModalOpen: false,
+  order: null,
   orderNum: {},
 };
 
@@ -20,7 +21,8 @@ export const orderReducer = (state = initialState, action) => {
         ...state,
         isModalOpen: true,
         isLoading: false,
-        orderNum: action.orderNum,
+        order: action.order,
+        orderNum: action.orderNum
       };
     }
     case POST_ORDER_FAILED: {

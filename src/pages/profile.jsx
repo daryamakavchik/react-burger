@@ -4,31 +4,12 @@ import { NavLink, Switch, Route, useRouteMatch } from "react-router-dom";
 import styles from "./profile.module.css";
 import Orders from "./orders";
 import EditProfile from "./editprofile";
-import { wsConnectionStartAction, wsConnectionClosedAction } from "../services/actions/ws";
-import { getCorrectOrders } from "../utils/api";
-import { setCorrectOrdersAction } from "../services/actions/feed";
 import { logoutUser } from "../services/actions/auth";
-import { getCookie } from "../services/actions/auth";
-import { useSelector } from "react-redux";
 
 export function ProfilePage() {
   const dispatch = useDispatch();
   const logout = () => dispatch(logoutUser());
   const { path } = useRouteMatch();
-  const token = getCookie('token');
-  const wsUrl = `wss://norma.nomoreparties.space/orders` + `?token=${token}`;
-
-  React.useEffect(() => { dispatch(wsConnectionStartAction(wsUrl)); return () => { dispatch(wsConnectionClosedAction()); }}, [dispatch]);
-
-  const { orders } = useSelector((store) => store.ws);
-  const ingredientsData = useSelector((store) => store.data.data);
-  const correctOrders = orders && getCorrectOrders(orders, ingredientsData).reverse();
-
-  React.useEffect(() => { if (correctOrders && correctOrders.length) { dispatch(setCorrectOrdersAction(correctOrders));}});
-
-  if (!correctOrders) {
-    return (<p className={`${styles.text} text text_type_main-large text_color_inactive`}>Список пуст</p>)
-  }
 
   return (
     <>
@@ -95,7 +76,7 @@ export function ProfilePage() {
 
           <Switch>
             <Route exact path={path} children={<EditProfile />} />
-            <Route exact path={`${path}/orders`} children={<Orders orders={correctOrders} />} />
+            <Route exact path={`${path}/orders`} children={<Orders />} />
           </Switch>
         </div>
       </div>

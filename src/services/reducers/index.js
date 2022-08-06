@@ -15,6 +15,7 @@ import { orderReducer } from "./order";
 import { userReducer } from "./auth";
 import { feedReducer } from "./feed";
 import { wsReducer } from "./ws";
+import { wsAuthReducer } from "./wsauth";
 
 export const initialState = {
   isLoading: false,
@@ -186,5 +187,6 @@ export const rootReducer = combineReducers({
   ord: orderReducer, 
   user: userReducer,
   feed: feedReducer,
-  ws: wsReducer
+  ws: wsReducer,
+  wsAuth: wsAuthReducer
 });

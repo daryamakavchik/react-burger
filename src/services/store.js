@@ -23,7 +23,6 @@ const actions = {
   onClose: WS_CONNECTION_CLOSED,
   onError: WS_CONNECTION_ERROR,
   onOrders: WS_GET_ORDERS,
-  onSendOrders: WS_SEND_ORDER,
 };
 
 const enhancer = composeEnhancers(

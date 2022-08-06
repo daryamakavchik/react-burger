@@ -4,18 +4,13 @@ import { useDispatch } from "react-redux";
 import OrderCard from "../components/ordercard/ordercard";
 import { useSelector } from 'react-redux';
 import { wsConnectionClosedAction, wsConnectionStartAction } from "../services/actions/ws";
-import { setCorrectOrdersAction, setDoneOrdersAction } from "../services/actions/feed";
 import { v4 as uuidv4 } from "uuid";
 import StatsList from "../components/statslist/statslist";
-import { getCorrectOrders, getDoneInProgressOrders, getIngredients } from "../utils/api";
 
 export function FeedPage() {
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector((state) => state.ws);
   const { done, inProgress } = useSelector((state) => state.feed);
-  const ingredientsData = useSelector((state) => state.data.data);
-  const correctOrders = orders && getCorrectOrders(orders, ingredientsData);
-  const doneInProgressOrders = correctOrders && getDoneInProgressOrders(correctOrders);
 
   React.useEffect(() => {
     dispatch(wsConnectionStartAction('wss://norma.nomoreparties.space/orders/all'));
@@ -24,22 +19,6 @@ export function FeedPage() {
     };
   }, [dispatch]);
 
-  React.useEffect(() => {
-    if (correctOrders && correctOrders.length && doneInProgressOrders) {
-      dispatch(setCorrectOrdersAction(correctOrders));
-      dispatch(setDoneOrdersAction(doneInProgressOrders));
-    }
-  }, []);
-
-  if (!correctOrders) {
-    return (
-      <p
-        className={`${styles.text} text text_type_main-large text_color_inactive`}
-      >
-        Список пуст
-      </p>
-    );
-  }
 
   return (
     <>

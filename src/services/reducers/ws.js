@@ -9,7 +9,6 @@ import {
 export const initialState = {
     wsConnected: false,
     orders: [],
-    userOrders: [],
   
     total: 0,
     totalToday: 0,
@@ -47,11 +46,18 @@ export const initialState = {
           loading: false,
         };
       }
+      // case POST_ORDER_SUCCESS: {
+      //   const order = action.order;
+      //   return {
+      //     ...state,
+      //     orders: [...state.orders, order]
+      //   }
+      // }
       case WS_GET_ORDERS: {
         return {
           ...state,
           error: undefined,
-          orders: action.payload.orders ? action.payload.orders : state.orders,
+          orders: action.payload.orders,
           total: action.payload.total,
           totalToday: action.payload.totalToday,
           loading: false,

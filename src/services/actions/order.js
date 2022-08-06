@@ -12,8 +12,10 @@ export const openOrderModal = (orderData) => {
     apiPostOrder(orderData)
       .then((res) => {
         if (res && res.success) {
+          console.log(res);
           dispatch({
             type: POST_ORDER_SUCCESS,
+            order: res,
             orderNum: res.order.number,
           });
         } else {
