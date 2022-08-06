@@ -46,13 +46,6 @@ export const initialState = {
           loading: false,
         };
       }
-      // case POST_ORDER_SUCCESS: {
-      //   const order = action.order;
-      //   return {
-      //     ...state,
-      //     orders: [...state.orders, order]
-      //   }
-      // }
       case WS_GET_ORDERS: {
         return {
           ...state,

@@ -14,9 +14,9 @@ export default function OrderCard({ order }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const { url } = useRouteMatch();
-
+console.log(order);
   const { ingredients, name, _id, status, number, createdAt, updatedAt } =
-    order;
+    order.order;
   const data = useSelector((store) => store.data.data);
   let ingrData;
 
@@ -29,13 +29,13 @@ export default function OrderCard({ order }) {
     let bun = false;
     let targetImages = [];
     ingredients.forEach(ingredient => {
-      ingrData = data.find((el) => el._id === ingredient);
+      ingrData = data.find((el) => el._id === ingredient._id);
         if (ingredient.type === 'bun' && !bun) {
             bun = true;
-            targetImages.push(ingrData.image_mobile);
+            targetImages.push(ingrData.image);
         }
         if (ingredient.type !== 'bun') {
-            targetImages.push(ingrData.image_mobile)
+            targetImages.push(ingrData.image)
         }
     });
     setImages(targetImages);
