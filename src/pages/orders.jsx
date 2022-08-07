@@ -25,7 +25,7 @@ export default function Orders() {
   return (
     <ul className={styles.orders}>
       { orders && orders.map((el) => (
-        <OrderCard order={el} key={uuidv4()} />
+        <OrderCard order={el.order} key={uuidv4()} />
       ))}
     </ul>
   );

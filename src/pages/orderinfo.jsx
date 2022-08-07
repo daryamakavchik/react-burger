@@ -22,8 +22,8 @@ export default function OrderInfoPage() {
   const getBurgerIngredientsObjWithCount = (arr) =>
     arr?.reduce((acc, curr) => {
         const id = curr._id;
-        acc.item[id] = curr;
-        acc.count[id] = (acc.count[id] || 0) + 1;
+        acc.item._id = curr;
+        acc.count._id = (acc.count._id || 0) + 1;
         return acc;
       },
       { item: {}, count: {} }
@@ -33,7 +33,9 @@ export default function OrderInfoPage() {
     order &&
     order.ingredients &&
     getBurgerIngredients(order?.ingredients, allIngredients);
+
   const bI = burgerIngredients && getBurgerIngredientsObjWithCount(burgerIngredients);
+  console.log(bI);
   const ing = Array.from(new Set(order?.ingredients));
 
   return (
@@ -56,7 +58,7 @@ export default function OrderInfoPage() {
         <ul className={styles.ingredients}>
           {ing.map((el, i) => (
             <li className={styles.ingredient} key={i}>
-              <img src={bI?.item[el]?.image} className={styles.img} />
+              <div className={styles.img} style={{ backgroundImage: `url(${bI?.item[el]?.image})`}}/>
               <div className={styles.text}>
                 <p className={`${styles.textt} text text_type_main-default`}>
                   {bI?.item[el]?.name}
