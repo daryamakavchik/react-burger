@@ -45,16 +45,11 @@ export const apiGetOrder = async (id) => {
 export const apiGetUserOrder = async (id) => {
   return await fetch(`${baseUrl}orders/${id}`, {
     method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
     headers: {
       "Content-Type": "application/json",
       Authorization: 'Bearer ' + getCookie("token"),
     },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-  })
+  }).then((res) => checkResponse(res))
 };
 
 

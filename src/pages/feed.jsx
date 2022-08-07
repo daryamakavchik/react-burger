@@ -19,6 +19,16 @@ export function FeedPage() {
     };
   }, [dispatch]);
 
+  const filterOrdersByStatus = (arr) => {
+    return arr?.reduce((acc, curr) => {
+      curr.status === 'done' ? acc.done = [...acc.done, curr] : acc.pending = [...acc.pending, curr]
+      return acc;
+    }, { done: [], pending: [] })
+  }
+
+  const statusArrays = filterOrdersByStatus(orders);
+  const doneArray = statusArrays?.done.slice(0, 30);
+  console.log(statusArrays);
 
   return (
     <>
@@ -27,7 +37,7 @@ export function FeedPage() {
       </h2>
       <div className={styles.content}>
         <ul className={styles.orders}>
-            {orders.map(order => <OrderCard order={order} key={uuidv4()} />)}
+            {orders && orders.map(order => <OrderCard order={order} key={uuidv4()} />)}
         </ul>
         <div style={{display: 'flex', flexDirection: 'column'}}>
         <div className={styles.completed}>
@@ -36,18 +46,18 @@ export function FeedPage() {
               <p className={`${styles.subtitle} text text_type_main-default`}>
                 Готовы:
               </p>
-              <StatsList done={true} orders={done} />
+              <StatsList orders={doneArray} />
               </div>
             <div className={styles.type}>
               <p className={`${styles.subtitle} text text_type_main-default`}>
                 В работе:
               </p>
-              <StatsList orders={inProgress} />
+              <StatsList orders={statusArrays} />
               </div>
             </div>
           </div>
           <div>
-            <p className={`${styles.subtitle} text text_type_main-default`}>
+            <p className={`${styles.subtitlee} text text_type_main-default`}>
               Выполнено за все время:
             </p>
             <p className={`${styles.digitslarge} text text_type_digits-large`}>
@@ -55,7 +65,7 @@ export function FeedPage() {
             </p>
           </div>
           <div>
-            <p className={`${styles.subtitle} text text_type_main-default`}>
+            <p className={`${styles.subtitlee} text text_type_main-default`}>
               Выполнено за сегодня:
             </p>
             <p className={`${styles.digitslarge} text text_type_digits-large`}>

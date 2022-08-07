@@ -46,6 +46,7 @@
 .textt{
     width: 320px;
     margin-right: 110px;
+    padding-left: 16px;
 }
 
 .subtext{
@@ -74,5 +75,11 @@
 }
 
 .img{
-    margin-right: 16px;
+    width: 112px;
+    height: 56px;
+    /* margin-right: 16px; */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
 }
