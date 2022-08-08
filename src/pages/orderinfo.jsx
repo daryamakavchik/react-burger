@@ -12,8 +12,11 @@ export default function OrderInfoPage() {
   const dispatch = useDispatch();
   const { orders } = useSelector((state => state.ws));
   const { currentOrder } = useSelector((state) => state.feed);
+  const data = useSelector((store) => store.data.data);
   const { id } = useParams();
   const[price, setPrice] = useState(0);
+  const[count, setCount] = useState(0);
+
   let ingrData;
 
   const number = currentOrder?.number;
@@ -22,17 +25,29 @@ export default function OrderInfoPage() {
   const ingredients = currentOrder?.ingredients;
   const createdAt = currentOrder?.createdAt;
 
-  // const date = createdAt && formatDate(createdAt);
-  const cost = ingredients && ingredients.reduce((acc, cur) => acc + cur.quantity * cur.price, 0);
   const done = status === 'done';
-  const data = useSelector((store) => store.data.data);
+
+    const ingredientsWithCount = (ingredients) => {
+       const res = {};
+       ingredients.forEach((ingr) => {
+          if (!res[ingr]) {
+             res[ingr] = { ingr, count: 0 };
+          };
+          res[ingr].count += 1;
+       });
+    return Object.values(res);
+ };
+
+ const uniqueArr = ingredientsWithCount(ingredients);
+ console.log(uniqueArr);
+
 
   useEffect(() => {
     if (data.length) {
       let totalPrice = 0;
       let targetIngredients = [];
       let bun = false;
-      ingredients.forEach((ingr) => {
+      ingredientsWithCount(ingredients).forEach((ingr) => {
         ingrData = data.find((el) => el._id === ingr);
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
@@ -65,18 +80,18 @@ export default function OrderInfoPage() {
           Состав:
         </p>
         <ul className={styles.ingredients}>
-          {ingredients.map((ingr, i) => (
+          {uniqueArr.map((ingr, i) => (
             <li className={styles.ingredient} key={i}>
-              <div className={styles.img} style={{ backgroundImage: `url(${(data.find((el) => el._id === ingr)).image})`}}/>
+              <div className={styles.img} style={{ backgroundImage: `url(${(data.find((el) => el._id === ingr.ingr)).image})`}}/>
               <div className={styles.text}>
                 <p className={`${styles.textt} text text_type_main-default`}>
-                  {(data.find((el) => el._id === ingr)).name}
+                  {(data.find((el) => el._id === ingr.ingr)).name}
                 </p>
                 <div className={styles.price}>
                   <p
                     className={`${styless.id} ${styles.smallprice} text text_type_digits-default`}
                   >
-                    1 x {(data.find((el) => el._id === ingr)).price}
+                  {`   ${ingr.count} x ${(data.find((el) => el._id === ingr.ingr)).price}   `}
                   </p>
                   <CurrencyIcon />
                 </div>
