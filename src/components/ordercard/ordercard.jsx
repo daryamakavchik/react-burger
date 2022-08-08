@@ -9,12 +9,12 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { getOrder, getOrders } from "../../services/actions/order";
 
 export default function OrderCard({ order }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const { url } = useRouteMatch();
-  const { ingredients, name, _id, status, number, createdAt, updatedAt } = order;
   const data = useSelector((store) => store.data.data);
   let ingrData;
 
@@ -26,7 +26,7 @@ export default function OrderCard({ order }) {
   useEffect(() => {
     let bun = false;
     let targetImages = [];
-    ingredients.forEach(ingredient => {
+    order.ingredients.forEach(ingredient => {
       ingrData = data.find((el) => el._id === ingredient);
         if (ingredient.type === 'bun' && !bun) {
             bun = true;
@@ -38,14 +38,14 @@ export default function OrderCard({ order }) {
     });
     setImages(targetImages);
     setCount(targetImages.length)
-}, [ingredients]);
+}, [order.ingredients]);
 
   useEffect(() => {
     if (data.length) {
       let totalPrice = 0;
       let targetIngredients = [];
       let bun = false;
-      ingredients.forEach((ingr) => {
+      order.ingredients.forEach((ingr) => {
         ingrData = data.find((el) => el._id === ingr);
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
@@ -60,18 +60,19 @@ export default function OrderCard({ order }) {
     }
   }, [data, order.ingredients]);
   
+ const select = () => dispatch(selectOrderAction(order));
 
-  return (
-    <li className={styles.order} onClick={() => dispatch(selectOrderAction(order))} >
-      <Link className={styles.link} to={{ pathname: `${url}/${_id}`, state: { background: location } }} >
+  return ( 
+    <li className={styles.order} onClick={select}>
+      <Link className={styles.link} to={{ pathname: `${url}/${order._id}`, state: { background: location } }} >
         <div className={styles.orderid}>
-          <p className={`${styles.id} text text_type_digits-default`}>{`#${number}`}</p>
-          <p className={`${styles.timestamp} text text_type_main-small text_color_inactive`}>{createdAt}</p>
+          <p className={`${styles.id} text text_type_digits-default`}>{`#${order.number}`}</p>
+          <p className={`${styles.timestamp} text text_type_main-small text_color_inactive`}>{order.createdAt}</p>
         </div>
-        <h3 className={`${styles.burgername} text text_type_main-default`}>{name}</h3>
+        <h3 className={`${styles.burgername} text text_type_main-default`}>{order.name}</h3>
         {url === "/profile/order" && (
-          <p className={`text text_type_main-small ${status === "done" && styles.ready}`}>
-            {status === "created" ? "Создан" : status === "pending" ? "Готовится" : "Выполнен"}
+          <p className={`text text_type_main-small ${order.status === "done" && styles.ready}`}>
+            {order.status === "created" ? "Создан" : order.status === "pending" ? "Готовится" : "Выполнен"}
           </p>
         )}
         <div className={styles.componentandprice}>

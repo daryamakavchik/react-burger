@@ -1,73 +1,82 @@
 import React from "react";
 import styles from "./orderinfo.module.css";
 import styless from "./feed.module.css";
-import { getOrder, getUserOrder } from "../services/actions/order";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function OrderInfoPage() {
   const dispatch = useDispatch();
+  const { orders } = useSelector((state => state.ws));
+  const { currentOrder } = useSelector((state) => state.feed);
   const { id } = useParams();
-  useEffect(() => {dispatch(getUserOrder(id))}, [dispatch, id]);
-  
-  const order = useSelector((store) => store.ord.currentOrder);
-  console.log(order);
-  const allIngredients = useSelector((store) => store.data.data);
+  const[price, setPrice] = useState(0);
+  let ingrData;
 
-  const getBurgerIngredients = (arrBurgerIngredients, arrAllIngredients) => arrBurgerIngredients?.map((id) => arrAllIngredients.filter((item) => item._id === id))?.flat();
+  const number = currentOrder?.number;
+  const name = currentOrder?.name;
+  const status = currentOrder?.status;
+  const ingredients = currentOrder?.ingredients;
+  const createdAt = currentOrder?.createdAt;
 
-  const getBurgerIngredientsObjWithCount = (arr) =>
-    arr?.reduce((acc, curr) => {
-        const id = curr._id;
-        acc.item._id = curr;
-        acc.count._id = (acc.count._id || 0) + 1;
-        return acc;
-      },
-      { item: {}, count: {} }
-    );
+  // const date = createdAt && formatDate(createdAt);
+  const cost = ingredients && ingredients.reduce((acc, cur) => acc + cur.quantity * cur.price, 0);
+  const done = status === 'done';
+  const data = useSelector((store) => store.data.data);
 
-  const burgerIngredients =
-    order &&
-    order.ingredients &&
-    getBurgerIngredients(order?.ingredients, allIngredients);
-
-  const bI = burgerIngredients && getBurgerIngredientsObjWithCount(burgerIngredients);
-  console.log(bI);
-  const ing = Array.from(new Set(order?.ingredients));
+  useEffect(() => {
+    if (data.length) {
+      let totalPrice = 0;
+      let targetIngredients = [];
+      let bun = false;
+      ingredients.forEach((ingr) => {
+        ingrData = data.find((el) => el._id === ingr);
+        if (ingrData?.price) {
+          targetIngredients.push(ingrData);
+          if (ingrData.type === "bun" && !bun) {
+            totalPrice += 2 * ingrData.price;
+            bun = true;
+          }
+          if (ingrData.type !== "bun") totalPrice += ingrData.price;
+        }
+      });
+      setPrice(totalPrice);
+    }
+  }, [data, ingredients]);
 
   return (
     <div className={styles.content}>
       <p className={`${styless.id} ${styles.id} text text_type_digits-default`}>
-        #{order?.number}
+        #{number}
       </p>
       <p
         className={`${styless.burgername} ${styles.burgername} text text_type_main-default`}
       >
-        {order?.name}
+        {name}
       </p>
       <p className={`${styles.subtext} text text_type_main-small`}>
-        {order?.status}
+      {done ? 'Выполнен' :'Готовится'}
       </p>
       <div className={styles.ingredientsblock}>
         <p className={`${styless.subtitle} text text_type_main-default`}>
           Состав:
         </p>
         <ul className={styles.ingredients}>
-          {ing.map((el, i) => (
+          {ingredients.map((ingr, i) => (
             <li className={styles.ingredient} key={i}>
-              <div className={styles.img} style={{ backgroundImage: `url(${bI?.item[el]?.image})`}}/>
+              <div className={styles.img} style={{ backgroundImage: `url(${(data.find((el) => el._id === ingr)).image})`}}/>
               <div className={styles.text}>
                 <p className={`${styles.textt} text text_type_main-default`}>
-                  {bI?.item[el]?.name}
+                  {(data.find((el) => el._id === ingr)).name}
                 </p>
                 <div className={styles.price}>
                   <p
                     className={`${styless.id} ${styles.smallprice} text text_type_digits-default`}
                   >
-                    2 x 20
+                    1 x {(data.find((el) => el._id === ingr)).price}
                   </p>
                   <CurrencyIcon />
                 </div>
@@ -85,7 +94,7 @@ export default function OrderInfoPage() {
             <p
               className={`${styless.id} ${styles.smallprice} text text_type_digits-default`}
             >
-              510
+              {price}
             </p>
             <CurrencyIcon />
           </div>

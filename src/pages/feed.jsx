@@ -28,7 +28,6 @@ export function FeedPage() {
 
   const statusArrays = filterOrdersByStatus(orders);
   const doneArray = statusArrays?.done.slice(0, 30);
-  console.log(statusArrays);
 
   return (
     <>

@@ -103,7 +103,7 @@ function App() {
             <Route
               path="/feed/:id"
               children={
-                <Modal onClose={closeOrder}>
+                <Modal onClose={closeAllModals}>
                   <OrderInfoPage />
                 </Modal>
               }

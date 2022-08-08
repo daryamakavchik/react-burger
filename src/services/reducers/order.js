@@ -8,6 +8,7 @@ export const initialState = {
   orderLoaded: false,
   orderFailed: false,
   order: null,
+  orders: null,
   currentOrder: null,
   orderNum: {},
 };
@@ -48,6 +49,7 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         orderFailed: false,
+        order: action.order,
         currentOrder: action.order,
         orderRequest: false,
         orderLoaded: true
@@ -66,11 +68,10 @@ export const orderReducer = (state = initialState, action) => {
       };
     }
     case GET_USER_ORDER_SUCCESS: {
-      const data = action.order ? action.order : null
       return {
         ...state,
         orderFailed: false,
-        currentOrder: data,
+        currentOrder: action.order,
         orderRequest: false,
         orderLoaded: true
       };

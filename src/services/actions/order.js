@@ -1,5 +1,5 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { apiPostOrder, apiGetOrder, apiGetUserOrder } from "../../utils/api";
+import { apiPostOrder, apiGetOrders, apiGetUserOrder } from "../../utils/api";
 export const POST_ORDER_REQUEST = "POST_ORDER_REQUEST";
 export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
 export const POST_ORDER_FAILED = "POST_ORDER_FAILED";
@@ -44,17 +44,17 @@ export const closeOrderModal = () => {
   };
 };
 
-export const getOrder = (id) => {
+export const getOrders = () => {
   return function (dispatch) {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
-    apiGetOrder(id)
+    apiGetOrders()
       .then((res) => {
         if (res && res.success) {
           dispatch({
             type: GET_ORDER_SUCCESS,
-            order: res.orders[0],
+            orders: res.orders
           });
         } else {
           dispatch({
@@ -81,7 +81,7 @@ export const getUserOrder = (id) => {
         if (res && res.success) {
           dispatch({
             type: GET_USER_ORDER_SUCCESS,
-            order: res.orders[0],
+            order: res.orders,
           });
         } else {
           dispatch({

@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   orders: [],
-  selectedOrder: null,
+  currentOrder: null,
   isModalOpen: false,
   isOrderInfoOpen: false,
   done: [],
@@ -32,14 +32,14 @@ export const feedReducer = (state = initialState, action) => {
     case SELECT_ORDER: {
       return {
         ...state,
-        selectedOrder: action.payload,
+        currentOrder: action.payload,
         isOrderInfoOpen: true
       };
     }
     case UNSELECT_ORDER: {
       return {
         ...state,
-        selectedOrder: null,
+        currentOrder: null,
         isOrderInfoOpen: false
       }
     }
