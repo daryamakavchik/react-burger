@@ -9,7 +9,6 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { getOrder, getOrders } from "../../services/actions/order";
 
 export default function OrderCard({ order }) {
   const dispatch = useDispatch();

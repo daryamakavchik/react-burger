@@ -11,8 +11,6 @@ import { useRouteMatch } from "react-router-dom";
 
 export default function OrderInfoPage() {
   const dispatch = useDispatch();
-  const {orders} = useSelector((state => state.ws));
-  const {userorders} = useSelector((state) => state.wsAuth.orders);
   const { currentOrder } = useSelector((state) => state.feed);
   const data = useSelector((store) => store.data.data);
   const { id } = useParams();
@@ -25,10 +23,11 @@ export default function OrderInfoPage() {
   const number = currentOrder?.number;
   const name = currentOrder?.name;
   const status = currentOrder?.status;
-  const ingredients = currentOrder?.ingredients;
+  let ingredients = currentOrder?.ingredients;
   const createdAt = currentOrder?.createdAt;
 
-  const done = status === 'done';
+  const done = status === 'one';
+  ingredients = url === `/profile/orders/${id}` ? (ingredients.map((ing) => ing._id !== undefined ? ing._id : ing)) : ingredients;
 
     const ingredientsWithCount = (ingredients) => {
        const res = {};
@@ -51,13 +50,14 @@ export default function OrderInfoPage() {
       let bun = false;
       uniqueArr.forEach((ingr) => { 
         ingrData = data.find((el) => el._id === ingr.ingr);
+        console.log(ingrData);
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
           if (ingrData.type === "bun" && !bun) {
-            totalPrice += 2 * ingrData.price;
+            totalPrice += 2 * ingrData?.price;
             bun = true;
           }
-          if (ingrData.type !== "bun") totalPrice += ingrData.price;
+          if (ingrData.type !== "bun") totalPrice += ingrData?.price;
         }
       });
       setPrice(totalPrice);
@@ -94,7 +94,7 @@ export default function OrderInfoPage() {
                   <p
                     className={`${styless.id} ${styles.smallprice} text text_type_digits-default`}
                   >
-                  {`${ingr.count}`} x{ url === `/feed/${id}` ? `${(data.find((el) => el._id === ingr.ingr)).price}` : `${(data.find((el) => el._id === ingr.ingr._id)).price}` }
+                  {ingr.count} x {(data.find((el) => el._id === ingr.ingr)).price}
                   </p>
                   <CurrencyIcon />
                 </div>
