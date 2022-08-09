@@ -8,28 +8,39 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
+import { selectOrderAction } from "../services/actions/feed";
+import { wsConnectionStartAction, wsConnectionClosedAction, wsConnectionGetOrdersAction } from "../services/actions/ws";
 
-export default function OrderInfoPage() {
+export default function OrderInfoPage(data) {
   const dispatch = useDispatch();
-  const { currentOrder } = useSelector((state) => state.feed);
-  const data = useSelector((store) => store.data.data);
   const { id } = useParams();
   const { url } = useRouteMatch();
   const[price, setPrice] = useState(0);
   const[count, setCount] = useState(0);
+  const { currentOrder } = useSelector((store) => store.feed);
+  const { orders } = useSelector((store) => store.ws);
 
   let ingrData;
+  data = data.data;
+  console.log(orders);
+
+  React.useEffect(() => {
+    if (currentOrder === null) {
+      const order = orders.find((order) => order._id === id);
+      console.log(order);
+      order && dispatch(selectOrderAction(order));
+      console.log('ss');
+    }
+  }, [currentOrder, id, orders, dispatch]);
 
   const number = currentOrder?.number;
   const name = currentOrder?.name;
   const status = currentOrder?.status;
   let ingredients = currentOrder?.ingredients;
   const createdAt = currentOrder?.createdAt;
-
-  const done = status === 'one';
-  ingredients = url === `/profile/orders/${id}` ? 
-    (ingredients.map((ing) => ing._id !== undefined ? ing._id : ing)) : 
-    ingredients;
+  console.log(currentOrder);
+  const done = status === 'done';
+  ingredients = url === `/profile/orders/${id}` ? (ingredients.map((ing) => ing._id !== undefined ? ing._id : ing)) : ingredients;
 
     const ingredientsWithCount = (ingredients) => {
        const res = {};
@@ -43,7 +54,6 @@ export default function OrderInfoPage() {
  };
 
  const uniqueArr = ingredientsWithCount(ingredients);
- console.log(uniqueArr);
 
   useEffect(() => {
     if (data.length) {
@@ -64,6 +74,8 @@ export default function OrderInfoPage() {
       setPrice(totalPrice);
     }
   }, [data, ingredients]);
+
+ 
 
 
   return (
@@ -86,7 +98,9 @@ export default function OrderInfoPage() {
         <ul className={styles.ingredients}>
           {uniqueArr.map((ingr, i) => (
             <li className={styles.ingredient} key={i}>
-              <div className={styles.img} style={{ backgroundImage: `url(${(data.find((el) => el._id === ingr.ingr)).image})` }}/>
+              <div className={styles.img} 
+              style={{ backgroundImage: `url(${(data.find((el) => el._id === ingr.ingr)).image})` }}
+              />
               <div className={styles.text}>
                 <p className={`${styles.textt} text text_type_main-default`}>
                   { url === `/feed/${id}` ? (data.find((el) => el._id === ingr.ingr)).name : (data.find((el) => el._id === ingr.ingr)).name }

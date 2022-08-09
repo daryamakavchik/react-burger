@@ -28,6 +28,7 @@ export function FeedPage() {
 
   const statusArrays = filterOrdersByStatus(orders);
   const doneArray = statusArrays?.done.slice(0, 30);
+  const pendingArray = statusArrays?.pending.slice(0, 30);
 
   return (
     <>
@@ -51,7 +52,7 @@ export function FeedPage() {
               <p className={`${styles.subtitle} text text_type_main-default`}>
                 В работе:
               </p>
-              <StatsList orders={statusArrays} />
+              <StatsList orders={pendingArray} />
               </div>
             </div>
           </div>

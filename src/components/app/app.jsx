@@ -80,10 +80,10 @@ function App() {
             </DetailsModal>
           </Route>
           <Route path="/profile/orders/:id" exact={true}>
-            <OrderInfoPage />
+            <OrderInfoPage data={data}/>
           </Route>
           <Route path="/feed/:id">
-            <OrderInfoPage />
+            <OrderInfoPage data={data} />
             </Route>
           <ProtectedRoute path="/profile">
             <ProfilePage />
@@ -104,7 +104,7 @@ function App() {
               path="/feed/:id"
               children={
                 <Modal onClose={closeAllModals}>
-                  <OrderInfoPage />
+                  <OrderInfoPage data={data} />
                 </Modal>
               }
             />
@@ -112,7 +112,7 @@ function App() {
               path="/profile/orders/:id"
               children={
                 <Modal onClose={closeAllModals}>
-                  <OrderInfoPage />
+                  <OrderInfoPage data={data} />
                 </Modal>
               }
             />
