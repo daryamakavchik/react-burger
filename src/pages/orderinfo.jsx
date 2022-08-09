@@ -75,6 +75,19 @@ export default function OrderInfoPage(data) {
     }
   }, [data, ingredients]);
 
+  const getDays = (days) => ( days === 0 ? 'Сегодня' : days === 1 ? 'Вчера' : days > 1 ? `${days} дня(-ей) назад` : 'Что-то пошло не так:(');
+  const editDate = (date) => {
+   const createdAt= new Date(date);
+   const today = new Date();
+   today.setHours(0, 0, 0, 0);
+   const diffTime = Math.ceil((today.getTime() - createdAt.getTime()) / (60 * 60 * 24 * 1000));
+   const hours = createdAt.getHours() > 9 ? createdAt.getHours() : `0${createdAt.getHours()}`
+   const min = createdAt.getMinutes() > 9 ? createdAt.getMinutes() : `0${createdAt.getMinutes()}`
+ 
+   return `${getDays(diffTime)}, ${hours}:${min} i-GMT+${createdAt.getTimezoneOffset() * (-1) / 60}`;
+ };
+ 
+ const dateString = editDate(currentOrder.createdAt);
  
 
 
@@ -121,7 +134,7 @@ export default function OrderInfoPage(data) {
           <p
             className={`${styless.timestamp} text text_type_main-small text_color_inactive`}
           >
-            Вчера, 13:50 i-GMT+3
+            {dateString}
           </p>
           <div className={styles.price}>
             <p
