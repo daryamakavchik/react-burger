@@ -7,13 +7,16 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useRouteMatch } from "react-router-dom";
 
 export default function OrderInfoPage() {
   const dispatch = useDispatch();
-  const { orders } = useSelector((state => state.ws));
+  const {orders} = useSelector((state => state.ws));
+  const {userorders} = useSelector((state) => state.wsAuth.orders);
   const { currentOrder } = useSelector((state) => state.feed);
   const data = useSelector((store) => store.data.data);
   const { id } = useParams();
+  const { url } = useRouteMatch();
   const[price, setPrice] = useState(0);
   const[count, setCount] = useState(0);
 
@@ -41,14 +44,13 @@ export default function OrderInfoPage() {
  const uniqueArr = ingredientsWithCount(ingredients);
  console.log(uniqueArr);
 
-
   useEffect(() => {
     if (data.length) {
       let totalPrice = 0;
       let targetIngredients = [];
       let bun = false;
-      ingredientsWithCount(ingredients).forEach((ingr) => {
-        ingrData = data.find((el) => el._id === ingr);
+      uniqueArr.forEach((ingr) => { 
+        ingrData = data.find((el) => el._id === ingr.ingr);
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
           if (ingrData.type === "bun" && !bun) {
@@ -61,6 +63,7 @@ export default function OrderInfoPage() {
       setPrice(totalPrice);
     }
   }, [data, ingredients]);
+
 
   return (
     <div className={styles.content}>
@@ -82,16 +85,16 @@ export default function OrderInfoPage() {
         <ul className={styles.ingredients}>
           {uniqueArr.map((ingr, i) => (
             <li className={styles.ingredient} key={i}>
-              <div className={styles.img} style={{ backgroundImage: `url(${(data.find((el) => el._id === ingr.ingr)).image})`}}/>
+              <div className={styles.img} style={{ backgroundImage: `url(${(data.find((el) => el._id === ingr.ingr)).image})` }}/>
               <div className={styles.text}>
                 <p className={`${styles.textt} text text_type_main-default`}>
-                  {(data.find((el) => el._id === ingr.ingr)).name}
+                  { url === `/feed/${id}` ? (data.find((el) => el._id === ingr.ingr)).name : (data.find((el) => el._id === ingr.ingr)).name }
                 </p>
                 <div className={styles.price}>
                   <p
                     className={`${styless.id} ${styles.smallprice} text text_type_digits-default`}
                   >
-                  {`   ${ingr.count} x ${(data.find((el) => el._id === ingr.ingr)).price}   `}
+                  {`${ingr.count}`} x{ url === `/feed/${id}` ? `${(data.find((el) => el._id === ingr.ingr)).price}` : `${(data.find((el) => el._id === ingr.ingr._id)).price}` }
                   </p>
                   <CurrencyIcon />
                 </div>

@@ -27,7 +27,7 @@ export default function OrderCard({ order }) {
     let bun = false;
     let targetImages = [];
     order.ingredients.forEach(ingredient => {
-      ingrData = data.find((el) => el._id === ingredient);
+      url === '/feed' ? ingrData = data.find((el) => el._id === ingredient) : ingrData = data.find((el) => el._id === ingredient._id) ;
         if (ingredient.type === 'bun' && !bun) {
             bun = true;
             targetImages.push(ingrData.image);
