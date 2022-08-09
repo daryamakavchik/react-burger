@@ -27,7 +27,9 @@ export default function OrderInfoPage() {
   const createdAt = currentOrder?.createdAt;
 
   const done = status === 'one';
-  ingredients = url === `/profile/orders/${id}` ? (ingredients.map((ing) => ing._id !== undefined ? ing._id : ing)) : ingredients;
+  ingredients = url === `/profile/orders/${id}` ? 
+    (ingredients.map((ing) => ing._id !== undefined ? ing._id : ing)) : 
+    ingredients;
 
     const ingredientsWithCount = (ingredients) => {
        const res = {};
@@ -48,9 +50,8 @@ export default function OrderInfoPage() {
       let totalPrice = 0;
       let targetIngredients = [];
       let bun = false;
-      uniqueArr.forEach((ingr) => { 
-        ingrData = data.find((el) => el._id === ingr.ingr);
-        console.log(ingrData);
+      uniqueArr.forEach((ingredient) => { 
+        ingrData = data.find((el) => el._id === ingredient.ingr);
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
           if (ingrData.type === "bun" && !bun) {

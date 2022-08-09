@@ -44,8 +44,8 @@ export default function OrderCard({ order }) {
       let totalPrice = 0;
       let targetIngredients = [];
       let bun = false;
-      order.ingredients.forEach((ingr) => {
-        ingrData = data.find((el) => el._id === ingr);
+      order.ingredients.forEach((ingredient) => {
+        url === '/feed' ? ingrData = data.find((el) => el._id === ingredient) : ingrData = data.find((el) => el._id === ingredient._id) ;
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
           if (ingrData.type === "bun" && !bun) {
@@ -97,9 +97,9 @@ export default function OrderCard({ order }) {
             })}
           </div>
           <div className={styles.price}>
-            <p className={`${styles.digit} text text_type_digits-default`}>
+            {price > 0 && <p className={`${styles.digit} text text_type_digits-default`}>
               {price}
-            </p>
+            </p>}
             <CurrencyIcon type="primary" />
           </div>
         </div>
