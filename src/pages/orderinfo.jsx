@@ -9,7 +9,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
 import { selectOrderAction } from "../services/actions/feed";
-import { wsConnectionStartAction, wsConnectionClosedAction, wsConnectionGetOrdersAction } from "../services/actions/ws";
 
 export default function OrderInfoPage(data) {
   const dispatch = useDispatch();
@@ -22,14 +21,11 @@ export default function OrderInfoPage(data) {
 
   let ingrData;
   data = data.data;
-  console.log(orders);
 
   React.useEffect(() => {
     if (currentOrder === null) {
       const order = orders.find((order) => order._id === id);
-      console.log(order);
       order && dispatch(selectOrderAction(order));
-      console.log('ss');
     }
   }, [currentOrder, id, orders, dispatch]);
 
@@ -38,7 +34,7 @@ export default function OrderInfoPage(data) {
   const status = currentOrder?.status;
   let ingredients = currentOrder?.ingredients;
   const createdAt = currentOrder?.createdAt;
-  console.log(currentOrder);
+
   const done = status === 'done';
   ingredients = url === `/profile/orders/${id}` ? (ingredients.map((ing) => ing._id !== undefined ? ing._id : ing)) : ingredients;
 
@@ -118,15 +114,15 @@ export default function OrderInfoPage(data) {
                 <p className={`${styles.textt} text text_type_main-default`}>
                   { url === `/feed/${id}` ? (data.find((el) => el._id === ingr.ingr)).name : (data.find((el) => el._id === ingr.ingr)).name }
                 </p>
-                <div className={styles.price}>
-                  <p
+                <p
                     className={`${styless.id} ${styles.smallprice} text text_type_digits-default`}
                   >
                   {ingr.count} x {(data.find((el) => el._id === ingr.ingr)).price}
                   </p>
+              </div>
+              <div className={styles.price}>
                   <CurrencyIcon />
                 </div>
-              </div>
             </li>
           ))}
         </ul>
@@ -138,7 +134,7 @@ export default function OrderInfoPage(data) {
           </p>
           <div className={styles.price}>
             <p
-              className={`${styless.id} ${styles.smallprice} text text_type_digits-default`}
+              className={`${styless.id} ${styles.footerprice} text text_type_digits-default`}
             >
               {price}
             </p>

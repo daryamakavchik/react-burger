@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 640px;
-    height: 620px;
+
     justify-content: center;
     align-items: center;
     margin: 0 auto;
@@ -32,7 +32,7 @@
 .ingredient{
     display: flex;
     flex-direction: row;
-    width: 608px;
+    width: 646px;
     height: 64px;
 }
 
@@ -41,11 +41,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    width: 616px;
 }
 
 .textt{
-    width: 320px;
-    margin-right: 110px;
     padding-left: 16px;
 }
 
@@ -57,12 +56,15 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    max-height: 24px;
+    justify-content: center;
 }
 
 .smallprice{
-    width: 81px;
-    height: 24px;
+    min-width: 66px;
+    margin-right: 9px;
+}
+
+.footerprice{
     margin-right: 9px;
 }
 
@@ -72,12 +74,11 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 40px;
+    width: 645px;
 }
 
 .img{
-    width: 112px;
-    height: 56px;
-    /* margin-right: 16px; */
+    width: 64px;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
