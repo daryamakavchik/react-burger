@@ -61,12 +61,26 @@ export default function OrderCard({ order }) {
   
  const select = () => dispatch(selectOrderAction(order));
 
+ const getDays = (days) => ( days === 0 ? 'Сегодня' : days === 1 ? 'Вчера' : days > 1 ? `${days} дня(-ей) назад` : 'Что-то пошло не так:(');
+ const editDate = (date) => {
+  const createdAt= new Date(date);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const diffTime = Math.ceil((today.getTime() - createdAt.getTime()) / (60 * 60 * 24 * 1000));
+  const hours = createdAt.getHours() > 9 ? createdAt.getHours() : `0${createdAt.getHours()}`
+  const min = createdAt.getMinutes() > 9 ? createdAt.getMinutes() : `0${createdAt.getMinutes()}`
+
+  return `${getDays(diffTime)}, ${hours}:${min} i-GMT+${createdAt.getTimezoneOffset() * (-1) / 60}`;
+};
+
+const dateString = editDate(order.createdAt);
+
   return ( 
     <li className={styles.order} onClick={select}>
       <Link className={styles.link} to={{ pathname: `${url}/${order._id}`, state: { background: location } }} >
         <div className={styles.orderid}>
           <p className={`${styles.id} text text_type_digits-default`}>{`#${order.number}`}</p>
-          <p className={`${styles.timestamp} text text_type_main-small text_color_inactive`}>{order.createdAt}</p>
+          <p className={`${styles.timestamp} text text_type_main-small text_color_inactive`}>{dateString}</p>
         </div>
         <h3 className={`${styles.burgername} text text_type_main-default`}>{order.name}</h3>
         {url === "/profile/order" && (
