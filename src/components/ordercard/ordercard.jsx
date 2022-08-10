@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { editDate } from "../../utils/functions";
 
 export default function OrderCard({ order }) {
@@ -83,13 +82,13 @@ export default function OrderCard({ order }) {
               let left = -i * 15;
               if (i <= imageQuantity - 1)
                 return (
-                  <div key={uuidv4()} className={styles.container} style={{ left: left, zIndex: 100 - i }}>
+                  <div key={i} className={styles.container} style={{ left: left, zIndex: 100 - i }}>
                     <img className={styles.image} src={image} alt="" />
                   </div>
                 );
               if (i === imageQuantity)
                 return (
-                  <div key={uuidv4()} className={styles.container} style={{ left: left, zIndex: 100 - i }}>
+                  <div key={i} className={styles.container} style={{ left: left, zIndex: 100 - i }}>
                     <p className={styles.count + " text text_type_digits-default"}>
                       {"+" + (count - imageQuantity + 1)}
                     </p>

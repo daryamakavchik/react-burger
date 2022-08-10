@@ -5,7 +5,6 @@ import { wsAuthConnectionStartAction, wsAuthConnectionClosedAction } from '../se
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
 import { getCookie } from "../services/actions/auth";
 
 export default function Orders() {
@@ -25,7 +24,7 @@ export default function Orders() {
   return (
     <ul className={styles.orders}>
       { orders && orders.map((el) => (
-        <OrderCard order={el.order} key={uuidv4()} />
+        <OrderCard order={el.order} key={el.order._id} />
       ))}
     </ul>
   );

@@ -7,7 +7,6 @@ import {
   wsConnectionClosedAction,
   wsConnectionStartAction,
 } from "../services/actions/ws";
-import { v4 as uuidv4 } from "uuid";
 import StatsList from "../components/statslist/statslist";
 import { filterOrders } from "../utils/functions";
 
@@ -36,9 +35,9 @@ export function FeedPage() {
       <div className={styles.content}>
         <ul className={styles.orders}>
           {orders &&
-            orders.map((order) => <OrderCard order={order} key={uuidv4()} />)}
+            orders.map((order) => <OrderCard order={order} key={order._id} />)}
         </ul>
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div className={styles.ordernums}>
           <div className={styles.completed}>
             <div className={styles.types}>
               <div className={styles.type}>

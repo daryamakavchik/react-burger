@@ -59,7 +59,7 @@ export default function EditProfile() {
   return (
     <form className={styles.form} onSubmit={(e) => onSave(e)}>
       <Input
-        style={{ color: "#8585AD" }}
+        className={styles.input}
         type={"text"}
         placeholder={"Имя"}
         onChange={onNameChange}
@@ -69,8 +69,8 @@ export default function EditProfile() {
       />
       <div className={styles.email}>
         <EmailInput
+          className={styles.emailinput}
           onChange={onLoginChange}
-          style={{ marginTop: "24px", marginBottom: "24px" }}
           name={"login"}
           value={state.email || ""}
           icon={"EditIcon"}

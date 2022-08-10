@@ -27,6 +27,11 @@
     list-style-type: none;
 }
 
+.ordernums{
+    display: flex;
+    flex-direction: column;
+}
+
 .completed{
     display: flex;
     flex-direction: column;

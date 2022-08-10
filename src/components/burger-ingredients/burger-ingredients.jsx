@@ -9,10 +9,7 @@ import styles from "./burger-ingredients.module.css";
 export default function BurgerIngredients() {
   const [current, setCurrent] = useState("bun");
   const isLoading = useSelector(store => store.data.isLoading);
-
-  const dispatch = useDispatch();
-  useEffect(() => { dispatch(setIngredientsData()) }, [dispatch]);   
-
+  
   const { data } = useSelector(store => store.data);
   const bunsArr = data.filter((el) => el.type === "bun");
   const mainArr = data.filter((el) => el.type === "main");

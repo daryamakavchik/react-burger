@@ -54,7 +54,7 @@ export default function BurgerIngredient(props) {
         <div className={styles.optioncard} onClick={openModal} ref={dragRef}>
           {count && <Counter count={count} />}
           {buncount && <Counter count={buncount} />}
-          <img src={props.image} alt="" />
+          <img src={props.image} alt={`${props.name}`} />
           <p className={styles.optiontext}>{props.name}</p>
         </div>
       </Link>
