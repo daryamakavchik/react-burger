@@ -14,7 +14,6 @@ export function ProfilePage() {
   const logout = () => {
     dispatch(logoutUser());
   }
-  console.log(isHistoryLinkActive);
 
   return (
     <>
