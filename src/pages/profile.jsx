@@ -1,15 +1,20 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { NavLink, Switch, Route, useRouteMatch, useParams } from "react-router-dom";
+import { NavLink, Switch, Route, useRouteMatch } from "react-router-dom";
 import styles from "./profile.module.css";
 import Orders from "./orders";
 import EditProfile from "./editprofile";
 import { logoutUser } from "../services/actions/auth";
+import { useState } from "react";
 
 export function ProfilePage() {
   const dispatch = useDispatch();
-  const logout = () => dispatch(logoutUser());
   const { path } = useRouteMatch();
+  const [isHistoryLinkActive, setHistoryLinkActive] = useState(false);
+  const logout = () => {
+    dispatch(logoutUser());
+  }
+  console.log(isHistoryLinkActive);
 
   return (
     <>
@@ -28,6 +33,7 @@ export function ProfilePage() {
               'pr-5',
               'mr-2',
               'text text_type_main-medium text_color_inactive`}
+                  onClick={() => setHistoryLinkActive(false)}
                   activeClassName={styles.textactive}
                 >
                   <span>Профиль</span>
@@ -43,6 +49,7 @@ export function ProfilePage() {
               'pr-5',
               'mr-2',
               'text text_type_main-medium text_color_inactive`}
+                  onClick={() => setHistoryLinkActive(true)}
                   activeClassName={styles.textactive}
                   id='orderhistory'
                 >
@@ -68,7 +75,7 @@ export function ProfilePage() {
             </ul>
             <div className={styles.footer}>
               <p
-                className={`${styles.subtext} text text_type_main-default text_color_inactive`}
+                className={ !isHistoryLinkActive ? `${styles.subtext} text text_type_main-default text_color_inactive` : `${styles.disabledsubtext}`}
               >
                 В этом разделе вы можете изменить свои персональные данные.
               </p>
