@@ -10,6 +10,7 @@ import { useRouteMatch } from "react-router-dom";
 import { selectOrderAction } from "../services/actions/feed";
 import { wsConnectionStartAction } from "../services/actions/ws";
 import { editDate } from "../utils/functions";
+import { v4 as uuidv4 } from "uuid";
 
 export default function OrderInfoPage(data) {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export default function OrderInfoPage(data) {
   const { currentOrder } = useSelector((store) => store.feed);
   const { orders } = useSelector((store) => store.ws);
   const done = currentOrder?.status === "done";
-
+  const uniqueKey = uuidv4();
   const dateString = editDate(currentOrder?.createdAt);
 
   let ingrData;
@@ -100,7 +101,7 @@ export default function OrderInfoPage(data) {
                 src={data && data.find((el) => el._id === ingr.ingr).image} />
                 </div>
               <div className={styles.text}>
-                <p className={`${styles.textt} text text_type_main-default`}>
+                <p className={`${styles.textname} text text_type_main-default`}>
                   {data && data.find((el) => el._id === ingr.ingr).name}
                 </p>
                 <p
