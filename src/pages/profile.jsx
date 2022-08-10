@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { NavLink, Switch, Route, useRouteMatch } from "react-router-dom";
+import { NavLink, Switch, Route, useRouteMatch, useParams } from "react-router-dom";
 import styles from "./profile.module.css";
 import Orders from "./orders";
 import EditProfile from "./editprofile";
@@ -44,6 +44,7 @@ export function ProfilePage() {
               'mr-2',
               'text text_type_main-medium text_color_inactive`}
                   activeClassName={styles.textactive}
+                  id='orderhistory'
                 >
                   <span>История заказов</span>
                 </NavLink>

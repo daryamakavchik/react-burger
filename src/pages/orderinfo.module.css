@@ -87,12 +87,39 @@
     width: 645px;
 }
 
+.imgcontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 68px;
+    height: 64px;
+    position: relative;
+    background: linear-gradient(45deg, rgba(128, 26, 178, 1), rgba(74, 76, 255, 1));
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.imgcontainer::after{
+    display: block;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    left: 2px;
+    bottom: 2px;
+    border-radius: 100px;
+    background: var(--background);
+    content: "";
+}
+
 .img{
-    width: 64px;
+    width: 112px;
+    height: 56px;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     box-sizing: border-box;
+    z-index: 100;
+    object-position: 1px 0.5px;
 }
 
 .burgername{

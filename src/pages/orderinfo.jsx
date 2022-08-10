@@ -93,15 +93,12 @@ export default function OrderInfoPage(data) {
         </p>
         <ul className={styles.ingredients}>
           {uniqueArr?.map((ingr, i) => (
+            <>
             <li className={styles.ingredient} key={i}>
-              <div
-                className={styles.img}
-                style={{
-                  backgroundImage: `url(${
-                    data && data.find((el) => el._id === ingr.ingr).image
-                  })`,
-                }}
-              />
+              <div className={styles.imgcontainer}>
+                <img className={styles.img}
+                src={data && data.find((el) => el._id === ingr.ingr).image} />
+                </div>
               <div className={styles.text}>
                 <p className={`${styles.textt} text text_type_main-default`}>
                   {data && data.find((el) => el._id === ingr.ingr).name}
@@ -117,6 +114,7 @@ export default function OrderInfoPage(data) {
                 <CurrencyIcon />
               </div>
             </li>
+            </>
           ))}
         </ul>
         <div className={styles.footer}>

@@ -17,7 +17,6 @@ export default function Orders() {
     dispatch(wsAuthConnectionStartAction(wsUrl), [dispatch]);
     return () => {
       dispatch(wsAuthConnectionClosedAction(), [dispatch]);
-      return;
     };
   }, [dispatch]);
 
