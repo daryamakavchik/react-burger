@@ -25,7 +25,6 @@ export default function OrderCard({ order }) {
   const dateString = editDate(order.createdAt);
   const select = () => dispatch(selectOrderAction(order));
 
-
   let ingrData;
 
   useEffect(() => {
