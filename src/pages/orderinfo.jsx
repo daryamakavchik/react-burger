@@ -3,14 +3,17 @@ import styles from "./orderinfo.module.css";
 import styless from "./feed.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
 import { selectOrderAction } from "../services/actions/feed";
+import { wsConnectionStartAction, wsConnectionClosedAction, WS_GET_ORDERS } from "../services/actions/ws";
+import { WS_AUTH_CONNECTION_START } from "../services/actions/wsauth";
 
 export default function OrderInfoPage(data) {
+  const location = useLocation();
   const dispatch = useDispatch();
   const { id } = useParams();
   const { url } = useRouteMatch();
@@ -18,26 +21,24 @@ export default function OrderInfoPage(data) {
   const[count, setCount] = useState(0);
   const { currentOrder } = useSelector((store) => store.feed);
   const { orders } = useSelector((store) => store.ws);
-
   let ingrData;
   data = data.data;
 
   React.useEffect(() => {
-    if (currentOrder === null) {
+    dispatch(wsConnectionStartAction('wss://norma.nomoreparties.space/orders/all'));
+  }, [dispatch]);
+
+  React.useEffect(() => {
       const order = orders.find((order) => order._id === id);
       order && dispatch(selectOrderAction(order));
-    }
   }, [currentOrder, id, orders, dispatch]);
 
-  const number = currentOrder?.number;
-  const name = currentOrder?.name;
-  const status = currentOrder?.status;
-  let ingredients = currentOrder?.ingredients;
-  const createdAt = currentOrder?.createdAt;
+const done = currentOrder?.status === 'done';
+let ingredients;
+let uniqueArr;
+ingredients = url === `/profile/orders/${id}` ? (currentOrder?.ingredients.map((ing) => ing._id !== undefined ? ing._id : ing)) : currentOrder?.ingredients;
 
-  const done = status === 'done';
-  ingredients = url === `/profile/orders/${id}` ? (ingredients.map((ing) => ing._id !== undefined ? ing._id : ing)) : ingredients;
-
+if (ingredients) {
     const ingredientsWithCount = (ingredients) => {
        const res = {};
        ingredients.forEach((ingr) => {
@@ -48,11 +49,11 @@ export default function OrderInfoPage(data) {
        });
     return Object.values(res);
  };
-
- const uniqueArr = ingredientsWithCount(ingredients);
+ uniqueArr = ingredientsWithCount(ingredients);
+}
 
   useEffect(() => {
-    if (data.length) {
+    if (data.length && uniqueArr) {
       let totalPrice = 0;
       let targetIngredients = [];
       let bun = false;
@@ -83,19 +84,17 @@ export default function OrderInfoPage(data) {
    return `${getDays(diffTime)}, ${hours}:${min} i-GMT+${createdAt.getTimezoneOffset() * (-1) / 60}`;
  };
  
- const dateString = editDate(currentOrder.createdAt);
- 
-
+ const dateString = editDate(currentOrder?.createdAt);
 
   return (
     <div className={styles.content}>
       <p className={`${styless.id} ${styles.id} text text_type_digits-default`}>
-        #{number}
+        #{currentOrder?.number}
       </p>
       <p
         className={`${styless.burgername} ${styles.burgername} text text_type_main-default`}
       >
-        {name}
+        {currentOrder?.name}
       </p>
       <p className={`${styles.subtext} text text_type_main-small`}>
       {done ? 'Выполнен' :'Готовится'}
@@ -105,19 +104,19 @@ export default function OrderInfoPage(data) {
           Состав:
         </p>
         <ul className={styles.ingredients}>
-          {uniqueArr.map((ingr, i) => (
+          {uniqueArr?.map((ingr, i) => (
             <li className={styles.ingredient} key={i}>
               <div className={styles.img} 
-              style={{ backgroundImage: `url(${(data.find((el) => el._id === ingr.ingr)).image})` }}
+              style={{ backgroundImage: `url(${data && (data.find((el) => el._id === ingr.ingr)).image})` }}
               />
               <div className={styles.text}>
                 <p className={`${styles.textt} text text_type_main-default`}>
-                  { url === `/feed/${id}` ? (data.find((el) => el._id === ingr.ingr)).name : (data.find((el) => el._id === ingr.ingr)).name }
+                  { data && (data.find((el) => el._id === ingr.ingr)).name }
                 </p>
                 <p
                     className={`${styless.id} ${styles.smallprice} text text_type_digits-default`}
                   >
-                  {ingr.count} x {(data.find((el) => el._id === ingr.ingr)).price}
+                  {ingr.count} x {data && (data.find((el) => el._id === ingr.ingr)).price}
                   </p>
               </div>
               <div className={styles.price}>

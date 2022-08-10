@@ -79,12 +79,12 @@ function App() {
               <IngredientDetails data={data} />
             </DetailsModal>
           </Route>
-          <Route path="/profile/orders/:id" exact={true}>
-            <OrderInfoPage data={data}/>
+          <Route path="/profile/orders/:id" exact={true} > 
+            <OrderInfoPage data={data}  /> 
           </Route>
-          <Route path="/feed/:id">
-            <OrderInfoPage data={data} />
-            </Route>
+          <Route path="/feed/:id" >
+            <OrderInfoPage data={data} /> 
+          </Route>
           <ProtectedRoute path="/profile">
             <ProfilePage />
           </ProtectedRoute>
