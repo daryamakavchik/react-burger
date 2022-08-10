@@ -10,7 +10,6 @@ import { useRouteMatch } from "react-router-dom";
 import { selectOrderAction } from "../services/actions/feed";
 import { wsConnectionStartAction } from "../services/actions/ws";
 import { editDate } from "../utils/functions";
-import { v4 as uuidv4 } from "uuid";
 
 export default function OrderInfoPage(data) {
   const dispatch = useDispatch();
@@ -20,7 +19,6 @@ export default function OrderInfoPage(data) {
   const { currentOrder } = useSelector((store) => store.feed);
   const { orders } = useSelector((store) => store.ws);
   const done = currentOrder?.status === "done";
-  const uniqueKey = uuidv4();
   const dateString = editDate(currentOrder?.createdAt);
 
   let ingrData;
@@ -93,29 +91,27 @@ export default function OrderInfoPage(data) {
           Состав:
         </p>
         <ul className={styles.ingredients}>
-          {uniqueArr?.map((ingr, i) => (
-            <>
-            <li className={styles.ingredient} key={i}>
+          {uniqueArr && uniqueArr.map((ingr) => (
+            <li className={ingr.ingr === null ? styles.null : styles.ingredient} key={ingr.ingr}>
               <div className={styles.imgcontainer}>
                 <img className={styles.img}
-                src={data && data.find((el) => el._id === ingr.ingr).image} />
+                src={ingr && ingr.ingr && data && data.find((el) => el._id === ingr.ingr).image} />
                 </div>
               <div className={styles.text}>
                 <p className={`${styles.textname} text text_type_main-default`}>
-                  {data && data.find((el) => el._id === ingr.ingr).name}
+                  {ingr && ingr.ingr && data && data.find((el) => el._id === ingr.ingr).name}
                 </p>
                 <p
                   className={`${styles.id} ${styles.smallprice} text text_type_digits-default`}
                 >
                   {ingr.count} x{" "}
-                  {data && data.find((el) => el._id === ingr.ingr).price}
+                  {ingr && ingr.ingr && data && data.find((el) => el._id === ingr.ingr).price}
                 </p>
               </div>
               <div className={styles.price}>
                 <CurrencyIcon />
               </div>
             </li>
-            </>
           ))}
         </ul>
         <div className={styles.footer}>

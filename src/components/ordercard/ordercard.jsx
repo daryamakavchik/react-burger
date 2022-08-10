@@ -67,7 +67,7 @@ export default function OrderCard({ order }) {
   }, [data, order.ingredients]);
 
   return ( 
-    <li className={styles.order} onClick={select}>
+    <li className={styles.order} onClick={select} key={order._id}>
       <Link className={styles.link} to={{ pathname: `${url}/${order._id}`, state: { background: location } }} >
         <div className={styles.orderid}>
           <p className={`${styles.id} text text_type_digits-default`}>{`#${order.number}`}</p>
