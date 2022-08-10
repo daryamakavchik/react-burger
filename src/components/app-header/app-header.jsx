@@ -1,5 +1,4 @@
-import React, { useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import React from "react";
 import {
   Logo,
   BurgerIcon,
@@ -10,7 +9,6 @@ import styles from "./app-header.module.css";
 import { Link } from "react-router-dom";
 
 function AppHeader() {
-  const history = useHistory();
 
   return (
     <header className={styles.header}>

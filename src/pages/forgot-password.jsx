@@ -10,14 +10,15 @@ import {
 import { Link, useHistory } from "react-router-dom";
 import { resetPassword } from "../services/actions/auth";
 
-
 export function ForgotPasswordPage() {
-  const [emailValue, setEmailValue] = useState("");
-  const history = useHistory();
   const dispatch = useDispatch();
-  const onEmailChange = (e) => {
-    setEmailValue(e.target.value);
-  };
+  const history = useHistory();
+  const [emailValue, setEmailValue] = useState("");
+
+  const isforgotPassword = useSelector((store) => store.user.isforgotPassword);
+  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
+
+  const onEmailChange = (e) => { setEmailValue(e.target.value) };
 
   const redirectOnSuccess = () => {
     history.replace({
@@ -32,27 +33,15 @@ export function ForgotPasswordPage() {
     setEmailValue("");
   };
 
-
-  const isforgotPassword = useSelector((store) => store.user.isforgotPassword);
-  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
-
   if (isUserAuthorized) {
     return (
-      <Redirect
-        to={{
-          pathname: '/'
-        }}
-      />
+      <Redirect to={{ pathname: "/" }}/>
     );
   }
 
   if (!isUserAuthorized && isforgotPassword) {
     return (
-      <Redirect
-        to={{
-          pathname: '/reset-password'
-        }}
-      />
+      <Redirect to={{ pathname: "/reset-password" }}/>
     );
   }
 
@@ -76,15 +65,10 @@ export function ForgotPasswordPage() {
         </div>
       </form>
       <div className={styles.textcontainer}>
-        <p
-          className={`${styles.text} text text_type_main-default text_color_inactive`}
-        >
+        <p className={`${styles.text} text text_type_main-default text_color_inactive`}>
           Вспомнили пароль?
         </p>
-        <Link
-          to="/login"
-          className={`${styles.activetext} text text_type_main-default`}
-        >
+        <Link to="/login" className={`${styles.activetext} text text_type_main-default`}>
           Войти
         </Link>
       </div>

@@ -1,34 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./feed.module.css";
 import { useDispatch } from "react-redux";
 import OrderCard from "../components/ordercard/ordercard";
-import { useSelector } from 'react-redux';
-import { wsConnectionClosedAction, wsConnectionStartAction } from "../services/actions/ws";
+import { useSelector } from "react-redux";
+import {
+  wsConnectionClosedAction,
+  wsConnectionStartAction,
+} from "../services/actions/ws";
 import { v4 as uuidv4 } from "uuid";
 import StatsList from "../components/statslist/statslist";
+import { filterOrders } from "../utils/functions";
 
 export function FeedPage() {
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector((state) => state.ws);
-  const { done, inProgress } = useSelector((state) => state.feed);
+  
+  const statusArrays = filterOrders(orders);
+  const doneArray = statusArrays?.done.slice(0, 30);
+  const pendingArray = statusArrays?.pending.slice(0, 30);
 
-  React.useEffect(() => {
-    dispatch(wsConnectionStartAction('wss://norma.nomoreparties.space/orders/all'));
+  useEffect(() => {
+    dispatch(
+      wsConnectionStartAction("wss://norma.nomoreparties.space/orders/all")
+    );
     return () => {
       dispatch(wsConnectionClosedAction());
     };
   }, [dispatch]);
-
-  const filterOrdersByStatus = (arr) => {
-    return arr?.reduce((acc, curr) => {
-      curr.status === 'done' ? acc.done = [...acc.done, curr] : acc.pending = [...acc.pending, curr]
-      return acc;
-    }, { done: [], pending: [] })
-  }
-
-  const statusArrays = filterOrdersByStatus(orders);
-  const doneArray = statusArrays?.done.slice(0, 30);
-  const pendingArray = statusArrays?.pending.slice(0, 30);
 
   return (
     <>
@@ -37,27 +35,28 @@ export function FeedPage() {
       </h2>
       <div className={styles.content}>
         <ul className={styles.orders}>
-            {orders && orders.map(order => <OrderCard order={order} key={uuidv4()} />)}
+          {orders &&
+            orders.map((order) => <OrderCard order={order} key={uuidv4()} />)}
         </ul>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-        <div className={styles.completed}>
-          <div className={styles.types}>
-            <div className={styles.type}>
-              <p className={`${styles.subtitle} text text_type_main-default`}>
-                Готовы:
-              </p>
-              <StatsList orders={doneArray} />
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div className={styles.completed}>
+            <div className={styles.types}>
+              <div className={styles.type}>
+                <p className={`${styles.subtitle} text text_type_main-default`}>
+                  Готовы:
+                </p>
+                <StatsList orders={doneArray} />
               </div>
-            <div className={styles.type}>
-              <p className={`${styles.subtitle} text text_type_main-default`}>
-                В работе:
-              </p>
-              <StatsList orders={pendingArray} />
+              <div className={styles.type}>
+                <p className={`${styles.subtitle} text text_type_main-default`}>
+                  В работе:
+                </p>
+                <StatsList orders={pendingArray} />
               </div>
             </div>
           </div>
           <div>
-            <p className={`${styles.subtitlee} text text_type_main-default`}>
+            <p className={`${styles.subtitledone} text text_type_main-default`}>
               Выполнено за все время:
             </p>
             <p className={`${styles.digitslarge} text text_type_digits-large`}>
@@ -65,7 +64,7 @@ export function FeedPage() {
             </p>
           </div>
           <div>
-            <p className={`${styles.subtitlee} text text_type_main-default`}>
+            <p className={`${styles.subtitledone} text text_type_main-default`}>
               Выполнено за сегодня:
             </p>
             <p className={`${styles.digitslarge} text text_type_digits-large`}>
@@ -73,7 +72,7 @@ export function FeedPage() {
             </p>
           </div>
         </div>
-        </div>
+      </div>
     </>
   );
 }

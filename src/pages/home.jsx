@@ -8,6 +8,7 @@ import { getUserInfo } from "../services/actions/auth";
 export function HomePage() {
   const dispatch = useDispatch();
   const isLoading = useSelector((store) => store.data.isLoading);
+  
   useEffect(() => dispatch(getUserInfo()), [dispatch]);
   
   return (

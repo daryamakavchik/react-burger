@@ -1,4 +1,3 @@
-import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { apiPostOrder, apiGetOrders, apiGetUserOrder } from "../../utils/api";
 export const POST_ORDER_REQUEST = "POST_ORDER_REQUEST";
 export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";

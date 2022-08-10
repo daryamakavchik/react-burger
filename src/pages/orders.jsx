@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./feed.module.css";
+import OrderCard from "../components/ordercard/ordercard";
 import { wsAuthConnectionStartAction, wsAuthConnectionClosedAction } from '../services/actions/wsauth';
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import OrderCard from "../components/ordercard/ordercard";
 import { v4 as uuidv4 } from "uuid";
 import { getCookie } from "../services/actions/auth";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../pages/feed.module.css";
+import styles from "./ordercard.module.css";
 import { useRouteMatch } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { selectOrderAction } from "../../services/actions/feed";
@@ -9,18 +9,24 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { editDate } from "../../utils/functions";
 
 export default function OrderCard({ order }) {
   const dispatch = useDispatch();
   const location = useLocation();
   const { url } = useRouteMatch();
   const data = useSelector((store) => store.data.data);
-  let ingrData;
 
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);
   const [images, setImages] = useState([]);
+
   const imageQuantity = 5;
+  const dateString = editDate(order.createdAt);
+  const select = () => dispatch(selectOrderAction(order));
+
+
+  let ingrData;
 
   useEffect(() => {
     let bun = false;
@@ -58,22 +64,6 @@ export default function OrderCard({ order }) {
       setPrice(totalPrice);
     }
   }, [data, order.ingredients]);
-  
- const select = () => dispatch(selectOrderAction(order));
-
- const getDays = (days) => ( days === 0 ? 'Сегодня' : days === 1 ? 'Вчера' : days > 1 ? `${days} дня(-ей) назад` : 'Что-то пошло не так:(');
- const editDate = (date) => {
-  const createdAt= new Date(date);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const diffTime = Math.ceil((today.getTime() - createdAt.getTime()) / (60 * 60 * 24 * 1000));
-  const hours = createdAt.getHours() > 9 ? createdAt.getHours() : `0${createdAt.getHours()}`
-  const min = createdAt.getMinutes() > 9 ? createdAt.getMinutes() : `0${createdAt.getMinutes()}`
-
-  return `${getDays(diffTime)}, ${hours}:${min} i-GMT+${createdAt.getTimezoneOffset() * (-1) / 60}`;
-};
-
-const dateString = editDate(order.createdAt);
 
   return ( 
     <li className={styles.order} onClick={select}>
@@ -111,7 +101,7 @@ const dateString = editDate(order.createdAt);
             })}
           </div>
           <div className={styles.price}>
-            {price > 0 && <p className={`${styles.digit} text text_type_digits-default`}>
+            {price > 0 && <p className={`${styles.digits} text text_type_digits-default`}>
               {price}
             </p>}
             <CurrencyIcon type="primary" />

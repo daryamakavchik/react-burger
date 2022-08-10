@@ -6,12 +6,10 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
-  WS_GET_ORDERS,
-  WS_SEND_ORDER,
+  WS_GET_ORDERS
 } from "../services/actions/ws";
 import { wsMiddleware } from "./wsMiddleware";
 
-const wsUrl = "wss://norma.nomoreparties.space/orders/all";
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
