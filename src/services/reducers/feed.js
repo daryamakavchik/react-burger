@@ -36,13 +36,6 @@ export const feedReducer = (state = initialState, action) => {
         isOrderInfoOpen: true
       };
     }
-    case UNSELECT_ORDER: {
-      return {
-        ...state,
-        currentOrder: null,
-        isOrderInfoOpen: false
-      }
-    }
     default: {
       return state;
     }

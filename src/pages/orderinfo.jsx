@@ -8,7 +8,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
 import { selectOrderAction } from "../services/actions/feed";
-import { wsConnectionStartAction } from "../services/actions/ws";
 import { editDate } from "../utils/functions";
 
 export default function OrderInfoPage(data) {

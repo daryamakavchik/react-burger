@@ -23,9 +23,3 @@ export const selectOrderAction = (order) => {
     payload: order,
   };
 };
-
-export const unselectOrderAction = () => {
-  return {
-    type: UNSELECT_ORDER,
-  };
-};

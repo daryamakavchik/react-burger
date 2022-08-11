@@ -20,7 +20,6 @@ import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import styles from "./app.module.css";
 import OrderInfoPage from "../../pages/orderinfo";
-import { unselectOrderAction } from "../../services/actions/feed";
 
 function App() {
   const location = useLocation();
@@ -36,11 +35,6 @@ function App() {
   const closeAllModals = () => {
     history.goBack();
     dispatch(closeCurrentIngredient(ingr), [dispatch]);
-  };
-
-  const closeOrder = () => {
-    history.goBack();
-    dispatch(unselectOrderAction(ingr), [dispatch]);
   };
 
   useEffect(() => {
