@@ -11,7 +11,8 @@ export default function Orders() {
   const dispatch = useDispatch();
   const token = getCookie('token');
   const wsUrl = `wss://norma.nomoreparties.space/orders` + `?token=${token}`;
-  const { orders } = useSelector((store) => store.ws);
+  let { orders } = useSelector((store) => store.ws);
+  const reversedorders = [...orders].reverse();
   
   useEffect(() => {
     dispatch(wsConnectionStartAction(wsUrl), [dispatch]);
@@ -22,7 +23,7 @@ export default function Orders() {
 
   return ( orders && 
     <ul className={styles.orders}>
-      { orders.reverse().map((el) => (
+      { reversedorders.map((el) => (
         <OrderCard order={el} key={el._id} />
       ))}
     </ul>

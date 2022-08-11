@@ -52,7 +52,7 @@ export default function OrderCard({ order }) {
       let targetIngredients = [];
       let bun = false;
       order && order.ingredients.forEach((ingredient) => {
-        url === '/feed' ? ingrData = data.find((el) => el._id === ingredient) : ingrData = data.find((el) => el._id === ingredient?._id) ;
+        ingrData = data.find((el) => el._id === ingredient);
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
           if (ingrData.type === "bun" && !bun) {

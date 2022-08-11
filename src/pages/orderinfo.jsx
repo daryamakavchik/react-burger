@@ -43,12 +43,6 @@ export default function OrderInfoPage(data) {
   }
 
   useEffect(() => {
-    dispatch(
-      wsConnectionStartAction("wss://norma.nomoreparties.space/orders/all")
-    );
-  }, [dispatch]);
-
-  useEffect(() => {
     const order = orders.find((order) => order._id === id);
     order && dispatch(selectOrderAction(order));
   }, [currentOrder, id, orders, dispatch]);
