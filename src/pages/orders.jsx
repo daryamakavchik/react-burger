@@ -15,9 +15,9 @@ export default function Orders() {
   const reversedorders = [...orders].reverse();
   
   useEffect(() => {
-    dispatch(wsConnectionStartAction(wsUrl), [dispatch]);
+    dispatch(wsConnectionStartAction(wsUrl));
     return () => {
-      dispatch(wsConnectionClosedAction(), [dispatch]);
+      dispatch(wsConnectionClosedAction());
     };
   }, [dispatch]);
 
