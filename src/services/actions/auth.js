@@ -220,13 +220,6 @@ export const refreshTokenAction = () => {
       .finally(() => {
         dispatch({ type: AUTH_CHECKED });
       });
-    // .catch((err) => {
-    //   deleteCookie("token");
-    //   localStorage.removeItem("refreshToken");
-    //   dispatch({
-    //     type: REFRESH_TOKEN_FAILED,
-    //   });
-    // });
   };
 };
 
@@ -301,7 +294,7 @@ export function setCookie(name, value, props) {
   document.cookie = updatedCookie;
 }
 
-export function getCookie(name) {
+export const getCookie = (name) => {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +

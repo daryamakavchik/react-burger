@@ -6,8 +6,9 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
-  WS_GET_ORDERS
+  WS_GET_ORDERS,
 } from "../services/actions/ws";
+import { WS_AUTH_SEND_ORDER } from "./actions/wsauth";
 import { wsMiddleware } from "./wsMiddleware";
 
 const composeEnhancers =
@@ -21,6 +22,7 @@ const actions = {
   onClose: WS_CONNECTION_CLOSED,
   onError: WS_CONNECTION_ERROR,
   onOrders: WS_GET_ORDERS,
+  onSendOrders: WS_AUTH_SEND_ORDER
 };
 
 const enhancer = composeEnhancers(

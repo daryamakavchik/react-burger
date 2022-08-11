@@ -21,7 +21,7 @@ export default function OrderCard({ order }) {
   const [images, setImages] = useState([]);
 
   const imageQuantity = 5;
-  const dateString = editDate(order.createdAt);
+  const dateString = editDate(order?.createdAt);
   const select = () => dispatch(selectOrderAction(order));
 
   let ingrData;
@@ -29,8 +29,8 @@ export default function OrderCard({ order }) {
   useEffect(() => {
     let bun = false;
     let targetImages = [];
-    order.ingredients.forEach(ingredient => {
-      url === '/feed' ? ingrData = data.find((el) => el._id === ingredient) : ingrData = data.find((el) => el._id === ingredient._id) ;
+    order && order.ingredients.forEach(ingredient => {
+      ingrData = data?.find((el) => el._id === ingredient);
       if (ingredient === null) {
         return
       }
@@ -43,16 +43,16 @@ export default function OrderCard({ order }) {
         }
     });
     setImages(targetImages);
-    setCount(targetImages.length)
-}, [order.ingredients]);
+    setCount(targetImages.length);
+}, [order?.ingredients]);
 
   useEffect(() => {
     if (data.length) {
       let totalPrice = 0;
       let targetIngredients = [];
       let bun = false;
-      order.ingredients.forEach((ingredient) => {
-        url === '/feed' ? ingrData = data.find((el) => el._id === ingredient) : ingrData = data.find((el) => el._id === ingredient._id) ;
+      order && order.ingredients.forEach((ingredient) => {
+        url === '/feed' ? ingrData = data.find((el) => el._id === ingredient) : ingrData = data.find((el) => el._id === ingredient?._id) ;
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
           if (ingrData.type === "bun" && !bun) {
@@ -64,19 +64,19 @@ export default function OrderCard({ order }) {
       });
       setPrice(totalPrice);
     }
-  }, [data, order.ingredients]);
+  }, [data, order?.ingredients]);
 
   return ( 
-    <li className={styles.order} onClick={select} key={order._id}>
-      <Link className={styles.link} to={{ pathname: `${url}/${order._id}`, state: { background: location } }} >
+    <li className={styles.order} onClick={select} key={order?._id}>
+      <Link className={styles.link} to={{ pathname: `${url}/${order?._id}`, state: { background: location } }} >
         <div className={styles.orderid}>
-          <p className={`${styles.id} text text_type_digits-default`}>{`#${order.number}`}</p>
+          <p className={`${styles.id} text text_type_digits-default`}>{`#${order?.number}`}</p>
           <p className={`${styles.timestamp} text text_type_main-small text_color_inactive`}>{dateString}</p>
         </div>
-        <h3 className={`${styles.burgername} text text_type_main-default`}>{order.name}</h3>
+        <h3 className={`${styles.burgername} text text_type_main-default`}>{order?.name}</h3>
         {url === "/profile/order" && (
-          <p className={`text text_type_main-small ${order.status === "done" && styles.ready}`}>
-            {order.status === "created" ? "Создан" : order.status === "pending" ? "Готовится" : "Выполнен"}
+          <p className={`text text_type_main-small ${order?.status === "done" && styles.ready}`}>
+            {order?.status === "created" ? "Создан" : order?.status === "pending" ? "Готовится" : "Выполнен"}
           </p>
         )}
         <div className={styles.componentandprice}>
@@ -86,7 +86,7 @@ export default function OrderCard({ order }) {
               if (i <= imageQuantity - 1)
                 return (
                   <div key={i} className={styles.container} style={{ left: left, zIndex: 100 - i }}>
-                    <img className={styles.image} src={image} alt="" />
+                    <img className={styles.image} src={image} alt="Изображение инргедиента" />
                   </div>
                 );
               if (i === imageQuantity)
@@ -95,7 +95,7 @@ export default function OrderCard({ order }) {
                     <p className={styles.count + " text text_type_digits-default"}>
                       {"+" + (count - imageQuantity + 1)}
                     </p>
-                    <img className={styles.image} style={{ opacity: 0.5 }} src={image} alt="" />
+                    <img className={styles.image} style={{ opacity: 0.5 }} src={image} alt="Изображение инргедиента" />
                   </div>
                 );
               return false;

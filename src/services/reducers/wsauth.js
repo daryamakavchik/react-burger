@@ -4,7 +4,8 @@ import {
     WS_AUTH_CONNECTION_ERROR,
     WS_AUTH_CONNECTION_START,
     WS_AUTH_CONNECTION_SUCCESS,
-    WS_AUTH_GET_ORDERS
+    WS_AUTH_GET_ORDERS,
+    WS_AUTH_SEND_ORDER
   } from '../actions/wsauth';
   
   export const initialState = {
@@ -50,7 +51,8 @@ import {
         case POST_ORDER_SUCCESS: {
             return {
                 ...state,
-                    orders: [...state.orders, action.order]
+                    orders: [...state.orders, action.order],
+                    loading: false
               };
             }
         case WS_AUTH_GET_ORDERS: {
@@ -61,6 +63,13 @@ import {
             total: action.payload.total,
             totalToday: action.payload.totalToday,
             loading: false,
+          };
+        }
+        case WS_AUTH_SEND_ORDER: {
+          return {
+            ...state,
+                orders: [...state.orders, action.order],
+                loading: false
           };
         }
         default: {

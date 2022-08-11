@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./feed.module.css";
 import OrderCard from "../components/ordercard/ordercard";
-import { wsAuthConnectionStartAction, wsAuthConnectionClosedAction } from '../services/actions/wsauth';
+import { wsConnectionStartAction, wsConnectionClosedAction, wsConnectionGetOrdersAction } from '../services/actions/ws';
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -9,21 +9,21 @@ import { getCookie } from "../services/actions/auth";
 
 export default function Orders() {
   const dispatch = useDispatch();
-  const token = getCookie("token");
+  const token = getCookie('token');
   const wsUrl = `wss://norma.nomoreparties.space/orders` + `?token=${token}`;
-  const { orders } = useSelector((store) => store.wsAuth);
-
+  const { orders } = useSelector((store) => store.ws);
+  
   useEffect(() => {
-    dispatch(wsAuthConnectionStartAction(wsUrl), [dispatch]);
+    dispatch(wsConnectionStartAction(wsUrl), [dispatch]);
     return () => {
-      dispatch(wsAuthConnectionClosedAction(), [dispatch]);
+      dispatch(wsConnectionClosedAction(), [dispatch]);
     };
   }, [dispatch]);
 
-  return (
+  return ( orders && 
     <ul className={styles.orders}>
-      { orders && orders.map((el) => (
-        <OrderCard order={el.order} key={el.order._id} />
+      { orders.map((el) => (
+        <OrderCard order={el} key={el._id} />
       ))}
     </ul>
   );
