@@ -45,11 +45,12 @@ export default function OrderInfoPage(data) {
   }
 
   const token = getCookie('token');
-  const wsUrl = `wss://norma.nomoreparties.space/orders` + `?token=${token}`;
+  const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
+  const wsAuthUrl = `wss://norma.nomoreparties.space/orders` + `?token=${token}`;
   const reversedorders = [...orders].reverse();
   
   useEffect(() => {
-    dispatch(wsConnectionStartAction(wsUrl));
+    url === `/profile/orders/${id}` ? dispatch(wsConnectionStartAction(wsAuthUrl)) : dispatch(wsConnectionStartAction(wsUrl)) ;
     return () => {
       dispatch(wsConnectionClosedAction());
     };
