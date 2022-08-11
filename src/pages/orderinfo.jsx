@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
 import { selectOrderAction } from "../services/actions/feed";
 import { editDate } from "../utils/functions";
+import { wsConnectionStartAction, wsConnectionClosedAction } from "../services/actions/ws";
+import { getCookie } from "../services/actions/auth";
 
 export default function OrderInfoPage(data) {
   const dispatch = useDispatch();
@@ -25,6 +27,7 @@ export default function OrderInfoPage(data) {
   let uniqueArr;
   data = data.data;
 
+
   ingredients = url === `/profile/orders/${id}` ? currentOrder?.ingredients.map((ing) =>ing._id !== undefined ? ing._id : ing) : currentOrder?.ingredients;
 
   if (ingredients) {
@@ -40,6 +43,17 @@ export default function OrderInfoPage(data) {
     };
     uniqueArr = ingredientsWithCount(ingredients);
   }
+
+  const token = getCookie('token');
+  const wsUrl = `wss://norma.nomoreparties.space/orders` + `?token=${token}`;
+  const reversedorders = [...orders].reverse();
+  
+  useEffect(() => {
+    dispatch(wsConnectionStartAction(wsUrl));
+    return () => {
+      dispatch(wsConnectionClosedAction());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     const order = orders.find((order) => order._id === id);
