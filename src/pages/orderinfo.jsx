@@ -21,12 +21,14 @@ export default function OrderInfoPage(data) {
   const { orders } = useSelector((store) => store.ws);
   const done = currentOrder?.status === "done";
   const dateString = editDate(currentOrder?.createdAt);
+  const token = getCookie('token');
+  const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
+  const wsAuthUrl = `wss://norma.nomoreparties.space/orders` + `?token=${token}`;
 
   let ingrData;
   let ingredients;
   let uniqueArr;
   data = data.data;
-
 
   ingredients = url === `/profile/orders/${id}` ? currentOrder?.ingredients.map((ing) =>ing._id !== undefined ? ing._id : ing) : currentOrder?.ingredients;
 
@@ -44,11 +46,6 @@ export default function OrderInfoPage(data) {
     uniqueArr = ingredientsWithCount(ingredients);
   }
 
-  const token = getCookie('token');
-  const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
-  const wsAuthUrl = `wss://norma.nomoreparties.space/orders` + `?token=${token}`;
-  const reversedorders = [...orders].reverse();
-  
   useEffect(() => {
     url === `/profile/orders/${id}` ? dispatch(wsConnectionStartAction(wsAuthUrl)) : dispatch(wsConnectionStartAction(wsUrl)) ;
     return () => {
