@@ -1,16 +1,9 @@
 .page {
-  margin: 0 auto;
-  max-width: 1280px;
-}
-
-.App {
-  margin: 0;
-  padding: 0;
-}
-
-.content {
-  display: grid;
-  grid-template-columns: repeat(2, 600px);
-  grid-gap: 61.5px;
-  margin: 0;
-}
+    margin: 0 auto;
+    max-width: 1280px;
+  }
+  
+  .App {
+    margin: 0;
+    padding: 0;
+  }
