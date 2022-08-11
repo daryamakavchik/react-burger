@@ -3,7 +3,8 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
-  WS_GET_ORDERS
+  WS_GET_ORDERS,
+  WS_SEND_ORDER
 } from "../actions/ws";
 
 export const initialState = {
@@ -54,6 +55,12 @@ export const initialState = {
           total: action.payload.total,
           totalToday: action.payload.totalToday,
           loading: false,
+        };
+      }
+      case WS_SEND_ORDER: {
+        return {
+          ...state,
+          orders: [...state.orders, action.payload],
         };
       }
       default: {

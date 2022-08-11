@@ -3,7 +3,7 @@ export const WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR';
 export const WS_CONNECTION_START = 'WS_CONNECTION_START';
 export const WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS';
 export const WS_GET_ORDERS = 'WS_GET_ORDERS';
-
+export const WS_SEND_ORDER = 'WS_SEND_ORDER';
 
   export const wsConnectionStartAction = (wsUrl) => {
     return {
@@ -35,5 +35,12 @@ export const WS_GET_ORDERS = 'WS_GET_ORDERS';
     return {
       type: WS_GET_ORDERS,
       payload: orders,
+    };
+  };
+
+  export const wsConnectionSendOrderAction = (order) => {
+    return {
+      type: WS_SEND_ORDER,
+      payload: order,
     };
   };

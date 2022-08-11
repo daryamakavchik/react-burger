@@ -22,7 +22,7 @@ export default function Orders() {
 
   return ( orders && 
     <ul className={styles.orders}>
-      { orders.map((el) => (
+      { orders.reverse().map((el) => (
         <OrderCard order={el} key={el._id} />
       ))}
     </ul>
