@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,7 +9,7 @@ import {
 import { loginUser } from "../services/actions/auth";
 import styles from "./login.module.css";
 
-export function LoginPage() {
+export const LoginPage:FC = () => {
   const dispatch = useDispatch();
   const { state } = useLocation();
   const [emailValue, setEmailValue] = useState("");

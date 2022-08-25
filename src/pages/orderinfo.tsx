@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from "./orderinfo.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
@@ -12,7 +12,7 @@ import { editDate } from "../utils/functions";
 import { wsConnectionStartAction, wsConnectionClosedAction } from "../services/actions/ws";
 import { getCookie } from "../services/actions/auth";
 
-export default function OrderInfoPage(data) {
+export const OrderInfoPage:FC = (data) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { url } = useRouteMatch();

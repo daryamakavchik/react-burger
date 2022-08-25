@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styles from "./resetpassword.module.css";
 import {
@@ -9,7 +9,7 @@ import {
 import { savePassword } from "../services/actions/auth";
 import { useDispatch } from "react-redux";
 
-export function ResetPasswordPage() {
+export const ResetPasswordPage:FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [passwordValue, setPasswordValue] = useState("");

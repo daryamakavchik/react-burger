@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import styles from "./feed.module.css";
 import { useDispatch } from "react-redux";
 import OrderCard from "../components/ordercard/ordercard";
@@ -10,7 +10,7 @@ import {
 import StatsList from "../components/statslist/statslist";
 import { filterOrders } from "../utils/functions";
 
-export function FeedPage() {
+export const FeedPage:FC = () => {
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector((state) => state.ws);
   

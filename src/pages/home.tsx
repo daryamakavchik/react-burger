@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./home.module.css";
 import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
 import { getUserInfo } from "../services/actions/auth";
 
-export function HomePage() {
+export const HomePage:FC = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((store) => store.data.isLoading);
   

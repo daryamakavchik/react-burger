@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, Switch, Route, useRouteMatch } from "react-router-dom";
 import styles from "./profile.module.css";
@@ -7,7 +7,7 @@ import EditProfile from "./editprofile";
 import { logoutUser } from "../services/actions/auth";
 import { useState } from "react";
 
-export function ProfilePage() {
+export const ProfilePage:FC = () => {
   const dispatch = useDispatch();
   const { path } = useRouteMatch();
   const [isHistoryLinkActive, setHistoryLinkActive] = useState(false);

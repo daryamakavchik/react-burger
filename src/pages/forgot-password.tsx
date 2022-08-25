@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -10,7 +10,7 @@ import {
 import { Link, useHistory } from "react-router-dom";
 import { resetPassword } from "../services/actions/auth";
 
-export function ForgotPasswordPage() {
+export const ForgotPasswordPage:FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [emailValue, setEmailValue] = useState("");
@@ -18,7 +18,7 @@ export function ForgotPasswordPage() {
   const isforgotPassword = useSelector((store) => store.user.isforgotPassword);
   const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
 
-  const onEmailChange = (e) => { setEmailValue(e.target.value) };
+  const onEmailChange = (e: React.ChangeEvent<any>) => { setEmailValue(e.target.value) };
 
   const redirectOnSuccess = () => {
     history.replace({
@@ -27,7 +27,7 @@ export function ForgotPasswordPage() {
     });
   };
 
-  const resetUserPassword = (e, emailValue) => {
+  const resetUserPassword = (e: React.ChangeEvent<any>, emailValue) => {
     e.preventDefault();
     dispatch(resetPassword(emailValue, redirectOnSuccess), [dispatch]);
     setEmailValue("");

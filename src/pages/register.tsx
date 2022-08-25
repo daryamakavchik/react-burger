@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, FC } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import styles from "./register.module.css";
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { registerUser } from "../services/actions/auth";
 
-export function RegisterPage() {
+export const RegisterPage:FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
