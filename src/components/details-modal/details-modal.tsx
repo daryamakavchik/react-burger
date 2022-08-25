@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const modalsContainer = document.querySelector("#modals");
 
-export default function DetailsModal({ title, children }) {
+export const DetailsModal:FC = ({ title, children }) => {
   return ReactDOM.createPortal(
     <>
       <div className={styles.modal}>

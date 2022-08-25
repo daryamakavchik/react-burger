@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from "./modal-overlay.module.css";
 import PropTypes from "prop-types";
 
-export default function ModalOverlay({ onClick }) {
+export const ModalOverlay:FC = ({ onClick }) => {
   return <div className={styles.modaloverlay} onClick={onClick} />;
 }
 

@@ -5,7 +5,7 @@ import { ingredientsPropTypes } from "../../utils/proptypes";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./ingredient-category.module.css";
 
-export const IngredientCategory = forwardRef(
+export const IngredientCategory<HTMLHeadingElement, PropsType> = forwardRef(
   ({ title, ingredients, id }, ref) => {
     return (
       <>

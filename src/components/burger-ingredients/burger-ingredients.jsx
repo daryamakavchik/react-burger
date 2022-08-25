@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useRef, useState } from "react";
 import { useSelector } from 'react-redux';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientCategory } from "../ingredient-category/ingredient-category";
 import styles from "./burger-ingredients.module.css";
 
-export default function BurgerIngredients() {
+export const BurgerIngredients:FC = () => {
   const [current, setCurrent] = useState("bun");
   const isLoading = useSelector(store => store.data.isLoading);
 

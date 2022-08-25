@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   Logo,
   BurgerIcon,
@@ -8,7 +8,7 @@ import {
 import styles from "./app-header.module.css";
 import { Link } from "react-router-dom";
 
-function AppHeader() {
+export const AppHeader:FC = () => {
 
   return (
     <header className={styles.header}>
@@ -46,5 +46,3 @@ function AppHeader() {
     </header>
   );
 }
-
-export default AppHeader;

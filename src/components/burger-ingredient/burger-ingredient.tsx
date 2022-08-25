@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useDrag } from "react-dnd";
@@ -9,7 +9,7 @@ import { openCurrentIngredient, closeCurrentIngredient } from "../../services/ac
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 
-export default function BurgerIngredient(props) {
+export default function BurgerIngredient:FC = (props) => {
   const dispatch = useDispatch();
   const modalOpen = useSelector((store) => store.ingr.isModalOpen);
   const location = useLocation();

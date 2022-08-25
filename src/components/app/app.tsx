@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "../protected-route";
@@ -21,7 +21,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import styles from "./app.module.css";
 import OrderInfoPage from "../../pages/orderinfo";
 
-function App() {
+export const App:FC = () => {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -124,5 +124,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

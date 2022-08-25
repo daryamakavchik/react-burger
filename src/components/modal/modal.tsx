@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import ReactDOM from "react-dom";
 import { useEffect } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -10,7 +10,7 @@ import { store } from "../../services/store";
 
 const modalsContainer = document.querySelector("#modals");
 
-export default function Modal({ title, onClose, children }) {
+export const Modal:FC = ({ title, onClose, children }) => {
   const isOrderModal = useSelector(store => store.feed.isModalOpen);
   const isIngredientModal = useSelector(store => store.ingr.isIngredientModal);
 

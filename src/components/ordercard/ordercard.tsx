@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from "./ordercard.module.css";
 import { useRouteMatch } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { editDate } from "../../utils/functions";
 
-export default function OrderCard({ order }) {
+export const OrderCard:FC = ({ order }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { url } = useRouteMatch();

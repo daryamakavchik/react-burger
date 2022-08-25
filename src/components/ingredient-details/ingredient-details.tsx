@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from "./ingredient-details.module.css";
 
-export default function IngredientDetails(ingrdata) {
+export const IngredientDetails:FC = (ingrdata) => {
   const [ingr, setIngredient] = useState(null);
   const { id } = useParams();
   let currentIngredient = {};

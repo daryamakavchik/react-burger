@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
@@ -18,7 +18,7 @@ import { openOrderModal, closeOrderModal } from "../../services/actions/order";
 import BurgerElement from "../burger-element/burger-element";
 import Loader from "../loader/loader";
 
-export default function BurgerConstructor() {
+export const BurgerConstructor:FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [totalPrice, setTotalPrice] = useState(0);

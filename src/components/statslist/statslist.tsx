@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from "./statslist.module.css";
 
-export default function StatsList({ orders }) {
+export const StatsList:FC = ({ orders }) => {
   return (
     <ul className={styles.list}>
       {orders.length > 0 ? orders.map((order, index) => (

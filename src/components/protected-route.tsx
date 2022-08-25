@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "../services/actions/auth";
 
-export const ProtectedRoute = ({ children, ...rest }) => {
+export const ProtectedRoute:FC = ({ children, ...rest }) => {
   const dispatch = useDispatch();
   const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
 

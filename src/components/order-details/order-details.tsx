@@ -1,8 +1,8 @@
-import React from "react";
+import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import styles from "./order-details.module.css";
 
-export default function OrderDetails() {
+export const OrderDetails:FC = () => {
   const orderNum = useSelector((store) => store.ord.orderNum);
 
   return (

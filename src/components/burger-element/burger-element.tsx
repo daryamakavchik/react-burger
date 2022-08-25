@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, FC } from "react";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -6,7 +6,7 @@ import { UPDATE_ITEMS } from "../../services/actions";
 import PropTypes from "prop-types";
 import styles from "../burger-constructor/burger-constructor.module.css";
 
-export default function BurgerElement({ item, index, handleClose }) {
+export const BurgerElement:FC = ({ item, index, handleClose }) => {
   const dispatch = useDispatch();
   const ref = useRef();
   const [{ isDrag }, drag] = useDrag({

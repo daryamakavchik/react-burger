@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FunctionComponent } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { updateUser } from "../services/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./profile.module.css";
@@ -9,7 +9,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const EditProfile: FunctionComponent = () => {
+export const EditProfile: FC = () => {
 
   type TProfileForm = {
     name: string;
