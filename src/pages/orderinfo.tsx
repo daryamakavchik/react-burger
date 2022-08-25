@@ -12,6 +12,24 @@ import { editDate } from "../utils/functions";
 import { wsConnectionStartAction, wsConnectionClosedAction } from "../services/actions/ws";
 import { getCookie } from "../services/actions/auth";
 
+
+type TIngredientData = {
+  _id: string;
+  name: string;
+  type: string;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  __v: number;
+}
+
+type TIngredients = TIngredientData[];
+
 export const OrderInfoPage:FC = (data) => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -30,10 +48,10 @@ export const OrderInfoPage:FC = (data) => {
   let uniqueArr;
   data = data.data;
 
-  ingredients = url === `/profile/orders/${id}` ? currentOrder?.ingredients.map((ing) =>ing._id !== undefined ? ing._id : ing) : currentOrder?.ingredients;
+  ingredients = url === `/profile/orders/${id}` ? currentOrder?.ingredients.map((ing:TIngredientData) =>ing._id !== undefined ? ing._id : ing) : currentOrder?.ingredients;
 
   if (ingredients) {
-    const ingredientsWithCount = (ingredients) => {
+    const ingredientsWithCount = (ingredients:TIngredients) => {
       const res = {};
       ingredients.forEach((ingr) => {
         if (!res[ingr]) {

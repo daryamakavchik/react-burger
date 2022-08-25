@@ -27,7 +27,7 @@ export const ForgotPasswordPage:FC = () => {
     });
   };
 
-  const resetUserPassword = (e: React.ChangeEvent<any>, emailValue) => {
+  const resetUserPassword = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     dispatch(resetPassword(emailValue, redirectOnSuccess), [dispatch]);
     setEmailValue("");

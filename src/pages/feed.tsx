@@ -10,9 +10,21 @@ import {
 import StatsList from "../components/statslist/statslist";
 import { filterOrders } from "../utils/functions";
 
+type TOrder = {
+  _id: string;
+  ingredients: string[];
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+};
+
+type TOrders = TOrder[];
+
 export const FeedPage:FC = () => {
   const dispatch = useDispatch();
-  const { orders, total, totalToday } = useSelector((state) => state.ws);
+  const { orders, total, totalToday } = useSelector((store) => store.ws);
   
   const statusArrays = filterOrders(orders);
   const doneArray = statusArrays?.done.slice(0, 30);
@@ -35,7 +47,7 @@ export const FeedPage:FC = () => {
       <div className={styles.content}>
         <ul className={styles.orders}>
           {orders &&
-            orders.map((order) => <OrderCard order={order} key={order._id} />)}
+            orders.map((order:TOrder) => <OrderCard order={order} key={order._id} />)}
         </ul>
         <div className={styles.ordernums}>
           <div className={styles.completed}>

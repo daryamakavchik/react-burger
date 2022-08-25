@@ -13,14 +13,14 @@ export const RegisterPage:FC = () => {
   const [passwordValue, setPasswordValue] = useState("password");
   const [nameValue, setNameValue] = useState("");
 
-  const onNameChange = (e) => {
+  const onNameChange = (e: React.ChangeEvent<any>) => {
     setNameValue(e.target.value);
   };
 
-  const onPasswordChange = (e) => {
+  const onPasswordChange = (e: React.ChangeEvent<any>) => {
     setPasswordValue(e.target.value);
   };
-  const onEmailChange = (e) => {
+  const onEmailChange = (e: React.ChangeEvent<any>) => {
     setEmailValue(e.target.value);
   };
 
@@ -32,7 +32,7 @@ export const RegisterPage:FC = () => {
   };
 
   const onRegisterClick = useCallback(
-    (e) => {
+    (e: React.ChangeEvent<any>) => {
       e.preventDefault();
       dispatch(
         registerUser(nameValue, emailValue, passwordValue, redirectOnSuccess)

@@ -9,21 +9,22 @@ import {
 import { loginUser } from "../services/actions/auth";
 import styles from "./login.module.css";
 
+
 export const LoginPage:FC = () => {
   const dispatch = useDispatch();
   const { state } = useLocation();
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
   const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
 
-  const onPasswordChange = (e) => {
+  const onPasswordChange = (e: React.ChangeEvent<any>) => {
     setPasswordValue(e.target.value);
   };
-  const onEmailChange = (e) => {
+  const onEmailChange = (e: React.ChangeEvent<any>) => {
     setEmailValue(e.target.value);
   };
 
-  const login = (e, emailValue, passwordValue) => {
+  const login = (e: React.ChangeEvent<any>, emailValue:string, passwordValue:string) => {
     e.preventDefault();
     dispatch(loginUser(emailValue, passwordValue));
   };
@@ -48,7 +49,6 @@ export const LoginPage:FC = () => {
         </div>
         <div className={styles.password}>
           <PasswordInput
-            className={styles.password}
             onChange={onPasswordChange}
             name={"password"}
             value={passwordValue}
