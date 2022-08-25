@@ -26,6 +26,29 @@ import {
   AUTH_CHECKED
 } from "../actions/auth";
 
+type TProfileForm = {
+  name: string;
+  email: string;
+  password: string;
+}
+
+type TUserActions =
+  | TRegisterActions
+  | TLoginActions
+  | TForgotPasswordActions
+  | TResetPasswordActions
+  | TProfileActions
+
+type TInitialUserState = {
+  user: TProfileForm,
+  isLoading: boolean,
+  hasError: boolean,
+  isUserAuthorized: boolean,
+  isAuthChecked: boolean,
+  isTokenUpdated: boolean,
+  isForgotPassword: boolean
+}
+
 const initialUserState = {
   user: {
     name: "",
@@ -40,7 +63,7 @@ const initialUserState = {
   isForgotPassword: false
 };
 
-export const userReducer = (state = initialUserState, action) => {
+export const userReducer = (state = initialUserState, action: TUserActions):TInitialUserState => {
   switch (action.type) {
     case AUTH_CHECKED: {
       return {
