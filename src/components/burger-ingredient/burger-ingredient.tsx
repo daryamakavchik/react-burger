@@ -4,9 +4,9 @@ import { useHistory, useLocation, Link } from "react-router-dom";
 import { useDrag } from "react-dnd";
 import { ingredientsPropTypes } from "../../utils/proptypes";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/modal";
+import { Modal } from "../modal/modal";
 import { openCurrentIngredient, closeCurrentIngredient } from "../../services/actions";
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import styles from "../burger-ingredients/burger-ingredients.module.css";
 
 export default function BurgerIngredient:FC = (props) => {

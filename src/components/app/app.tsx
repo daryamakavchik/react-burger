@@ -13,13 +13,13 @@ import {
   setIngredientsData,
   closeCurrentIngredient,
 } from "../../services/actions";
-import DetailsModal from "../details-modal/details-modal";
-import Modal from "../modal/modal";
-import AppHeader from "../app-header/app-header";
-import OrderDetails from "../order-details/order-details";
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import { DetailsModal } from "../details-modal/details-modal";
+import { Modal } from "../modal/modal";
+import { AppHeader } from "../app-header/app-header";
+import { OrderDetails } from "../order-details/order-details";
+import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import styles from "./app.module.css";
-import OrderInfoPage from "../../pages/orderinfo";
+import { OrderInfoPage } from "../../pages/orderinfo";
 
 export const App:FC = () => {
   const location = useLocation();

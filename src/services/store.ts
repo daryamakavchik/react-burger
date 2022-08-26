@@ -1,5 +1,5 @@
 import { compose, createStore, applyMiddleware } from "redux";
-import { rootReducer } from "../services/reducers/index";
+import { rootReducer } from "./reducers/index";
 import thunk from "redux-thunk";
 import {
   WS_CONNECTION_CLOSED,
@@ -8,7 +8,7 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_GET_ORDERS,
   WS_SEND_ORDER
-} from "../services/actions/ws";
+} from "./actions/ws";
 import { wsMiddleware } from "./wsMiddleware";
 
 const composeEnhancers =

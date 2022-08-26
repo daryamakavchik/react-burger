@@ -7,16 +7,16 @@ import {
   Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
+import { Modal } from "../modal/modal";
+import { OrderDetails } from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import {
   onDropHandler,
   deleteItem
 } from "../../services/actions";
 import { openOrderModal, closeOrderModal } from "../../services/actions/order";
-import BurgerElement from "../burger-element/burger-element";
-import Loader from "../loader/loader";
+import { BurgerElement } from "../burger-element/burger-element";
+import { Loader } from "../loader/loader";
 
 export const BurgerConstructor:FC = () => {
   const dispatch = useDispatch();

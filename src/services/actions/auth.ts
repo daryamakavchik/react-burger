@@ -1,3 +1,4 @@
+import { type } from "os";
 import {
   apiLoginUser,
   apiLogoutUser,
@@ -37,28 +38,234 @@ export const UPDATE_SUCCESS = "UPDATE_SUCCESS";
 export const UPDATE_FAILED = "UPDATE_FAILED";
 export const AUTH_CHECKED = "AUTH_CHECKED";
 
-export const loginUser = (email, password) => {
+export interface ILoginRequest{
+  readonly type: typeof LOGIN_REQUEST;
+}
+
+export interface ILoginSuccess{
+  readonly type: typeof LOGIN_SUCCESS;
+  user: TUser
+}
+
+export interface ILoginFailed{
+  readonly type: typeof LOGIN_FAILED;
+}
+
+export interface IRegisterRequest{
+  readonly type: typeof REGISTER_REQUEST;
+}
+
+export interface IRegisterSuccess{
+  readonly type: typeof REGISTER_SUCCESS;
+  user: TUser
+}
+
+export interface IRegisterFailed{
+  readonly type: typeof REGISTER_FAILED;
+}
+
+export interface IGetUserInfoRequest{
+  readonly type: typeof GET_USERINFO_REQUEST;
+}
+
+export interface IGetUserInfoSuccess{
+  readonly type: typeof GET_USERINFO_SUCCESS;
+  user: TUser
+}
+
+export interface IGetUserInfoFailed{
+  readonly type: typeof GET_USERINFO_FAILED;
+}
+
+export interface IRefreshTokenRequest{
+  readonly type: typeof REFRESH_TOKEN_REQUEST;
+}
+
+export interface IRefreshTokenSuccess{
+  readonly type: typeof REFRESH_TOKEN_SUCCESS;
+}
+
+export interface IRefreshTokenFailed{
+  readonly type: typeof REFRESH_TOKEN_FAILED;
+}
+
+export interface IResetPasswordRequest{
+  readonly type: typeof RESET_PASSWORD_REQUEST;
+}
+
+export interface IResetPasswordSuccess{
+  readonly type: typeof RESET_PASSWORD_SUCCESS;
+}
+
+export interface IResetPasswordFailed{
+  readonly type: typeof RESET_PASSWORD_FAILED;
+}
+
+export interface ISavePasswordRequest{
+  readonly type: typeof SAVE_PASSWORD_REQUEST;
+}
+
+export interface ISavePasswordSuccess{
+  readonly type: typeof SAVE_PASSWORD_SUCCESS;
+}
+
+export interface ISavePasswordFailed{
+  readonly type: typeof SAVE_PASSWORD_FAILED;
+}
+
+export interface ILogoutRequest{
+  readonly type: typeof LOGOUT_REQUEST;
+}
+
+export interface ILogoutSuccess{
+  readonly type: typeof LOGOUT_SUCCESS;
+}
+
+export interface ILogoutFailed{
+  readonly type: typeof LOGOUT_FAILED;
+}
+
+export interface IUpdateRequest{
+  readonly type: typeof UPDATE_REQUEST;
+}
+
+export interface IUpdateSuccess{
+  readonly type: typeof UPDATE_SUCCESS;
+  user: TUser
+}
+
+export interface IUpdateFailed{
+  readonly type: typeof UPDATE_FAILED;
+}
+
+export interface IAuthChecked{
+  readonly type: typeof AUTH_CHECKED;
+}
+
+type TUser = {
+  name: string,
+  email: string,
+  password: string
+}
+
+const loginRequest = ():ILoginRequest => ({
+  type: LOGIN_REQUEST
+});
+
+const loginSuccess = (user: TUser):ILoginSuccess => ({
+  type: LOGIN_SUCCESS,
+  user
+});
+
+const loginFailed = ():ILoginFailed => ({
+  type: LOGIN_FAILED
+});
+
+const logoutRequest = ():ILogoutRequest => ({
+  type: LOGOUT_REQUEST
+});
+
+const logoutSuccess = ():ILogoutSuccess => ({
+  type: LOGOUT_SUCCESS
+});
+
+const logoutFailed = ():ILogoutFailed => ({
+  type: LOGOUT_FAILED
+});
+
+const updateRequest = ():IUpdateRequest => ({
+  type: UPDATE_REQUEST
+});
+
+const updateSuccess = (user:TUser):IUpdateSuccess => ({
+  type: UPDATE_SUCCESS, 
+  user
+});
+
+const updateFailed = ():IUpdateFailed => ({
+  type: UPDATE_FAILED
+});
+
+const registerRequest = ():IRegisterRequest => ({
+  type: REGISTER_REQUEST
+});
+
+const registerSuccess = (user:TUser):IRegisterSuccess => ({
+  type: REGISTER_SUCCESS, 
+  user
+});
+
+const registerFailed = ():IRegisterFailed => ({
+  type: REGISTER_FAILED
+});
+
+const getUserInfoRequest = ():IGetUserInfoRequest => ({
+  type: GET_USERINFO_REQUEST
+});
+
+const getUserInfoSuccess = (user:TUser):IGetUserInfoSuccess => ({
+  type: GET_USERINFO_SUCCESS, 
+  user
+});
+
+const getUserInfoFailed = ():IGetUserInfoFailed => ({
+  type: GET_USERINFO_FAILED
+});
+
+const checkAuth = ():IAuthChecked => ({
+  type: AUTH_CHECKED
+});
+
+const refreshTokenRequest = ():IRefreshTokenRequest => ({
+  type: REFRESH_TOKEN_REQUEST
+});
+
+const refreshTokenSuccess = ():IRefreshTokenSuccess => ({
+  type: REFRESH_TOKEN_SUCCESS,
+});
+
+const refreshTokenFailed = ():IRefreshTokenFailed => ({
+  type: REFRESH_TOKEN_FAILED
+});
+
+const resetPasswordRequest = ():IResetPasswordRequest => ({
+  type: RESET_PASSWORD_REQUEST
+});
+
+const resetPasswordSuccess = ():IResetPasswordSuccess => ({
+  type: RESET_PASSWORD_SUCCESS
+});
+
+const resetPasswordFailed = ():IResetPasswordFailed => ({
+  type: RESET_PASSWORD_FAILED
+});
+
+const savePasswordRequest = ():ISavePasswordRequest => ({
+  type: SAVE_PASSWORD_REQUEST
+});
+
+const savePasswordSuccess = ():ISavePasswordSuccess => ({
+  type: SAVE_PASSWORD_SUCCESS
+});
+
+const savePasswordFailed = ():ISavePasswordFailed => ({
+  type: SAVE_PASSWORD_FAILED
+});
+
+
+export const loginUser = (email:string, password:string) => {
   return function(dispatch) {
-    dispatch({
-      type: LOGIN_REQUEST,
-    });
+    dispatch(loginRequest());
     apiLoginUser(email, password)
       .then((res) => {
         if (res && res.success) {
-          dispatch({
-            type: LOGIN_SUCCESS,
-            name: res.user.name,
-            email: res.user.email,
-            password: res.user.password,
-          });
+          dispatch(loginSuccess(res.user));
           const accessToken = res.accessToken.split("Bearer ")[1];
           const refreshToken = res.refreshToken;
           setCookie("token", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
         } else {
-          dispatch({
-            type: LOGIN_FAILED,
-          });
+          dispatch(loginFailed());
         }
       })
       .catch((err) => {
@@ -69,22 +276,16 @@ export const loginUser = (email, password) => {
 
 export const logoutUser = () => {
   return function(dispatch) {
-    dispatch({
-      type: LOGOUT_REQUEST,
-    });
+    dispatch(logoutRequest());
     apiLogoutUser(localStorage.getItem("refreshToken"))
       .then((res) => {
         if (res && res.success) {
-          dispatch({
-            type: LOGOUT_SUCCESS,
-          });
+          dispatch(logoutSuccess());
           deleteCookie("token");
           const refreshToken = localStorage.getItem("refreshToken");
           localStorage.removeItem("refreshToken", refreshToken);
         } else {
-          dispatch({
-            type: LOGOUT_FAILED,
-          });
+          dispatch(logoutFailed());
         }
       })
       .catch((err) => {
@@ -93,23 +294,15 @@ export const logoutUser = () => {
   };
 };
 
-export const updateUser = (email, name) => {
+export const updateUser = (email:string, name:string) => {
   return function(dispatch) {
-    dispatch({
-      type: UPDATE_REQUEST,
-    });
+    dispatch(updateRequest());
     apiUpdateUser(email, name)
       .then((res) => {
         if (res && res.success) {
-          dispatch({
-            type: UPDATE_SUCCESS,
-            email: res.user.email,
-            name: res.user.name,
-          });
+          dispatch(updateSuccess(res.user));
         } else {
-          dispatch({
-            type: UPDATE_FAILED,
-          });
+          dispatch(updateFailed());
         }
       })
       .catch((err) => {
@@ -120,26 +313,18 @@ export const updateUser = (email, name) => {
 
 export const registerUser = (name, email, password, redirectFunc) => {
   return function(dispatch) {
-    dispatch({
-      type: REGISTER_REQUEST,
-    });
+    dispatch(registerRequest());
     apiRegisterUser(name, email, password)
       .then((res) => {
         if (res.success) {
-          dispatch({
-            type: REGISTER_SUCCESS,
-            name: res.user.name,
-            email: res.user.email,
-          });
+          dispatch(registerSuccess(res.user));
           const accessToken = res.accessToken.split("Bearer ")[1];
           const refreshToken = res.refreshToken;
           setCookie("token", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
           redirectFunc();
         } else {
-          dispatch({
-            type: REGISTER_FAILED,
-          });
+          dispatch(registerFailed());
         }
       })
       .catch((err) => {
@@ -150,9 +335,7 @@ export const registerUser = (name, email, password, redirectFunc) => {
 
 export const getUserInfo = () => {
   return function(dispatch) {
-    dispatch({
-      type: GET_USERINFO_REQUEST,
-    });
+    dispatch(getUserInfoRequest());
     apiUserRequest()
       .catch((err) => {
         if (err && err.message === 'jwt expired') {
@@ -161,19 +344,13 @@ export const getUserInfo = () => {
       })
       .then((res) => {
         if (res && res.success) {
-          dispatch({
-            type: GET_USERINFO_SUCCESS,
-            name: res.user.name,
-            email: res.user.email,
-          });
+          dispatch(getUserInfoSuccess(res.user));
         } else {
-          dispatch({
-            type: GET_USERINFO_FAILED,
-          });
+          dispatch(getUserInfoFailed());
         }
       })
       .finally(() => {
-        dispatch({ type: AUTH_CHECKED });
+        dispatch(checkAuth());
       });
   };
 };
@@ -181,9 +358,7 @@ export const getUserInfo = () => {
 
 export const refreshTokenAction = () => {
   return function(dispatch) {
-    dispatch({
-      type: REFRESH_TOKEN_REQUEST,
-    });
+    dispatch(refreshTokenRequest());
     apiRefreshToken(localStorage.getItem("refreshToken"))
       .then((res) => {
         if (res && res.success) {
@@ -197,13 +372,9 @@ export const refreshTokenAction = () => {
 
           setCookie("token", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
-          dispatch({
-            type: REFRESH_TOKEN_SUCCESS,
-          });
+          dispatch(refreshTokenSuccess());
         } else {
-          dispatch({
-            type: REFRESH_TOKEN_FAILED,
-          });
+          dispatch(refreshTokenFailed());
         }
         return res;
       })
@@ -218,27 +389,21 @@ export const refreshTokenAction = () => {
       })
       .then((res) => checkResponse(res))
       .finally(() => {
-        dispatch({ type: AUTH_CHECKED });
+        dispatch(checkAuth());
       });
   };
 };
 
-export const resetPassword = (email, redirectFunc) => {
+export const resetPassword = (email:string, redirectFunc:any) => {
   return function(dispatch) {
-    dispatch({
-      type: RESET_PASSWORD_REQUEST,
-    });
+    dispatch(resetPasswordRequest());
     apiPasswordReset(email)
       .then((res) => {
         if (res && res.success) {
-          dispatch({
-            type: RESET_PASSWORD_SUCCESS,
-          });
+          dispatch(resetPasswordSuccess());
           redirectFunc();
         } else {
-          dispatch({
-            type: RESET_PASSWORD_FAILED,
-          });
+          dispatch(resetPasswordFailed());
         }
       })
       .catch((err) => {
@@ -247,22 +412,16 @@ export const resetPassword = (email, redirectFunc) => {
   };
 };
 
-export const savePassword = (password, code, redirectFunc) => {
+export const savePassword = (password:string, code:string, redirectFunc:any) => {
   return function(dispatch) {
-    dispatch({
-      type: SAVE_PASSWORD_REQUEST,
-    });
+    dispatch(savePasswordRequest());
     apiPasswordSave(password, code)
       .then((res) => {
         if (res && res.success) {
-          dispatch({
-            type: SAVE_PASSWORD_SUCCESS,
-          });
+          dispatch(savePasswordSuccess());
           redirectFunc();
         } else {
-          dispatch({
-            type: SAVE_PASSWORD_FAILED,
-          });
+          dispatch(savePasswordFailed());
         }
       })
       .catch((err) => {
