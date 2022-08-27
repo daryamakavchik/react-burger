@@ -1,6 +1,7 @@
 import { POST_ORDER_REQUEST, POST_ORDER_SUCCESS, POST_ORDER_FAILED, CLOSE_ORDER_MODAL, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED, GET_USER_ORDER_REQUEST, GET_USER_ORDER_SUCCESS, GET_USER_ORDER_FAILED  } from "../actions/order";
+import { TOrderActions } from "../actions/order";
 
-export const initialState = {
+export const initialOrderState = {
   isLoading: false,
   hasError: false,
   isModalOpen: false,
@@ -13,7 +14,7 @@ export const initialState = {
   orderNum: {},
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialOrderState, action: TOrderActions) => {
   switch (action.type) {
     case POST_ORDER_REQUEST: {
       return {
@@ -49,8 +50,7 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         orderFailed: false,
-        order: action.order,
-        currentOrder: action.order,
+        orders: action.orders,
         orderRequest: false,
         orderLoaded: true
       };
