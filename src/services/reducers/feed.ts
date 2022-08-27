@@ -1,11 +1,19 @@
 import { 
-    SELECT_ORDER, 
-    SET_CORRECT_ORDERS, 
-    SET_DONE_ORDERS, 
-    UNSELECT_ORDER
+    SELECT_ORDER
 } from '../actions/feed';
+import { TOrderActions } from '../actions/feed';
 
-const initialState = {
+
+type TInitialOrderState = {
+  orders: TOrder[],
+  currentOrder: TOrder,
+  isModalOpen: boolean,
+  isOrderInfoOpen: boolean,
+  done: TOrder[],
+  inProgress: TOrder[],
+}
+
+const initialOrderState = {
   orders: [],
   currentOrder: null,
   isModalOpen: false,
@@ -14,25 +22,12 @@ const initialState = {
   inProgress: [],
 };
 
-export const feedReducer = (state = initialState, action) => {
+export const feedReducer = (state = initialOrderState, action:TOrderActions ):TInitialOrderState => {
   switch (action.type) {
-    case SET_CORRECT_ORDERS: {
-      return {
-        ...state,
-        orders: action.payload,
-      };
-    }
-    case SET_DONE_ORDERS: {
-      return {
-        ...state,
-        done: action.payload.done,
-        inProgress: action.payload.inProgress,
-      }
-    }
     case SELECT_ORDER: {
       return {
         ...state,
-        currentOrder: action.payload,
+        currentOrder: action.order,
         isOrderInfoOpen: true
       };
     }

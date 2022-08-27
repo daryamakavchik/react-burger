@@ -1,25 +1,16 @@
 export const SELECT_ORDER = 'SELECT_ORDER';
-export const SET_CORRECT_ORDERS = 'SET_CORRECT_ORDERS';
-export const SET_DONE_ORDERS = 'SET_DONE_ORDERS';
 export const UNSELECT_ORDER = 'UNSELECT_ORDER';
 
-export const setCorrectOrdersAction = (orders) => {
-  return {
-    type: SET_CORRECT_ORDERS,
-    payload: orders,
-  };
-};
+export interface ISelectOrder {
+  readonly type: typeof SELECT_ORDER;
+  order: TOrder;
+}
 
-export const setDoneOrdersAction = (orders) => {
-  return {
-    type: SET_DONE_ORDERS,
-    payload: orders,
-  };
-};
-
-export const selectOrderAction = (order) => {
+export const selectOrderAction = (order:TOrder) => {
   return {
     type: SELECT_ORDER,
-    payload: order,
+    order: order,
   };
 };
+
+export type TOrderActions = ISelectOrder;
