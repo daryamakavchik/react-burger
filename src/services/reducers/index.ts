@@ -15,8 +15,10 @@ import { orderReducer } from "./order";
 import { userReducer } from "./auth";
 import { feedReducer } from "./feed";
 import { wsReducer } from "./ws";
+import { TConstructorActions } from "../actions";
+import { TIngredientData } from "../actions";
 
-export const initialState = {
+export const initialConstructorState = {
   isLoading: false,
   hasError: false,
   data: [],
@@ -36,7 +38,7 @@ export const initialState = {
   }
 };
 
-export const dataReducer = (state = initialState, action) => {
+export const dataReducer = (state = initialConstructorState, action: TConstructorActions) => {
   switch (action.type) {
     case GET_DATA_REQUEST: {
       return {
@@ -68,16 +70,16 @@ export const dataReducer = (state = initialState, action) => {
   }
 };
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (state = initialConstructorState, action:TConstructorActions) => {
   switch (action.type) {
     case ADD_ITEM: {
-      let ingredientAmount = state.burgerIngredients.fillings.filter(function(item){return item._id === action.item._id}).length + 1; 
+      let ingredientAmount = state.burgerIngredients.fillings.filter(function(item:TIngredientData){return item._id === action.item._id}).length + 1; 
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
           fillings: 
-          [...state.burgerIngredients.fillings.map((item) => 
+          [...state.burgerIngredients.fillings.map((item:TIngredientData) => 
             ({...item, added: ingredientAmount})),
             ...[{ ...action.item, added: 1, key: action.key, count: ingredientAmount }],
           ],
@@ -99,8 +101,8 @@ export const constructorReducer = (state = initialState, action) => {
         burgerIngredients: {
           ...state.burgerIngredients,
           fillings: state.burgerIngredients.fillings
-            .map((item) =>
-              item._id === action.item._id
+            .map((item?:TIngredientData) =>
+              item?._id === action.item?._id
                 ? { ...item, count: item.count - 1 }
                 : item
             )
@@ -138,7 +140,7 @@ export const constructorReducer = (state = initialState, action) => {
   }
 };
 
-export const currentIngredientReducer = (state = initialState, action) => {
+export const currentIngredientReducer = (state = initialConstructorState, action:TConstructorActions) => {
   switch (action.type) {
     case OPEN_CURRENT_INGREDIENT: {
       return {
@@ -147,12 +149,12 @@ export const currentIngredientReducer = (state = initialState, action) => {
         isIngredientModal: true,
         currentIngredient: {
           ...state.currentIngredient,
-          image: action.payload.image,
-          name: action.payload.name,
-          calories: action.payload.calories,
-          proteins: action.payload.proteins,
-          fat: action.payload.fat,
-          carbohydrates: action.payload.carbohydrates,
+          image: action.props.image,
+          name: action.props.name,
+          calories: action.props.calories,
+          proteins: action.props.proteins,
+          fat: action.props.fat,
+          carbohydrates: action.props.carbohydrates,
         },
       };
     }
