@@ -45,7 +45,7 @@ type RootState = ReturnType<typeof store.getState>;
 type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>
 >;
-type AppDispatch = typeof store.dispatch;
+export type AppDispatch = typeof store.dispatch;
 
 type TUser = {
   name: string;
@@ -295,7 +295,7 @@ export const loginUser = (email: string, password: string) => (dispatch:AppDispa
           dispatch(loginSuccess(res.user));
           const accessToken = res.accessToken.split("Bearer ")[1];
           const refreshToken = res.refreshToken;
-          setCookie("token", accessToken);
+          setCookie("token", accessToken, {});
           localStorage.setItem("refreshToken", refreshToken);
         } else {
           dispatch(loginFailed());
@@ -313,8 +313,7 @@ export const logoutUser = () => (dispatch:AppDispatch) => {
         if (res && res.success) {
           dispatch(logoutSuccess());
           deleteCookie("token");
-          const refreshToken = localStorage.getItem("refreshToken");
-          localStorage.removeItem("refreshToken", refreshToken);
+          localStorage.removeItem("refreshToken");
         } else {
           dispatch(logoutFailed());
         }
@@ -339,7 +338,7 @@ export const updateUser = (email: string, name: string) => (dispatch:AppDispatch
       });
 };
 
-export const registerUser = (name, email, password, redirectFunc) => (dispatch:AppDispatch) => {
+export const registerUser = (name:string, email:string, password:string, redirectFunc:any) => (dispatch:AppDispatch) => {
     dispatch(registerRequest());
     apiRegisterUser(name, email, password)
       .then((res) => {
@@ -347,7 +346,7 @@ export const registerUser = (name, email, password, redirectFunc) => (dispatch:A
           dispatch(registerSuccess(res.user));
           const accessToken = res.accessToken.split("Bearer ")[1];
           const refreshToken = res.refreshToken;
-          setCookie("token", accessToken);
+          setCookie("token", accessToken, {});
           localStorage.setItem("refreshToken", refreshToken);
           redirectFunc();
         } else {
@@ -390,10 +389,10 @@ export const refreshTokenAction = () => (dispatch:AppDispatch) => {
           const refreshToken = res.refreshToken;
 
           deleteCookie("token");
-          localStorage.removeItem("refreshToken", prevRefreshToken);
+          localStorage.removeItem("refreshToken");
 
-          setCookie("token", accessToken);
-          localStorage.setItem("refreshToken", refreshToken);
+          setCookie("token", accessToken, {});
+          localStorage.setItem("refreshToken", res.refreshToken);
           dispatch(refreshTokenSuccess());
         } else {
           dispatch(refreshTokenFailed());
@@ -451,7 +450,7 @@ export const savePassword = (
       });
 };
 
-export function setCookie(name, value, props) {
+export function setCookie(name: string, value:any, props:any) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == "number" && exp) {
@@ -474,7 +473,7 @@ export function setCookie(name, value, props) {
   document.cookie = updatedCookie;
 }
 
-export const getCookie = (name) => {
+export const getCookie = (name:string) => {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
@@ -485,6 +484,6 @@ export const getCookie = (name) => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-export function deleteCookie(name) {
+export function deleteCookie(name:string) {
   setCookie(name, null, { expires: -1 });
 }
