@@ -4,7 +4,7 @@ import {
 
 export const baseUrl = "https://norma.nomoreparties.space/api/";
 
-export function checkResponse(res) {
+export function checkResponse(res: Response) {
   if (res.ok) {
     return res.json();
   }
@@ -15,7 +15,7 @@ export const fetchData = async () => {
   return fetch(`${baseUrl}ingredients`).then((res) => checkResponse(res));
 };
 
-export const apiPostOrder = async (orderData) => {
+export const apiPostOrder = async (orderData: string[]) => {
   return await fetch(`${baseUrl}orders`, {
     method: "POST",
     headers: {
@@ -43,7 +43,7 @@ export const apiGetOrders = async () => {
   }).then((res) => checkResponse(res));
 };
 
-export const apiGetUserOrder = async (id) => {
+export const apiGetUserOrder = async (id:string) => {
   return await fetch(`${baseUrl}orders/${id}`, {
     method: 'GET',
     headers: {
@@ -54,7 +54,7 @@ export const apiGetUserOrder = async (id) => {
 };
 
 
-export const apiPasswordReset = async (email) => {
+export const apiPasswordReset = async (email:string) => {
   return await fetch(`${baseUrl}password-reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -64,7 +64,7 @@ export const apiPasswordReset = async (email) => {
   }).then((res) => checkResponse(res));
 };
 
-export const apiPasswordSave = async (password, token) => {
+export const apiPasswordSave = async (password:string, token:string) => {
   return await fetch(`${baseUrl}password-reset/reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -75,7 +75,7 @@ export const apiPasswordSave = async (password, token) => {
   }).then((res) => checkResponse(res));
 };
 
-export const apiLoginUser = async (email, password) => {
+export const apiLoginUser = async (email:string, password:string) => {
   return await fetch(`${baseUrl}auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -86,7 +86,7 @@ export const apiLoginUser = async (email, password) => {
   }).then((res) => checkResponse(res));
 };
 
-export const apiLogoutUser = async (token) => {
+export const apiLogoutUser = async (token:string) => {
   return await fetch(`${baseUrl}auth/logout`, {
     method: "POST",
     headers: {
@@ -98,7 +98,7 @@ export const apiLogoutUser = async (token) => {
   }).then((res) => checkResponse(res));
 };
 
-export const apiRegisterUser = async (name, email, password) => {
+export const apiRegisterUser = async (name:string, email:string, password:string) => {
   return await fetch(`${baseUrl}auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -125,7 +125,7 @@ export const apiUserRequest = async () => {
   }).then((res) => checkResponse(res))
 };
 
-export const apiRefreshToken = async (refreshToken) => {
+export const apiRefreshToken = async (refreshToken:string) => {
   return await fetch(`${baseUrl}auth/token`, {
     method: "POST",
     headers: {
@@ -137,7 +137,7 @@ export const apiRefreshToken = async (refreshToken) => {
   }).then((res) => checkResponse(res));
 };
 
-export const apiUpdateUser = async (email, name) => {
+export const apiUpdateUser = async (email:string, name:string) => {
   return await fetch(`${baseUrl}auth/user`, {
     method: "PATCH",
     headers: {
