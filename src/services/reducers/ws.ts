@@ -6,8 +6,19 @@ import {
   WS_GET_ORDERS,
   WS_SEND_ORDER
 } from "../actions/ws";
+import { TWSActions } from '../actions/ws';
 
-export const initialState = {
+type TWSState = {
+  wsConnected: boolean;
+  orders: Array<any>;
+  total: number;
+  totalToday: number;
+  loading: boolean;
+
+  error?: Event;
+}
+
+export const initialWsState:TWSState = {
     wsConnected: false,
     orders: [],
   
@@ -16,7 +27,7 @@ export const initialState = {
     loading: false,
   };
   
-  export const wsReducer = (state = initialState, action) => {
+  export const wsReducer = (state = initialWsState, action: TWSActions) => {
     switch (action.type) {
       case WS_CONNECTION_START: {
         return {
@@ -34,7 +45,7 @@ export const initialState = {
       case WS_CONNECTION_ERROR: {
         return {
           ...state,
-          error: action.payload,
+          error: action.error,
           wsConnected: false,
           loading: false,
         };
@@ -51,16 +62,16 @@ export const initialState = {
         return {
           ...state,
           error: undefined,
-          orders: action.payload.orders,
-          total: action.payload.total,
-          totalToday: action.payload.totalToday,
+          orders: action.orders,
+          // total: action.total,
+          // totalToday: action.totalToday,
           loading: false,
         };
       }
       case WS_SEND_ORDER: {
         return {
           ...state,
-          orders: [...state.orders, action.payload],
+          orders: [...state.orders, action.order],
         };
       }
       default: {
