@@ -5,7 +5,7 @@ export const WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS';
 export const WS_GET_ORDERS = 'WS_GET_ORDERS';
 export const WS_SEND_ORDER = 'WS_SEND_ORDER';
 
-  export const wsConnectionStartAction = (wsUrl) => {
+  export const wsConnectionStartAction = (wsUrl:string) => {
     return {
       type: WS_CONNECTION_START,
       wsUrl,
@@ -18,7 +18,7 @@ export const WS_SEND_ORDER = 'WS_SEND_ORDER';
     };
   };
   
-  export const wsConnectionErrorAction = (error) => {
+  export const wsConnectionErrorAction = (error:any) => {
     return {
       type: WS_CONNECTION_ERROR,
       payload: error,

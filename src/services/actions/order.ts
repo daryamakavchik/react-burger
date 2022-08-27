@@ -1,5 +1,6 @@
 import { apiPostOrder, apiGetOrders, apiGetUserOrder } from "../../utils/api";
 import { wsConnectionSendOrderAction } from "./ws";
+import { AppDispatch } from "./auth";
 export const POST_ORDER_REQUEST = "POST_ORDER_REQUEST";
 export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
 export const POST_ORDER_FAILED = "POST_ORDER_FAILED";
@@ -11,8 +12,7 @@ export const GET_USER_ORDER_REQUEST = "GET_USER_ORDER_REQUEST";
 export const GET_USER_ORDER_SUCCESS = "GET_USER_ORDER_SUCCESS";
 export const GET_USER_ORDER_FAILED = "GET_USER_ORDER_FAILED";
 
-export const openOrderModal = (orderData) => {
-  return function (dispatch) {
+export const openOrderModal = (orderData) => (dispatch:AppDispatch) =>  {
     dispatch({
       type: POST_ORDER_REQUEST,
     });
@@ -34,19 +34,15 @@ export const openOrderModal = (orderData) => {
       .catch((err) => {
         console.log(err);
       });
-  };
 };
 
-export const closeOrderModal = () => {
-  return function (dispatch) {
+export const closeOrderModal = () => (dispatch:AppDispatch) =>  {
     dispatch({
       type: CLOSE_ORDER_MODAL,
     });
-  };
 };
 
-export const getOrders = () => {
-  return function (dispatch) {
+export const getOrders = () => (dispatch:AppDispatch) =>  {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
@@ -69,11 +65,9 @@ export const getOrders = () => {
           type: GET_ORDER_FAILED,
         });
       });
-  };
 };
 
-export const getUserOrder = (id) => {
-  return function(dispatch) {
+export const getUserOrder = (id:string) => (dispatch:AppDispatch) => {
     dispatch({
       type: GET_USER_ORDER_REQUEST,
     });
@@ -96,5 +90,4 @@ export const getUserOrder = (id) => {
           type: GET_USER_ORDER_FAILED,
         });
       });
-  };
 };

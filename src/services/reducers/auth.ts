@@ -26,18 +26,13 @@ import {
   AUTH_CHECKED
 } from "../actions/auth";
 
+import { TApplicationActions } from '../actions/auth';
+
 type TProfileForm = {
-  name: string;
+  name: string
   email: string;
   password: string;
 }
-
-type TUserActions =
-  | TRegisterActions
-  | TLoginActions
-  | TForgotPasswordActions
-  | TResetPasswordActions
-  | TProfileActions
 
 type TInitialUserState = {
   user: TProfileForm,
@@ -63,7 +58,7 @@ const initialUserState = {
   isForgotPassword: false
 };
 
-export const userReducer = (state = initialUserState, action: TUserActions):TInitialUserState => {
+export const userReducer = (state = initialUserState, action: TApplicationActions):TInitialUserState => {
   switch (action.type) {
     case AUTH_CHECKED: {
       return {
@@ -82,9 +77,9 @@ export const userReducer = (state = initialUserState, action: TUserActions):TIni
         ...state,
         isUserAuthorized: true,
         user: {
-          name: action.name,
-          email: action.email,
-          password: action.password
+          name: action.user.name,
+          email: action.user.email,
+          password: action.user.password
         },
       };
     }
@@ -108,9 +103,9 @@ export const userReducer = (state = initialUserState, action: TUserActions):TIni
         isUserAuthorized: true,
         user: {
           ...state.user,
-          email: action.email,
-          name: action.name,
-          password: action.password
+          email: action.user.email,
+          name: action.user.name,
+          password: action.user.password
         },
       };
     }
@@ -133,9 +128,9 @@ export const userReducer = (state = initialUserState, action: TUserActions):TIni
         isLoading: false,
         user: {
           ...state.user,
-          name: action.name,
-          email: action.email,
-          password: action.password,
+          name: action.user.name,
+          email: action.user.email,
+          password: action.user.password,
         },
         isUserAuthorized: true
       };
@@ -247,8 +242,8 @@ export const userReducer = (state = initialUserState, action: TUserActions):TIni
         isLoading: false,
         user: {
           ...state.user,
-          name: action.name,
-          email: action.email,
+          name: action.user.name,
+          email: action.user.email,
         },
       };
     }

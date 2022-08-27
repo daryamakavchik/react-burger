@@ -54,36 +54,30 @@ type TUser = {
 };
 
 type TLoginActions = ILoginRequest | ILoginSuccess | ILoginFailed;
-
 type TLogoutActions = ILogoutRequest | ILogoutSuccess | ILogoutFailed;
-
 type TUpdateActions = IUpdateRequest | IUpdateSuccess | IUpdateFailed;
-
 type TRegisterActions = IRegisterRequest | IRegisterSuccess | IRegisterFailed;
-
 type TResetPasswordActions =
   | IResetPasswordRequest
   | IResetPasswordSuccess
   | IResetPasswordFailed;
-
 type TSavePasswordActions =
   | ISavePasswordRequest
   | ISavePasswordSuccess
   | ISavePasswordFailed;
-
 type TGetUserInfoActions =
   | IGetUserInfoRequest
   | IGetUserInfoSuccess
   | IGetUserInfoFailed;
-
 type TRefreshTokenActions =
   | IRefreshTokenRequest
   | IRefreshTokenSuccess
   | IRefreshTokenFailed;
-
 type TAuthCheckedActions = IAuthChecked;
 
-type TApplicationActions =
+
+
+export type TApplicationActions =
   | TSavePasswordActions
   | TGetUserInfoActions
   | TLoginActions
