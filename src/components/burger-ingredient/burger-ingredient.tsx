@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useDrag } from "react-dnd";
-import { ingredientsPropTypes } from "../../utils/proptypes";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Modal } from "../modal/modal";
 import { openCurrentIngredient, closeCurrentIngredient } from "../../services/actions";
@@ -68,5 +67,3 @@ export default function BurgerIngredient:FC = (props) => {
     </>
   );
 }
-
-BurgerIngredient.propTypes = ingredientsPropTypes.isRequired;

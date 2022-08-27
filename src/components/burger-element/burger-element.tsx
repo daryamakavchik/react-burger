@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UPDATE_ITEMS } from "../../services/actions";
-import PropTypes from "prop-types";
 import styles from "../burger-constructor/burger-constructor.module.css";
 
 export const BurgerElement:FC = ({ item, index, handleClose }) => {
@@ -66,10 +65,3 @@ export const BurgerElement:FC = ({ item, index, handleClose }) => {
     </li>
   );
 }
-
-BurgerElement.propTypes = {
-  item: PropTypes.object,
-  index: PropTypes.number,
-  handleClose: PropTypes.func,
-  moveItem: PropTypes.func,
-};
