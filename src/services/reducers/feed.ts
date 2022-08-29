@@ -13,7 +13,7 @@ type TInitialOrderState = {
   inProgress: TOrder[],
 }
 
-const initialOrderState = {
+const initialOrderState:TInitialOrderState = {
   orders: [],
   currentOrder: null,
   isModalOpen: false,

@@ -10,6 +10,7 @@ import {
   WS_SEND_ORDER
 } from "./actions/ws";
 import { wsMiddleware } from "./wsMiddleware";
+import { configureStore } from '@reduxjs/toolkit'
 
 declare global {
   interface Window {
@@ -35,3 +36,8 @@ const enhancer = composeEnhancers(
   applyMiddleware(thunk, wsMiddleware(actions))
 );
 export const store = createStore(rootReducer, enhancer);
+
+export type RootState = ReturnType<typeof store.getState>; 
+// export type AppThunk<TReturn = void> = ActionCreator<
+//   ThunkAction<TReturn, Action, RootState, TApplicationActions>
+// >;

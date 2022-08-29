@@ -44,7 +44,7 @@ type TInitialUserState = {
   isForgotPassword: boolean
 }
 
-const initialUserState = {
+const initialUserState:TInitialUserState = {
   user: {
     name: "",
     email: "",

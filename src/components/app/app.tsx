@@ -20,21 +20,29 @@ import { OrderDetails } from "../order-details/order-details";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import styles from "./app.module.css";
 import { OrderInfoPage } from "../../pages/orderinfo";
+import { AppDispatch } from "../../services/actions/auth";
+import { RootState } from "../../services/store";
+import { Location } from "history";
+
+type TLocationState = {
+  from?: Location;
+  background: Location
+}
 
 export const App:FC = () => {
-  const location = useLocation();
+  const location = useLocation<TLocationState>();
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const ingr = useSelector((store) => store.ingr.currentIngredient);
-  const data = useSelector((store) => store.data.data);
-  const isForgotPassword = useSelector((store) => store.user.isForgotPassword);
-  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
+  const ingr = useSelector((store:RootState) => store.ingr.currentIngredient);
+  const data = useSelector((store:RootState) => store.data.data);
+  const isForgotPassword = useSelector((store:RootState) => store.user.isForgotPassword);
+  const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
   const background = location.state && location.state.background;
 
-  const closeAllModals = () => {
+  const closeAllModals = () => (dispatch:AppDispatch) => {
     history.goBack();
-    dispatch(closeCurrentIngredient(ingr), [dispatch]);
+    dispatch(closeCurrentIngredient());
   };
 
   useEffect(() => {

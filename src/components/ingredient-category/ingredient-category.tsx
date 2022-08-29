@@ -1,6 +1,6 @@
 import React from "react";
 import { forwardRef } from "react";
-import BurgerIngredient from "../burger-ingredient/burger-ingredient";
+import { BurgerIngredient } from "../burger-ingredient/burger-ingredient";
 import styles from "./ingredient-category.module.css";
 
 export const IngredientCategory<HTMLHeadingElement, PropsType> = forwardRef(

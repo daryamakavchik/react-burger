@@ -27,7 +27,7 @@ export const initialWsState:TWSState = {
     loading: false,
   };
   
-  export const wsReducer = (state = initialWsState, action: TWSActions) => {
+  export const wsReducer = (state = initialWsState, action: TWSActions):TWSState => {
     switch (action.type) {
       case WS_CONNECTION_START: {
         return {

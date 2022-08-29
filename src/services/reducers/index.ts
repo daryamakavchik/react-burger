@@ -18,7 +18,7 @@ import { wsReducer } from "./ws";
 import { TConstructorActions } from "../actions";
 import { TIngredientData } from "../actions";
 
-export const initialConstructorState = {
+export const initialConstructorState:TInitialConstructorState = {
   isLoading: false,
   hasError: false,
   data: [],
@@ -38,7 +38,27 @@ export const initialConstructorState = {
   }
 };
 
-export const dataReducer = (state = initialConstructorState, action: TConstructorActions) => {
+export type TInitialConstructorState = {
+  isLoading: boolean,
+  hasError: boolean,
+  data: any,
+  burgerIngredients: {
+    bun: any,
+    fillings: Array<any>
+  },
+  isModalOpen: boolean,
+  isIngredientModal: boolean,
+  currentIngredient: {
+    image: any,
+    name: any,
+    calories: any,
+    proteins: any,
+    fat: any,
+    carbohydrates: any,
+  }
+};
+
+export const dataReducer = (state = initialConstructorState, action: TConstructorActions):TInitialConstructorState => {
   switch (action.type) {
     case GET_DATA_REQUEST: {
       return {
