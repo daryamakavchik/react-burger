@@ -2,10 +2,11 @@ import React, { useEffect, FC } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo } from "../services/actions/auth";
+import { RootStatestore:RootState } from "../services/store";
 
 export const ProtectedRoute:FC = ({ children, ...rest }) => {
   const dispatch = useDispatch();
-  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
+  const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
 
   useEffect(() => dispatch(getUserInfo()), [dispatch]);
 
