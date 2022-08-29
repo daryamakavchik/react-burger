@@ -1,5 +1,5 @@
 import React, { useEffect, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "../protected-route";
 import { ForgotPasswordPage } from "../../pages/forgot-password";
@@ -20,9 +20,9 @@ import { OrderDetails } from "../order-details/order-details";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import styles from "./app.module.css";
 import { OrderInfoPage } from "../../pages/orderinfo";
-import { AppDispatch } from "../../services/actions/auth";
 import { RootState } from "../../services/store";
 import { Location } from "history";
+import { useDispatch } from '../../services/actions/auth';
 
 type TLocationState = {
   from?: Location;
@@ -40,7 +40,7 @@ export const App:FC = () => {
   const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
   const background = location.state && location.state.background;
 
-  const closeAllModals = () => (dispatch:AppDispatch) => {
+  const closeAllModals = () => {
     history.goBack();
     dispatch(closeCurrentIngredient());
   };
