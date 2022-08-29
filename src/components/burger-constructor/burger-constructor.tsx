@@ -17,16 +17,17 @@ import {
 import { openOrderModal, closeOrderModal } from "../../services/actions/order";
 import { BurgerElement } from "../burger-element/burger-element";
 import { Loader } from "../loader/loader";
+import { RootState } from "../../services/store";
 
 export const BurgerConstructor:FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [totalPrice, setTotalPrice] = useState(0);
-  const userName = useSelector((store) => store.user.user.name);
-  const isLoading = useSelector((store) => store.ord.isLoading);
-  const modalOpen = useSelector((store) => store.ord.isModalOpen);
+  const userName = useSelector((store:RootState) => store.user.user.name);
+  const isLoading = useSelector((store:RootState) => store.ord.isLoading);
+  const modalOpen = useSelector((store:RootState) => store.ord.isModalOpen);
 
-  const { bun, content } = useSelector((store) => ({
+  const { bun, content } = useSelector((store:RootState) => ({
     bun: store.constr.burgerIngredients.bun,
     content: store.constr.burgerIngredients.fillings,
   }));
@@ -55,14 +56,14 @@ export const BurgerConstructor:FC = () => {
       .concat(bunIdArr);
 
   const openModal = () => {
-      dispatch(openOrderModal(orderData), [dispatch]);
+      dispatch(openOrderModal(orderData));
   };
   const redirectFunc = () => {
     history.replace({ pathname: "/login" });
   };
 
   const closeAllModals = () => {
-    dispatch(closeOrderModal(), [dispatch]);
+    dispatch(closeOrderModal());
   };
 
   let total =
