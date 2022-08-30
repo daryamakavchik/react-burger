@@ -38,7 +38,7 @@ export const OrderCard:FC<OrderProps> = (order: OrderProps) => {
 
   useEffect(() => {
     let bun = false;
-    let targetImages = [];
+    let targetImages:any[] = [];
     order && order.ingredients.forEach(ingredient => {
       ingrData = data?.find((el) => el._id === ingredient);
       if (ingredient === null) {

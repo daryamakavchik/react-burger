@@ -10,7 +10,6 @@ import {
   WS_SEND_ORDER
 } from "./actions/ws";
 import { wsMiddleware } from "./wsMiddleware";
-import { configureStore } from '@reduxjs/toolkit'
 
 declare global {
   interface Window {

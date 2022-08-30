@@ -1,6 +1,6 @@
 import React, { useEffect, FC } from "react";
 import { Redirect, Route } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from '../services/actions/auth';
 import { getUserInfo } from "../services/actions/auth";
 import { RootState } from "../services/store";
 import { RouteComponentProps } from "@reach/router";
