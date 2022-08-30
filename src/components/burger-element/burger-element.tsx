@@ -5,12 +5,18 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import { UPDATE_ITEMS } from "../../services/actions";
 import styles from "../burger-constructor/burger-constructor.module.css";
 
-export const BurgerElement:FC = ({ item, index, handleClose }) => {
+type BurgerElementProps = {
+  item: any,
+  index: number,
+  handleClose: any
+}
+
+export const BurgerElement:FC<BurgerElementProps> = (props:BurgerElementProps) => {
   const dispatch = useDispatch();
-  const ref = useRef();
+  const ref = useRef<HTMLLIElement>(null);
   const [{ isDrag }, drag] = useDrag({
     type: "item",
-    item: { index },
+    item: props.index,
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
@@ -23,8 +29,8 @@ export const BurgerElement:FC = ({ item, index, handleClose }) => {
         return;
       }
 
-      const dragIndex = item.index;
-      const hoverIndex = index;
+      const dragIndex = props.item.index;
+      const hoverIndex = props.index;
 
       if (dragIndex === hoverIndex) {
         return;
@@ -32,7 +38,7 @@ export const BurgerElement:FC = ({ item, index, handleClose }) => {
 
       const elementPos = ref.current.getBoundingClientRect();
       const elementMiddle = (elementPos.bottom - elementPos.top) / 2;
-      const userCursorOffset = monitor.getClientOffset().y - elementPos.top;
+      const userCursorOffset = monitor!.getClientOffset()!.y - elementPos.top;
 
       if (dragIndex < hoverIndex && userCursorOffset < elementMiddle) {
         return;
@@ -46,7 +52,7 @@ export const BurgerElement:FC = ({ item, index, handleClose }) => {
         fromIndex: dragIndex,
         toIndex: hoverIndex,
       });
-      item.index = hoverIndex;
+      props.item.index = hoverIndex;
     },
   });
 
@@ -56,11 +62,11 @@ export const BurgerElement:FC = ({ item, index, handleClose }) => {
   return (
     <li className={styles.component} ref={ref} style={{ opacity }}>
       <ConstructorElement
-        text={item.name}
-        price={item.price}
-        thumbnail={item.image}
-        handleClose={() => handleClose(item)}
-        index={index}
+        text={props.item.name}
+        price={props.item.price}
+        thumbnail={props.item.image}
+        handleClose={() => props.handleClose(props.item)}
+        index={props.index}
       />
     </li>
   );

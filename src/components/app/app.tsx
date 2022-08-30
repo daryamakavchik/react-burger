@@ -12,7 +12,6 @@ import { ProfilePage } from "../../pages/profile";
 import {
   setIngredientsData,
   closeCurrentIngredient,
-  TIngredientData,
 } from "../../services/actions";
 import { DetailsModal } from "../details-modal/details-modal";
 import { Modal } from "../modal/modal";

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from '../../services/actions/auth';
 import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import {
@@ -12,7 +12,8 @@ import { OrderDetails } from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import {
   onDropHandler,
-  deleteItem
+  deleteItem,
+  TIngredientData
 } from "../../services/actions";
 import { openOrderModal, closeOrderModal } from "../../services/actions/order";
 import { BurgerElement } from "../burger-element/burger-element";
@@ -32,16 +33,16 @@ export const BurgerConstructor:FC = () => {
     content: store.constr.burgerIngredients.fillings,
   }));
 
-  const dropHandler = (item) => {
+  const dropHandler = (item:TIngredientData) => {
     dispatch(onDropHandler(item));
   };
-  const deleteHandler = (item) => {
+  const deleteHandler = (item:TIngredientData) => {
     dispatch(deleteItem(item));
   };
 
   const [, dropTarget] = useDrop(() => ({
     accept: "ingredient",
-    drop: (item, monitor) => {
+    drop: (item:any, monitor) => {
       dropHandler(item);
     },
   }));
