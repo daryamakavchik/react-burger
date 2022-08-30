@@ -168,11 +168,11 @@ export const deleteItem = (item:TIngredientData):IDeleteItem => {
 };
 
 export const openCurrentIngredient = (props:TIngredientData) => {
-    return dispatch(openIngredient(props));
+    dispatch(openIngredient(props));
 };
 
 export const closeCurrentIngredient = () =>{
-    return dispatch(closeIngredient());
+    dispatch(closeIngredient());
 };
 
 

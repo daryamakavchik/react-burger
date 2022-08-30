@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../../services/actions/auth';
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useDrag } from "react-dnd";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";

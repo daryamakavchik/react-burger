@@ -16,18 +16,18 @@ export const BurgerIngredients:FC = () => {
   const mainArr = data.filter((el:TIngredientData) => el.type === "main");
   const sauceArr = data.filter((el:TIngredientData) => el.type === "sauce");
 
-  const containerRef = useRef(null);
-  const bunsRef = useRef(null);
-  const sauceRef = useRef(null);
-  const mainRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const bunsRef = useRef<HTMLElement>(null);
+  const sauceRef = useRef<HTMLElement>(null);
+  const mainRef = useRef<HTMLElement>(null);
 
-  const scroll = (ref) =>
-    containerRef.current.scroll({
+  const scroll = (ref:any) =>
+    containerRef.current!.scroll({
       behavior: "smooth",
-      top: ref.current.offsetTop - containerRef.current.offsetTop - 40,
+      top: ref.current.offsetTop - containerRef.current!.offsetTop - 40,
     });
 
-  const onTabClick = (tab, categoryRef) => () => {
+  const onTabClick = (tab:any, categoryRef:any) => () => {
     setCurrent(tab);
     scroll(categoryRef);
   };

@@ -1,9 +1,16 @@
-import React from "react";
+import React, { FC } from "react";
 import { forwardRef } from "react";
+import { TIngredientData } from "../../services/actions";
 import { BurgerIngredient } from "../burger-ingredient/burger-ingredient";
 import styles from "./ingredient-category.module.css";
 
-export const IngredientCategory<HTMLHeadingElement, PropsType> = forwardRef(
+type PropsType = {
+  title: string,
+  ingredients: Array<TIngredientData>,
+  id: string
+}
+
+export const IngredientCategory:FC<PropsType> = forwardRef<HTMLInputElement, PropsType>(
   ({ title, ingredients, id }, ref) => {
     return (
       <>
