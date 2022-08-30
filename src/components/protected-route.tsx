@@ -5,7 +5,7 @@ import { getUserInfo } from "../services/actions/auth";
 import { RootState } from "../services/store";
 import { RouteComponentProps } from "@reach/router";
 
-type Props = { children: React.ReactNode } & RouteComponentProps;
+type Props = { children: React.ReactNode, exact?: boolean } & RouteComponentProps;
 
 export const ProtectedRoute:FC<Props> = ({ children, ...rest }) => {
   const dispatch = useDispatch();

@@ -12,6 +12,7 @@ import { ProfilePage } from "../../pages/profile";
 import {
   setIngredientsData,
   closeCurrentIngredient,
+  TIngredientData,
 } from "../../services/actions";
 import { DetailsModal } from "../details-modal/details-modal";
 import { Modal } from "../modal/modal";
@@ -23,7 +24,6 @@ import { OrderInfoPage } from "../../pages/orderinfo";
 import { RootState } from "../../services/store";
 import { Location } from "history";
 import { useDispatch } from '../../services/actions/auth';
-
 
 
 type TLocationState = {
