@@ -47,7 +47,7 @@ type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>
 >;
 export type AppDispatch = typeof store.dispatch;
-export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>(); 
+export const useDispatch = () => dispatchHook<AppDispatch>(); 
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
 type TUser = {
@@ -305,7 +305,7 @@ export const loginUser = (email: string, password: string) => (dispatch:AppDispa
 
 export const logoutUser = () => (dispatch:AppDispatch) => {
     dispatch(logoutRequest());
-    apiLogoutUser(localStorage.getItem("refreshToken"))
+    apiLogoutUser(localStorage.getItem("refreshToken")!)
       .then((res) => {
         if (res && res.success) {
           dispatch(logoutSuccess());
@@ -360,7 +360,7 @@ export const getUserInfo = () => (dispatch:AppDispatch) => {
     apiUserRequest()
       .catch((err) => {
         if (err && err.message === "jwt expired") {
-          dispatch(refreshTokenAction());
+          refreshTokenAction();
         }
       })
       .then((res) => {
@@ -377,7 +377,7 @@ export const getUserInfo = () => (dispatch:AppDispatch) => {
 
 export const refreshTokenAction = () => (dispatch:AppDispatch) => {
     dispatch(refreshTokenRequest());
-    apiRefreshToken(localStorage.getItem("refreshToken"))
+    apiRefreshToken(localStorage.getItem("refreshToken")!)
       .then((res) => {
         if (res && res.success) {
           const prevRefreshToken = localStorage.getItem("refreshToken");
