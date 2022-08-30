@@ -7,7 +7,9 @@ import styles from "./ingredient-category.module.css";
 type PropsType = {
   title: string,
   ingredients: Array<TIngredientData>,
-  id: string
+  id: string,
+  ref: any,
+  className: string
 }
 
 export const IngredientCategory:FC<PropsType> = forwardRef<HTMLInputElement, PropsType>(

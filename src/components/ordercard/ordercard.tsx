@@ -10,12 +10,15 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { editDate } from "../../utils/functions";
 import { RootState } from "../../services/store";
+import { TIconProps } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/utils";
+import { TIngredientData } from "../../services/actions";
 
 type OrderProps = {
   _id: string,
   number: number,
   name: string,
   createdAt: string,
+  updatedAt: string,
   status: string,
   ingredients: any
 }
@@ -28,7 +31,7 @@ export const OrderCard:FC<OrderProps> = (order: OrderProps) => {
 
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<Array<string>>([]);
 
   const imageQuantity = 5;
   const dateString = editDate(order?.createdAt);
@@ -39,17 +42,18 @@ export const OrderCard:FC<OrderProps> = (order: OrderProps) => {
   useEffect(() => {
     let bun = false;
     let targetImages:any[] = [];
-    order && order.ingredients.forEach(ingredient => {
+    let ingredients:Array<any> = order.ingredients;
+    order && ingredients && ingredients.forEach(ingredient => {
       ingrData = data?.find((el) => el._id === ingredient);
       if (ingredient === null) {
         return
       }
         if (ingredient.type === 'bun' && !bun) {
             bun = true;
-            targetImages.push(ingrData.image);
+            targetImages.push(ingrData?.image);
         }
         if (ingredient.type !== 'bun') {
-            targetImages.push(ingrData.image)
+            targetImages.push(ingrData?.image)
         }
     });
     setImages(targetImages);

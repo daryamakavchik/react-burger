@@ -7,7 +7,7 @@ import { TOrder } from '../../components/statslist/statslist';
 
 type TInitialOrderState = {
   orders: TOrder[],
-  currentOrder: TOrder,
+  currentOrder?: TOrder,
   isModalOpen: boolean,
   isOrderInfoOpen: boolean,
   done: TOrder[],
@@ -16,7 +16,7 @@ type TInitialOrderState = {
 
 const initialOrderState:TInitialOrderState = {
   orders: [],
-  currentOrder: {},
+  currentOrder: undefined,
   isModalOpen: false,
   isOrderInfoOpen: false,
   done: [],
