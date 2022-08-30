@@ -11,7 +11,7 @@ export const initialOrderState:TInitialOrderState = {
   order: null,
   orders: null,
   currentOrder: null,
-  orderNum: {},
+  orderNum: 0,
 };
 
 export type TInitialOrderState = {
@@ -24,7 +24,7 @@ export type TInitialOrderState = {
   order: any,
   orders: any,
   currentOrder: any,
-  orderNum: object,
+  orderNum: number,
 };
 
 export const orderReducer = (state = initialOrderState, action: TOrderActions):TInitialOrderState => {
