@@ -1,6 +1,15 @@
 import React, { FC } from "react";
 import styles from "./statslist.module.css";
 
+export type TOrder = {
+  _id: string;
+  ingredients: string[];
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+};
 
 type PropsType = {
   orders: Array<TOrder>

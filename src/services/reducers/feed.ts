@@ -2,6 +2,7 @@ import {
     SELECT_ORDER
 } from '../actions/feed';
 import { TOrderActions } from '../actions/feed';
+import { TOrder } from '../../components/statslist/statslist';
 
 
 type TInitialOrderState = {
@@ -15,7 +16,7 @@ type TInitialOrderState = {
 
 const initialOrderState:TInitialOrderState = {
   orders: [],
-  currentOrder: null,
+  currentOrder: {},
   isModalOpen: false,
   isOrderInfoOpen: false,
   done: [],
