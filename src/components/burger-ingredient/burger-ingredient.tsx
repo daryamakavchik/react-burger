@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useDrag } from "react-dnd";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,30 +7,34 @@ import { Modal } from "../modal/modal";
 import { openCurrentIngredient, closeCurrentIngredient } from "../../services/actions";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import styles from "../burger-ingredients/burger-ingredients.module.css";
+import { RootState } from "../../services/store";
+import { TIngredientData } from '../../pages/orderinfo';
+import { useSelector } from "../../services/actions/auth";
 
-export const BurgerIngredient:FC = (props) => {
+
+export const BurgerIngredient:FC<TIngredientData> = (props:TIngredientData) => {
   const dispatch = useDispatch();
-  const modalOpen = useSelector((store) => store.ingr.isModalOpen);
+  const modalOpen = useSelector((store:RootState) => store.ingr.isModalOpen);
   const location = useLocation();
   const history = useHistory();
-  const data = useSelector((store) => store.data.data);
+  const data = useSelector<Array<TIngredientData>>((store:RootState) => store.data.data);
 
   let count;
-  const { bun, fillings } = useSelector((store) => ({
+  const { bun, fillings } = useSelector((store:RootState) => ({
     bun: store.constr.burgerIngredients.bun,
     fillings: store.constr.burgerIngredients.fillings,
   }));
   fillings &&
-    fillings.map((el) => (el._id === props._id ? (count = el.count) : null));
+    fillings.map((el:TIngredientData) => (el._id === props._id ? (count = el.count) : null));
   let buncount = bun && bun._id === props._id && bun.count;
 
   const openModal = () => {
-    dispatch(openCurrentIngredient(props), [dispatch]);
+    dispatch(openCurrentIngredient(props));
   };
 
   const closeAllModals = () => {
     history.goBack();
-    dispatch(closeCurrentIngredient(props), [dispatch]);
+    dispatch(closeCurrentIngredient());
   };
 
   const [, dragRef] = useDrag(

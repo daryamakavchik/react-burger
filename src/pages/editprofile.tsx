@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC } from "react";
 import { updateUser } from "../services/actions/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from '../services/actions/auth';
 import styles from "./profile.module.css";
 import {
   Input,
@@ -8,6 +8,7 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { RootState } from "../services/store";
 
 export const EditProfile: FC = () => {
 
@@ -21,9 +22,9 @@ export const EditProfile: FC = () => {
   const [state, setState] = useState<TProfileForm>({ name: "", email: "", password: "", isValueChanged: false});
   const dispatch = useDispatch();
 
-  const userName = useSelector((store) => store.user.user.name);
-  const userLogin = useSelector((store) => store.user.user.email);
-  const userPassword = useSelector((store) => store.user.user.password);
+  const userName = useSelector((store:RootState) => store.user.user.name);
+  const userLogin = useSelector((store:RootState) => store.user.user.email);
+  const userPassword = useSelector((store:RootState) => store.user.user.password);
 
   useEffect(() => {
     setState((state) => {

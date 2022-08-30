@@ -4,15 +4,17 @@ import { useSelector } from 'react-redux';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientCategory } from "../ingredient-category/ingredient-category";
 import styles from "./burger-ingredients.module.css";
+import { RootState } from '../../services/store';
+import { TIngredientData } from '../../pages/orderinfo';
 
 export const BurgerIngredients:FC = () => {
   const [current, setCurrent] = useState("bun");
-  const isLoading = useSelector(store => store.data.isLoading);
+  const isLoading = useSelector((store:RootState) => store.data.isLoading);
 
-  const { data } = useSelector(store => store.data);
-  const bunsArr = data.filter((el) => el.type === "bun");
-  const mainArr = data.filter((el) => el.type === "main");
-  const sauceArr = data.filter((el) => el.type === "sauce");
+  const { data } = useSelector((store:RootState) => store.data);
+  const bunsArr = data.filter((el:TIngredientData) => el.type === "bun");
+  const mainArr = data.filter((el:TIngredientData) => el.type === "main");
+  const sauceArr = data.filter((el:TIngredientData) => el.type === "sauce");
 
   const containerRef = useRef(null);
   const bunsRef = useRef(null);
@@ -43,7 +45,7 @@ export const BurgerIngredients:FC = () => {
 	}
 
   return (
-    !isLoading &&
+    isLoading ?
     <>
       <section className={styles.ingridients}>
         <p className="text text_type_main-large">Соберите бургер</p>
@@ -90,6 +92,6 @@ export const BurgerIngredients:FC = () => {
           </>
         </section>
       </section>
-    </>
+    </> : null
   );
 }

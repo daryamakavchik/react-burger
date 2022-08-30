@@ -1,16 +1,20 @@
 import React, { useState, useEffect, FC } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from "./ingredient-details.module.css";
+import { TIngredientData } from '../../pages/orderinfo';
 
-export const IngredientDetails:FC = (ingrdata) => {
-  const [ingr, setIngredient] = useState(null);
-  const { id } = useParams();
-  let currentIngredient = {};
+type IngrDetailsProps = {
+  data: Array<TIngredientData>
+}
+
+export const IngredientDetails:FC<IngrDetailsProps> = (data:IngrDetailsProps) => {
+  const [ingr, setIngredient] = useState({});
+  const { id } = useParams<{ id?: string }>();
 
    useEffect(()=>{
-		currentIngredient = ingrdata && ingrdata.data.find(el => el._id === id);
+		let currentIngredient:TIngredientData = data && data.data!.find(el => el._id === id);
     setIngredient(currentIngredient);
-	},[id, ingrdata]);
+	},[id, data]);
 
   return (
     <>

@@ -1,14 +1,15 @@
 import React, { useEffect, FC } from "react";
 import styles from "./feed.module.css";
 import { useDispatch } from "react-redux";
-import OrderCard from "../components/ordercard/ordercard";
+import { OrderCard } from "../components/ordercard/ordercard";
 import { useSelector } from "react-redux";
 import {
   wsConnectionClosedAction,
   wsConnectionStartAction,
 } from "../services/actions/ws";
-import StatsList from "../components/statslist/statslist";
+import { StatsList } from "../components/statslist/statslist";
 import { filterOrders } from "../utils/functions";
+import { RootState } from '"../services/store";'
 
 type TOrder = {
   _id: string;
@@ -24,7 +25,7 @@ type TOrders = TOrder[];
 
 export const FeedPage:FC = () => {
   const dispatch = useDispatch();
-  const { orders, total, totalToday } = useSelector((store) => store.ws);
+  const { orders, total, totalToday } = useSelector((store:RootState) => store.ws);
   
   const statusArrays = filterOrders(orders);
   const doneArray = statusArrays?.done.slice(0, 30);

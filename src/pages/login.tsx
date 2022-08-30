@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react";
 import { Link, Redirect, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from '../services/actions/auth';
 import {
   EmailInput,
   PasswordInput,
@@ -8,6 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { loginUser } from "../services/actions/auth";
 import styles from "./login.module.css";
+import { RootState } from "../services/store";
 
 
 export const LoginPage:FC = () => {
@@ -15,7 +16,7 @@ export const LoginPage:FC = () => {
   const { state } = useLocation();
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
-  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
+  const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
 
   const onPasswordChange = (e: React.ChangeEvent<any>) => {
     setPasswordValue(e.target.value);

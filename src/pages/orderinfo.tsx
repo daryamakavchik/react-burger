@@ -11,9 +11,9 @@ import { selectOrderAction } from "../services/actions/feed";
 import { editDate } from "../utils/functions";
 import { wsConnectionStartAction, wsConnectionClosedAction } from "../services/actions/ws";
 import { getCookie } from "../services/actions/auth";
+import { RootState } from "../services/store";
 
-
-type TIngredientData = {
+export type TIngredientData = {
   _id: string;
   name: string;
   type: string;
@@ -26,17 +26,18 @@ type TIngredientData = {
   image_mobile: string;
   image_large: string;
   __v: number;
+  count?: number
 }
 
 type TIngredients = TIngredientData[];
 
-export const OrderInfoPage:FC = (data) => {
+export const OrderInfoPage:FC<TIngredients> = (data:TIngredients) => {
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { id } = useParams<{ id?: string }>();
   const { url } = useRouteMatch();
   const [price, setPrice] = useState(0);
-  const { currentOrder } = useSelector((store) => store.feed);
-  const { orders } = useSelector((store) => store.ws);
+  const { currentOrder } = useSelector((store:RootState) => store.feed);
+  const { orders } = useSelector((store:RootState) => store.ws);
   const done = currentOrder?.status === "done";
   const dateString = editDate(currentOrder?.createdAt);
   const token = getCookie('token');
@@ -45,8 +46,8 @@ export const OrderInfoPage:FC = (data) => {
 
   let ingrData;
   let ingredients;
-  let uniqueArr;
-  data = data.data;
+  let uniqueArr:any;
+  // data = data.data;
 
   ingredients = url === `/profile/orders/${id}` ? currentOrder?.ingredients.map((ing:TIngredientData) =>ing._id !== undefined ? ing._id : ing) : currentOrder?.ingredients;
 

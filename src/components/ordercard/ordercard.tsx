@@ -9,12 +9,22 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { editDate } from "../../utils/functions";
+import { RootState } from "../../services/store";
 
-export const OrderCard:FC = ({ order }) => {
+type OrderProps = {
+  _id: string,
+  number: number,
+  name: string,
+  createdAt: string,
+  status: string,
+  ingredients: any
+}
+
+export const OrderCard:FC<OrderProps> = (order: OrderProps) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { url } = useRouteMatch();
-  const data = useSelector((store) => store.data.data);
+  const data = useSelector((store:RootState) => store.data.data);
 
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);
@@ -51,7 +61,7 @@ export const OrderCard:FC = ({ order }) => {
       let totalPrice = 0;
       let targetIngredients = [];
       let bun = false;
-      order && order.ingredients.forEach((ingredient) => {
+      order && order.ingredients.forEach((ingredient:string) => {
         ingrData = data.find((el) => el._id === ingredient);
         if (ingrData?.price) {
           targetIngredients.push(ingrData);

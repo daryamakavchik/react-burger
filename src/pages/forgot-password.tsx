@@ -1,6 +1,5 @@
 import React, { useState, FC } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from '../services/actions/auth';
 import { Redirect } from "react-router-dom";
 import styles from "./forgotpassword.module.css";
 import {
@@ -9,14 +8,15 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
 import { resetPassword } from "../services/actions/auth";
+import { RootState } from "../services/store";
 
 export const ForgotPasswordPage:FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [emailValue, setEmailValue] = useState("");
 
-  const isforgotPassword = useSelector((store) => store.user.isforgotPassword);
-  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
+  const isforgotPassword = useSelector((store:RootState) => store.user.isForgotPassword);
+  const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
 
   const onEmailChange = (e: React.ChangeEvent<any>) => { setEmailValue(e.target.value) };
 
@@ -29,7 +29,7 @@ export const ForgotPasswordPage:FC = () => {
 
   const resetUserPassword = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
-    dispatch(resetPassword(emailValue, redirectOnSuccess), [dispatch]);
+    dispatch(resetPassword(emailValue, redirectOnSuccess));
     setEmailValue("");
   };
 

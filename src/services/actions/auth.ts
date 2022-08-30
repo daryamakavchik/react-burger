@@ -14,7 +14,7 @@ import {
 import { store } from "../store";
 import { Action, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { useDispatch as dispatchHook } from "react-redux";
+import { useDispatch as dispatchHook, useSelector as selectorHook, TypedUseSelectorHook } from "react-redux";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -48,6 +48,7 @@ type AppThunk<TReturn = void> = ActionCreator<
 >;
 export type AppDispatch = typeof store.dispatch;
 export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>(); 
+export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
 type TUser = {
   name: string;

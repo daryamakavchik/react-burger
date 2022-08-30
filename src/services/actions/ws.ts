@@ -80,3 +80,12 @@ export type TWSActions =
       order: order,
     };
   };
+
+  export type TActions = {
+    wsStart: typeof WS_CONNECTION_START,
+    onOpen: typeof WS_CONNECTION_SUCCESS,
+    onError: typeof WS_CONNECTION_ERROR,
+    onOrders: typeof WS_GET_ORDERS,
+    onClose: typeof WS_CONNECTION_CLOSED,
+    onSendOrders: typeof WS_SEND_ORDER,
+  }

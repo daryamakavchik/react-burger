@@ -41,7 +41,7 @@ export const initialConstructorState:TInitialConstructorState = {
 export type TInitialConstructorState = {
   isLoading: boolean,
   hasError: boolean,
-  data: any,
+  data: Array<TIngredientData>,
   burgerIngredients: {
     bun: any,
     fillings: Array<any>

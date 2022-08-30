@@ -1,9 +1,10 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import styles from "./order-details.module.css";
+import { RootState } from "../../services/store";
 
 export const OrderDetails:FC = () => {
-  const orderNum = useSelector((store) => store.ord.orderNum);
+  const orderNum = useSelector((store:RootState) => store.ord.orderNum);
 
   return (
     <>

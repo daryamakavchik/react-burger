@@ -153,10 +153,10 @@ export const setIngredientsData = () => {
 export const onDropHandler = (item:TIngredientData) => {
     if (item.type !== 'bun') {
       let key = uuidv4()
-      dispatch(addItem(item, key));
+      return dispatch(addItem(item, key));
     }
     else {
-      dispatch(addBun(item))
+      return dispatch(addBun(item))
     }
 };
 
@@ -168,11 +168,11 @@ export const deleteItem = (item:TIngredientData):IDeleteItem => {
 };
 
 export const openCurrentIngredient = (props:TIngredientData) => {
-    dispatch(openIngredient(props));
+    return dispatch(openIngredient(props));
 };
 
 export const closeCurrentIngredient = () =>{
-    dispatch(closeIngredient());
+    return dispatch(closeIngredient());
 };
 
 
