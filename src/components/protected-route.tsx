@@ -11,7 +11,7 @@ export const ProtectedRoute:FC<Props> = ({ children, ...rest }) => {
   const dispatch = useDispatch();
   const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
 
-  // useEffect(() => getUserInfo(), []);
+  useEffect(() => { getUserInfo(); }, []);
 
   return (
     <Route

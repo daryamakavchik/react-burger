@@ -12,7 +12,7 @@ import { editDate } from "../../utils/functions";
 import { RootState } from "../../services/store";
 import { TOrder } from "../statslist/statslist";
 
-export type OrderProps = {
+export type OrderProps =  TOrder &{
   order: TOrder,
   // _id: string;
   // ingredients: string[];
@@ -65,8 +65,8 @@ export const OrderCard:FC<OrderProps> = (order:TOrder) => {
       let totalPrice = 0;
       let targetIngredients = [];
       let bun = false;
-      order && order.ingredients.forEach((ingredient:string) => {
-        ingrData = data.find((el) => el._id === ingredient);
+      order && order.ingredients.forEach((ingredient) => {
+        ingrData = data.find((el) => el._id === ingredient._id);
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
           if (ingrData.type === "bun" && !bun) {

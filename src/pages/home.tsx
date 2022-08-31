@@ -10,7 +10,7 @@ export const HomePage:FC = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((store:RootState) => store.data.isLoading);
   
-  useEffect(() => getUserInfo(), [dispatch]);
+  useEffect(() => { getUserInfo(); }, []);
   
   return (
         <main className={styles.content}>
