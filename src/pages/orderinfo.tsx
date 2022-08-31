@@ -29,7 +29,7 @@ export type TIngredientData = {
   count: number
 }
 
-type TIngredients = { data: Array<TIngredientData>, forEach: any };
+type TIngredients = { data: Array<TIngredientData>};
 
 export const OrderInfoPage:FC<TIngredients> = (data:TIngredients) => {
   const dispatch = useDispatch();
