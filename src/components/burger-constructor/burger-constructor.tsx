@@ -1,10 +1,9 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { useEffect, useState, FC, PropsWithChildren, SyntheticEvent} from "react";
 import { useDispatch, useSelector } from '../../services/actions/auth';
 import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import {
   CurrencyIcon,
-  Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Modal } from "../modal/modal";
@@ -20,6 +19,23 @@ import { BurgerElement } from "../burger-element/burger-element";
 import { Loader } from "../loader/loader";
 import { RootState } from "../../services/store";
 
+
+type Props = {
+  children?: React.ReactNode
+  type?: "secondary" | "primary" | undefined;
+    size?: "small" | "medium" | "large" | undefined;
+    onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
+    disabled?: boolean | undefined;
+    name?: string | undefined;
+    htmlType?: "button" | undefined;
+};
+
+export function Button({children}: Props) {
+  return (
+    <>{children}</>
+  )
+}
+
 export const BurgerConstructor:FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -34,7 +50,7 @@ export const BurgerConstructor:FC = () => {
   }));
 
   const dropHandler = (item:TIngredientData) => {
-    dispatch(onDropHandler(item));
+    onDropHandler(item);
   };
   const deleteHandler = (item:TIngredientData) => {
     dispatch(deleteItem(item));
@@ -57,14 +73,14 @@ export const BurgerConstructor:FC = () => {
       .concat(bunIdArr);
 
   const openModal = () => {
-      dispatch(openOrderModal(orderData));
+      openOrderModal(orderData);
   };
   const redirectFunc = () => {
     history.replace({ pathname: "/login" });
   };
 
   const closeAllModals = () => {
-    dispatch(closeOrderModal());
+    closeOrderModal();
   };
 
   let total =

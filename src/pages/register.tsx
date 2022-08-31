@@ -1,15 +1,31 @@
-import React, { useState, useCallback, FC } from "react";
+import React, { useState, useCallback, FC, SyntheticEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import styles from "./register.module.css";
-import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Input, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { registerUser } from "../services/actions/auth";
+
+type Props = {
+  children?: React.ReactNode
+  type?: "secondary" | "primary" | undefined;
+    size?: "small" | "medium" | "large" | undefined;
+    onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
+    disabled?: boolean | undefined;
+    name?: string | undefined;
+    htmlType?: "button" | undefined;
+};
+
+export function Button({children}: Props) {
+  return (
+    <>{children}</>
+  )
+}
 
 export const RegisterPage:FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [emailValue, setEmailValue] = useState("E-mail");
+  const [emailValue, setEmailValue] = useState<string>("E-mail");
   const [passwordValue, setPasswordValue] = useState("password");
   const [nameValue, setNameValue] = useState("");
 
@@ -34,9 +50,7 @@ export const RegisterPage:FC = () => {
   const onRegisterClick = useCallback(
     (e: React.ChangeEvent<any>) => {
       e.preventDefault();
-      dispatch(
-        registerUser(nameValue, emailValue, passwordValue, redirectOnSuccess)
-      );
+        registerUser(nameValue, emailValue, passwordValue, redirectOnSuccess);
     },
     [emailValue, nameValue, passwordValue]
   );
@@ -58,13 +72,14 @@ export const RegisterPage:FC = () => {
         size={"default"}
       />
       <div className={styles.email}>
-        <EmailInput onChange={onEmailChange} name={"email"} />
+        <EmailInput value={''} onChange={onEmailChange} name={"email"} />
       </div>
       <div className={styles.password}>
         <PasswordInput
-          className={styles.password}
+          // className={styles.password}
           onChange={onPasswordChange}
           name={"password"}
+          value={''}
         />
       </div>
       <div className={styles.button}>

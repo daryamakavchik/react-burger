@@ -1,6 +1,6 @@
-export const SELECT_ORDER = 'SELECT_ORDER';
-export const UNSELECT_ORDER = 'UNSELECT_ORDER';
 import { TOrder } from "../../components/statslist/statslist";
+export const SELECT_ORDER:'SELECT_ORDER' = 'SELECT_ORDER';
+export const UNSELECT_ORDER:'UNSELECT_ORDER' = 'UNSELECT_ORDER';
 
 
 export interface ISelectOrder {

@@ -1,11 +1,24 @@
 import React, { FC } from 'react';
 import { useRef, useState } from "react";
 import { useSelector } from 'react-redux';
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+// import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientCategory } from "../ingredient-category/ingredient-category";
 import styles from "./burger-ingredients.module.css";
 import { RootState } from '../../services/store';
 import { TIngredientData } from '../../pages/orderinfo';
+
+type Props = {
+  children?: string;
+  active: boolean;
+  value?: string;
+  onClick: (value: string) => void;
+};
+
+export function Tab({children}: Props) {
+  return (
+    <>{children}</>
+  )
+}
 
 export const BurgerIngredients:FC = () => {
   const [current, setCurrent] = useState("bun");

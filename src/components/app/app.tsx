@@ -25,7 +25,7 @@ import { Location } from "history";
 import { useDispatch } from '../../services/actions/auth';
 
 
-type TLocationState = {
+export type TLocationState = {
   from?: Location;
   background: Location
 }
@@ -43,12 +43,12 @@ export const App:FC = () => {
 
   const closeAllModals = () => {
     history.goBack();
-    dispatch(closeCurrentIngredient());
+    closeCurrentIngredient();
   };
 
   useEffect(() => {
-    dispatch(setIngredientsData());
-  }, [dispatch]);
+    setIngredientsData();
+  }, []);
 
   return (
     <div className={styles.page}>

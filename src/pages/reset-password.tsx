@@ -1,13 +1,28 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, SyntheticEvent } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styles from "./resetpassword.module.css";
 import {
-  Button,
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { savePassword } from "../services/actions/auth";
 import { useDispatch } from "react-redux";
+
+type Props = {
+  children?: React.ReactNode
+  type?: "secondary" | "primary" | undefined;
+    size?: "small" | "medium" | "large" | undefined;
+    onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
+    disabled?: boolean | undefined;
+    name?: string | undefined;
+    htmlType?: "button" | undefined;
+};
+
+export function Button({children}: Props) {
+  return (
+    <>{children}</>
+  )
+}
 
 export const ResetPasswordPage:FC = () => {
   const history = useHistory();
@@ -32,7 +47,7 @@ export const ResetPasswordPage:FC = () => {
 
   const saveUserPassword = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
-    dispatch(savePassword(passwordValue, codeValue, redirectOnSuccess), [dispatch]);
+    savePassword(passwordValue, codeValue, redirectOnSuccess);
     setPasswordValue("");
     setCodeValue("");
   };
@@ -45,7 +60,7 @@ export const ResetPasswordPage:FC = () => {
       <form className={styles.form} onSubmit={(e) => saveUserPassword(e)}>
       <div className={styles.password}>
         <PasswordInput
-          placeholder={"Введите новый пароль"}
+          // placeholder={"Введите новый пароль"}
           onChange={onPasswordChange}
           value={passwordValue}
           name={"password"}

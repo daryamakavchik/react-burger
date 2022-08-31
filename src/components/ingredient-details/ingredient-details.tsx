@@ -8,12 +8,12 @@ type IngrDetailsProps = {
 }
 
 export const IngredientDetails:FC<IngrDetailsProps> = (data:IngrDetailsProps) => {
-  const [ingr, setIngredient] = useState({});
+  const [ingr, setIngredient] = useState<TIngredientData>();
   const { id } = useParams<{ id?: string }>();
 
    useEffect(()=>{
-		let currentIngredient:TIngredientData = data && data.data!.find(el => el._id === id);
-    setIngredient(currentIngredient);
+		let currentIngredient = data && data.data!.find(el => el._id === id);
+    setIngredient(currentIngredient!);
 	},[id, data]);
 
   return (

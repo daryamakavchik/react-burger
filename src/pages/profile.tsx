@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../services/actions/auth';
 import { NavLink, Switch, Route, useRouteMatch } from "react-router-dom";
 import styles from "./profile.module.css";
 import { Orders } from "./orders";
@@ -12,7 +12,7 @@ export const ProfilePage:FC = () => {
   const { path } = useRouteMatch();
   const [isHistoryLinkActive, setHistoryLinkActive] = useState(false);
   const logout = () => {
-    dispatch(logoutUser());
+    logoutUser();
   }
 
   return (

@@ -1,6 +1,7 @@
 import { fetchData } from "../../utils/api";
 import { v4 as uuidv4 } from "uuid";
-import { useDispatch } from "./auth";
+import { AppDispatch } from "./auth";
+
 export const GET_DATA_REQUEST = "GET_DATA_REQUEST";
 export const GET_DATA_SUCCESS = "GET_DATA_SUCCESS";
 export const GET_DATA_FAILED = "GET_DATA_FAILED";
@@ -12,7 +13,6 @@ export const OPEN_CURRENT_INGREDIENT = "OPEN_CURRENT_INGREDIENT";
 export const SET_CURRENT_INGREDIENT = "SET_CURRENT_INGREDIENT";
 export const CLOSE_CURRENT_INGREDIENT = "CLOSE_CURRENT_INGREDIENT";
 export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS";
-
 
 export type TIngredientData = {
   _id: string;
@@ -27,7 +27,7 @@ export type TIngredientData = {
   image_mobile: string;
   image_large: string;
   __v: number;
-  count?: number
+  count: number
 }
 
 export interface IGetDataRequest {
@@ -36,7 +36,7 @@ export interface IGetDataRequest {
 
 export interface IGetDataSuccess {
   readonly type: typeof GET_DATA_SUCCESS,
-  data:Array<TIngredientData>,
+  data: Array<TIngredientData>,
   bun: object,
   fillings: Array<any>
 }
@@ -132,17 +132,15 @@ const updateIngredients = (toIndex: any, fromIndex: any):IUpdateItems => ({
   type: UPDATE_ITEMS,
   toIndex,
   fromIndex
-})
+});
 
-const dispatch = useDispatch();
-
-export const setIngredientsData = () => {
+export const setIngredientsData = () => (dispatch:AppDispatch) => {
     dispatch(getDataRequest());
     fetchData().then((res) => {
       if (res && res.success) {
-        dispatch(getDataSuccess(res.data));
+        return dispatch(getDataSuccess(res.data));
       } else {
-        dispatch(getDataFailed());
+        return dispatch(getDataFailed());
       }
     })
     .catch((err) => {
@@ -150,7 +148,7 @@ export const setIngredientsData = () => {
   });
 }
 
-export const onDropHandler = (item:TIngredientData) => {
+export const onDropHandler = (item:TIngredientData) => (dispatch:AppDispatch) => {
     if (item.type !== 'bun') {
       let key = uuidv4()
       return dispatch(addItem(item, key));
@@ -167,15 +165,15 @@ export const deleteItem = (item:TIngredientData):IDeleteItem => {
   };
 };
 
-export const openCurrentIngredient = (props:TIngredientData) => {
+export const openCurrentIngredient = (props:TIngredientData) => (dispatch:AppDispatch) => {
     dispatch(openIngredient(props));
 };
 
-export const closeCurrentIngredient = () =>{
-    dispatch(closeIngredient());
+export const closeCurrentIngredient = () => (dispatch:AppDispatch) => {
+    return dispatch(closeIngredient());
 };
 
 
-export const updateItems = () => {
+export const updateItems = () => (dispatch:AppDispatch) => {
     dispatch(updateIngredients('', ''))
 }

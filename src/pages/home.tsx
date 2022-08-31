@@ -1,8 +1,8 @@
 import React, { useEffect, FC } from "react";
 import { useDispatch, useSelector } from '../services/actions/auth';
 import styles from "./home.module.css";
-import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../components/burger-constructor/burger-constructor";
+import { BurgerIngredients } from "../components/burger-ingredients/burger-ingredients";
+import { BurgerConstructor } from "../components/burger-constructor/burger-constructor";
 import { getUserInfo } from "../services/actions/auth";
 import { RootState } from "../services/store";
 
@@ -10,7 +10,7 @@ export const HomePage:FC = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((store:RootState) => store.data.isLoading);
   
-  useEffect(() => dispatch(getUserInfo()), [dispatch]);
+  useEffect(() => getUserInfo(), [dispatch]);
   
   return (
         <main className={styles.content}>

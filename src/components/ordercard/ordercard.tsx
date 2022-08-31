@@ -10,20 +10,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { editDate } from "../../utils/functions";
 import { RootState } from "../../services/store";
-import { TIconProps } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/utils";
-import { TIngredientData } from "../../services/actions";
+import { TOrder } from "../statslist/statslist";
 
 type OrderProps = {
-  _id: string,
-  number: number,
-  name: string,
-  createdAt: string,
-  updatedAt: string,
-  status: string,
-  ingredients: any
+  order: TOrder
 }
 
-export const OrderCard:FC<OrderProps> = (order: OrderProps) => {
+export const OrderCard:FC<OrderProps> = (order: TOrder) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { url } = useRouteMatch();

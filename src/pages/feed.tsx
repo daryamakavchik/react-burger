@@ -9,7 +9,7 @@ import {
 } from "../services/actions/ws";
 import { StatsList } from "../components/statslist/statslist";
 import { filterOrders } from "../utils/functions";
-import { RootState } from '"../services/store";'
+import { RootState } from "../services/store"
 
 type TOrder = {
   _id: string;
@@ -18,7 +18,7 @@ type TOrder = {
   name: string;
   createdAt: string;
   updatedAt: string;
-  number: number;
+  number: number
 };
 
 type TOrders = TOrder[];

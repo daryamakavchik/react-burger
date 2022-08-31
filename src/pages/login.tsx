@@ -1,19 +1,35 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, SyntheticEvent } from "react";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from '../services/actions/auth';
 import {
   EmailInput,
   PasswordInput,
-  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { loginUser } from "../services/actions/auth";
 import styles from "./login.module.css";
 import { RootState } from "../services/store";
+import { TLocationState } from "../components/app/app";
 
+const { state } = useLocation<TLocationState>();
+
+type Props = {
+  children?: React.ReactNode
+  type?: "secondary" | "primary" | undefined;
+    size?: "small" | "medium" | "large" | undefined;
+    onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
+    disabled?: boolean | undefined;
+    name?: string | undefined;
+    htmlType?: "button" | undefined;
+};
+
+export function Button({children}: Props) {
+  return (
+    <>{children}</>
+  )
+}
 
 export const LoginPage:FC = () => {
   const dispatch = useDispatch();
-  const { state } = useLocation();
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
@@ -27,7 +43,7 @@ export const LoginPage:FC = () => {
 
   const login = (e: React.ChangeEvent<any>, emailValue:string, passwordValue:string) => {
     e.preventDefault();
-    dispatch(loginUser(emailValue, passwordValue));
+    loginUser(emailValue, passwordValue);
   };
 
   if (isUserAuthorized) {

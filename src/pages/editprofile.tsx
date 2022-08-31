@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC, SyntheticEvent } from "react";
 import { updateUser } from "../services/actions/auth";
 import { useDispatch, useSelector } from '../services/actions/auth';
 import styles from "./profile.module.css";
@@ -6,9 +6,24 @@ import {
   Input,
   EmailInput,
   PasswordInput,
-  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { RootState } from "../services/store";
+
+type Props = {
+  children?: React.ReactNode
+  type?: "secondary" | "primary" | undefined;
+    size?: "small" | "medium" | "large" | undefined;
+    onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
+    disabled?: boolean | undefined;
+    name?: string | undefined;
+    htmlType?: "button" | undefined;
+};
+
+export function Button({children}: Props) {
+  return (
+    <>{children}</>
+  )
+}
 
 export const EditProfile: FC = () => {
 
@@ -50,7 +65,7 @@ export const EditProfile: FC = () => {
   };
   const onSave = (e: React.ChangeEvent<any>):void => {
     e.preventDefault();
-    dispatch(updateUser(state.email, state.name));
+    updateUser(state.email, state.name);
   };
 
   const onCancel = () => {
@@ -82,7 +97,6 @@ export const EditProfile: FC = () => {
           onChange={onLoginChange}
           name={"login"}
           value={state.email || ""}
-          icon={"EditIcon"}
         />
       </div>
       <div className={styles.password}>

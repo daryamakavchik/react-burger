@@ -26,7 +26,7 @@ export type TIngredientData = {
   image_mobile: string;
   image_large: string;
   __v: number;
-  count?: number
+  count: number
 }
 
 type TIngredients = { data: Array<TIngredientData> };
@@ -49,7 +49,7 @@ export const OrderInfoPage:FC<TIngredients> = (data:TIngredients) => {
   let uniqueArr:any;
   // data = data.data;
 
-  ingredients = url === `/profile/orders/${id}` ? currentOrder?.ingredients.map((ing:TIngredientData) =>ing._id !== undefined ? ing._id : ing) : currentOrder?.ingredients;
+  ingredients = url === `/profile/orders/${id}` ? currentOrder?.ingredients.map((ing) => ing._id !== undefined ? ing._id : ing) : currentOrder?.ingredients;
 
   if (ingredients) {
     const ingredientsWithCount = (ingredients:TIngredients) => {
