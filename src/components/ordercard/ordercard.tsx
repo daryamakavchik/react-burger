@@ -12,11 +12,18 @@ import { editDate } from "../../utils/functions";
 import { RootState } from "../../services/store";
 import { TOrder } from "../statslist/statslist";
 
-type OrderProps = {
-  order: TOrder
+export type OrderProps = {
+  order: TOrder,
+  // _id: string;
+  // ingredients: string[];
+  // status: string;
+  // name: string;
+  // createdAt: string;
+  // updatedAt: string;
+  // number: number;
 }
 
-export const OrderCard:FC<OrderProps> = (order: TOrder) => {
+export const OrderCard:FC<OrderProps> = (order:TOrder) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { url } = useRouteMatch();

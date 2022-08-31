@@ -29,7 +29,7 @@ export type TIngredientData = {
   count: number
 }
 
-type TIngredients = { data: Array<TIngredientData> };
+type TIngredients = { data: Array<TIngredientData>, forEach: any };
 
 export const OrderInfoPage:FC<TIngredients> = (data:TIngredients) => {
   const dispatch = useDispatch();
@@ -52,9 +52,9 @@ export const OrderInfoPage:FC<TIngredients> = (data:TIngredients) => {
   ingredients = url === `/profile/orders/${id}` ? currentOrder?.ingredients.map((ing) => ing._id !== undefined ? ing._id : ing) : currentOrder?.ingredients;
 
   if (ingredients) {
-    const ingredientsWithCount = (ingredients:TIngredients) => {
+    const ingredientsWithCount = (ingredients:Array<TIngredientData>) => {
       const res = {};
-      ingredients.forEach((ingr) => {
+      ingredients.forEach((ingr:TIngredientData) => {
         if (!res[ingr]) {
           res[ingr] = { ingr, count: 0 };
         }
