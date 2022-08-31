@@ -16,7 +16,22 @@ import { userReducer } from "./auth";
 import { feedReducer } from "./feed";
 import { wsReducer } from "./ws";
 import { TConstructorActions } from "../actions";
-import { TIngredientData } from "../actions";
+
+export type TIngredientData = {
+  _id: string;
+  name: string;
+  type: string;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  __v: number;
+  count: number
+}
 
 export const initialConstructorState:TInitialConstructorState = {
   isLoading: false,
@@ -126,7 +141,7 @@ export const constructorReducer = (state = initialConstructorState, action:TCons
                 ? { ...item, count: item.count - 1 }
                 : item
             )
-            .filter((item) => item.count > 0),
+            .filter((item) => item!.count > 0),
         },
       };
     }
