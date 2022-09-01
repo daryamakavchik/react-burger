@@ -14,16 +14,10 @@ import { TOrder } from "../statslist/statslist";
 
 export type OrderProps =  TOrder &{
   order: TOrder,
-  // _id: string;
-  // ingredients: string[];
-  // status: string;
-  // name: string;
-  // createdAt: string;
-  // updatedAt: string;
-  // number: number;
+  key: string
 }
 
-export const OrderCard:FC<OrderProps> = (order:TOrder) => {
+export const OrderCard:FC<OrderProps> = (props:OrderProps) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { url } = useRouteMatch();
@@ -34,16 +28,16 @@ export const OrderCard:FC<OrderProps> = (order:TOrder) => {
   const [images, setImages] = useState<Array<string>>([]);
 
   const imageQuantity = 5;
-  const dateString = editDate(order?.createdAt);
-  const select = () => dispatch(selectOrderAction(order));
+  const dateString = editDate(props.order?.createdAt);
+  const select = () => dispatch(selectOrderAction(props.order));
 
   let ingrData;
 
   useEffect(() => {
     let bun = false;
     let targetImages:any[] = [];
-    let ingredients:Array<any> = order.ingredients;
-    order && ingredients && ingredients.forEach(ingredient => {
+    let ingredients:Array<any> = props.order.ingredients;
+    props.order && ingredients && ingredients.forEach(ingredient => {
       ingrData = data?.find((el) => el._id === ingredient);
       if (ingredient === null) {
         return
@@ -58,14 +52,14 @@ export const OrderCard:FC<OrderProps> = (order:TOrder) => {
     });
     setImages(targetImages);
     setCount(targetImages.length);
-}, [order?.ingredients]);
+}, [props.order?.ingredients]);
 
   useEffect(() => {
     if (data.length) {
       let totalPrice = 0;
       let targetIngredients = [];
       let bun = false;
-      order && order.ingredients.forEach((ingredient) => {
+      props.order && props.order.ingredients.forEach((ingredient) => {
         ingrData = data.find((el) => el._id === ingredient._id);
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
@@ -78,19 +72,19 @@ export const OrderCard:FC<OrderProps> = (order:TOrder) => {
       });
       setPrice(totalPrice);
     }
-  }, [data, order?.ingredients]);
+  }, [data, props.order?.ingredients]);
 
   return ( 
-    <li className={styles.order} onClick={select} key={order?._id}>
-      <Link className={styles.link} to={{ pathname: `${url}/${order?._id}`, state: { background: location } }} >
+    <li className={styles.order} onClick={select} key={props.order?._id}>
+      <Link className={styles.link} to={{ pathname: `${url}/${props.order?._id}`, state: { background: location } }} >
         <div className={styles.orderid}>
-          <p className={`${styles.id} text text_type_digits-default`}>{`#${order?.number}`}</p>
+          <p className={`${styles.id} text text_type_digits-default`}>{`#${props.order?.number}`}</p>
           <p className={`${styles.timestamp} text text_type_main-small text_color_inactive`}>{dateString}</p>
         </div>
-        <h3 className={`${styles.burgername} text text_type_main-default`}>{order?.name}</h3>
+        <h3 className={`${styles.burgername} text text_type_main-default`}>{props.order?.name}</h3>
         {url === "/profile/order" && (
-          <p className={`text text_type_main-small ${order?.status === "done" && styles.ready}`}>
-            {order?.status === "created" ? "Создан" : order?.status === "pending" ? "Готовится" : "Выполнен"}
+          <p className={`text text_type_main-small ${props.order?.status === "done" && styles.ready}`}>
+            {props.order?.status === "created" ? "Создан" : props.order?.status === "pending" ? "Готовится" : "Выполнен"}
           </p>
         )}
         <div className={styles.componentandprice}>

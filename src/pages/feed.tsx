@@ -13,7 +13,7 @@ import { RootState } from "../services/store"
 
 type TOrder = {
   _id: string;
-  ingredients: string[];
+  ingredients: TOrder[];
   status: string;
   name: string;
   createdAt: string;
@@ -48,7 +48,7 @@ export const FeedPage:FC = () => {
       <div className={styles.content}>
         <ul className={styles.orders}>
           {orders &&
-            orders.map((order) => <OrderCard order={order} key={order._id} />)}
+            orders.map((order:TOrder) => <OrderCard order={order} key={order._id} />)}
         </ul>
         <div className={styles.ordernums}>
           <div className={styles.completed}>
