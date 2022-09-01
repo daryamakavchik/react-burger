@@ -18,10 +18,7 @@ declare global {
   }
 }
 
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()
-    : compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const actions = {
   wsStart: WS_CONNECTION_START,
@@ -35,6 +32,8 @@ const actions = {
 const enhancer = composeEnhancers(
   applyMiddleware(thunk, wsMiddleware(actions))
 );
+
 export const store = createStore(rootReducer, enhancer);
 
 export type RootState = ReturnType<typeof store.getState>; 
+
