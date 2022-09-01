@@ -13,6 +13,12 @@ import { wsConnectionStartAction, wsConnectionClosedAction } from "../services/a
 import { getCookie } from "../services/actions/auth";
 import { RootState } from "../services/store";
 
+
+export type TIngredientDataArray = {
+  data: TIngredientData[];
+  length: any;
+  find: any
+}
 export type TIngredientData = {
   _id: string;
   name: string;
@@ -29,10 +35,9 @@ export type TIngredientData = {
   count: number
 }
 
-type TIngredients = { data: Array<TIngredientData>};
-
-export const OrderInfoPage:FC<TIngredients> = (data:TIngredients) => {
+export const OrderInfoPage:FC<TIngredientDataArray> = (data:TIngredientDataArray) => {
   const dispatch = useDispatch();
+  const [orderIngredients, setOrderIngredients] = useState<TIngredientData[] | null>(null);
   const { id } = useParams<{ id?: string }>();
   const { url } = useRouteMatch();
   const [price, setPrice] = useState(0);
@@ -46,24 +51,20 @@ export const OrderInfoPage:FC<TIngredients> = (data:TIngredients) => {
 
   let ingrData;
   let ingredients;
-  let uniqueArr:any;
   // data = data.data;
 
-  ingredients = url === `/profile/orders/${id}` ? currentOrder?.ingredients.map((ing) => ing._id !== undefined ? ing._id : ing) : currentOrder?.ingredients;
+  ingredients = 
+  // url === `/profile/orders/${id}` ? currentOrder?.ingredients.map((ing) => ing._id !== undefined ? ing._id : ing) : 
+  currentOrder!.ingredients;
 
-  if (ingredients) {
-    const ingredientsWithCount = (ingredients:Array<TIngredientData>) => {
-      const res = {};
-      ingredients.forEach((ingr:TIngredientData) => {
-        if (!res[ingr]) {
-          res[ingr] = { ingr, count: 0 };
-        }
-        res[ingr].count += 1;
-      });
-      return Object.values(res);
-    };
-    uniqueArr = ingredientsWithCount(ingredients);
-  }
+  const uniqueArr = [...ingredients.reduce( (mp, o) => {
+    if (!mp.has(o._id)) 
+      mp.set(o._id, { ...o, count: 0 });
+      mp.get(o._id).count++;
+    return mp;
+  }, new Map).values()];
+
+console.log(uniqueArr);
 
   useEffect(() => {
     url === `/profile/orders/${id}` ? dispatch(wsConnectionStartAction(wsAuthUrl)) : dispatch(wsConnectionStartAction(wsUrl)) ;
@@ -83,7 +84,7 @@ export const OrderInfoPage:FC<TIngredients> = (data:TIngredients) => {
       let targetIngredients = [];
       let bun = false;
       uniqueArr.forEach((ingredient) => {
-        ingrData = data.find((el) => el._id === ingredient.ingr);
+        ingrData = data.find((el:TIngredientData) => el._id === ingredient.ingr);
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
           if (ingrData.type === "bun" && !bun) {
@@ -119,21 +120,21 @@ export const OrderInfoPage:FC<TIngredients> = (data:TIngredients) => {
             <li className={ingr.ingr === null ? styles.null : styles.ingredient} key={ingr.ingr}>
               <div className={styles.imgcontainer}>
                 <img className={styles.img}
-                src={ingr && ingr.ingr && data && data.find((el) => el._id === ingr.ingr).image} />
+                src={ingr && ingr.ingr && data && data.find((el:TIngredientData) => el._id === ingr.ingr).image} />
                 </div>
               <div className={styles.text}>
                 <p className={`${styles.textname} text text_type_main-default`}>
-                  {ingr && ingr.ingr && data && data.find((el) => el._id === ingr.ingr).name}
+                  {ingr && ingr.ingr && data && data.find((el:TIngredientData) => el._id === ingr.ingr).name}
                 </p>
                 <p
                   className={`${styles.id} ${styles.smallprice} text text_type_digits-default`}
                 >
                   {ingr.count} x{" "}
-                  {ingr && ingr.ingr && data && data.find((el) => el._id === ingr.ingr).price}
+                  {ingr && ingr.ingr && data && data.find((el:TIngredientData) => el._id === ingr.ingr).price}
                 </p>
               </div>
               <div className={styles.price}>
-                <CurrencyIcon />
+                <CurrencyIcon type='primary'/>
               </div>
             </li>
           ))}
@@ -150,7 +151,7 @@ export const OrderInfoPage:FC<TIngredients> = (data:TIngredients) => {
             >
               {price}
             </p>
-            <CurrencyIcon />
+            <CurrencyIcon type='primary'/>
           </div>
         </div>
       </div>

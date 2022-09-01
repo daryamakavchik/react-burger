@@ -11,23 +11,7 @@ import styles from "./login.module.css";
 import { RootState } from "../services/store";
 import { TLocationState } from "../components/app/app";
 
-const { state } = useLocation<TLocationState>();
-
-// type Props = {
-//   children?: React.ReactNode
-//   type?: "secondary" | "primary" | undefined;
-//     size?: "small" | "medium" | "large" | undefined;
-//     onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
-//     disabled?: boolean | undefined;
-//     name?: string | undefined;
-//     htmlType?: "button" | undefined;
-// };
-
-// export function Button({children}: Props) {
-//   return (
-//     <>{children}</>
-//   )
-// }
+// const { state } = useLocation<TLocationState>();
 
 export const LoginPage:FC = () => {
   const dispatch = useDispatch();
@@ -47,9 +31,9 @@ export const LoginPage:FC = () => {
     loginUser(emailValue, passwordValue);
   };
 
-  if (isUserAuthorized) {
-    return <Redirect to={state?.from || "/"} />;
-  }
+  // if (isUserAuthorized) {
+  //   return <Redirect to={state?.from || "/"} />;
+  // }
 
   return (
     <div className={styles.container}>

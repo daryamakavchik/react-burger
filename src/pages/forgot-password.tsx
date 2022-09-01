@@ -9,22 +9,6 @@ import { Link, useHistory } from "react-router-dom";
 import { resetPassword } from "../services/actions/auth";
 import { RootState } from "../services/store";
 
-// type Props = {
-//   children?: React.ReactNode
-//   type?: "secondary" | "primary" | undefined;
-//     size?: "small" | "medium" | "large" | undefined;
-//     onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
-//     disabled?: boolean | undefined;
-//     name?: string | undefined;
-//     htmlType?: "button" | undefined;
-// };
-
-// export function Button({children}: Props) {
-//   return (
-//     <>{children}</>
-//   )
-// }
-
 export const ForgotPasswordPage:FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();

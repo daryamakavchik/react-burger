@@ -10,22 +10,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { RootState } from "../services/store";
 
-// type Props = {
-//   children?: React.ReactNode
-//   type?: "secondary" | "primary" | undefined;
-//     size?: "small" | "medium" | "large" | undefined;
-//     onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
-//     disabled?: boolean | undefined;
-//     name?: string | undefined;
-//     htmlType?: "button" | undefined;
-// };
-
-// export function Button({children}: Props) {
-//   return (
-//     <>{children}</>
-//   )
-// }
-
 export const EditProfile: FC = () => {
 
   type TProfileForm = {

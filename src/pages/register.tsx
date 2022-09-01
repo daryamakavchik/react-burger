@@ -5,22 +5,6 @@ import styles from "./register.module.css";
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { registerUser } from "../services/actions/auth";
 
-// type Props = {
-//   children?: React.ReactNode
-//   type?: "secondary" | "primary" | undefined;
-//     size?: "small" | "medium" | "large" | undefined;
-//     onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
-//     disabled?: boolean | undefined;
-//     name?: string | undefined;
-//     htmlType?: "button" | undefined;
-// };
-
-// export function Button({children}: Props) {
-//   return (
-//     <>{children}</>
-//   )
-// }
-
 export const RegisterPage:FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();

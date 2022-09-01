@@ -1,4 +1,5 @@
-import { compose, createStore, applyMiddleware } from "redux";
+import { compose, applyMiddleware } from "redux";
+import { legacy_createStore as createStore} from 'redux'
 import { rootReducer } from "./reducers/index";
 import thunk from "redux-thunk";
 import {
@@ -37,6 +38,3 @@ const enhancer = composeEnhancers(
 export const store = createStore(rootReducer, enhancer);
 
 export type RootState = ReturnType<typeof store.getState>; 
-// export type AppThunk<TReturn = void> = ActionCreator<
-//   ThunkAction<TReturn, Action, RootState, TApplicationActions>
-// >;
