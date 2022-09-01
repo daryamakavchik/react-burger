@@ -4,25 +4,26 @@ import styles from "./resetpassword.module.css";
 import {
   PasswordInput,
   Input,
+  Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { savePassword } from "../services/actions/auth";
 import { useDispatch } from "react-redux";
 
-type Props = {
-  children?: React.ReactNode
-  type?: "secondary" | "primary" | undefined;
-    size?: "small" | "medium" | "large" | undefined;
-    onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
-    disabled?: boolean | undefined;
-    name?: string | undefined;
-    htmlType?: "button" | undefined;
-};
+// type Props = {
+//   children?: React.ReactNode
+//   type?: "secondary" | "primary" | undefined;
+//     size?: "small" | "medium" | "large" | undefined;
+//     onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
+//     disabled?: boolean | undefined;
+//     name?: string | undefined;
+//     htmlType?: "button" | undefined;
+// };
 
-export function Button({children}: Props) {
-  return (
-    <>{children}</>
-  )
-}
+// export function Button({children}: Props) {
+//   return (
+//     <>{children}</>
+//   )
+// }
 
 export const ResetPasswordPage:FC = () => {
   const history = useHistory();

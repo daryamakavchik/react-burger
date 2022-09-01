@@ -12,7 +12,7 @@ import { editDate } from "../../utils/functions";
 import { RootState } from "../../services/store";
 import { TOrder } from "../statslist/statslist";
 
-export type OrderProps =  TOrder &{
+export type OrderProps = { 
   order: TOrder,
   key: string
 }

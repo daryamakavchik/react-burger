@@ -24,6 +24,11 @@ import { RootState } from "../../services/store";
 import { Location } from "history";
 import { useDispatch } from '../../services/actions/auth';
 
+declare module 'react' {
+  interface FunctionComponent<P = {}> {
+    (props: PropsWithChildren<P>, context?: any): ReactElement<any, any> | null;
+  }
+}
 
 export type TLocationState = {
   from?: Location;

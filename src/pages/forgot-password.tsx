@@ -3,27 +3,27 @@ import { useDispatch, useSelector } from '../services/actions/auth';
 import { Redirect } from "react-router-dom";
 import styles from "./forgotpassword.module.css";
 import {
-  EmailInput,
+  EmailInput, Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
 import { resetPassword } from "../services/actions/auth";
 import { RootState } from "../services/store";
 
-type Props = {
-  children?: React.ReactNode
-  type?: "secondary" | "primary" | undefined;
-    size?: "small" | "medium" | "large" | undefined;
-    onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
-    disabled?: boolean | undefined;
-    name?: string | undefined;
-    htmlType?: "button" | undefined;
-};
+// type Props = {
+//   children?: React.ReactNode
+//   type?: "secondary" | "primary" | undefined;
+//     size?: "small" | "medium" | "large" | undefined;
+//     onClick?: (() => void) | ((e: SyntheticEvent) => void) | undefined;
+//     disabled?: boolean | undefined;
+//     name?: string | undefined;
+//     htmlType?: "button" | undefined;
+// };
 
-export function Button({children}: Props) {
-  return (
-    <>{children}</>
-  )
-}
+// export function Button({children}: Props) {
+//   return (
+//     <>{children}</>
+//   )
+// }
 
 export const ForgotPasswordPage:FC = () => {
   const dispatch = useDispatch();
