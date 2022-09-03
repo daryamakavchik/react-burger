@@ -1,4 +1,3 @@
-import { type } from "os";
 import {
   apiLoginUser,
   apiLogoutUser,
@@ -15,6 +14,7 @@ import { store } from "../store";
 import { Action, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { useDispatch as dispatchHook, useSelector as selectorHook, TypedUseSelectorHook } from "react-redux";
+
 
 export const LOGIN_REQUEST:"LOGIN_REQUEST" = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS:"LOGIN_SUCCESS" = "LOGIN_SUCCESS";
@@ -43,11 +43,11 @@ export const UPDATE_FAILED:"UPDATE_FAILED" = "UPDATE_FAILED";
 export const AUTH_CHECKED:"AUTH_CHECKED" = "AUTH_CHECKED";
 
 type RootState = ReturnType<typeof store.getState>;
-type AppThunk<TReturn = void> = ActionCreator<
+export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>
 >;
 export type AppDispatch = typeof store.dispatch;
-export const useDispatch = () => dispatchHook<AppDispatch>(); 
+export const useDispatch: () => AppDispatch | AppThunk = dispatchHook;
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
 type TUser = {
@@ -284,7 +284,7 @@ const savePasswordFailed = (): ISavePasswordFailed => ({
   type: SAVE_PASSWORD_FAILED,
 });
 
-export const loginUser = (email: string, password: string) => (dispatch:AppDispatch) => {
+export const loginUser:AppThunk = (email: string, password: string) => (dispatch:AppDispatch) => {
     dispatch(loginRequest());
     apiLoginUser(email, password)
       .then((res) => {
@@ -303,7 +303,7 @@ export const loginUser = (email: string, password: string) => (dispatch:AppDispa
       });
 };
 
-export const logoutUser = () => (dispatch:AppDispatch) => {
+export const logoutUser:AppThunk = () => (dispatch:AppDispatch) => {
     dispatch(logoutRequest());
     apiLogoutUser(localStorage.getItem("refreshToken")!)
       .then((res) => {
@@ -320,7 +320,7 @@ export const logoutUser = () => (dispatch:AppDispatch) => {
       });
 };
 
-export const updateUser = (email: string, name: string) => (dispatch:AppDispatch) => {
+export const updateUser:AppThunk = (email: string, name: string) => (dispatch:AppDispatch) => {
     dispatch(updateRequest());
     apiUpdateUser(email, name)
       .then((res) => {
@@ -335,7 +335,7 @@ export const updateUser = (email: string, name: string) => (dispatch:AppDispatch
       });
 };
 
-export const registerUser = (name:string, email:string, password:string, redirectFunc:any) => (dispatch:AppDispatch) => {
+export const registerUser:AppThunk = (name:string, email:string, password:string, redirectFunc:any) => (dispatch:AppDispatch) => {
     dispatch(registerRequest());
     apiRegisterUser(name, email, password)
       .then((res) => {
@@ -355,7 +355,7 @@ export const registerUser = (name:string, email:string, password:string, redirec
       });
 };
 
-export const getUserInfo = () => (dispatch:AppDispatch) => {
+export const getUserInfo:AppThunk = () => (dispatch:AppDispatch) => {
     dispatch(getUserInfoRequest());
     apiUserRequest()
       .catch((err) => {
@@ -375,7 +375,7 @@ export const getUserInfo = () => (dispatch:AppDispatch) => {
       });
 };
 
-export const refreshTokenAction = () => (dispatch:AppDispatch) => {
+export const refreshTokenAction:AppThunk = () => (dispatch:AppDispatch) => {
     dispatch(refreshTokenRequest());
     apiRefreshToken(localStorage.getItem("refreshToken")!)
       .then((res) => {
@@ -411,7 +411,7 @@ export const refreshTokenAction = () => (dispatch:AppDispatch) => {
       });
 };
 
-export const resetPassword = (email: string, redirectFunc: any) => (dispatch:AppDispatch) => {
+export const resetPassword:AppThunk = (email: string, redirectFunc: any) => (dispatch:AppDispatch) => {
     dispatch(resetPasswordRequest());
     apiPasswordReset(email)
       .then((res) => {
@@ -427,7 +427,7 @@ export const resetPassword = (email: string, redirectFunc: any) => (dispatch:App
       });
 };
 
-export const savePassword = (
+export const savePassword:AppThunk = (
   password: string,
   code: string,
   redirectFunc: any

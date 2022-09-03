@@ -1,5 +1,5 @@
 import React, { useState, useCallback, FC, SyntheticEvent } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../services/actions/auth';
 import { useHistory, Link } from "react-router-dom";
 import styles from "./register.module.css";
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";

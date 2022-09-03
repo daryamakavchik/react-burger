@@ -1,6 +1,6 @@
 import React, { useEffect, FC } from "react";
 import styles from "./feed.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../services/actions/auth';
 import { OrderCard } from "../components/ordercard/ordercard";
 import { useSelector } from "react-redux";
 import {
@@ -32,6 +32,7 @@ export const FeedPage:FC = () => {
   const pendingArray = statusArrays?.pending.slice(0, 30);
 
   useEffect(() => {
+    console.log('dispatch is actually working');
     dispatch(
       wsConnectionStartAction("wss://norma.nomoreparties.space/orders/all")
     );

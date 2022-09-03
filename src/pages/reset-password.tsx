@@ -7,7 +7,7 @@ import {
   Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { savePassword } from "../services/actions/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../services/actions/auth';
 
 export const ResetPasswordPage:FC = () => {
   const history = useHistory();

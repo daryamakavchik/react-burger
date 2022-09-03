@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styles from "./orderinfo.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../services/actions/auth';
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";

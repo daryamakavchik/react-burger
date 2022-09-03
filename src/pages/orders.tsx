@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styles from "./feed.module.css";
 import { OrderCard } from "../components/ordercard/ordercard";
 import { wsConnectionStartAction, wsConnectionClosedAction, wsConnectionGetOrdersAction } from '../services/actions/ws';
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../services/actions/auth';
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getCookie } from "../services/actions/auth";

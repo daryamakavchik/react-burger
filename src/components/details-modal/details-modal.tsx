@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import styles from "./details-modal.module.css";
 

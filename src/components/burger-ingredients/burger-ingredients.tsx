@@ -1,24 +1,11 @@
 import React, { FC } from 'react';
 import { useRef, useState } from "react";
 import { useSelector } from 'react-redux';
-// import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientCategory } from "../ingredient-category/ingredient-category";
 import styles from "./burger-ingredients.module.css";
 import { RootState } from '../../services/store';
 import { TIngredientData } from '../../pages/orderinfo';
-
-type Props = {
-  children?: string;
-  active: boolean;
-  value?: string;
-  onClick: (value: string) => void;
-};
-
-export function Tab({children}: Props) {
-  return (
-    <>{children}</>
-  )
-}
 
 export const BurgerIngredients:FC = () => {
   const [current, setCurrent] = useState("bun");
@@ -58,21 +45,21 @@ export const BurgerIngredients:FC = () => {
 	}
 
   return (
-    isLoading ?
+    !isLoading ?
     <>
       <section className={styles.ingridients}>
         <p className="text text_type_main-large">Соберите бургер</p>
         <div className={styles.optionselection}>
-          <Tab active={current === "bun"} onClick={onTabClick("bun", bunsRef)}>
+          <Tab value='' active={current === "bun"} onClick={onTabClick("bun", bunsRef)}>
             Булки
           </Tab>
-          <Tab
+          <Tab value=''
             active={current === "sauce"}
             onClick={onTabClick("sauce", sauceRef)}
           >
             Соусы
           </Tab>
-          <Tab
+          <Tab value=''
             active={current === "main"}
             onClick={onTabClick("main", mainRef)}
           >

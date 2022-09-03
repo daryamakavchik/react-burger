@@ -48,11 +48,11 @@ export const App:FC = () => {
 
   const closeAllModals = () => {
     history.goBack();
-    closeCurrentIngredient();
+    dispatch(closeCurrentIngredient());
   };
 
   useEffect(() => {
-    setIngredientsData();
+    dispatch(setIngredientsData());
   }, []);
 
   return (

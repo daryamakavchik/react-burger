@@ -29,12 +29,12 @@ export const BurgerIngredient:FC<TIngredientData> = (props:TIngredientData) => {
   let buncount = bun && bun._id === props._id && bun.count;
 
   const openModal = () => {
-   openCurrentIngredient(props);
+   dispatch(openCurrentIngredient(props));
   };
 
   const closeAllModals = () => {
     history.goBack();
-    closeCurrentIngredient();
+    dispatch(closeCurrentIngredient());
   };
 
   const [, dragRef] = useDrag(

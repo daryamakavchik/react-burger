@@ -1,5 +1,5 @@
 import React, { useRef, FC } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../../services/actions/auth';
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UPDATE_ITEMS } from "../../services/actions";

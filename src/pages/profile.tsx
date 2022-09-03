@@ -12,7 +12,7 @@ export const ProfilePage:FC = () => {
   const { path } = useRouteMatch();
   const [isHistoryLinkActive, setHistoryLinkActive] = useState(false);
   const logout = () => {
-    logoutUser();
+    dispatch(logoutUser());
   }
 
   return (

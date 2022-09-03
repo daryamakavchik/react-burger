@@ -5,12 +5,21 @@ import { BurgerIngredients } from "../components/burger-ingredients/burger-ingre
 import { BurgerConstructor } from "../components/burger-constructor/burger-constructor";
 import { getUserInfo } from "../services/actions/auth";
 import { RootState } from "../services/store";
+import { wsConnectionStartAction, wsConnectionClosedAction} from "../services/actions/ws";
 
 export const HomePage:FC = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((store:RootState) => store.data.isLoading);
   
-  useEffect(() => { getUserInfo(); }, []);
+  useEffect(() => { dispatch(getUserInfo()); }, [dispatch]);
+  useEffect(() => {
+    dispatch(
+      wsConnectionStartAction("wss://norma.nomoreparties.space/orders/all")
+    );
+    return () => {
+      dispatch(wsConnectionClosedAction());
+    };
+  }, [dispatch]);
   
   return (
         <main className={styles.content}>
