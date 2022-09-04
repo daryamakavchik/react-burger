@@ -13,7 +13,7 @@ import { RootState } from "../../services/store";
 import { TOrder } from "../statslist/statslist";
 
 export type OrderProps = { 
-  order: TOrder,
+  order: any,
   key: string
 }
 
@@ -59,8 +59,8 @@ export const OrderCard:FC<OrderProps> = (props:OrderProps) => {
       let totalPrice = 0;
       let targetIngredients = [];
       let bun = false;
-      props.order && props.order.ingredients.forEach((ingredient) => {
-        ingrData = data.find((el) => el._id === ingredient._id);
+      props.order && props.order.ingredients.forEach((ingredient:string) => {
+        ingrData = data?.find(el => el._id === ingredient);
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
           if (ingrData.type === "bun" && !bun) {
