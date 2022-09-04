@@ -3,7 +3,7 @@ import styles from "./statslist.module.css";
 
 export type TOrder = {
   _id: string;
-  ingredients: Array<TOrder>;
+  ingredients: Array<string>;
   status: string;
   name: string;
   createdAt: string;
