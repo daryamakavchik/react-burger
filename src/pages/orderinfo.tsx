@@ -15,9 +15,7 @@ import { RootState } from "../services/store";
 
 
 export type TIngredientDataArray = {
-  data: TIngredientData[];
-  length: any;
-  find: any
+  data: TIngredientData[]
 }
 export type TIngredientData = {
   _id: string;
@@ -51,7 +49,6 @@ export const OrderInfoPage:FC<TIngredientDataArray> = (data:TIngredientDataArray
 
   let ingrData;
   let ingredients;
-  // data = data.data;
 
   ingredients = 
   // url === `/profile/orders/${id}` ? currentOrder?.ingredients.map((ing) => ing._id !== undefined ? ing._id : ing) : 
@@ -62,7 +59,7 @@ export const OrderInfoPage:FC<TIngredientDataArray> = (data:TIngredientDataArray
       mp.set(o._id, { ...o, count: 0 });
       mp.get(o._id).count++;
     return mp;
-  }, new Map).values()];
+  }, new Map).values()];  
 
 console.log(uniqueArr);
 
@@ -79,12 +76,12 @@ console.log(uniqueArr);
   }, [currentOrder, id, orders, dispatch]);
 
   useEffect(() => {
-    if (data.length && uniqueArr) {
+    if (data.data.length && uniqueArr) {
       let totalPrice = 0;
       let targetIngredients = [];
       let bun = false;
       uniqueArr.forEach((ingredient) => {
-        ingrData = data.find((el:TIngredientData) => el._id === ingredient.ingr);
+        ingrData = data.data.find((el:TIngredientData) => el._id === ingredient.ingr);
         if (ingrData?.price) {
           targetIngredients.push(ingrData);
           if (ingrData.type === "bun" && !bun) {
@@ -120,17 +117,17 @@ console.log(uniqueArr);
             <li className={ingr.ingr === null ? styles.null : styles.ingredient} key={ingr.ingr}>
               <div className={styles.imgcontainer}>
                 <img className={styles.img}
-                src={ingr && ingr.ingr && data && data.find((el:TIngredientData) => el._id === ingr.ingr).image} />
+                src={ingr && ingr.ingr && data && (data?.data.find((el:TIngredientData) => el._id === ingr.ingr)!).image} />
                 </div>
               <div className={styles.text}>
                 <p className={`${styles.textname} text text_type_main-default`}>
-                  {ingr && ingr.ingr && data && data.find((el:TIngredientData) => el._id === ingr.ingr).name}
+                  {ingr && ingr.ingr && data && (data.data.find((el:TIngredientData) => el._id === ingr.ingr)!).name}
                 </p>
                 <p
                   className={`${styles.id} ${styles.smallprice} text text_type_digits-default`}
                 >
                   {ingr.count} x{" "}
-                  {ingr && ingr.ingr && data && data.find((el:TIngredientData) => el._id === ingr.ingr).price}
+                  {ingr && ingr.ingr && data && (data.data.find((el:TIngredientData) => el._id === ingr.ingr)!).price}
                 </p>
               </div>
               <div className={styles.price}>

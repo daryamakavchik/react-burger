@@ -87,9 +87,9 @@ export const App:FC = () => {
               <IngredientDetails data={data} />
             </DetailsModal>
           </Route>
-          {/* <Route path="/profile/orders/:id" exact={true} > 
+          <Route path="/profile/orders/:id" exact={true} > 
             <OrderInfoPage data={data}  /> 
-          </Route> */}
+          </Route>
           {/* <Route path="/feed/:id" >
             <OrderInfoPage data={data} /> 
           </Route> */}
