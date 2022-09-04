@@ -34,7 +34,7 @@ export const BurgerConstructor:FC = () => {
   }));
 
   const dropHandler = (item:TIngredientData) => {
-    onDropHandler(item);
+    dispatch(onDropHandler(item));
   };
   const deleteHandler = (item:TIngredientData) => {
     dispatch(deleteItem(item));

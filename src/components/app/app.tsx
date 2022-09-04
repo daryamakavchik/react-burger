@@ -90,9 +90,9 @@ export const App:FC = () => {
           <Route path="/profile/orders/:id" exact={true} > 
             <OrderInfoPage data={data}  /> 
           </Route>
-          {/* <Route path="/feed/:id" >
+          <Route path="/feed/:id" >
             <OrderInfoPage data={data} /> 
-          </Route> */}
+          </Route>
           <ProtectedRoute path="/profile">
             <ProfilePage />
           </ProtectedRoute>
@@ -108,22 +108,22 @@ export const App:FC = () => {
                 </Modal>
               }
             />
-            {/* <Route
+            <Route
               path="/feed/:id"
               children={
                 <Modal onClose={closeAllModals}>
                   <OrderInfoPage data={data} />
                 </Modal>
               }
-            /> */}
-            {/* <ProtectedRoute
+            />
+            <ProtectedRoute
               path="/profile/orders/:id"
               children={
                 <Modal onClose={closeAllModals}>
                   <OrderInfoPage data={data} />
                 </Modal>
               }
-            /> */}
+            />
             <Route
               path="/ingredients/:id"
               children={

@@ -26,14 +26,12 @@ type TOrders = TOrder[];
 export const FeedPage:FC = () => {
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector((store:RootState) => store.ws);
-  console.log(orders.orders);
   
   const statusArrays = filterOrders(orders.orders);
   const doneArray = statusArrays?.done.slice(0, 30);
   const pendingArray = statusArrays?.pending.slice(0, 30);
 
   useEffect(() => {
-    console.log('dispatch is actually working');
     dispatch(
       wsConnectionStartAction("wss://norma.nomoreparties.space/orders/all")
     );
