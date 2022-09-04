@@ -28,7 +28,7 @@ export const FeedPage:FC = () => {
   const { orders, total, totalToday } = useSelector((store:RootState) => store.ws);
   console.log(orders.orders);
   
-  const statusArrays = filterOrders(orders);
+  const statusArrays = filterOrders(orders.orders);
   const doneArray = statusArrays?.done.slice(0, 30);
   const pendingArray = statusArrays?.pending.slice(0, 30);
 
