@@ -28,12 +28,14 @@ export const LoginPage:FC = () => {
 
   const login = (e: React.ChangeEvent<any>, emailValue:string, passwordValue:string) => {
     e.preventDefault();
-    loginUser(emailValue, passwordValue);
+    dispatch(loginUser(emailValue, passwordValue));
   };
 
-  // if (isUserAuthorized) {
-  //   return <Redirect to={state?.from || "/"} />;
-  // }
+  if (isUserAuthorized) {
+    return <Redirect to={
+      // state?.from || 
+      "/"} />;
+  }
 
   return (
     <div className={styles.container}>
