@@ -57,14 +57,14 @@ export const BurgerConstructor:FC = () => {
       .concat(bunIdArr);
 
   const openModal = () => {
-      openOrderModal(orderData);
+      dispatch(openOrderModal(orderData));
   };
   const redirectFunc = () => {
     history.replace({ pathname: "/login" });
   };
 
   const closeAllModals = () => {
-    closeOrderModal();
+    dispatch(closeOrderModal());
   };
 
   let total =
