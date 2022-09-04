@@ -26,6 +26,7 @@ type TOrders = TOrder[];
 export const FeedPage:FC = () => {
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector((store:RootState) => store.ws);
+  console.log(orders.orders);
   
   const statusArrays = filterOrders(orders);
   const doneArray = statusArrays?.done.slice(0, 30);
@@ -49,7 +50,7 @@ export const FeedPage:FC = () => {
       <div className={styles.content}>
         <ul className={styles.orders}>
           {orders &&
-            orders.map((order:TOrder) => <OrderCard order={order} key={order._id} />)}
+            orders.orders.map((order:TOrder) => <OrderCard order={order} key={order._id} />)}
         </ul>
         <div className={styles.ordernums}>
           <div className={styles.completed}>

@@ -1,3 +1,4 @@
+import { TOrder } from "../../components/statslist/statslist";
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
@@ -10,7 +11,7 @@ import { TWSActions } from '../actions/ws';
 
 type TWSState = {
   wsConnected: boolean;
-  orders: Array<any>;
+  orders: TResponse;
   total: number;
   totalToday: number;
   loading: boolean;
@@ -18,9 +19,16 @@ type TWSState = {
   error?: Event;
 }
 
+export type TResponse = {
+  success: boolean,
+  total: number;
+  totalToday: number;
+  orders: Array<TOrder>
+}
+
 export const initialWsState:TWSState = {
     wsConnected: false,
-    orders: [],
+    orders: { success: false, orders: [], total: 0, totalToday: 0},
   
     total: 0,
     totalToday: 0,
@@ -68,12 +76,12 @@ export const initialWsState:TWSState = {
           loading: false,
         };
       }
-      case WS_SEND_ORDER: {
-        return {
-          ...state,
-          orders: [...state.orders, action.order],
-        };
-      }
+      // case WS_SEND_ORDER: {
+      //   return {
+      //     ...state,
+      //     orders: [...state.orders, action.order],
+      //   };
+      // }
       default: {
         return state;
       }

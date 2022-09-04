@@ -74,7 +74,7 @@ console.log(uniqueArr);
   }, [dispatch]);
 
   useEffect(() => {
-    const order = orders.find((order) => order._id === id);
+    const order = orders.orders.find((order) => order._id === id);
     order && dispatch(selectOrderAction(order));
   }, [currentOrder, id, orders, dispatch]);
 

@@ -1,3 +1,5 @@
+import { TOrder } from "../../components/statslist/statslist";
+
 export const WS_CONNECTION_CLOSED:'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSED';
 export const WS_CONNECTION_ERROR:'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
 export const WS_CONNECTION_START:'WS_CONNECTION_START' = 'WS_CONNECTION_START';
@@ -25,7 +27,7 @@ export interface IWsConnectionClosed{
 
 export interface IWsConnectionGetOrders{
   readonly type: typeof WS_GET_ORDERS,
-  orders: Array<any>
+  orders: any
 }
 
 export interface IWsConnectionSendOrder{
