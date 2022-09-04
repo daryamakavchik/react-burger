@@ -49,25 +49,26 @@ export const OrderInfoPage:FC<TIngredientDataArray> = (data:TIngredientDataArray
 
   let ingrData;
   let ingredients;
-
-  ingredients = currentOrder!.ingredients;
-
-  const uniqueArr = [...(ingredients!).reduce( (mp, o) => {
-    if (!mp.has(o._id)) 
-      mp.set(o._id, { ...o, count: 0 });
-      mp.get(o._id).count++;
+  
+  ingredients = currentOrder?.ingredients;
+  
+  const uniqueArr = [...(ingredients !== undefined ? ingredients : []).reduce( (mp, ingr) => {
+    if (!mp.has(ingr)) 
+      mp.set(ingr, { ingr, count: 0 });
+      mp.get(ingr).count++;
     return mp;
   }, new Map).values()];  
 
   useEffect(() => {
-    url === `/profile/orders/${id}` ? dispatch(wsConnectionStartAction(wsAuthUrl)) : dispatch(wsConnectionStartAction(wsUrl)) ;
+    url === `/profile/orders/${id}` ? dispatch(wsConnectionStartAction(wsAuthUrl)) : dispatch(wsConnectionStartAction(wsUrl));
     return () => {
       dispatch(wsConnectionClosedAction());
     };
   }, [dispatch]);
 
+
   useEffect(() => {
-    const order = orders.orders.find((order) => order._id === id);
+    const order = orders.orders.find((order) => order._id === id!);
     order && dispatch(selectOrderAction(order));
   }, [currentOrder, id, orders, dispatch]);
 
