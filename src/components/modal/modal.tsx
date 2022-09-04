@@ -1,26 +1,13 @@
 import React, { FC } from "react";
 import ReactDOM from "react-dom";
 import { useEffect } from "react";
-// import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ModalOverlay } from "../modal-overlay/modal-overlay";
 import styles from "./modal.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../services/store";
 
 const modalsContainer = document.querySelector("#modals");
-
-type Props = {
-  children?: string;
-  type?: string,
-  onClick?: (value: string) => void;
-};
-
-export function CloseIcon({children}: Props) {
-  return (
-    <>{children}</>
-  )
-}
-
 
 type ModalProps = {
   title?: string,
@@ -47,7 +34,7 @@ export const Modal:FC<ModalProps> = (props:ModalProps) => {
     <>
       <div className={isOrderModal ? styles.ordermodal : styles.modal}>
         <button className={styles.closebutton} onClick={props.onClose}>
-          <CloseIcon />
+          <CloseIcon type='primary' />
         </button>
        {isIngredientModal && <h3 className={styles.title}>{props.title}</h3> }
         {props.children}
