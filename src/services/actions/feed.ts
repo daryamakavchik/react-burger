@@ -1,7 +1,6 @@
-import { TOrder } from "../../components/statslist/statslist";
+import { TOrder } from "../../utils/types";
 export const SELECT_ORDER:'SELECT_ORDER' = 'SELECT_ORDER';
 export const UNSELECT_ORDER:'UNSELECT_ORDER' = 'UNSELECT_ORDER';
-
 
 export interface ISelectOrder {
   readonly type: typeof SELECT_ORDER;

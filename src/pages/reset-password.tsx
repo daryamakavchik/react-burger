@@ -1,13 +1,9 @@
-import React, { useState, FC, SyntheticEvent } from "react";
+import React, { useState, FC } from "react";
 import { Link, useHistory } from "react-router-dom";
-import styles from "./resetpassword.module.css";
-import {
-  PasswordInput,
-  Input,
-  Button
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { savePassword } from "../services/actions/auth";
 import { useDispatch } from '../services/actions/auth';
+import { PasswordInput, Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { savePassword } from "../services/actions/auth";
+import styles from "./resetpassword.module.css";
 
 export const ResetPasswordPage:FC = () => {
   const history = useHistory();
@@ -32,7 +28,7 @@ export const ResetPasswordPage:FC = () => {
 
   const saveUserPassword = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
-    savePassword(passwordValue, codeValue, redirectOnSuccess);
+    dispatch(savePassword(passwordValue, codeValue, redirectOnSuccess));
     setPasswordValue("");
     setCodeValue("");
   };

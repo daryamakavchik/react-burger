@@ -15,7 +15,6 @@ import { Action, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { useDispatch as dispatchHook, useSelector as selectorHook, TypedUseSelectorHook } from "react-redux";
 
-
 export const LOGIN_REQUEST:"LOGIN_REQUEST" = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS:"LOGIN_SUCCESS" = "LOGIN_SUCCESS";
 export const LOGIN_FAILED:"LOGIN_FAILED" = "LOGIN_FAILED";
@@ -42,11 +41,10 @@ export const UPDATE_SUCCESS:"UPDATE_SUCCESS" = "UPDATE_SUCCESS";
 export const UPDATE_FAILED:"UPDATE_FAILED" = "UPDATE_FAILED";
 export const AUTH_CHECKED:"AUTH_CHECKED" = "AUTH_CHECKED";
 
-type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<TReturn = void> = ActionCreator<
-  ThunkAction<TReturn, Action, RootState, TApplicationActions>
->;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppThunk<TReturn = void> = ActionCreator< ThunkAction<TReturn, Action, RootState, TApplicationActions>>;
 export type AppDispatch = typeof store.dispatch;
+
 export const useDispatch: () => AppDispatch | AppThunk = dispatchHook;
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
@@ -77,8 +75,6 @@ type TRefreshTokenActions =
   | IRefreshTokenSuccess
   | IRefreshTokenFailed;
 type TAuthCheckedActions = IAuthChecked;
-
-
 
 export type TApplicationActions =
   | TSavePasswordActions
@@ -380,10 +376,7 @@ export const refreshTokenAction:AppThunk = () => (dispatch:AppDispatch) => {
     apiRefreshToken(localStorage.getItem("refreshToken")!)
       .then((res) => {
         if (res && res.success) {
-          const prevRefreshToken = localStorage.getItem("refreshToken");
-
           const accessToken = res.accessToken.split("Bearer ")[1];
-          const refreshToken = res.refreshToken;
 
           deleteCookie("token");
           localStorage.removeItem("refreshToken");

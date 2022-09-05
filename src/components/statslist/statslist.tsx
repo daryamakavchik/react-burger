@@ -1,20 +1,8 @@
 import React, { FC } from "react";
+import { TStatsListProps } from "../../utils/types";
 import styles from "./statslist.module.css";
 
-export type TOrder = {
-  _id: string;
-  ingredients: Array<string>;
-  status: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  number: number;
-};
-
-type PropsType = {
-  orders: Array<TOrder>
-}
-export const StatsList:FC<PropsType> = (props:PropsType) => {
+export const StatsList:FC<TStatsListProps> = (props:TStatsListProps) => {
   return (
     <ul className={styles.list}>
       {props.orders.length > 0 ? props.orders.map((order, index) => (

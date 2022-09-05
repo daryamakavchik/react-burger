@@ -1,27 +1,15 @@
 import React, { useEffect, FC } from "react";
 import styles from "./feed.module.css";
-import { useDispatch } from '../services/actions/auth';
+import { useDispatch, useSelector } from '../services/actions/auth';
 import { OrderCard } from "../components/ordercard/ordercard";
-import { useSelector } from "react-redux";
+import { StatsList } from "../components/statslist/statslist";
+import { filterOrders } from "../utils/functions";
 import {
   wsConnectionClosedAction,
   wsConnectionStartAction,
 } from "../services/actions/ws";
-import { StatsList } from "../components/statslist/statslist";
-import { filterOrders } from "../utils/functions";
+import { TOrder } from "../utils/types";
 import { RootState } from "../services/store"
-
-type TOrder = {
-  _id: string;
-  ingredients: TOrder[];
-  status: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  number: number
-};
-
-type TOrders = TOrder[];
 
 export const FeedPage:FC = () => {
   const dispatch = useDispatch();

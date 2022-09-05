@@ -1,6 +1,9 @@
 import React, { useEffect, FC } from "react";
-import { useSelector } from "react-redux";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from '../../services/actions/auth';
+import { RootState } from "../../services/store";
+import { TLocationState } from "../../utils/types";
+
 import { ProtectedRoute } from "../protected-route";
 import { ForgotPasswordPage } from "../../pages/forgot-password";
 import { HomePage } from "../../pages/home";
@@ -9,20 +12,15 @@ import { RegisterPage } from "../../pages/register";
 import { FeedPage } from "../../pages/feed";
 import { ResetPasswordPage } from "../../pages/reset-password";
 import { ProfilePage } from "../../pages/profile";
-import {
-  setIngredientsData,
-  closeCurrentIngredient,
-} from "../../services/actions";
 import { DetailsModal } from "../details-modal/details-modal";
 import { Modal } from "../modal/modal";
 import { AppHeader } from "../app-header/app-header";
 import { OrderDetails } from "../order-details/order-details";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
-import styles from "./app.module.css";
 import { OrderInfoPage } from "../../pages/orderinfo";
-import { RootState } from "../../services/store";
-import { Location } from "history";
-import { useDispatch } from '../../services/actions/auth';
+
+import { setIngredientsData, closeCurrentIngredient } from "../../services/actions";
+import styles from "./app.module.css";
 
 declare module 'react' {
   interface FunctionComponent<P = {}> {
@@ -30,17 +28,10 @@ declare module 'react' {
   }
 }
 
-export type TLocationState = {
-  from?: Location;
-  background: Location
-}
-
 export const App:FC = () => {
   const location = useLocation<TLocationState>();
   const history = useHistory();
   const dispatch = useDispatch();
-
-  const ingr = useSelector((store:RootState) => store.ingr.currentIngredient);
   const data = useSelector((store:RootState) => store.data.data);
   const isForgotPassword = useSelector((store:RootState) => store.user.isForgotPassword);
   const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);

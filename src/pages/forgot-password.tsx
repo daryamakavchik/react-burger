@@ -1,13 +1,10 @@
-import React, { useState, FC, SyntheticEvent } from "react";
+import React, { useState, FC } from "react";
 import { useDispatch, useSelector } from '../services/actions/auth';
-import { Redirect } from "react-router-dom";
-import styles from "./forgotpassword.module.css";
-import {
-  EmailInput, Button
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useHistory } from "react-router-dom";
+import { Redirect, Link, useHistory } from "react-router-dom";
+import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { resetPassword } from "../services/actions/auth";
 import { RootState } from "../services/store";
+import styles from "./forgotpassword.module.css";
 
 export const ForgotPasswordPage:FC = () => {
   const dispatch = useDispatch();
@@ -28,7 +25,7 @@ export const ForgotPasswordPage:FC = () => {
 
   const resetUserPassword = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
-    resetPassword(emailValue, redirectOnSuccess);
+    dispatch(resetPassword(emailValue, redirectOnSuccess));
     setEmailValue("");
   };
 

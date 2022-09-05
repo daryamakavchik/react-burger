@@ -2,8 +2,7 @@ import {
     SELECT_ORDER
 } from '../actions/feed';
 import { TOrderActions } from '../actions/feed';
-import { TOrder } from '../../components/statslist/statslist';
-
+import { TOrder } from '../../utils/types';
 
 type TInitialOrderState = {
   orders: TOrder[],

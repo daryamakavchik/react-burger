@@ -1,9 +1,9 @@
-import React, { useState, useCallback, FC, SyntheticEvent } from "react";
+import React, { useState, useCallback, FC } from "react";
 import { useDispatch } from '../services/actions/auth';
 import { useHistory, Link } from "react-router-dom";
-import styles from "./register.module.css";
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { registerUser } from "../services/actions/auth";
+import styles from "./register.module.css";
 
 export const RegisterPage:FC = () => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export const RegisterPage:FC = () => {
   const onRegisterClick = useCallback(
     (e: React.ChangeEvent<any>) => {
       e.preventDefault();
-        registerUser(nameValue, emailValue, passwordValue, redirectOnSuccess);
+        dispatch(registerUser(nameValue, emailValue, passwordValue, redirectOnSuccess));
     },
     [emailValue, nameValue, passwordValue]
   );

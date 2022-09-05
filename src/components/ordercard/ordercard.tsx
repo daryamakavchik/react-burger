@@ -1,23 +1,14 @@
-import React, { FC } from "react";
-import styles from "./ordercard.module.css";
-import { useRouteMatch } from "react-router-dom";
+import React, { useState, useEffect, FC } from "react";
+import { useRouteMatch, useLocation, Link } from "react-router-dom";
+import { useDispatch, useSelector } from '../../services/actions/auth';
+import { RootState } from "../../services/store";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { selectOrderAction } from "../../services/actions/feed";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
 import { editDate } from "../../utils/functions";
-import { RootState } from "../../services/store";
-import { TOrder } from "../statslist/statslist";
+import { TOrderCardProps } from "../../utils/types";
+import styles from "./ordercard.module.css";
 
-export type OrderProps = { 
-  order: any,
-  key: string
-}
-
-export const OrderCard:FC<OrderProps> = (props:OrderProps) => {
+export const OrderCard:FC<TOrderCardProps> = (props:TOrderCardProps) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { url } = useRouteMatch();

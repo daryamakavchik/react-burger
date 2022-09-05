@@ -3,11 +3,9 @@ import { Redirect, Route } from "react-router-dom";
 import { useSelector, useDispatch } from '../services/actions/auth';
 import { getUserInfo } from "../services/actions/auth";
 import { RootState } from "../services/store";
-import { RouteComponentProps } from "@reach/router";
+import { TProtectedRouteProps } from "../utils/types";
 
-type Props = { children: React.ReactNode, exact?: boolean } & RouteComponentProps;
-
-export const ProtectedRoute:FC<Props> = ({ children, ...rest }) => {
+export const ProtectedRoute:FC<TProtectedRouteProps> = ({ children, ...rest }) => {
   const dispatch = useDispatch();
   const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
 

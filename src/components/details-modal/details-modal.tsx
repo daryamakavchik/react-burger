@@ -1,14 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import styles from "./details-modal.module.css";
+import { TDetailsModalProps } from "../../utils/types";
 
 const modalsContainer = document.querySelector("#modals");
-type DetailsModalProps = {
-  title: string;
-  children: React.ReactNode
-}
 
-export const DetailsModal = ( props:DetailsModalProps ) => {
+export const DetailsModal = ( props:TDetailsModalProps ) => {
   return ReactDOM.createPortal(
     <>
       <div className={styles.modal}>

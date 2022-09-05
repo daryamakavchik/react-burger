@@ -1,4 +1,4 @@
-import React, { useState, FC, SyntheticEvent } from "react";
+import React, { useState, FC } from "react";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from '../services/actions/auth';
 import {
@@ -7,10 +7,9 @@ import {
   Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { loginUser } from "../services/actions/auth";
-import styles from "./login.module.css";
 import { RootState } from "../services/store";
-import { TLocationState } from "../components/app/app";
-
+import { TLocationState } from "../utils/types";
+import styles from "./login.module.css";
 
 export const LoginPage:FC = () => {
   const dispatch = useDispatch();

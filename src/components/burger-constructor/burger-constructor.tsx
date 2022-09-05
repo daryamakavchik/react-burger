@@ -1,24 +1,18 @@
-import React, { useEffect, useState, FC, PropsWithChildren, SyntheticEvent} from "react";
+import React, { useEffect, useState, FC} from "react";
 import { useDispatch, useSelector } from '../../services/actions/auth';
 import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
-import {
-  CurrencyIcon,
-  Button,
-  ConstructorElement,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+
+import { CurrencyIcon, Button, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+import { RootState } from "../../services/store";
 import { Modal } from "../modal/modal";
 import { OrderDetails } from "../order-details/order-details";
-import styles from "./burger-constructor.module.css";
-import {
-  onDropHandler,
-  deleteItem,
-  TIngredientData
-} from "../../services/actions";
-import { openOrderModal, closeOrderModal } from "../../services/actions/order";
 import { BurgerElement } from "../burger-element/burger-element";
 import { Loader } from "../loader/loader";
-import { RootState } from "../../services/store";
+
+import { onDropHandler, deleteItem, TIngredientData } from "../../services/actions";
+import { openOrderModal, closeOrderModal } from "../../services/actions/order";
+import styles from "./burger-constructor.module.css";
 
 export const BurgerConstructor:FC = () => {
   const dispatch = useDispatch();

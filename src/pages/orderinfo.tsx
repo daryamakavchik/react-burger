@@ -1,41 +1,19 @@
-import React, { FC } from "react";
-import styles from "./orderinfo.module.css";
+import React, { useState, useEffect, FC } from "react";
+import { useDispatch, useSelector } from '../services/actions/auth';
+import { useParams, useRouteMatch } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from '../services/actions/auth';
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useRouteMatch } from "react-router-dom";
 import { selectOrderAction } from "../services/actions/feed";
 import { editDate } from "../utils/functions";
 import { wsConnectionStartAction, wsConnectionClosedAction } from "../services/actions/ws";
 import { getCookie } from "../services/actions/auth";
 import { RootState } from "../services/store";
-import { TOrder } from '../components/statslist/statslist';
-
-export type TIngredientDataArray = {
-  data: TIngredientData[]
-}
-export type TIngredientData = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  count: number
-}
+import { TOrder } from "../utils/types";
+import { TIngredientData } from "../utils/types";
+import { TIngredientDataArray } from "../utils/types";
+import styles from "./orderinfo.module.css";
 
 export const OrderInfoPage:FC<TIngredientDataArray> = (data:TIngredientDataArray) => {
   const dispatch = useDispatch();
-  const [orderIngredients, setOrderIngredients] = useState<TIngredientData[] | null>(null);
   const { id } = useParams<{ id?: string }>();
   const { url } = useRouteMatch();
   const [price, setPrice] = useState(0);
@@ -52,12 +30,12 @@ export const OrderInfoPage:FC<TIngredientDataArray> = (data:TIngredientDataArray
   
   ingredients = currentOrder?.ingredients;
   
-  const uniqueArr = [...(ingredients !== undefined ? ingredients : []).reduce( (mp, ingr) => {
+  const uniqueArr = [...(ingredients !== undefined ? ingredients : []).reduce((mp:any, ingr:any) => {
     if (!mp.has(ingr)) 
       mp.set(ingr, { ingr, count: 0 });
       mp.get(ingr).count++;
     return mp;
-  }, new Map).values()];  
+  }, new Map()).values()];  
 
   useEffect(() => {
     url === `/profile/orders/${id}` ? dispatch(wsConnectionStartAction(wsAuthUrl)) : dispatch(wsConnectionStartAction(wsUrl));

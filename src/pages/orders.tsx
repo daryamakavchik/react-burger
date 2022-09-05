@@ -1,12 +1,10 @@
-import React, { FC } from "react";
-import styles from "./feed.module.css";
+import React, { useEffect, FC } from "react";
+import { useDispatch, useSelector } from '../services/actions/auth';
 import { OrderCard } from "../components/ordercard/ordercard";
-import { wsConnectionStartAction, wsConnectionClosedAction, wsConnectionGetOrdersAction } from '../services/actions/ws';
-import { useDispatch } from '../services/actions/auth';
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { wsConnectionStartAction, wsConnectionClosedAction } from '../services/actions/ws';
 import { getCookie } from "../services/actions/auth";
 import { RootState } from "../services/store";
+import styles from "./feed.module.css";
 
 export const Orders:FC = () => {
   const dispatch = useDispatch();
@@ -20,7 +18,7 @@ export const Orders:FC = () => {
     return () => {
       dispatch(wsConnectionClosedAction());
     };
-  }, [dispatch]);
+  }, [dispatch, wsUrl]);
 
   return ( orders && 
     <ul className={styles.orders}>

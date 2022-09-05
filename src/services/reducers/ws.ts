@@ -1,4 +1,4 @@
-import { TOrder } from "../../components/statslist/statslist";
+import { TOrder } from "../../utils/types";
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,

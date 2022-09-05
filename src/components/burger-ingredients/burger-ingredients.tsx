@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { useRef, useState } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/actions/auth';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientCategory } from "../ingredient-category/ingredient-category";
-import styles from "./burger-ingredients.module.css";
 import { RootState } from '../../services/store';
-import { TIngredientData } from '../../pages/orderinfo';
+import { TIngredientData } from '../../utils/types';
+import styles from "./burger-ingredients.module.css";
 
 export const BurgerIngredients:FC = () => {
   const [current, setCurrent] = useState("bun");

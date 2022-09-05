@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { Link } from "react-router-dom";
 import {
   Logo,
   BurgerIcon,
@@ -6,7 +7,6 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
-import { Link } from "react-router-dom";
 
 export const AppHeader:FC = () => {
 

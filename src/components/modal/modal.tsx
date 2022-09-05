@@ -1,21 +1,16 @@
 import React, { FC } from "react";
 import ReactDOM from "react-dom";
 import { useEffect } from "react";
+import { useSelector } from '../../services/actions/auth';
+import { RootState } from "../../services/store";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ModalOverlay } from "../modal-overlay/modal-overlay";
+import { TModalProps } from "../../utils/types";
 import styles from "./modal.module.css";
-import { useSelector } from "react-redux";
-import { RootState } from "../../services/store";
 
 const modalsContainer = document.querySelector("#modals");
 
-type ModalProps = {
-  title?: string,
-  onClose?: any,
-  children?: React.ReactNode
-}
-
-export const Modal:FC<ModalProps> = (props:ModalProps) => {
+export const Modal:FC<TModalProps> = (props:TModalProps) => {
   const isOrderModal = useSelector((store:RootState) => store.feed.isModalOpen);
   const isIngredientModal = useSelector((store:RootState) => store.ingr.isIngredientModal);
 

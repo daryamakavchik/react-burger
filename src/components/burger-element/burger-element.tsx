@@ -1,17 +1,12 @@
 import React, { useRef, FC } from "react";
 import { useDispatch } from '../../services/actions/auth';
 import { useDrag, useDrop } from "react-dnd";
+import { TBurgerElementProps } from "../../utils/types";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UPDATE_ITEMS } from "../../services/actions";
 import styles from "../burger-constructor/burger-constructor.module.css";
 
-type BurgerElementProps = {
-  item: any,
-  index: number,
-  handleClose: any
-}
-
-export const BurgerElement:FC<BurgerElementProps> = (props:BurgerElementProps) => {
+export const BurgerElement:FC<TBurgerElementProps> = (props:TBurgerElementProps) => {
   const dispatch = useDispatch();
   const ref = useRef<HTMLLIElement>(null);
   const [{ isDrag }, drag] = useDrag({

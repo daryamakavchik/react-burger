@@ -2,14 +2,14 @@ import React, { FC } from "react";
 import { useDispatch } from '../../services/actions/auth';
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useDrag } from "react-dnd";
+import { useSelector } from "../../services/actions/auth";
+import { RootState } from "../../services/store";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Modal } from "../modal/modal";
-import { openCurrentIngredient, closeCurrentIngredient } from "../../services/actions";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
+import { openCurrentIngredient, closeCurrentIngredient } from "../../services/actions";
+import { TIngredientData } from "../../utils/types";
 import styles from "../burger-ingredients/burger-ingredients.module.css";
-import { RootState } from "../../services/store";
-import { TIngredientData } from '../../pages/orderinfo';
-import { useSelector } from "../../services/actions/auth";
 
 
 export const BurgerIngredient:FC<TIngredientData> = (props:TIngredientData) => {

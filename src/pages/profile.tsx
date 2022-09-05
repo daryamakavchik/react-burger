@@ -1,11 +1,10 @@
-import React, { FC } from "react";
+import React, { useState, FC } from "react";
 import { useDispatch } from '../services/actions/auth';
 import { NavLink, Switch, Route, useRouteMatch } from "react-router-dom";
-import styles from "./profile.module.css";
 import { Orders } from "./orders";
 import { EditProfile } from "./editprofile";
 import { logoutUser } from "../services/actions/auth";
-import { useState } from "react";
+import styles from "./profile.module.css";
 
 export const ProfilePage:FC = () => {
   const dispatch = useDispatch();

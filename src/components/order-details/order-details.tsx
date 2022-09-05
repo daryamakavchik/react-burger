@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
-import styles from "./order-details.module.css";
+import { useSelector } from "../../services/actions/auth";
 import { RootState } from "../../services/store";
+import styles from "./order-details.module.css";
 
 export const OrderDetails:FC = () => {
   const orderNum = useSelector((store:RootState) => store.ord.orderNum);

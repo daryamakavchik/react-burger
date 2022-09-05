@@ -1,7 +1,6 @@
 import { apiPostOrder, apiGetOrders, apiGetUserOrder } from "../../utils/api";
 import { wsConnectionSendOrderAction } from "./ws";
 import { AppDispatch } from "./auth";
-import { TOrder } from "../../components/statslist/statslist";
 export const POST_ORDER_REQUEST:"POST_ORDER_REQUEST" = "POST_ORDER_REQUEST";
 export const POST_ORDER_SUCCESS:"POST_ORDER_SUCCESS" = "POST_ORDER_SUCCESS";
 export const POST_ORDER_FAILED:"POST_ORDER_FAILED" = "POST_ORDER_FAILED";
@@ -155,7 +154,7 @@ export const getUserOrder = (id:string) => (dispatch:AppDispatch) => {
     apiGetUserOrder(id)
       .then((res) => {
         if (res && res.success) {
-          dispatch(getOrderSuccess(res.orders));
+          dispatch(getUserOrderSuccess(res.orders));
         } else {
           dispatch(getUserOrderFailed());
         }

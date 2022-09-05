@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { useSelector } from "react-redux";
+import React, { FC } from 'react';
+import { useSelector } from '../../services/actions/auth';
 import { RootState } from "../../services/store";
 import styles from './loader.module.css';
 

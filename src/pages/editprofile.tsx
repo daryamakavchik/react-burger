@@ -1,7 +1,6 @@
-import React, { useState, useEffect, FC, SyntheticEvent } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { updateUser } from "../services/actions/auth";
 import { useDispatch, useSelector } from '../services/actions/auth';
-import styles from "./profile.module.css";
 import {
   Input,
   EmailInput,
@@ -9,17 +8,12 @@ import {
   Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { RootState } from "../services/store";
+import { TProfileFormProps } from "../utils/types";
+import styles from "./profile.module.css";
 
 export const EditProfile: FC = () => {
 
-  type TProfileForm = {
-    name: string;
-    email: string;
-    password: string;
-    isValueChanged: boolean
-  }
-
-  const [state, setState] = useState<TProfileForm>({ name: "", email: "", password: "", isValueChanged: false});
+  const [state, setState] = useState<TProfileFormProps>({ name: "", email: "", password: "", isValueChanged: false});
   const dispatch = useDispatch();
 
   const userName = useSelector((store:RootState) => store.user.user.name);
@@ -50,7 +44,7 @@ export const EditProfile: FC = () => {
   };
   const onSave = (e: React.ChangeEvent<any>):void => {
     e.preventDefault();
-    updateUser(state.email, state.name);
+    dispatch(updateUser(state.email, state.name));
   };
 
   const onCancel = () => {
