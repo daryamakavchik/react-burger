@@ -1,3 +1,4 @@
+import { totalmem } from "os";
 import { TOrder } from "../../components/statslist/statslist";
 
 export const WS_CONNECTION_CLOSED:'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSED';
@@ -72,11 +73,11 @@ export type TWSActions =
   export const wsConnectionGetOrdersAction = (orders:Array<any>):IWsConnectionGetOrders => {
     return {
       type: WS_GET_ORDERS,
-      orders: orders,
+      orders: orders
     };
   };
 
-  export const wsConnectionSendOrderAction = (order:any):IWsConnectionSendOrder => {
+  export const wsConnectionSendOrderAction = (order:string[]):IWsConnectionSendOrder => {
     return {
       type: WS_SEND_ORDER,
       order: order,

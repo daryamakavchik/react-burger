@@ -11,7 +11,7 @@ import { TWSActions } from '../actions/ws';
 
 type TWSState = {
   wsConnected: boolean;
-  orders: TResponse;
+  orders: any;
   total: number;
   totalToday: number;
   loading: boolean;
@@ -71,17 +71,17 @@ export const initialWsState:TWSState = {
           ...state,
           error: undefined,
           orders: action.orders,
-          // total: action.total,
-          // totalToday: action.totalToday,
+          total: action.orders.total,
+          totalToday: action.orders.totalToday,
           loading: false,
         };
       }
-      // case WS_SEND_ORDER: {
-      //   return {
-      //     ...state,
-      //     orders: [...state.orders, action.order],
-      //   };
-      // }
+      case WS_SEND_ORDER: {
+        return {
+          ...state,
+          orders: [...[state.orders], action.order],
+        };
+      }
       default: {
         return state;
       }

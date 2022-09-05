@@ -1,6 +1,7 @@
 import { apiPostOrder, apiGetOrders, apiGetUserOrder } from "../../utils/api";
 import { wsConnectionSendOrderAction } from "./ws";
 import { AppDispatch } from "./auth";
+import { TOrder } from "../../components/statslist/statslist";
 export const POST_ORDER_REQUEST:"POST_ORDER_REQUEST" = "POST_ORDER_REQUEST";
 export const POST_ORDER_SUCCESS:"POST_ORDER_SUCCESS" = "POST_ORDER_SUCCESS";
 export const POST_ORDER_FAILED:"POST_ORDER_FAILED" = "POST_ORDER_FAILED";
@@ -11,7 +12,6 @@ export const GET_ORDER_FAILED:"GET_ORDER_FAILED" = "GET_ORDER_FAILED";
 export const GET_USER_ORDER_REQUEST:"GET_USER_ORDER_REQUEST" = "GET_USER_ORDER_REQUEST";
 export const GET_USER_ORDER_SUCCESS:"GET_USER_ORDER_SUCCESS" = "GET_USER_ORDER_SUCCESS";
 export const GET_USER_ORDER_FAILED:"GET_USER_ORDER_FAILED" = "GET_USER_ORDER_FAILED";
-import { TOrder } from "../../components/statslist/statslist";
 
 export interface IPostOrderRequest {
   readonly type: typeof POST_ORDER_REQUEST

@@ -12,7 +12,7 @@ import { editDate } from "../utils/functions";
 import { wsConnectionStartAction, wsConnectionClosedAction } from "../services/actions/ws";
 import { getCookie } from "../services/actions/auth";
 import { RootState } from "../services/store";
-
+import { TOrder } from '../components/statslist/statslist';
 
 export type TIngredientDataArray = {
   data: TIngredientData[]
@@ -68,7 +68,7 @@ export const OrderInfoPage:FC<TIngredientDataArray> = (data:TIngredientDataArray
 
 
   useEffect(() => {
-    const order = orders.orders.find((order) => order._id === id!);
+    const order = orders.orders.find((order:TOrder) => order._id === id!);
     order && dispatch(selectOrderAction(order));
   }, [currentOrder, id, orders, dispatch]);
 
