@@ -11,11 +11,11 @@ export const ResetPasswordPage:FC = () => {
   const [passwordValue, setPasswordValue] = useState("");
   const [codeValue, setCodeValue] = useState("");
 
-  const onPasswordChange = (e: React.ChangeEvent<any>) => {
+  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(e.target.value);
   };
 
-  const onCodeChange = (e: React.ChangeEvent<any>) => {
+  const onCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCodeValue(e.target.value);
   };
 
@@ -26,7 +26,7 @@ export const ResetPasswordPage:FC = () => {
     });
   };
 
-  const saveUserPassword = (e: React.ChangeEvent<any>) => {
+  const saveUserPassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(savePassword(passwordValue, codeValue, redirectOnSuccess));
     setPasswordValue("");

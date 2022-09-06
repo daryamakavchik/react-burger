@@ -14,7 +14,7 @@ export const ForgotPasswordPage:FC = () => {
   const isforgotPassword = useSelector((store:RootState) => store.user.isForgotPassword);
   const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
 
-  const onEmailChange = (e: React.ChangeEvent<any>) => { setEmailValue(e.target.value) };
+  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => { setEmailValue(e.target.value) };
 
   const redirectOnSuccess = () => {
     history.replace({
@@ -23,7 +23,7 @@ export const ForgotPasswordPage:FC = () => {
     });
   };
 
-  const resetUserPassword = (e: React.ChangeEvent<any>) => {
+  const resetUserPassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(resetPassword(emailValue, redirectOnSuccess));
     setEmailValue("");

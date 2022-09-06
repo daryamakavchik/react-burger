@@ -32,17 +32,17 @@ export const EditProfile: FC = () => {
     });
   }, [userName, userLogin, userPassword]);
 
-  const onNameChange = (e: React.ChangeEvent<any>):void => {
+  const onNameChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
     setState({ ...state, name: e.target.value, isValueChanged: true });
   };
 
-  const onPasswordChange = (e: React.ChangeEvent<any>):void => {
+  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
     setState({ ...state, password: e.target.value, isValueChanged: true });
   };
-  const onLoginChange = (e: React.ChangeEvent<any>):void => {
+  const onLoginChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
     setState({ ...state, email: e.target.value, isValueChanged: true });
   };
-  const onSave = (e: React.ChangeEvent<any>):void => {
+  const onSave = (e: React.FormEvent<HTMLFormElement>):void => {
     e.preventDefault();
     dispatch(updateUser(state.email, state.name));
   };

@@ -17,6 +17,8 @@ export const BurgerElement:FC<TBurgerElementProps> = (props:TBurgerElementProps)
     }),
   });
 
+  console.log(props.index);
+
   const [, drop] = useDrop({
     accept: "item",
     hover(item, monitor) {

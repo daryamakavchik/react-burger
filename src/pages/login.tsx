@@ -18,14 +18,14 @@ export const LoginPage:FC = () => {
   const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
   const { state } = useLocation<TLocationState>();
 
-  const onPasswordChange = (e: React.ChangeEvent<any>) => {
+  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(e.target.value);
   };
-  const onEmailChange = (e: React.ChangeEvent<any>) => {
+  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
   };
 
-  const login = (e: React.ChangeEvent<any>, emailValue:string, passwordValue:string) => {
+  const login = (e: React.FormEvent<HTMLFormElement>, emailValue:string, passwordValue:string) => {
     e.preventDefault();
     dispatch(loginUser(emailValue, passwordValue));
   };
