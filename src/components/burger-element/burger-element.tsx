@@ -2,7 +2,7 @@ import React, { useRef, FC } from "react";
 import { useDispatch } from '../../services/store';
 import { useDrag, useDrop } from "react-dnd";
 import { TBurgerElementProps } from "../../utils/types";
-import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement } from "../../../node_modules/@ya.praktikum/react-developer-burger-ui-components";
 import { UPDATE_ITEMS } from "../../services/actions";
 import styles from "../burger-constructor/burger-constructor.module.css";
 
@@ -16,8 +16,6 @@ export const BurgerElement:FC<TBurgerElementProps> = (props:TBurgerElementProps)
       isDrag: monitor.isDragging(),
     }),
   });
-
-  console.log(props.index);
 
   const [, drop] = useDrop({
     accept: "item",

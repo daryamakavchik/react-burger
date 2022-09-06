@@ -8,7 +8,6 @@ import {
   wsConnectionClosedAction,
   wsConnectionStartAction,
 } from "../services/actions/ws";
-import { TOrder } from "../utils/types";
 
 export const FeedPage:FC = () => {
   const dispatch = useDispatch();

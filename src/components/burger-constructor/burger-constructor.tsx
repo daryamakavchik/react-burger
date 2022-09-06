@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from '../../services/store';
 import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
 
-import { CurrencyIcon, Button, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement } from "../../../node_modules/@ya.praktikum/react-developer-burger-ui-components";
 import { Modal } from "../modal/modal";
 import { OrderDetails } from "../order-details/order-details";
 import { BurgerElement } from "../burger-element/burger-element";

@@ -1,5 +1,3 @@
-import { TOrder } from "./types";
-
 export const filterOrders = (arr:any) => {
     return arr?.reduce(
       (acc:any, curr:any) => {
