@@ -1,13 +1,12 @@
 import React, { useState, FC } from "react";
 import { Link, Redirect, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from '../services/actions/auth';
+import { useDispatch, useSelector } from '../services/store';
 import {
   EmailInput,
   PasswordInput,
   Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { loginUser } from "../services/actions/auth";
-import { RootState } from "../services/store";
 import { TLocationState } from "../utils/types";
 import styles from "./login.module.css";
 

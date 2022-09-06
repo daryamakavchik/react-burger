@@ -1,9 +1,8 @@
 import React, { useEffect, FC } from "react";
-import { useDispatch, useSelector } from '../services/actions/auth';
+import { useDispatch, useSelector } from '../services/store';
 import { OrderCard } from "../components/ordercard/ordercard";
 import { wsConnectionStartAction, wsConnectionClosedAction } from '../services/actions/ws';
 import { getCookie } from "../services/actions/auth";
-import { RootState } from "../services/store";
 import styles from "./feed.module.css";
 
 export const Orders:FC = () => {

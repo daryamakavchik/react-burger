@@ -1,5 +1,5 @@
 import { RootState } from "./store";
-import { AppDispatch } from "./actions/auth";
+import { AppDispatch } from "./store";
 import {Middleware, MiddlewareAPI} from "redux";
 import { TActions } from "./actions/ws";
 

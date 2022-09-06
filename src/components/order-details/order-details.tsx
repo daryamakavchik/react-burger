@@ -1,6 +1,5 @@
 import React, { FC } from "react";
-import { useSelector } from "../../services/actions/auth";
-import { RootState } from "../../services/store";
+import { useSelector } from "../../services/store";
 import styles from "./order-details.module.css";
 
 export const OrderDetails:FC = () => {

@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from '../services/actions/auth';
+import { useDispatch } from '../services/store';
 import { PasswordInput, Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { savePassword } from "../services/actions/auth";
 import styles from "./resetpassword.module.css";

@@ -1,7 +1,6 @@
 import React, { useEffect, FC } from "react";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from '../../services/actions/auth';
-import { RootState } from "../../services/store";
+import { useDispatch, useSelector } from '../../services/store';
 import { TLocationState } from "../../utils/types";
 
 import { ProtectedRoute } from "../protected-route";

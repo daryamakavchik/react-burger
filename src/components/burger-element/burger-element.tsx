@@ -1,5 +1,5 @@
 import React, { useRef, FC } from "react";
-import { useDispatch } from '../../services/actions/auth';
+import { useDispatch } from '../../services/store';
 import { useDrag, useDrop } from "react-dnd";
 import { TBurgerElementProps } from "../../utils/types";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";

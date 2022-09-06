@@ -1,9 +1,7 @@
 import React, { FC } from "react";
-import { useDispatch } from '../../services/actions/auth';
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useDrag } from "react-dnd";
-import { useSelector } from "../../services/actions/auth";
-import { RootState } from "../../services/store";
+import { useDispatch, useSelector } from "../../services/store";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Modal } from "../modal/modal";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";

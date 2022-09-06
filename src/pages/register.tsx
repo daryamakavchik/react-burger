@@ -1,5 +1,5 @@
 import React, { useState, useCallback, FC } from "react";
-import { useDispatch } from '../services/actions/auth';
+import { useDispatch } from '../services/store';
 import { useHistory, Link } from "react-router-dom";
 import { Input, EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { registerUser } from "../services/actions/auth";

@@ -1,6 +1,6 @@
 import React, { useEffect, FC } from "react";
 import styles from "./feed.module.css";
-import { useDispatch, useSelector } from '../services/actions/auth';
+import { useDispatch, useSelector } from '../services/store';
 import { OrderCard } from "../components/ordercard/ordercard";
 import { StatsList } from "../components/statslist/statslist";
 import { filterOrders } from "../utils/functions";
@@ -9,7 +9,6 @@ import {
   wsConnectionStartAction,
 } from "../services/actions/ws";
 import { TOrder } from "../utils/types";
-import { RootState } from "../services/store"
 
 export const FeedPage:FC = () => {
   const dispatch = useDispatch();

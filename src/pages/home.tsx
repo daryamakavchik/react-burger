@@ -1,10 +1,9 @@
 import React, { useEffect, FC } from "react";
-import { useDispatch, useSelector } from '../services/actions/auth';
+import { useDispatch, useSelector } from '../services/store';
 import styles from "./home.module.css";
 import { BurgerIngredients } from "../components/burger-ingredients/burger-ingredients";
 import { BurgerConstructor } from "../components/burger-constructor/burger-constructor";
 import { getUserInfo } from "../services/actions/auth";
-import { RootState } from "../services/store";
 import { wsConnectionStartAction, wsConnectionClosedAction} from "../services/actions/ws";
 
 export const HomePage:FC = () => {

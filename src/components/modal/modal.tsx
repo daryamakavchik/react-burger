@@ -1,8 +1,7 @@
 import React, { FC } from "react";
 import ReactDOM from "react-dom";
 import { useEffect } from "react";
-import { useSelector } from '../../services/actions/auth';
-import { RootState } from "../../services/store";
+import { useSelector } from '../../services/store';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ModalOverlay } from "../modal-overlay/modal-overlay";
 import { TModalProps } from "../../utils/types";

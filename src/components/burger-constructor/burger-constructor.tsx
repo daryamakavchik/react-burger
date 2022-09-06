@@ -1,10 +1,9 @@
 import React, { useEffect, useState, FC} from "react";
-import { useDispatch, useSelector } from '../../services/actions/auth';
+import { useDispatch, useSelector } from '../../services/store';
 import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
 
 import { CurrencyIcon, Button, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { RootState } from "../../services/store";
 import { Modal } from "../modal/modal";
 import { OrderDetails } from "../order-details/order-details";
 import { BurgerElement } from "../burger-element/burger-element";

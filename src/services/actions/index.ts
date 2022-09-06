@@ -1,6 +1,6 @@
 import { fetchData } from "../../utils/api";
 import { v4 as uuidv4 } from "uuid";
-import { AppDispatch } from "./auth";
+import { AppDispatch } from "../store";
 
 export const GET_DATA_REQUEST:"GET_DATA_REQUEST" = "GET_DATA_REQUEST";
 export const GET_DATA_SUCCESS:"GET_DATA_SUCCESS" = "GET_DATA_SUCCESS";

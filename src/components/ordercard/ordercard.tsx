@@ -1,7 +1,6 @@
 import React, { useState, useEffect, FC } from "react";
 import { useRouteMatch, useLocation, Link } from "react-router-dom";
-import { useDispatch, useSelector } from '../../services/actions/auth';
-import { RootState } from "../../services/store";
+import { useDispatch, useSelector } from '../../services/store';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { selectOrderAction } from "../../services/actions/feed";
 import { editDate } from "../../utils/functions";

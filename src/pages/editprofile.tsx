@@ -1,13 +1,12 @@
 import React, { useState, useEffect, FC } from "react";
 import { updateUser } from "../services/actions/auth";
-import { useDispatch, useSelector } from '../services/actions/auth';
+import { useDispatch, useSelector } from '../services/store';
 import {
   Input,
   EmailInput,
   PasswordInput,
   Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { RootState } from "../services/store";
 import { TProfileFormProps } from "../utils/types";
 import styles from "./profile.module.css";
 

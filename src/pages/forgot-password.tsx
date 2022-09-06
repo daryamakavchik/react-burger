@@ -1,9 +1,8 @@
 import React, { useState, FC } from "react";
-import { useDispatch, useSelector } from '../services/actions/auth';
+import { useDispatch, useSelector } from '../services/store';
 import { Redirect, Link, useHistory } from "react-router-dom";
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { resetPassword } from "../services/actions/auth";
-import { RootState } from "../services/store";
 import styles from "./forgotpassword.module.css";
 
 export const ForgotPasswordPage:FC = () => {

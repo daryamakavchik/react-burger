@@ -26,7 +26,7 @@ import {
   AUTH_CHECKED
 } from "../actions/auth";
 
-import { TApplicationActions } from '../actions/auth';
+import { TApplicationActions } from '../store';
 
 type TProfileForm = {
   name: string

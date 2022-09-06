@@ -1,6 +1,6 @@
 import { apiPostOrder, apiGetOrders, apiGetUserOrder } from "../../utils/api";
 import { wsConnectionSendOrderAction } from "./ws";
-import { AppDispatch } from "./auth";
+import { AppDispatch } from "../store";
 import { TOrder } from "../../utils/types";
 export const POST_ORDER_REQUEST:"POST_ORDER_REQUEST" = "POST_ORDER_REQUEST";
 export const POST_ORDER_SUCCESS:"POST_ORDER_SUCCESS" = "POST_ORDER_SUCCESS";

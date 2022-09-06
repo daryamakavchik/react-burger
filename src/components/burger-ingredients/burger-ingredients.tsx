@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import { useRef, useState, RefObject } from "react";
-import { useSelector } from '../../services/actions/auth';
+import { useSelector } from '../../services/store';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientCategory } from "../ingredient-category/ingredient-category";
-import { RootState } from '../../services/store';
 import { TIngredientData } from '../../utils/types';
 import styles from "./burger-ingredients.module.css";
 

@@ -1,12 +1,11 @@
 import React, { useState, useEffect, FC } from "react";
-import { useDispatch, useSelector } from '../services/actions/auth';
+import { useDispatch, useSelector } from '../services/store';
 import { useParams, useRouteMatch } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { selectOrderAction } from "../services/actions/feed";
 import { editDate } from "../utils/functions";
 import { wsConnectionStartAction, wsConnectionClosedAction } from "../services/actions/ws";
 import { getCookie } from "../services/actions/auth";
-import { RootState } from "../services/store";
 import { TOrder } from "../utils/types";
 import { TIngredientData } from "../utils/types";
 import { TIngredientDataArray } from "../utils/types";

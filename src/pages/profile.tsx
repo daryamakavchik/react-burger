@@ -1,5 +1,5 @@
 import React, { useState, FC } from "react";
-import { useDispatch } from '../services/actions/auth';
+import { useDispatch } from '../services/store';
 import { NavLink, Switch, Route, useRouteMatch } from "react-router-dom";
 import { Orders } from "./orders";
 import { EditProfile } from "./editprofile";
