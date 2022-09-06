@@ -23,7 +23,7 @@ export const BurgerIngredient:FC<TIngredientData> = (props:TIngredientData) => {
     fillings: store.constr.burgerIngredients.fillings,
   }));
   fillings &&
-    fillings.map((el:TIngredientData) => (el._id === props._id ? (count = el.count) : null));
+    fillings.map((el) => (el._id === props._id ? (count = el.count) : null));
   let buncount = bun && bun._id === props._id && bun.count;
 
   const openModal = () => {

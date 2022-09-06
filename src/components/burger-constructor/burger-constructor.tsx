@@ -45,7 +45,7 @@ export const BurgerConstructor:FC = () => {
   const orderData =
     bun &&
     content &&
-    Array.from(content.map((el:TIngredientData) => el._id))
+    Array.from(content.map((el) => el._id))
       .concat(bunIdArr!)
       .concat(bunIdArr!);
 
@@ -62,10 +62,10 @@ export const BurgerConstructor:FC = () => {
 
   let total =
     bun && bunsPrice
-      ? content.reduce(function(acc:number, obj:TIngredientData) {
+      ? content.reduce(function(acc, obj) {
           return acc + obj.price * obj.count;
         }, bunsPrice)
-      : content.reduce(function(acc:number, obj:TIngredientData) {
+      : content.reduce(function(acc, obj) {
           return acc + obj.price * obj.count;
         }, 0);
 

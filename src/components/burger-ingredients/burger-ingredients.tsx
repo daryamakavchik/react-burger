@@ -11,9 +11,9 @@ export const BurgerIngredients:FC = () => {
   const isLoading = useSelector((store) => store.data.isLoading);
 
   const { data } = useSelector((store) => store.data);
-  const bunsArr = data.filter((el:TIngredientData) => el.type === "bun");
-  const mainArr = data.filter((el:TIngredientData) => el.type === "main");
-  const sauceArr = data.filter((el:TIngredientData) => el.type === "sauce");
+  const bunsArr = data.filter((el) => el.type === "bun");
+  const mainArr = data.filter((el) => el.type === "main");
+  const sauceArr = data.filter((el) => el.type === "sauce");
 
   const containerRef = useRef<HTMLDivElement>(null);
   const bunsRef = useRef<HTMLElement>(null);

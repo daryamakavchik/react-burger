@@ -29,7 +29,7 @@ export const OrderInfoPage:FC<TIngredientDataArray> = (data:TIngredientDataArray
   
   ingredients = currentOrder?.ingredients;
   
-  const uniqueArr = [...(ingredients !== undefined ? ingredients : []).reduce((mp:any, ingr:string) => {
+  const uniqueArr = [...(ingredients !== undefined ? ingredients : []).reduce((mp, ingr) => {
     if (!mp.has(ingr)) 
       mp.set(ingr, { ingr, count: 0 });
       mp.get(ingr).count++;

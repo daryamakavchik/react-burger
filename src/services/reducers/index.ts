@@ -110,13 +110,13 @@ export const dataReducer = (state = initialConstructorState, action: TConstructo
 export const constructorReducer = (state = initialConstructorState, action:TConstructorActions):TInitialConstructorState => {
   switch (action.type) {
     case ADD_ITEM: {
-      let ingredientAmount = state.burgerIngredients.fillings.filter(function(item:TIngredientData){return item._id === action.item._id}).length + 1; 
+      let ingredientAmount = state.burgerIngredients.fillings.filter(function(item){return item._id === action.item._id}).length + 1; 
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
           fillings: 
-          [...state.burgerIngredients.fillings.map((item:TIngredientData) => 
+          [...state.burgerIngredients.fillings.map((item) => 
             ({...item, added: ingredientAmount})),
             ...[{ ...action.item, added: 1, key: action.key, count: ingredientAmount }],
           ],
@@ -138,7 +138,7 @@ export const constructorReducer = (state = initialConstructorState, action:TCons
         burgerIngredients: {
           ...state.burgerIngredients,
           fillings: state.burgerIngredients.fillings
-            .map((item:TIngredientData) =>
+            .map((item) =>
               item?._id === action.item?._id
                 ? { ...item, count: item.count - 1 }
                 : item
