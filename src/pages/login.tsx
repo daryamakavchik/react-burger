@@ -15,7 +15,7 @@ export const LoginPage:FC = () => {
   const dispatch = useDispatch();
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
-  const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
+  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
   const { state } = useLocation<TLocationState>();
 
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -16,9 +16,9 @@ export const EditProfile: FC = () => {
   const [state, setState] = useState<TProfileFormProps>({ name: "", email: "", password: "", isValueChanged: false});
   const dispatch = useDispatch();
 
-  const userName = useSelector((store:RootState) => store.user.user.name);
-  const userLogin = useSelector((store:RootState) => store.user.user.email);
-  const userPassword = useSelector((store:RootState) => store.user.user.password);
+  const userName = useSelector((store) => store.user.user.name);
+  const userLogin = useSelector((store) => store.user.user.email);
+  const userPassword = useSelector((store) => store.user.user.password);
 
   useEffect(() => {
     setState((state) => {

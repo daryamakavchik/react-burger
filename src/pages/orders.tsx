@@ -10,7 +10,7 @@ export const Orders:FC = () => {
   const dispatch = useDispatch();
   const token = getCookie('token');
   const wsUrl = `wss://norma.nomoreparties.space/orders` + `?token=${token}`;
-  let { orders } = useSelector((store:RootState) => store.ws);
+  let { orders } = useSelector((store) => store.ws);
   const reversedorders = [...orders!.orders].reverse();
   
   useEffect(() => {

@@ -12,7 +12,7 @@ export const OrderCard:FC<TOrderCardProps> = (props:TOrderCardProps) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { url } = useRouteMatch();
-  const data = useSelector((store:RootState) => store.data.data);
+  const data = useSelector((store) => store.data.data);
 
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);

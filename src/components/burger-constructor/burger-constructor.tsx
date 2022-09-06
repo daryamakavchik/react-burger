@@ -18,11 +18,11 @@ export const BurgerConstructor:FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [totalPrice, setTotalPrice] = useState(0);
-  const userName = useSelector((store:RootState) => store.user.user.name);
-  const isLoading = useSelector((store:RootState) => store.ord.isLoading);
-  const modalOpen = useSelector((store:RootState) => store.ord.isModalOpen);
+  const userName = useSelector((store) => store.user.user.name);
+  const isLoading = useSelector((store) => store.ord.isLoading);
+  const modalOpen = useSelector((store) => store.ord.isModalOpen);
 
-  const { bun, content } = useSelector((store:RootState) => ({
+  const { bun, content } = useSelector((store) => ({
     bun: store.constr.burgerIngredients.bun,
     content: store.constr.burgerIngredients.fillings,
   }));

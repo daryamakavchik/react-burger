@@ -11,8 +11,8 @@ import styles from "./modal.module.css";
 const modalsContainer = document.querySelector("#modals");
 
 export const Modal:FC<TModalProps> = (props:TModalProps) => {
-  const isOrderModal = useSelector((store:RootState) => store.feed.isModalOpen);
-  const isIngredientModal = useSelector((store:RootState) => store.ingr.isIngredientModal);
+  const isOrderModal = useSelector((store) => store.feed.isModalOpen);
+  const isIngredientModal = useSelector((store) => store.ingr.isIngredientModal);
 
   const handleEscKeydown = (event: KeyboardEvent) => {
     event.key === "Escape" && props.onClose!();

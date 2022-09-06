@@ -9,9 +9,9 @@ import styles from "./burger-ingredients.module.css";
 
 export const BurgerIngredients:FC = () => {
   const [current, setCurrent] = useState("bun");
-  const isLoading = useSelector((store:RootState) => store.data.isLoading);
+  const isLoading = useSelector((store) => store.data.isLoading);
 
-  const { data } = useSelector((store:RootState) => store.data);
+  const { data } = useSelector((store) => store.data);
   const bunsArr = data.filter((el:TIngredientData) => el.type === "bun");
   const mainArr = data.filter((el:TIngredientData) => el.type === "main");
   const sauceArr = data.filter((el:TIngredientData) => el.type === "sauce");

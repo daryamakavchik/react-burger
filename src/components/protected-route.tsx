@@ -7,7 +7,7 @@ import { TProtectedRouteProps } from "../utils/types";
 
 export const ProtectedRoute:FC<TProtectedRouteProps> = ({ children, ...rest }) => {
   const dispatch = useDispatch();
-  const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
+  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
 
   useEffect(() => { dispatch(getUserInfo()); }, [dispatch]);
 

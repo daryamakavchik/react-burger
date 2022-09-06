@@ -11,8 +11,8 @@ export const ForgotPasswordPage:FC = () => {
   const history = useHistory();
   const [emailValue, setEmailValue] = useState("");
 
-  const isforgotPassword = useSelector((store:RootState) => store.user.isForgotPassword);
-  const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
+  const isforgotPassword = useSelector((store) => store.user.isForgotPassword);
+  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
 
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => { setEmailValue(e.target.value) };
 

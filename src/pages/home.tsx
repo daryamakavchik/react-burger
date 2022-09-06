@@ -9,7 +9,7 @@ import { wsConnectionStartAction, wsConnectionClosedAction} from "../services/ac
 
 export const HomePage:FC = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector((store:RootState) => store.data.isLoading);
+  const isLoading = useSelector((store) => store.data.isLoading);
   
   useEffect(() => { dispatch(getUserInfo()); }, [dispatch]);
   useEffect(() => {

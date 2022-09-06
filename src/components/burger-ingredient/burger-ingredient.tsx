@@ -14,13 +14,13 @@ import styles from "../burger-ingredients/burger-ingredients.module.css";
 
 export const BurgerIngredient:FC<TIngredientData> = (props:TIngredientData) => {
   const dispatch = useDispatch();
-  const modalOpen = useSelector((store:RootState) => store.ingr.isModalOpen);
+  const modalOpen = useSelector((store) => store.ingr.isModalOpen);
   const location = useLocation();
   const history = useHistory();
-  const data = useSelector<Array<TIngredientData>>((store:RootState) => store.data.data);
+  const data = useSelector<Array<TIngredientData>>((store) => store.data.data);
 
   let count;
-  const { bun, fillings } = useSelector((store:RootState) => ({
+  const { bun, fillings } = useSelector((store) => ({
     bun: store.constr.burgerIngredients.bun,
     fillings: store.constr.burgerIngredients.fillings,
   }));

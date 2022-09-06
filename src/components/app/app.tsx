@@ -32,9 +32,9 @@ export const App:FC = () => {
   const location = useLocation<TLocationState>();
   const history = useHistory();
   const dispatch = useDispatch();
-  const data = useSelector((store:RootState) => store.data.data);
-  const isForgotPassword = useSelector((store:RootState) => store.user.isForgotPassword);
-  const isUserAuthorized = useSelector((store:RootState) => store.user.isUserAuthorized);
+  const data = useSelector((store) => store.data.data);
+  const isForgotPassword = useSelector((store) => store.user.isForgotPassword);
+  const isUserAuthorized = useSelector((store) => store.user.isUserAuthorized);
   const background = location.state && location.state.background;
 
   const closeAllModals = () => {

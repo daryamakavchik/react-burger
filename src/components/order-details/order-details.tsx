@@ -4,7 +4,7 @@ import { RootState } from "../../services/store";
 import styles from "./order-details.module.css";
 
 export const OrderDetails:FC = () => {
-  const orderNum = useSelector((store:RootState) => store.ord.orderNum);
+  const orderNum = useSelector((store) => store.ord.orderNum);
 
   return (
     <>
