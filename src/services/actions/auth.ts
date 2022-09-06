@@ -10,171 +10,74 @@ import {
   checkResponse,
   baseUrl,
 } from "../../utils/api";
-import { store } from "../store";
-import { Action, ActionCreator } from "redux";
-import { ThunkAction } from "redux-thunk";
-import { useDispatch as dispatchHook, useSelector as selectorHook, TypedUseSelectorHook } from "react-redux";
 
-export const LOGIN_REQUEST:"LOGIN_REQUEST" = "LOGIN_REQUEST";
-export const LOGIN_SUCCESS:"LOGIN_SUCCESS" = "LOGIN_SUCCESS";
-export const LOGIN_FAILED:"LOGIN_FAILED" = "LOGIN_FAILED";
-export const REGISTER_REQUEST:"REGISTER_REQUEST" = "REGISTER_REQUEST";
-export const REGISTER_SUCCESS:"REGISTER_SUCCESS" = "REGISTER_SUCCESS";
-export const REGISTER_FAILED:"REGISTER_FAILED" = "REGISTER_FAILED";
-export const GET_USERINFO_REQUEST:"GET_USERINFO_REQUEST" = "GET_USERINFO_REQUEST";
-export const GET_USERINFO_SUCCESS:"GET_USERINFO_SUCCESS" = "GET_USERINFO_SUCCESS";
-export const GET_USERINFO_FAILED:"GET_USERINFO_FAILED" = "GET_USERINFO_FAILED";
-export const REFRESH_TOKEN_REQUEST:"REFRESH_TOKEN_REQUEST" = "REFRESH_TOKEN_REQUEST";
-export const REFRESH_TOKEN_SUCCESS:"REFRESH_TOKEN_SUCCESS" = "REFRESH_TOKEN_SUCCESS";
-export const REFRESH_TOKEN_FAILED:"REFRESH_TOKEN_FAILED" = "REFRESH_TOKEN_FAILED";
-export const RESET_PASSWORD_REQUEST:"RESET_PASSWORD_REQUEST" = "RESET_PASSWORD_REQUEST";
-export const RESET_PASSWORD_SUCCESS:"RESET_PASSWORD_SUCCESS" = "RESET_PASSWORD_SUCCESS";
-export const RESET_PASSWORD_FAILED:"RESET_PASSWORD_FAILED" = "RESET_PASSWORD_FAILED";
-export const SAVE_PASSWORD_REQUEST:"SAVE_PASSWORD_REQUEST" = "SAVE_PASSWORD_REQUEST";
-export const SAVE_PASSWORD_SUCCESS:"SAVE_PASSWORD_SUCCESS" = "SAVE_PASSWORD_SUCCESS";
-export const SAVE_PASSWORD_FAILED:"SAVE_PASSWORD_FAILED" = "SAVE_PASSWORD_FAILED";
-export const LOGOUT_REQUEST:"LOGOUT_REQUEST" = "LOGOUT_REQUEST";
-export const LOGOUT_SUCCESS:"LOGOUT_SUCCESS" = "LOGOUT_SUCCESS";
-export const LOGOUT_FAILED:"LOGOUT_FAILED" = "LOGOUT_FAILED";
-export const UPDATE_REQUEST:"UPDATE_REQUEST" = "UPDATE_REQUEST";
-export const UPDATE_SUCCESS:"UPDATE_SUCCESS" = "UPDATE_SUCCESS";
-export const UPDATE_FAILED:"UPDATE_FAILED" = "UPDATE_FAILED";
-export const AUTH_CHECKED:"AUTH_CHECKED" = "AUTH_CHECKED";
+import {
+  ILoginRequest,
+  ILoginSuccess,
+  ILoginFailed,
+  ILogoutRequest,
+  ILogoutSuccess,
+  ILogoutFailed,
+  IUpdateRequest,
+  IUpdateSuccess,
+  IUpdateFailed,
+  IRegisterRequest,
+  IRegisterSuccess,
+  IRegisterFailed,
+  IGetUserInfoRequest,
+  IGetUserInfoSuccess,
+  IGetUserInfoFailed,
+  IAuthChecked,
+  IRefreshTokenRequest,
+  IRefreshTokenSuccess,
+  IRefreshTokenFailed,
+  IResetPasswordRequest,
+  IResetPasswordSuccess,
+  IResetPasswordFailed,
+  ISavePasswordRequest,
+  ISavePasswordSuccess,
+  ISavePasswordFailed,
+  AppThunk,
+  AppDispatch,
+  TUser,
+} from "../store";
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<TReturn = void> = ActionCreator< ThunkAction<TReturn, Action, RootState, TApplicationActions>>;
-export type AppDispatch = typeof store.dispatch;
-
-export const useDispatch: () => AppDispatch | AppThunk = dispatchHook;
-export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
-
-type TUser = {
-  name: string;
-  email: string;
-  password: string;
-};
-
-type TLoginActions = ILoginRequest | ILoginSuccess | ILoginFailed;
-type TLogoutActions = ILogoutRequest | ILogoutSuccess | ILogoutFailed;
-type TUpdateActions = IUpdateRequest | IUpdateSuccess | IUpdateFailed;
-type TRegisterActions = IRegisterRequest | IRegisterSuccess | IRegisterFailed;
-type TResetPasswordActions =
-  | IResetPasswordRequest
-  | IResetPasswordSuccess
-  | IResetPasswordFailed;
-type TSavePasswordActions =
-  | ISavePasswordRequest
-  | ISavePasswordSuccess
-  | ISavePasswordFailed;
-type TGetUserInfoActions =
-  | IGetUserInfoRequest
-  | IGetUserInfoSuccess
-  | IGetUserInfoFailed;
-type TRefreshTokenActions =
-  | IRefreshTokenRequest
-  | IRefreshTokenSuccess
-  | IRefreshTokenFailed;
-type TAuthCheckedActions = IAuthChecked;
-
-export type TApplicationActions =
-  | TSavePasswordActions
-  | TGetUserInfoActions
-  | TLoginActions
-  | TLogoutActions
-  | TUpdateActions
-  | TRegisterActions
-  | TResetPasswordActions
-  | TRefreshTokenActions
-  | TAuthCheckedActions
-  | TSavePasswordActions;
-
-export interface ILoginRequest {
-  readonly type: typeof LOGIN_REQUEST;
-}
-export interface ILoginSuccess {
-  readonly type: typeof LOGIN_SUCCESS;
-  user: TUser;
-}
-export interface ILoginFailed {
-  readonly type: typeof LOGIN_FAILED;
-}
-
-export interface IRegisterRequest {
-  readonly type: typeof REGISTER_REQUEST;
-}
-export interface IRegisterSuccess {
-  readonly type: typeof REGISTER_SUCCESS;
-  user: TUser;
-}
-export interface IRegisterFailed {
-  readonly type: typeof REGISTER_FAILED;
-}
-
-export interface IGetUserInfoRequest {
-  readonly type: typeof GET_USERINFO_REQUEST;
-}
-export interface IGetUserInfoSuccess {
-  readonly type: typeof GET_USERINFO_SUCCESS;
-  user: TUser;
-}
-export interface IGetUserInfoFailed {
-  readonly type: typeof GET_USERINFO_FAILED;
-}
-
-export interface IRefreshTokenRequest {
-  readonly type: typeof REFRESH_TOKEN_REQUEST;
-}
-export interface IRefreshTokenSuccess {
-  readonly type: typeof REFRESH_TOKEN_SUCCESS;
-}
-export interface IRefreshTokenFailed {
-  readonly type: typeof REFRESH_TOKEN_FAILED;
-}
-
-export interface IResetPasswordRequest {
-  readonly type: typeof RESET_PASSWORD_REQUEST;
-}
-export interface IResetPasswordSuccess {
-  readonly type: typeof RESET_PASSWORD_SUCCESS;
-}
-export interface IResetPasswordFailed {
-  readonly type: typeof RESET_PASSWORD_FAILED;
-}
-
-export interface ISavePasswordRequest {
-  readonly type: typeof SAVE_PASSWORD_REQUEST;
-}
-export interface ISavePasswordSuccess {
-  readonly type: typeof SAVE_PASSWORD_SUCCESS;
-}
-export interface ISavePasswordFailed {
-  readonly type: typeof SAVE_PASSWORD_FAILED;
-}
-
-export interface ILogoutRequest {
-  readonly type: typeof LOGOUT_REQUEST;
-}
-export interface ILogoutSuccess {
-  readonly type: typeof LOGOUT_SUCCESS;
-}
-export interface ILogoutFailed {
-  readonly type: typeof LOGOUT_FAILED;
-}
-
-export interface IUpdateRequest {
-  readonly type: typeof UPDATE_REQUEST;
-}
-export interface IUpdateSuccess {
-  readonly type: typeof UPDATE_SUCCESS;
-  user: TUser;
-}
-export interface IUpdateFailed {
-  readonly type: typeof UPDATE_FAILED;
-}
-
-export interface IAuthChecked {
-  readonly type: typeof AUTH_CHECKED;
-}
+export const LOGIN_REQUEST: "LOGIN_REQUEST" = "LOGIN_REQUEST";
+export const LOGIN_SUCCESS: "LOGIN_SUCCESS" = "LOGIN_SUCCESS";
+export const LOGIN_FAILED: "LOGIN_FAILED" = "LOGIN_FAILED";
+export const REGISTER_REQUEST: "REGISTER_REQUEST" = "REGISTER_REQUEST";
+export const REGISTER_SUCCESS: "REGISTER_SUCCESS" = "REGISTER_SUCCESS";
+export const REGISTER_FAILED: "REGISTER_FAILED" = "REGISTER_FAILED";
+export const GET_USERINFO_REQUEST: "GET_USERINFO_REQUEST" =
+  "GET_USERINFO_REQUEST";
+export const GET_USERINFO_SUCCESS: "GET_USERINFO_SUCCESS" =
+  "GET_USERINFO_SUCCESS";
+export const GET_USERINFO_FAILED: "GET_USERINFO_FAILED" = "GET_USERINFO_FAILED";
+export const REFRESH_TOKEN_REQUEST: "REFRESH_TOKEN_REQUEST" =
+  "REFRESH_TOKEN_REQUEST";
+export const REFRESH_TOKEN_SUCCESS: "REFRESH_TOKEN_SUCCESS" =
+  "REFRESH_TOKEN_SUCCESS";
+export const REFRESH_TOKEN_FAILED: "REFRESH_TOKEN_FAILED" =
+  "REFRESH_TOKEN_FAILED";
+export const RESET_PASSWORD_REQUEST: "RESET_PASSWORD_REQUEST" =
+  "RESET_PASSWORD_REQUEST";
+export const RESET_PASSWORD_SUCCESS: "RESET_PASSWORD_SUCCESS" =
+  "RESET_PASSWORD_SUCCESS";
+export const RESET_PASSWORD_FAILED: "RESET_PASSWORD_FAILED" =
+  "RESET_PASSWORD_FAILED";
+export const SAVE_PASSWORD_REQUEST: "SAVE_PASSWORD_REQUEST" =
+  "SAVE_PASSWORD_REQUEST";
+export const SAVE_PASSWORD_SUCCESS: "SAVE_PASSWORD_SUCCESS" =
+  "SAVE_PASSWORD_SUCCESS";
+export const SAVE_PASSWORD_FAILED: "SAVE_PASSWORD_FAILED" =
+  "SAVE_PASSWORD_FAILED";
+export const LOGOUT_REQUEST: "LOGOUT_REQUEST" = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS: "LOGOUT_SUCCESS" = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED: "LOGOUT_FAILED" = "LOGOUT_FAILED";
+export const UPDATE_REQUEST: "UPDATE_REQUEST" = "UPDATE_REQUEST";
+export const UPDATE_SUCCESS: "UPDATE_SUCCESS" = "UPDATE_SUCCESS";
+export const UPDATE_FAILED: "UPDATE_FAILED" = "UPDATE_FAILED";
+export const AUTH_CHECKED: "AUTH_CHECKED" = "AUTH_CHECKED";
 
 const loginRequest = (): ILoginRequest => ({
   type: LOGIN_REQUEST,
@@ -280,7 +183,8 @@ const savePasswordFailed = (): ISavePasswordFailed => ({
   type: SAVE_PASSWORD_FAILED,
 });
 
-export const loginUser:AppThunk = (email: string, password: string) => (dispatch:AppDispatch) => {
+export const loginUser: AppThunk =
+  (email: string, password: string) => (dispatch: AppDispatch) => {
     dispatch(loginRequest());
     apiLoginUser(email, password)
       .then((res) => {
@@ -297,26 +201,27 @@ export const loginUser:AppThunk = (email: string, password: string) => (dispatch
       .catch((err) => {
         console.log(err);
       });
+  };
+
+export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
+  dispatch(logoutRequest());
+  apiLogoutUser(localStorage.getItem("refreshToken")!)
+    .then((res) => {
+      if (res && res.success) {
+        dispatch(logoutSuccess());
+        deleteCookie("token");
+        localStorage.removeItem("refreshToken");
+      } else {
+        dispatch(logoutFailed());
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
-export const logoutUser:AppThunk = () => (dispatch:AppDispatch) => {
-    dispatch(logoutRequest());
-    apiLogoutUser(localStorage.getItem("refreshToken")!)
-      .then((res) => {
-        if (res && res.success) {
-          dispatch(logoutSuccess());
-          deleteCookie("token");
-          localStorage.removeItem("refreshToken");
-        } else {
-          dispatch(logoutFailed());
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-};
-
-export const updateUser:AppThunk = (email: string, name: string) => (dispatch:AppDispatch) => {
+export const updateUser: AppThunk =
+  (email: string, name: string) => (dispatch: AppDispatch) => {
     dispatch(updateRequest());
     apiUpdateUser(email, name)
       .then((res) => {
@@ -329,9 +234,11 @@ export const updateUser:AppThunk = (email: string, name: string) => (dispatch:Ap
       .catch((err) => {
         console.log(err);
       });
-};
+  };
 
-export const registerUser:AppThunk = (name:string, email:string, password:string, redirectFunc:() => void) => (dispatch:AppDispatch) => {
+export const registerUser: AppThunk =
+  (name: string, email: string, password: string, redirectFunc: () => void) =>
+  (dispatch: AppDispatch) => {
     dispatch(registerRequest());
     apiRegisterUser(name, email, password)
       .then((res) => {
@@ -349,62 +256,63 @@ export const registerUser:AppThunk = (name:string, email:string, password:string
       .catch((err) => {
         console.log(err);
       });
+  };
+
+export const getUserInfo: AppThunk = () => (dispatch: AppDispatch) => {
+  dispatch(getUserInfoRequest());
+  apiUserRequest()
+    .catch((err) => {
+      if (err && err.message === "jwt expired") {
+        refreshTokenAction();
+      }
+    })
+    .then((res) => {
+      if (res && res.success) {
+        dispatch(getUserInfoSuccess(res.user));
+      } else {
+        dispatch(getUserInfoFailed());
+      }
+    })
+    .finally(() => {
+      dispatch(checkAuth());
+    });
 };
 
-export const getUserInfo:AppThunk = () => (dispatch:AppDispatch) => {
-    dispatch(getUserInfoRequest());
-    apiUserRequest()
-      .catch((err) => {
-        if (err && err.message === "jwt expired") {
-          refreshTokenAction();
-        }
-      })
-      .then((res) => {
-        if (res && res.success) {
-          dispatch(getUserInfoSuccess(res.user));
-        } else {
-          dispatch(getUserInfoFailed());
-        }
-      })
-      .finally(() => {
-        dispatch(checkAuth());
+export const refreshTokenAction: AppThunk = () => (dispatch: AppDispatch) => {
+  dispatch(refreshTokenRequest());
+  apiRefreshToken(localStorage.getItem("refreshToken")!)
+    .then((res) => {
+      if (res && res.success) {
+        const accessToken = res.accessToken.split("Bearer ")[1];
+
+        deleteCookie("token");
+        localStorage.removeItem("refreshToken");
+
+        setCookie("token", accessToken, {});
+        localStorage.setItem("refreshToken", res.refreshToken);
+        dispatch(refreshTokenSuccess());
+      } else {
+        dispatch(refreshTokenFailed());
+      }
+      return res;
+    })
+    .then((fin) => {
+      return fetch(`${baseUrl}auth/user`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + getCookie("token"),
+        },
       });
+    })
+    .then((res) => checkResponse(res))
+    .finally(() => {
+      dispatch(checkAuth());
+    });
 };
 
-export const refreshTokenAction:AppThunk = () => (dispatch:AppDispatch) => {
-    dispatch(refreshTokenRequest());
-    apiRefreshToken(localStorage.getItem("refreshToken")!)
-      .then((res) => {
-        if (res && res.success) {
-          const accessToken = res.accessToken.split("Bearer ")[1];
-
-          deleteCookie("token");
-          localStorage.removeItem("refreshToken");
-
-          setCookie("token", accessToken, {});
-          localStorage.setItem("refreshToken", res.refreshToken);
-          dispatch(refreshTokenSuccess());
-        } else {
-          dispatch(refreshTokenFailed());
-        }
-        return res;
-      })
-      .then((fin) => {
-        return fetch(`${baseUrl}auth/user`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + getCookie("token"),
-          },
-        });
-      })
-      .then((res) => checkResponse(res))
-      .finally(() => {
-        dispatch(checkAuth());
-      });
-};
-
-export const resetPassword:AppThunk = (email: string, redirectFunc: () => void) => (dispatch:AppDispatch) => {
+export const resetPassword: AppThunk =
+  (email: string, redirectFunc: () => void) => (dispatch: AppDispatch) => {
     dispatch(resetPasswordRequest());
     apiPasswordReset(email)
       .then((res) => {
@@ -418,13 +326,11 @@ export const resetPassword:AppThunk = (email: string, redirectFunc: () => void) 
       .catch((err) => {
         console.log(err);
       });
-};
+  };
 
-export const savePassword:AppThunk = (
-  password: string,
-  code: string,
-  redirectFunc: () => void
-) => (dispatch:AppDispatch) => {
+export const savePassword: AppThunk =
+  (password: string, code: string, redirectFunc: () => void) =>
+  (dispatch: AppDispatch) => {
     dispatch(savePasswordRequest());
     apiPasswordSave(password, code)
       .then((res) => {
@@ -438,9 +344,13 @@ export const savePassword:AppThunk = (
       .catch((err) => {
         console.log(err);
       });
-};
+  };
 
-export function setCookie(name: string, value:string | number | boolean, props:any) {
+export function setCookie(
+  name: string,
+  value: string | number | boolean,
+  props: any
+) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == "number" && exp) {
@@ -463,7 +373,7 @@ export function setCookie(name: string, value:string | number | boolean, props:a
   document.cookie = updatedCookie;
 }
 
-export const getCookie = (name:string) => {
+export const getCookie = (name: string) => {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
@@ -474,6 +384,6 @@ export const getCookie = (name:string) => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-export function deleteCookie(name:string) {
-  setCookie(name, '', { expires: -1 });
+export function deleteCookie(name: string) {
+  setCookie(name, "", { expires: -1 });
 }
