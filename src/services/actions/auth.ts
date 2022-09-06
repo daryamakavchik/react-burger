@@ -331,7 +331,7 @@ export const updateUser:AppThunk = (email: string, name: string) => (dispatch:Ap
       });
 };
 
-export const registerUser:AppThunk = (name:string, email:string, password:string, redirectFunc:any) => (dispatch:AppDispatch) => {
+export const registerUser:AppThunk = (name:string, email:string, password:string, redirectFunc:() => void) => (dispatch:AppDispatch) => {
     dispatch(registerRequest());
     apiRegisterUser(name, email, password)
       .then((res) => {
@@ -404,7 +404,7 @@ export const refreshTokenAction:AppThunk = () => (dispatch:AppDispatch) => {
       });
 };
 
-export const resetPassword:AppThunk = (email: string, redirectFunc: any) => (dispatch:AppDispatch) => {
+export const resetPassword:AppThunk = (email: string, redirectFunc: () => void) => (dispatch:AppDispatch) => {
     dispatch(resetPasswordRequest());
     apiPasswordReset(email)
       .then((res) => {
@@ -423,7 +423,7 @@ export const resetPassword:AppThunk = (email: string, redirectFunc: any) => (dis
 export const savePassword:AppThunk = (
   password: string,
   code: string,
-  redirectFunc: any
+  redirectFunc: () => void
 ) => (dispatch:AppDispatch) => {
     dispatch(savePasswordRequest());
     apiPasswordSave(password, code)
@@ -440,7 +440,7 @@ export const savePassword:AppThunk = (
       });
 };
 
-export function setCookie(name: string, value:any, props:any) {
+export function setCookie(name: string, value:string | number | boolean, props:any) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == "number" && exp) {
@@ -475,5 +475,5 @@ export const getCookie = (name:string) => {
 };
 
 export function deleteCookie(name:string) {
-  setCookie(name, null, { expires: -1 });
+  setCookie(name, '', { expires: -1 });
 }

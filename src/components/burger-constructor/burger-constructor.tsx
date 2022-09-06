@@ -36,7 +36,7 @@ export const BurgerConstructor:FC = () => {
 
   const [, dropTarget] = useDrop(() => ({
     accept: "ingredient",
-    drop: (item:any, monitor) => {
+    drop: (item:TIngredientData, monitor) => {
       dropHandler(item);
     },
   }));
@@ -46,12 +46,12 @@ export const BurgerConstructor:FC = () => {
   const orderData =
     bun &&
     content &&
-    Array.from(content.map((el) => el._id))
-      .concat(bunIdArr)
-      .concat(bunIdArr);
+    Array.from(content.map((el:TIngredientData) => el._id))
+      .concat(bunIdArr!)
+      .concat(bunIdArr!);
 
   const openModal = () => {
-      dispatch(openOrderModal(orderData));
+      dispatch(openOrderModal(orderData!));
   };
   const redirectFunc = () => {
     history.replace({ pathname: "/login" });
@@ -63,10 +63,10 @@ export const BurgerConstructor:FC = () => {
 
   let total =
     bun && bunsPrice
-      ? content.reduce(function(acc, obj) {
+      ? content.reduce(function(acc:number, obj:TIngredientData) {
           return acc + obj.price * obj.count;
         }, bunsPrice)
-      : content.reduce(function(acc, obj) {
+      : content.reduce(function(acc:number, obj:TIngredientData) {
           return acc + obj.price * obj.count;
         }, 0);
 
@@ -114,10 +114,10 @@ export const BurgerConstructor:FC = () => {
         )}
         <ul className={styles.componentlist}>
           {content.map(
-            (item, index) =>
+            (item:TIngredientData, index:number) =>
               item.count > 0 && (
                 <BurgerElement
-                  key={item.key}
+                  key={item._id}
                   item={item}
                   handleClose={() => deleteHandler(item)}
                   index={index}

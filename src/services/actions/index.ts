@@ -37,8 +37,8 @@ export interface IGetDataRequest {
 export interface IGetDataSuccess {
   readonly type: typeof GET_DATA_SUCCESS,
   data: Array<TIngredientData>,
-  bun: object,
-  fillings: Array<any>
+  bun: TIngredientData | null,
+  fillings: Array<TIngredientData>
 }
 
 export interface IGetDataFailed {
@@ -48,7 +48,7 @@ export interface IGetDataFailed {
 export interface IAddItem {
   readonly type: typeof ADD_ITEM,
   item: TIngredientData,
-  key: any
+  key: string
 }
 
 export interface IAddBun {
@@ -100,7 +100,7 @@ const getDataRequest = (): IGetDataRequest => ({
 const getDataSuccess = (newdata:Array<TIngredientData>): IGetDataSuccess => ({
   type: GET_DATA_SUCCESS,
   data: newdata,
-  bun: {},
+  bun: null,
   fillings: []
 });
 
@@ -108,7 +108,7 @@ const getDataFailed = (): IGetDataFailed => ({
   type: GET_DATA_FAILED
 });
 
-const addItem = (item:TIngredientData, key: any): IAddItem => ({
+const addItem = (item:TIngredientData, key: string): IAddItem => ({
   type: ADD_ITEM,
   item,
   key

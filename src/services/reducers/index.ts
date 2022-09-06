@@ -30,7 +30,9 @@ export type TIngredientData = {
   image_mobile: string;
   image_large: string;
   __v: number;
-  count: number
+  count: number,
+  added?: number,
+  key?: string
 }
 
 export const initialConstructorState:TInitialConstructorState = {
@@ -44,12 +46,12 @@ export const initialConstructorState:TInitialConstructorState = {
   isModalOpen: false,
   isIngredientModal: false,
   currentIngredient: {
-    image: null,
-    name: null,
-    calories: null,
-    proteins: null,
-    fat: null,
-    carbohydrates: null,
+    image: '',
+    name: '',
+    calories: 0,
+    proteins: 0,
+    fat: 0,
+    carbohydrates: 0,
   }
 };
 
@@ -58,18 +60,18 @@ export type TInitialConstructorState = {
   hasError: boolean,
   data: Array<TIngredientData>,
   burgerIngredients: {
-    bun: any,
-    fillings: Array<any>
+    bun: TIngredientData | null,
+    fillings: Array<TIngredientData>
   },
   isModalOpen: boolean,
   isIngredientModal: boolean,
   currentIngredient: {
-    image: any,
-    name: any,
-    calories: any,
-    proteins: any,
-    fat: any,
-    carbohydrates: any,
+    image: string | null,
+    name: string | null,
+    calories: number | null,
+    proteins: number | null,
+    fat: number | null,
+    carbohydrates: number | null,
   }
 };
 
@@ -105,7 +107,7 @@ export const dataReducer = (state = initialConstructorState, action: TConstructo
   }
 };
 
-export const constructorReducer = (state = initialConstructorState, action:TConstructorActions) => {
+export const constructorReducer = (state = initialConstructorState, action:TConstructorActions):TInitialConstructorState => {
   switch (action.type) {
     case ADD_ITEM: {
       let ingredientAmount = state.burgerIngredients.fillings.filter(function(item:TIngredientData){return item._id === action.item._id}).length + 1; 
@@ -136,7 +138,7 @@ export const constructorReducer = (state = initialConstructorState, action:TCons
         burgerIngredients: {
           ...state.burgerIngredients,
           fillings: state.burgerIngredients.fillings
-            .map((item?:TIngredientData) =>
+            .map((item:TIngredientData) =>
               item?._id === action.item?._id
                 ? { ...item, count: item.count - 1 }
                 : item
@@ -175,7 +177,7 @@ export const constructorReducer = (state = initialConstructorState, action:TCons
   }
 };
 
-export const currentIngredientReducer = (state = initialConstructorState, action:TConstructorActions) => {
+export const currentIngredientReducer = (state = initialConstructorState, action:TConstructorActions):TInitialConstructorState => {
   switch (action.type) {
     case OPEN_CURRENT_INGREDIENT: {
       return {

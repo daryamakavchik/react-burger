@@ -20,7 +20,7 @@ export const OrderInfoPage:FC<TIngredientDataArray> = (data:TIngredientDataArray
   const { currentOrder } = useSelector((store:RootState) => store.feed);
   const { orders } = useSelector((store:RootState) => store.ws);
   const done = currentOrder?.status === "done";
-  const dateString = editDate(currentOrder?.createdAt);
+  const dateString = editDate(currentOrder?.createdAt!);
   const token = getCookie('token');
   const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
   const wsAuthUrl = `wss://norma.nomoreparties.space/orders` + `?token=${token}`;
@@ -30,7 +30,7 @@ export const OrderInfoPage:FC<TIngredientDataArray> = (data:TIngredientDataArray
   
   ingredients = currentOrder?.ingredients;
   
-  const uniqueArr = [...(ingredients !== undefined ? ingredients : []).reduce((mp:any, ingr:any) => {
+  const uniqueArr = [...(ingredients !== undefined ? ingredients : []).reduce((mp:any, ingr:string) => {
     if (!mp.has(ingr)) 
       mp.set(ingr, { ingr, count: 0 });
       mp.get(ingr).count++;
@@ -46,7 +46,7 @@ export const OrderInfoPage:FC<TIngredientDataArray> = (data:TIngredientDataArray
 
 
   useEffect(() => {
-    const order = orders.orders.find((order:TOrder) => order._id === id!);
+    const order = orders!.orders.find((order:TOrder) => order._id === id!);
     order && dispatch(selectOrderAction(order));
   }, [currentOrder, id, orders, dispatch]);
 

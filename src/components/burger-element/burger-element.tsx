@@ -35,10 +35,10 @@ export const BurgerElement:FC<TBurgerElementProps> = (props:TBurgerElementProps)
       const elementMiddle = (elementPos.bottom - elementPos.top) / 2;
       const userCursorOffset = monitor!.getClientOffset()!.y - elementPos.top;
 
-      if (dragIndex < hoverIndex && userCursorOffset < elementMiddle) {
+      if (dragIndex! < hoverIndex && userCursorOffset < elementMiddle) {
         return;
       }
-      if (dragIndex > hoverIndex && userCursorOffset > elementMiddle) {
+      if (dragIndex! > hoverIndex && userCursorOffset > elementMiddle) {
         return;
       }
 

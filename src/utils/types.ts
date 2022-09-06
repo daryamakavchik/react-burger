@@ -7,9 +7,9 @@ export type TLocationState = {
   }
 
 export type TBurgerElementProps = {
-    item: any,
+    item: TIngredientData,
     index: number,
-    handleClose: any
+    handleClose: (item:TIngredientData) => void
   }
 
 export type TDetailsModalProps = {
@@ -31,16 +31,16 @@ export type TIngredientDetailsProps = {
 
 export type TModalProps = {
   title?: string,
-  onClose?: any,
+  onClose?: () => void
   children?: React.ReactNode
 }
 
 export type TModalOverlayProps = {
-  onClick: any
+  onClick: () => void
 }
 
 export type TOrderCardProps = { 
-  order: any,
+  order: TOrder,
   key: string
 }
 
@@ -85,5 +85,6 @@ export type TIngredientData = {
   image_mobile: string;
   image_large: string;
   __v: number;
-  count: number
+  count: number;
+  index?: number
 }

@@ -1,3 +1,4 @@
+import { TOrder } from "../../utils/types";
 import { POST_ORDER_REQUEST, POST_ORDER_SUCCESS, POST_ORDER_FAILED, CLOSE_ORDER_MODAL, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED, GET_USER_ORDER_REQUEST, GET_USER_ORDER_SUCCESS, GET_USER_ORDER_FAILED  } from "../actions/order";
 import { TOrderActions } from "../actions/order";
 
@@ -21,9 +22,9 @@ export type TInitialOrderState = {
   orderRequest: boolean,
   orderLoaded: boolean,
   orderFailed: boolean,
-  order: any,
-  orders: any,
-  currentOrder: any,
+  order: TOrder | null,
+  orders: Array<TOrder> | null,
+  currentOrder: TOrder | null,
   orderNum: number,
 };
 

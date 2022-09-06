@@ -1,3 +1,5 @@
+import { TResponse } from "../reducers/ws";
+
 export const WS_CONNECTION_CLOSED: "WS_CONNECTION_CLOSED" =
   "WS_CONNECTION_CLOSED";
 export const WS_CONNECTION_ERROR: "WS_CONNECTION_ERROR" = "WS_CONNECTION_ERROR";
@@ -18,7 +20,7 @@ export interface IWsConnectionSuccess {
 
 export interface IWsConnectionError {
   readonly type: typeof WS_CONNECTION_ERROR;
-  error: any;
+  error: Event;
 }
 
 export interface IWsConnectionClosed {
@@ -27,12 +29,12 @@ export interface IWsConnectionClosed {
 
 export interface IWsConnectionGetOrders {
   readonly type: typeof WS_GET_ORDERS;
-  orders: any;
+  orders: TResponse;
 }
 
 export interface IWsConnectionSendOrder {
   readonly type: typeof WS_SEND_ORDER;
-  order: any;
+  order: string[];
 }
 
 export type TWSActions =
@@ -56,7 +58,7 @@ export const wsConnectionSuccessAction = (): IWsConnectionSuccess => {
   };
 };
 
-export const wsConnectionErrorAction = (error: any): IWsConnectionError => {
+export const wsConnectionErrorAction = (error: Event): IWsConnectionError => {
   return {
     type: WS_CONNECTION_ERROR,
     error: error,
@@ -70,7 +72,7 @@ export const wsConnectionClosedAction = (): IWsConnectionClosed => {
 };
 
 export const wsConnectionGetOrdersAction = (
-  orders: Array<any>
+  orders: TResponse
 ): IWsConnectionGetOrders => {
   return {
     type: WS_GET_ORDERS,

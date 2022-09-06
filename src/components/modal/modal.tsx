@@ -15,7 +15,7 @@ export const Modal:FC<TModalProps> = (props:TModalProps) => {
   const isIngredientModal = useSelector((store:RootState) => store.ingr.isIngredientModal);
 
   const handleEscKeydown = (event: KeyboardEvent) => {
-    event.key === "Escape" && props.onClose();
+    event.key === "Escape" && props.onClose!();
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const Modal:FC<TModalProps> = (props:TModalProps) => {
        {isIngredientModal && <h3 className={styles.title}>{props.title}</h3> }
         {props.children}
       </div>
-      <ModalOverlay onClick={props.onClose} />
+      <ModalOverlay onClick={props.onClose!} />
     </>,
     modalsContainer!
   );

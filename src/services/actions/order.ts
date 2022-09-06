@@ -1,6 +1,7 @@
 import { apiPostOrder, apiGetOrders, apiGetUserOrder } from "../../utils/api";
 import { wsConnectionSendOrderAction } from "./ws";
 import { AppDispatch } from "./auth";
+import { TOrder } from "../../utils/types";
 export const POST_ORDER_REQUEST:"POST_ORDER_REQUEST" = "POST_ORDER_REQUEST";
 export const POST_ORDER_SUCCESS:"POST_ORDER_SUCCESS" = "POST_ORDER_SUCCESS";
 export const POST_ORDER_FAILED:"POST_ORDER_FAILED" = "POST_ORDER_FAILED";
@@ -18,7 +19,7 @@ export interface IPostOrderRequest {
 
 export interface IPostOrderSuccess {
   readonly type: typeof POST_ORDER_SUCCESS,
-  order: any,
+  order: TOrder,
   orderNum: number
 }
 
@@ -36,7 +37,7 @@ export interface IGetOrderRequest {
 
 export interface IGetOrderSuccess {
   readonly type: typeof GET_ORDER_SUCCESS,
-  orders: Array<any>
+  orders: Array<TOrder>
 }
 
 export interface IGetOrderFailed {
@@ -49,7 +50,7 @@ export interface IGetUserOrderRequest {
 
 export interface IGetUserOrderSuccess {
   readonly type: typeof GET_USER_ORDER_SUCCESS,
-  order: any
+  order: TOrder
 }
 
 export interface IGetUserOrderFailed {
@@ -72,7 +73,7 @@ const postOrderRequest = ():IPostOrderRequest => ({
   type: POST_ORDER_REQUEST
 });
 
-const postOrderSuccess = (order: any, orderNum: number):IPostOrderSuccess => ({
+const postOrderSuccess = (order: TOrder, orderNum: number):IPostOrderSuccess => ({
   type: POST_ORDER_SUCCESS,
   order,
   orderNum
@@ -90,7 +91,7 @@ const getOrderRequest = ():IGetOrderRequest => ({
   type: GET_ORDER_REQUEST
 });
 
-const getOrderSuccess = (orders:Array<any>):IGetOrderSuccess => ({
+const getOrderSuccess = (orders:Array<TOrder>):IGetOrderSuccess => ({
   type: GET_ORDER_SUCCESS,
   orders
 });
@@ -103,7 +104,7 @@ const getUserOrderRequest = ():IGetUserOrderRequest => ({
   type: GET_USER_ORDER_REQUEST
 });
 
-const getUserOrderSuccess = (order:any):IGetUserOrderSuccess => ({
+const getUserOrderSuccess = (order:TOrder):IGetUserOrderSuccess => ({
   type: GET_USER_ORDER_SUCCESS,
   order
 });

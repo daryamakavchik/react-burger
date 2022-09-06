@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useRef, useState } from "react";
+import { useRef, useState, RefObject } from "react";
 import { useSelector } from '../../services/actions/auth';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientCategory } from "../ingredient-category/ingredient-category";
@@ -27,7 +27,7 @@ export const BurgerIngredients:FC = () => {
       top: ref.current.offsetTop - containerRef.current!.offsetTop - 40,
     });
 
-  const onTabClick = (tab:any, categoryRef:any) => () => {
+  const onTabClick = (tab:string, categoryRef:RefObject<HTMLElement>) => () => {
     setCurrent(tab);
     scroll(categoryRef);
   };

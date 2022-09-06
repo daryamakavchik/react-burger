@@ -11,7 +11,7 @@ export const Orders:FC = () => {
   const token = getCookie('token');
   const wsUrl = `wss://norma.nomoreparties.space/orders` + `?token=${token}`;
   let { orders } = useSelector((store:RootState) => store.ws);
-  const reversedorders = [...orders.orders].reverse();
+  const reversedorders = [...orders!.orders].reverse();
   
   useEffect(() => {
     dispatch(wsConnectionStartAction(wsUrl));
