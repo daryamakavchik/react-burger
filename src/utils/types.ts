@@ -9,10 +9,11 @@ export type TLocationState = {
 export type TBurgerElementProps = {
     item: TIngredientData,
     index: number,
-    handleClose: (item:TIngredientData) => void
+    handleClose: (item:TIngredientData) => void,
+    key?: string | number
   }
 
-export type TDetailsModalProps = {
+export type TDetailsPageProps = {
     title: string;
     children: React.ReactNode
   }
@@ -86,5 +87,7 @@ export type TIngredientData = {
   image_large: string;
   __v: number;
   count: number;
-  index?: number
+  added?: number;
+  index?: number;
+  key?: string | number
 }

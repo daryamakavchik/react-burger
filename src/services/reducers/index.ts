@@ -16,24 +16,7 @@ import { userReducer } from "./auth";
 import { feedReducer } from "./feed";
 import { wsReducer } from "./ws";
 import { TConstructorActions } from "../actions";
-
-export type TIngredientData = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  count: number,
-  added?: number,
-  key?: string
-}
+import { TIngredientData } from "../../utils/types";
 
 export const initialConstructorState:TInitialConstructorState = {
   isLoading: false,

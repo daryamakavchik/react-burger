@@ -11,7 +11,7 @@ import { RegisterPage } from "../../pages/register";
 import { FeedPage } from "../../pages/feed";
 import { ResetPasswordPage } from "../../pages/reset-password";
 import { ProfilePage } from "../../pages/profile";
-import { DetailsModal } from "../details-modal/details-modal";
+import { DetailsPage } from "../details-page/details-page";
 import { Modal } from "../modal/modal";
 import { AppHeader } from "../app-header/app-header";
 import { OrderDetails } from "../order-details/order-details";
@@ -73,9 +73,9 @@ export const App:FC = () => {
             </Route>
           )}
           <Route path="/ingredients/:id" exact={true}>
-            <DetailsModal title="Детали ингредиента">
+            <DetailsPage title="Детали ингредиента">
               <IngredientDetails data={data} />
-            </DetailsModal>
+            </DetailsPage>
           </Route>
           <Route path="/profile/orders/:id" exact={true} > 
             <OrderInfoPage data={data}  /> 
@@ -89,15 +89,6 @@ export const App:FC = () => {
         </Switch>
         {background && (
           <>
-            <ProtectedRoute
-              path="/"
-              exact={true}
-              children={
-                <Modal>
-                  <OrderDetails />
-                </Modal>
-              }
-            />
             <Route
               path="/feed/:id"
               children={

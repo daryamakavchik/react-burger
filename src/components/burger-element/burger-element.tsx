@@ -61,7 +61,6 @@ export const BurgerElement:FC<TBurgerElementProps> = (props:TBurgerElementProps)
         price={props.item.price}
         thumbnail={props.item.image}
         handleClose={() => props.handleClose(props.item)}
-        index={props.index}
       />
     </li>
   );

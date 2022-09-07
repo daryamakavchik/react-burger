@@ -10,8 +10,6 @@ import styles from "./modal.module.css";
 const modalsContainer = document.querySelector("#modals");
 
 export const Modal:FC<TModalProps> = (props:TModalProps) => {
-  const isOrderModal = useSelector((store) => store.feed.isModalOpen);
-  const isIngredientModal = useSelector((store) => store.ingr.isIngredientModal);
 
   const handleEscKeydown = (event: KeyboardEvent) => {
     event.key === "Escape" && props.onClose!();
@@ -26,11 +24,11 @@ export const Modal:FC<TModalProps> = (props:TModalProps) => {
 
   return ReactDOM.createPortal(
     <>
-      <div className={isOrderModal ? styles.ordermodal : styles.modal}>
+      <div className={!props.title ? styles.ordermodal : styles.modal}>
         <button className={styles.closebutton} onClick={props.onClose}>
           <CloseIcon type='primary' />
         </button>
-       {isIngredientModal && <h3 className={styles.title}>{props.title}</h3> }
+       {props.title && <h3 className={styles.title}>{props.title}</h3> }
         {props.children}
       </div>
       <ModalOverlay onClick={props.onClose!} />

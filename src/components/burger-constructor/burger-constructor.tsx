@@ -10,8 +10,9 @@ import { OrderDetails } from "../order-details/order-details";
 import { BurgerElement } from "../burger-element/burger-element";
 import { Loader } from "../loader/loader";
 
-import { onDropHandler, deleteItem, TIngredientData } from "../../services/actions";
+import { onDropHandler, deleteItem} from "../../services/actions";
 import { openOrderModal, closeOrderModal } from "../../services/actions/order";
+import { TIngredientData } from "../../utils/types";
 import styles from "./burger-constructor.module.css";
 
 export const BurgerConstructor:FC = () => {
@@ -114,10 +115,10 @@ export const BurgerConstructor:FC = () => {
         )}
         <ul className={styles.componentlist}>
           {content.map(
-            (item:TIngredientData, index:number) =>
+            (item, index) =>
               item.count > 0 && (
                 <BurgerElement
-                  key={item._id}
+                  key={item.key}
                   item={item}
                   handleClose={() => deleteHandler(item)}
                   index={index}

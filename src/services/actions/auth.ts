@@ -184,7 +184,7 @@ const savePasswordFailed = (): ISavePasswordFailed => ({
 });
 
 export const loginUser: AppThunk =
-  (email: string, password: string) => (dispatch: AppDispatch) => {
+  (email: string, password: string) => (dispatch) => {
     dispatch(loginRequest());
     apiLoginUser(email, password)
       .then((res) => {
@@ -203,7 +203,7 @@ export const loginUser: AppThunk =
       });
   };
 
-export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
+export const logoutUser: AppThunk = () => (dispatch) => {
   dispatch(logoutRequest());
   apiLogoutUser(localStorage.getItem("refreshToken")!)
     .then((res) => {
@@ -221,7 +221,7 @@ export const logoutUser: AppThunk = () => (dispatch: AppDispatch) => {
 };
 
 export const updateUser: AppThunk =
-  (email: string, name: string) => (dispatch: AppDispatch) => {
+  (email: string, name: string) => (dispatch) => {
     dispatch(updateRequest());
     apiUpdateUser(email, name)
       .then((res) => {
@@ -238,7 +238,7 @@ export const updateUser: AppThunk =
 
 export const registerUser: AppThunk =
   (name: string, email: string, password: string, redirectFunc: () => void) =>
-  (dispatch: AppDispatch) => {
+  (dispatch) => {
     dispatch(registerRequest());
     apiRegisterUser(name, email, password)
       .then((res) => {
@@ -258,7 +258,7 @@ export const registerUser: AppThunk =
       });
   };
 
-export const getUserInfo: AppThunk = () => (dispatch: AppDispatch) => {
+export const getUserInfo: AppThunk = () => (dispatch) => {
   dispatch(getUserInfoRequest());
   apiUserRequest()
     .catch((err) => {
@@ -278,7 +278,7 @@ export const getUserInfo: AppThunk = () => (dispatch: AppDispatch) => {
     });
 };
 
-export const refreshTokenAction: AppThunk = () => (dispatch: AppDispatch) => {
+export const refreshTokenAction: AppThunk = () => (dispatch) => {
   dispatch(refreshTokenRequest());
   apiRefreshToken(localStorage.getItem("refreshToken")!)
     .then((res) => {
@@ -312,7 +312,7 @@ export const refreshTokenAction: AppThunk = () => (dispatch: AppDispatch) => {
 };
 
 export const resetPassword: AppThunk =
-  (email: string, redirectFunc: () => void) => (dispatch: AppDispatch) => {
+  (email: string, redirectFunc: () => void) => (dispatch) => {
     dispatch(resetPasswordRequest());
     apiPasswordReset(email)
       .then((res) => {
@@ -330,7 +330,7 @@ export const resetPassword: AppThunk =
 
 export const savePassword: AppThunk =
   (password: string, code: string, redirectFunc: () => void) =>
-  (dispatch: AppDispatch) => {
+  (dispatch) => {
     dispatch(savePasswordRequest());
     apiPasswordSave(password, code)
       .then((res) => {

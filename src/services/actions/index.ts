@@ -1,6 +1,7 @@
 import { fetchData } from "../../utils/api";
 import { v4 as uuidv4 } from "uuid";
 import { AppDispatch } from "../store";
+import { TIngredientData } from "../../utils/types";
 
 export const GET_DATA_REQUEST:"GET_DATA_REQUEST" = "GET_DATA_REQUEST";
 export const GET_DATA_SUCCESS:"GET_DATA_SUCCESS" = "GET_DATA_SUCCESS";
@@ -13,22 +14,6 @@ export const OPEN_CURRENT_INGREDIENT:"OPEN_CURRENT_INGREDIENT" = "OPEN_CURRENT_I
 export const SET_CURRENT_INGREDIENT:"SET_CURRENT_INGREDIENT" = "SET_CURRENT_INGREDIENT";
 export const CLOSE_CURRENT_INGREDIENT:"CLOSE_CURRENT_INGREDIENT" = "CLOSE_CURRENT_INGREDIENT";
 export const POST_ORDER_SUCCESS:"POST_ORDER_SUCCESS" = "POST_ORDER_SUCCESS";
-
-export type TIngredientData = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  count: number
-}
 
 export interface IGetDataRequest {
   readonly type: typeof GET_DATA_REQUEST
@@ -48,7 +33,7 @@ export interface IGetDataFailed {
 export interface IAddItem {
   readonly type: typeof ADD_ITEM,
   item: TIngredientData,
-  key: string
+  key: string | number
 }
 
 export interface IAddBun {
