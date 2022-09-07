@@ -38,7 +38,6 @@ import {
   ISavePasswordSuccess,
   ISavePasswordFailed,
   AppThunk,
-  AppDispatch,
   TUser,
 } from "../store";
 

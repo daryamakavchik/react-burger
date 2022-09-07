@@ -14,7 +14,6 @@ import { ProfilePage } from "../../pages/profile";
 import { DetailsPage } from "../details-page/details-page";
 import { Modal } from "../modal/modal";
 import { AppHeader } from "../app-header/app-header";
-import { OrderDetails } from "../order-details/order-details";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import { OrderInfoPage } from "../../pages/orderinfo";
 
