@@ -11,7 +11,7 @@ import {
 
 export const FeedPage:FC = () => {
   const dispatch = useDispatch();
-  const { orders, total, totalToday } = useSelector((store) => store.ws);
+  const { orders } = useSelector((store) => store.ws);
   
   const statusArrays = filterOrders(orders!.orders);
   const doneArray = statusArrays?.done.slice(0, 30);
@@ -58,7 +58,7 @@ export const FeedPage:FC = () => {
               Выполнено за все время:
             </p>
             <p className={`${styles.digitslarge} text text_type_digits-large`}>
-              {total}
+              {orders?.total}
             </p>
           </div>
           <div>
@@ -66,7 +66,7 @@ export const FeedPage:FC = () => {
               Выполнено за сегодня:
             </p>
             <p className={`${styles.digitslarge} text text_type_digits-large`}>
-              {totalToday}
+              {orders?.totalToday}
             </p>
           </div>
         </div>
