@@ -35,11 +35,12 @@ export const BurgerConstructor:FC = () => {
     dispatch(deleteItem(item));
   };
 
-  const [, dropTarget] = useDrop(() => ({
+  const [{ isOver, canDrop }, dropTarget] = useDrop(() => ({
     accept: "ingredient",
     drop: (item:TIngredientData, monitor) => {
       dropHandler(item);
     },
+    collect: monitor => ({ isOver: monitor.isOver(), canDrop: monitor.canDrop() }),
   }));
 
   const bunsPrice = bun && bun.price * 2;
@@ -113,7 +114,7 @@ export const BurgerConstructor:FC = () => {
             />
           </div>
         )}
-        <ul className={styles.componentlist}>
+        <ul className={`${styles.componentlist} ${canDrop && styles.componentlistactive}`}>
           {content.map(
             (item, index) =>
               item.count > 0 && (

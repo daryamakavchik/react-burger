@@ -19,6 +19,10 @@
   overflow-y: scroll;
 }
 
+.componentlistactive {
+  box-shadow: 0 0 50px 1px linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);;
+}
+
 .component {
   display: flex;
   min-width: 488px;
