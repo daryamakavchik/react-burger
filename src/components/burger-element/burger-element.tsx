@@ -2,7 +2,7 @@ import React, { useRef, FC } from "react";
 import { useDispatch } from '../../services/store';
 import { useDrag, useDrop } from "react-dnd";
 import { TBurgerElementProps } from "../../utils/types";
-import { ConstructorElement } from "../../../node_modules/@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement, DragIcon } from "../../../node_modules/@ya.praktikum/react-developer-burger-ui-components";
 import { UPDATE_ITEMS } from "../../services/actions";
 import styles from "../burger-constructor/burger-constructor.module.css";
 
@@ -56,6 +56,7 @@ export const BurgerElement:FC<TBurgerElementProps> = (props:TBurgerElementProps)
 
   return (
     <li className={styles.component} ref={ref} style={{ opacity }}>
+      <DragIcon type={"primary"} />
       <ConstructorElement
         text={props.item.name}
         price={props.item.price}

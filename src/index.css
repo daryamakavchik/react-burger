@@ -26,3 +26,7 @@ code {
 .input__textfield {
   color: #8585AD !important;
 }
+
+.constructor-element{
+  margin-right: 8px;
+}

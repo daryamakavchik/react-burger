@@ -37,7 +37,7 @@ export const BurgerConstructor:FC = () => {
 
   const [{ isOver, canDrop }, dropTarget] = useDrop(() => ({
     accept: "ingredient",
-    drop: (item:TIngredientData, monitor) => {
+    drop: (item:TIngredientData) => {
       dropHandler(item);
     },
     collect: monitor => ({ isOver: monitor.isOver(), canDrop: monitor.canDrop() }),
@@ -114,7 +114,7 @@ export const BurgerConstructor:FC = () => {
             />
           </div>
         )}
-        <ul className={`${styles.componentlist} ${canDrop && styles.componentlistactive}`}>
+        <ul className={`${styles.componentlist}`}>
           {content.map(
             (item, index) =>
               item.count > 0 && (

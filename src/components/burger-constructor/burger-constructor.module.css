@@ -17,16 +17,21 @@
   height: fit-content;
   max-height: 464px;
   overflow-y: scroll;
-}
-
-.componentlistactive {
-  box-shadow: 0 0 50px 1px linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);;
+  transform: translateX(-30px);
 }
 
 .component {
   display: flex;
-  min-width: 488px;
-  height: 80px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 568px;
+  cursor: grab;
+  opacity: 1;
+}
+
+.component:active{
+  cursor: grabbing;
 }
 
 .total {
