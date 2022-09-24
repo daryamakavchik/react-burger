@@ -57,8 +57,8 @@ export interface ICloseCurrentIngredient {
 
 export interface IUpdateItems {
   readonly type: typeof UPDATE_ITEMS,
-  toIndex: any,
-  fromIndex: any
+  fromIndex: number,
+  toIndex: number
 }
 
 export interface IOrderSuccess {
@@ -113,10 +113,10 @@ const closeIngredient = (): ICloseCurrentIngredient => ({
   type: CLOSE_CURRENT_INGREDIENT
 });
 
-const updateIngredients = (toIndex: any, fromIndex: any):IUpdateItems => ({
+export const updateIngredients = (fromIndex: number, toIndex: number):IUpdateItems => ({
   type: UPDATE_ITEMS,
-  toIndex,
-  fromIndex
+  fromIndex,
+  toIndex
 });
 
 export const setIngredientsData = () => (dispatch:AppDispatch) => {
@@ -157,8 +157,3 @@ export const openCurrentIngredient = (props:TIngredientData) => (dispatch:AppDis
 export const closeCurrentIngredient = () => (dispatch:AppDispatch) => {
     return dispatch(closeIngredient());
 };
-
-
-export const updateItems = () => (dispatch:AppDispatch) => {
-    dispatch(updateIngredients('', ''))
-}

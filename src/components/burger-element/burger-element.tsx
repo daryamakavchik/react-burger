@@ -3,15 +3,19 @@ import { useDispatch } from '../../services/store';
 import { useDrag, useDrop } from "react-dnd";
 import { TBurgerElementProps } from "../../utils/types";
 import { ConstructorElement, DragIcon } from "../../../node_modules/@ya.praktikum/react-developer-burger-ui-components";
-import { UPDATE_ITEMS } from "../../services/actions";
+import { updateIngredients } from "../../services/actions";
 import styles from "../burger-constructor/burger-constructor.module.css";
 
 export const BurgerElement:FC<TBurgerElementProps> = (props:TBurgerElementProps) => {
   const dispatch = useDispatch();
   const ref = useRef<HTMLLIElement>(null);
+  const { key, index } = props!;
+
   const [{ isDrag }, drag] = useDrag({
     type: "item",
-    item: props.index,
+    item: () => {
+      return { key, index }
+    },
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
@@ -19,12 +23,12 @@ export const BurgerElement:FC<TBurgerElementProps> = (props:TBurgerElementProps)
 
   const [, drop] = useDrop({
     accept: "item",
-    hover(item, monitor) {
+    hover(item:TBurgerElementProps, monitor) {
       if (!ref.current) {
         return;
       }
 
-      const dragIndex = props.item.index;
+      const dragIndex = item.index!;
       const hoverIndex = props.index;
 
       if (dragIndex === hoverIndex) {
@@ -41,13 +45,8 @@ export const BurgerElement:FC<TBurgerElementProps> = (props:TBurgerElementProps)
       if (dragIndex! > hoverIndex && userCursorOffset > elementMiddle) {
         return;
       }
-
-      dispatch({
-        type: UPDATE_ITEMS,
-        fromIndex: dragIndex,
-        toIndex: hoverIndex,
-      });
-      props.item.index = hoverIndex;
+      dispatch(updateIngredients(dragIndex!, hoverIndex!));
+      item.index = hoverIndex;
     },
   });
 

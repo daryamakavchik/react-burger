@@ -12,8 +12,8 @@ export const IngredientCategory:FC<TIngredientCategoryProps> = forwardRef<HTMLIn
           {title}
         </h2>
         <div className={styles.optionscards}>
-          {ingredients.map((el, ind) => (
-            <BurgerIngredient key={ind} {...el}></BurgerIngredient>
+          {ingredients.map((el, index) => (
+            <BurgerIngredient key={index} {...el}></BurgerIngredient>
           ))}
         </div>
       </>

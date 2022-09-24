@@ -10,7 +10,7 @@ export type TBurgerElementProps = {
     item: TIngredientData,
     index: number,
     handleClose: (item:TIngredientData) => void,
-    key?: string | number
+    key?: string | number,
   }
 
 export type TDetailsPageProps = {
