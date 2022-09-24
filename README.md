@@ -15,7 +15,6 @@
 * выйти из личного кабинета
 * восстановить забытый пароль
 
-https://user-images.githubusercontent.com/90967822/192062517-cde6c500-32c8-4993-895f-06fd391c85a3.mp4
 
 ## СТЕК:
 * TypeScript
