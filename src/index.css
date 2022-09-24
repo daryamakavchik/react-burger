@@ -29,4 +29,13 @@ code {
 
 .constructor-element{
   margin-right: 8px;
+  width: 530px;
+}
+
+.constructor-element_pos_top{
+  margin-right: 8px;
+}
+
+.constructor-element_pos_bottom{
+  margin-right: 8px;
 }

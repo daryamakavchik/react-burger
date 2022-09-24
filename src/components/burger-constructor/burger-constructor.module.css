@@ -28,6 +28,7 @@
   min-width: 568px;
   cursor: grab;
   opacity: 1;
+  gap: 13.5px;
 }
 
 .component:active{

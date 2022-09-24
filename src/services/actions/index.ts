@@ -134,8 +134,8 @@ export const setIngredientsData = () => (dispatch:AppDispatch) => {
 }
 
 export const onDropHandler = (item:TIngredientData) => (dispatch:AppDispatch) => {
+    let key = uuidv4();
     if (item.type !== 'bun') {
-      let key = uuidv4()
       return dispatch(addItem(item, key));
     }
     else {

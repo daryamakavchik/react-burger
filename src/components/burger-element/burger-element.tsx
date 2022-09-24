@@ -56,7 +56,7 @@ export const BurgerElement:FC<TBurgerElementProps> = (props:TBurgerElementProps)
 
   return (
     <li className={styles.component} ref={ref} style={{ opacity }}>
-      <DragIcon type={"primary"} />
+      <DragIcon type='primary'></DragIcon>
       <ConstructorElement
         text={props.item.name}
         price={props.item.price}
