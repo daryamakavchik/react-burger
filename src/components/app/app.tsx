@@ -49,7 +49,7 @@ export const App:FC = () => {
       <section className={styles.App}>
         <AppHeader />
         <Switch location={background || location}>
-          <Route path="/" exact={true}>
+          <Route path="/react-burger" exact={true}>
             <HomePage />
           </Route>
           <Route path="/login" exact={true}>
