@@ -3,7 +3,7 @@
 ## ОПИСАНИЕ ПРОЕКТА
 Проект выполнен в рамках курса React-разработки от Яндекс Практикум.
 
-https://user-images.githubusercontent.com/90967822/192182387-7e77c61b-3da3-4366-99f8-ca66ce3958a0.mp4
+https://user-images.githubusercontent.com/90967822/192182698-3ceed458-3e94-4520-ab85-d7d09dfe51c3.mp4
 
 ### Stellar Burgers - интерактивное приложение, пользователь которого может:
 
