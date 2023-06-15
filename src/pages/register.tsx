@@ -52,7 +52,7 @@ export const RegisterPage:FC = () => {
         value={nameValue}
         name={"name"}
         error={false}
-        errorText={"Ошибка"}
+        errorText={"Error"}
         size={"default"}
       />
       <div className={styles.email}>

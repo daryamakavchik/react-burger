@@ -34,7 +34,7 @@ export const ProfilePage:FC = () => {
                   onClick={() => setHistoryLinkActive(false)}
                   activeClassName={styles.textactive}
                 >
-                  <span>Профиль</span>
+                  <span>Profile</span>
                 </NavLink>
               </li>
               <li>
@@ -51,7 +51,7 @@ export const ProfilePage:FC = () => {
                   activeClassName={styles.textactive}
                   id='orderhistory'
                 >
-                  <span>История заказов</span>
+                  <span>Order history</span>
                 </NavLink>
               </li>
               <li>
@@ -67,7 +67,7 @@ export const ProfilePage:FC = () => {
                   activeClassName={styles.textactive}
                   onClick={logout}
                 >
-                  <span>Выход</span>
+                  <span>Exit</span>
                 </NavLink>
               </li>
             </ul>
@@ -75,7 +75,7 @@ export const ProfilePage:FC = () => {
               <p
                 className={ !isHistoryLinkActive ? `${styles.subtext} text text_type_main-default text_color_inactive` : `${styles.disabledsubtext}`}
               >
-                В этом разделе вы можете изменить свои персональные данные.
+                Here you can edit yuor personal data.
               </p>
             </div>
           </div>

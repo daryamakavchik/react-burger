@@ -3,7 +3,6 @@ import { useRef, useState, RefObject } from "react";
 import { useSelector } from '../../services/store';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientCategory } from "../ingredient-category/ingredient-category";
-import { TIngredientData } from '../../utils/types';
 import styles from "./burger-ingredients.module.css";
 
 export const BurgerIngredients:FC = () => {
@@ -47,43 +46,43 @@ export const BurgerIngredients:FC = () => {
     !isLoading ?
     <>
       <section className={styles.ingridients}>
-        <p className="text text_type_main-large">Соберите бургер</p>
+        <p className="text text_type_main-large">Create a burger</p>
         <div className={styles.optionselection}>
           <Tab value='' active={current === "bun"} onClick={onTabClick("bun", bunsRef)}>
-            Булки
+            Buns
           </Tab>
           <Tab value=''
             active={current === "sauce"}
             onClick={onTabClick("sauce", sauceRef)}
           >
-            Соусы
+            Sauces
           </Tab>
           <Tab value=''
             active={current === "main"}
             onClick={onTabClick("main", mainRef)}
           >
-            Начинки
+            Contents
           </Tab>
         </div>
         <section className={styles.options} ref={containerRef} onScroll={handleScroll}>
           <>
             <IngredientCategory
               id="bun"
-              title="Булки"
+              title="Bins"
               ingredients={bunsArr}
               ref={bunsRef}
               className={styles.smallsection}
             />
             <IngredientCategory
               id="sauce"
-              title="Соусы"
+              title="Sauces"
               ingredients={sauceArr}
               ref={sauceRef}
               className={styles.smallsection}
             />
             <IngredientCategory
               id="main"
-              title="Начинки"
+              title="Contents"
               ingredients={mainArr}
               ref={mainRef}
               className={styles.smallsection}

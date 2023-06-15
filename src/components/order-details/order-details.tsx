@@ -11,16 +11,16 @@ export const OrderDetails:FC = () => {
         {orderNum}
       </p>
       <p className={`${styles.subtitle} text text_type_digits_medium`}>
-        идентификатор заказа
+        order ID
       </p>
       <div className={styles.check}></div>
       <p className={`${styles.text} text text_type_main_default`}>
-        Ваш заказ начали готовить
+        Your order is being prepared
       </p>
       <p
         className={`${styles.text} text text_type_main_default text_color_inactive`}
       >
-        Дождитесь готовности на орбитальной станции
+        Wait for your order at the orbital station
       </p>
     </>
   );

@@ -17,14 +17,14 @@ export const AppHeader:FC = () => {
         <Link className={styles.headernav} to='/'>
             <BurgerIcon type="secondary" />
             <div className={`${styles.icon} p-2`}>
-              Конструктор
+              Constructor
             </div>
             </Link>
         </li>
         <li className={styles.headernav}>
           <Link className={styles.headernav} to='/feed'>
             <ListIcon type="secondary" />
-            <div className={`${styles.icon} p-2`}>Лента заказов</div>
+            <div className={`${styles.icon} p-2`}>Order feed</div>
           </Link>
         </li>
         <Link className={styles.headernav} to='/'>
@@ -38,7 +38,7 @@ export const AppHeader:FC = () => {
             <div 
               className={`${styles.icon} p-2`}
             >
-              Личный кабинет
+              Profile
             </div>
           </Link>
         </li>

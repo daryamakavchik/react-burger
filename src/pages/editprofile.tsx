@@ -63,7 +63,7 @@ export const EditProfile: FC = () => {
       <div className={styles.input}>
       <Input
         type={"text"}
-        placeholder={"Имя"}
+        placeholder={"Name"}
         onChange={onNameChange}
         value={state.name || ""}
         name={"name"}
@@ -86,10 +86,10 @@ export const EditProfile: FC = () => {
       </div>
       <span className={state.isValueChanged ? styles.visible : styles.hidden}>
         <Button size="medium" type="secondary" onClick={onCancel}>
-          Отмена
+          Cancel
         </Button>
         <Button size="medium" type="primary">
-          Сохранить
+          Save
         </Button>
       </span>
     </form>

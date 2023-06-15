@@ -36,12 +36,12 @@ export const ResetPasswordPage:FC = () => {
   return (
     <div className={styles.container}>
       <p className={`${styles.title} text text_type_main-medium`}>
-        Восстановление пароля
+        Recover your password
       </p>
       <form className={styles.form} onSubmit={(e) => saveUserPassword(e)}>
       <div className={styles.password}>
         <PasswordInput
-          // placeholder={"Введите новый пароль"}
+          // placeholder={"Type your new passwordь"}
           onChange={onPasswordChange}
           value={passwordValue}
           name={"password"}
@@ -49,7 +49,7 @@ export const ResetPasswordPage:FC = () => {
       </div>
       <Input
         type={"text"}
-        placeholder={"Введите код из письма"}
+        placeholder={"Type the code from your e-mail"}
         onChange={onCodeChange}
         value={codeValue}
         name={"code"}

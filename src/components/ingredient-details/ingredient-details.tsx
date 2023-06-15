@@ -19,19 +19,19 @@ export const IngredientDetails:FC<TIngredientDetailsProps> = (data:TIngredientDe
       <h3 className={styles.name}>{ingr?.name}</h3>
       <ul className={styles.values}>
         <li className={styles.value}>
-          <p className={styles.nutrient}>Калории,ккал</p>
+          <p className={styles.nutrient}>Calories, cal</p>
           <p className={styles.number}>{ingr?.calories}</p>
         </li>
         <li className={styles.value}>
-          <p className={styles.nutrient}>Белки, г</p>
+          <p className={styles.nutrient}>Protein, g</p>
           <p className={styles.number}>{ingr?.proteins}</p>
         </li>
         <li className={styles.value}>
-          <p className={styles.nutrient}>Жиры, г</p>
+          <p className={styles.nutrient}>Fat, g</p>
           <p className={styles.number}>{ingr?.fat}</p>
         </li>
         <li className={styles.value}>
-          <p className={styles.nutrient}>Углеводы, г</p>
+          <p className={styles.nutrient}>Carbohydrates, g</p>
           <p className={styles.number}>{ingr?.carbohydrates}</p>
         </li>
       </ul>
