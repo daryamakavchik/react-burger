@@ -85,11 +85,11 @@ export const EditProfile: FC = () => {
         />
       </div>
       <span className={state.isValueChanged ? styles.visible : styles.hidden}>
-        <Button size="medium" type="secondary" onClick={onCancel}>
-          Отмена
+        <Button size="medium" htmlType="button" type="secondary" onClick={onCancel}>
+          Cancel
         </Button>
-        <Button size="medium" type="primary">
-          Сохранить
+        <Button size="medium" htmlType="button" type="primary">
+          Save
         </Button>
       </span>
     </form>
