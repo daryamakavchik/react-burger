@@ -37,7 +37,7 @@ export const LoginPage:FC = () => {
 
   return (
     <div className={styles.container}>
-      <p className="text text_type_main-medium">Вход</p>
+      <p className="text text_type_main-medium">Log in</p>
       <form
         className={styles.form}
         onSubmit={(e) => login(e, emailValue, passwordValue)}
@@ -51,13 +51,14 @@ export const LoginPage:FC = () => {
         </div>
         <div className={styles.password}>
           <PasswordInput
+            placeholder="Password"
             onChange={onPasswordChange}
             name={"password"}
             value={passwordValue}
           />
         </div>
         <div className={styles.button}>
-          <Button htmlType="button" type="primary" size="large">
+          <Button htmlType="submit" type="primary" size="large">
             Log in
           </Button>
         </div>
