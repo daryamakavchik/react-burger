@@ -1,5 +1,5 @@
 import { Location } from "history";
-import { RouteComponentProps } from "@react/router";
+import { RouteComponentProps } from "@gatsbyjs/reach-router";
 
 export type TLocationState = {
     from?: Location;
