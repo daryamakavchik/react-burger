@@ -72,7 +72,7 @@ export const App:FC = () => {
             </Route>
           )}
           <Route path="/ingredients/:id" exact={true}>
-            <DetailsPage title="Ingredient details">
+            <DetailsPage title="Детали ингредиента">
               <IngredientDetails data={data} />
             </DetailsPage>
           </Route>
@@ -107,7 +107,7 @@ export const App:FC = () => {
             <Route
               path="/ingredients/:id"
               children={
-                <Modal title="Ingredient details" onClose={closeAllModals}>
+                <Modal title="Детали ингредиента" onClose={closeAllModals}>
                   <IngredientDetails data={data} />
                 </Modal>
               }

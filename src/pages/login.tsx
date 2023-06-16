@@ -58,7 +58,7 @@ export const LoginPage:FC = () => {
         </div>
         <div className={styles.button}>
           <Button type="primary" size="large">
-            Log in
+            Войти
           </Button>
         </div>
       </form>
@@ -66,26 +66,26 @@ export const LoginPage:FC = () => {
         <p
           className={`${styles.text} text text_type_main-default text_color_inactive`}
         >
-         A new user?
+          Вы - новый пользователь?
         </p>
         <Link
           to="/register"
           className={`${styles.activetext} text text_type_main-default`}
         >
-          Sign up
+          Зарегистрироваться
         </Link>
       </div>
       <div className={styles.textcontainer}>
         <p
           className={`${styles.text} text text_type_main-default text_color_inactive`}
         >
-          Forgot your password?
+          Забыли пароль?
         </p>
         <Link
           to="/forgot-password"
           className={`${styles.activetext} text text_type_main-default`}
         >
-          Recover your password
+          Восстановить пароль
         </Link>
       </div>
     </div>

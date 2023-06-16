@@ -43,7 +43,7 @@ export const ForgotPasswordPage:FC = () => {
   return (
     <div className={styles.container}>
       <p className={`${styles.title} text text_type_main-medium`}>
-        Recover your password
+        Восстановление пароля
       </p>
       <form className={styles.form} onSubmit={(e) => resetUserPassword(e)}>
         <div className={styles.email}>
@@ -55,16 +55,16 @@ export const ForgotPasswordPage:FC = () => {
         </div>
         <div className={styles.button}>
           <Button type="primary" size="large">
-            Recover
+            Восстановить
           </Button>
         </div>
       </form>
       <div className={styles.textcontainer}>
         <p className={`${styles.text} text text_type_main-default text_color_inactive`}>
-          Remembered your password?
+          Вспомнили пароль?
         </p>
         <Link to="/login" className={`${styles.activetext} text text_type_main-default`}>
-          Log in
+          Войти
         </Link>
       </div>
     </div>

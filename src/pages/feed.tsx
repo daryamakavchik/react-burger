@@ -29,7 +29,7 @@ export const FeedPage:FC = () => {
   return (
     <>
       <h2 className={`${styles.title} text text_type_main-large`}>
-        Order feed
+        Лента заказов
       </h2>
       <div className={styles.content}>
         <ul className={styles.orders}>
@@ -41,13 +41,13 @@ export const FeedPage:FC = () => {
             <div className={styles.types}>
               <div className={styles.type}>
                 <p className={`${styles.subtitle} text text_type_main-default`}>
-                  Ready:
+                  Готовы:
                 </p>
                 <StatsList orders={doneArray} />
               </div>
               <div className={styles.type}>
                 <p className={`${styles.subtitle} text text_type_main-default`}>
-                  In progress:
+                  В работе:
                 </p>
                 <StatsList orders={pendingArray} />
               </div>
@@ -55,7 +55,7 @@ export const FeedPage:FC = () => {
           </div>
           <div>
             <p className={`${styles.subtitledone} text text_type_main-default`}>
-              Ready in total:
+              Выполнено за все время:
             </p>
             <p className={`${styles.digitslarge} text text_type_digits-large`}>
               {orders?.total}
@@ -63,7 +63,7 @@ export const FeedPage:FC = () => {
           </div>
           <div>
             <p className={`${styles.subtitledone} text text_type_main-default`}>
-              Ready today:
+              Выполнено за сегодня:
             </p>
             <p className={`${styles.digitslarge} text text_type_digits-large`}>
               {orders?.totalToday}

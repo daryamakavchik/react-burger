@@ -81,14 +81,15 @@ export const BurgerConstructor:FC = () => {
       <div className={styles.components} ref={dropTarget}>
         {!bun && content.length === 0 && (
           <div className={styles.subtitle}>
-            <p className="text text_type_main-medium"> 
-            Drag the bun and ingredients here
+            <p className="text text_type_main-medium">
+              Пожалуйста, перенесите сюда булку и ингредиенты для создания
+              заказа
             </p>
           </div>
         )}
         {!bun && content.length > 0 && (
           <p className={`${styles.subtitlebun} text text_type_main-medium`}>
-            Please add bun{" "}
+            Осталось добавить булку{" "}
             <span role="img" aria-label="eyes">
               👀
             </span>
@@ -96,7 +97,7 @@ export const BurgerConstructor:FC = () => {
         )}
         {bun && content.length === 0 && (
           <p className={`${styles.subtitlemain} text text_type_main-medium`}>
-            Please add contents{" "}
+            Осталось добавить начинку{" "}
             <span role="img" aria-label="eyes">
               👀
             </span>
@@ -107,7 +108,7 @@ export const BurgerConstructor:FC = () => {
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={bun.name + " (top)"}
+              text={bun.name + " (верх)"}
               price={bun.price}
               thumbnail={bun.image}
             />
@@ -132,7 +133,7 @@ export const BurgerConstructor:FC = () => {
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
-                text={bun.name + " (bottom)"}
+                text={bun.name + " (низ)"}
                 price={bun.price}
                 thumbnail={bun.image}
               />
@@ -152,7 +153,7 @@ export const BurgerConstructor:FC = () => {
                   size="medium"
                   onClick={userName.length > 0 ? openModal : redirectFunc}
                 >
-                  {!isLoading ? "Create an order" : "Loading..."}
+                  {!isLoading ? "Оформить заказ" : "Загрузка..."}
                 </Button>
               </div>
               <Loader />
