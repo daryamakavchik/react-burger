@@ -54,7 +54,7 @@ export const ForgotPasswordPage:FC = () => {
           />
         </div>
         <div className={styles.button}>
-          <Button htmlType="button" type="primary" size="large">
+          <Button htmlType="submit" type="primary" size="large">
             Recover
           </Button>
         </div>
