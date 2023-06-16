@@ -74,7 +74,7 @@ export const OrderCard:FC<TOrderCardProps> = (props:TOrderCardProps) => {
         <h3 className={`${styles.burgername} text text_type_main-default`}>{props.order?.name}</h3>
         {url === "/profile/order" && (
           <p className={`text text_type_main-small ${props.order?.status === "done" && styles.ready}`}>
-            {props.order?.status === "created" ? "Создан" : props.order?.status === "pending" ? "Готовится" : "Выполнен"}
+            {props.order?.status === "created" ? "Created" : props.order?.status === "pending" ? "Pending" : "Done"}
           </p>
         )}
         <div className={styles.componentandprice}>
@@ -84,7 +84,7 @@ export const OrderCard:FC<TOrderCardProps> = (props:TOrderCardProps) => {
               if (i <= imageQuantity - 1)
                 return (
                   <div key={i} className={styles.container} style={{ left: left, zIndex: 100 - i }}>
-                    <img className={styles.image} src={image} alt="Изображение инргедиента" />
+                    <img className={styles.image} src={image} alt="An ingredient" />
                   </div>
                 );
               if (i === imageQuantity)
@@ -93,7 +93,7 @@ export const OrderCard:FC<TOrderCardProps> = (props:TOrderCardProps) => {
                     <p className={styles.count + " text text_type_digits-default"}>
                       {"+" + (count - imageQuantity + 1)}
                     </p>
-                    <img className={styles.image} style={{ opacity: 0.5 }} src={image} alt="Изображение инргедиента" />
+                    <img className={styles.image} style={{ opacity: 0.5 }} src={image} alt="An ingredient" />
                   </div>
                 );
               return false;

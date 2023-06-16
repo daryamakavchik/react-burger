@@ -61,7 +61,7 @@ export const BurgerIngredient:FC<TIngredientData> = (props:TIngredientData) => {
       </Link>
       {modalOpen && (
         <>
-          <Modal title="Детали ингридиента" onClose={closeAllModals}>
+          <Modal title="Ingredient details" onClose={closeAllModals}>
             <IngredientDetails data={data} />
           </Modal>
         </>

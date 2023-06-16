@@ -80,7 +80,7 @@ export const OrderInfoPage:FC<TIngredientDataArray> = (data:TIngredientDataArray
         {currentOrder?.name}
       </p>
       <p className={`${styles.subtext} text text_type_main-small`}>
-        {done ? "Выполнен" : "Готовится"}
+        {done ? "Done" : "In progress"}
       </p>
       <div className={styles.ingredientsblock}>
         <p className={`${styles.subtitle} text text_type_main-default`}>

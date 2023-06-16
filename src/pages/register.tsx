@@ -42,7 +42,7 @@ export const RegisterPage:FC = () => {
   return (
     <div className={styles.container}>
       <p className={`${styles.title} text text_type_main-medium`}>
-        Регистрация
+        Registration
       </p>
       <form className={styles.form} onSubmit={(e) => onRegisterClick(e)}>
       <Input
@@ -67,8 +67,8 @@ export const RegisterPage:FC = () => {
         />
       </div>
       <div className={styles.button}>
-        <Button type="primary" size="large">
-          Зарегистрироваться
+        <Button htmlType="button" type="primary" size="large">
+          Sign up
         </Button>
       </div>
       </form>
@@ -76,13 +76,13 @@ export const RegisterPage:FC = () => {
         <p
           className={`${styles.text} text text_type_main-default text_color_inactive`}
         >
-          Уже зарегистрированы?
+          Already registered?
         </p>
         <Link
           to="/login"
           className={`${styles.activetext} text text_type_main-default`}
         >
-          Войти
+          Log in
         </Link>
       </div>
     </div>

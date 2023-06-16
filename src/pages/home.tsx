@@ -23,7 +23,7 @@ export const HomePage:FC = () => {
   return (
         <main className={styles.content}>
           {isLoading && (
-            <p className="text text_type_main-large">Загрузка...</p>
+            <p className="text text_type_main-large">Loading...</p>
           )}
           <>
             <BurgerIngredients />
