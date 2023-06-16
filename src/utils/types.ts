@@ -1,5 +1,5 @@
 import { Location } from "history";
-import { RouteComponentProps } from "@reach/router";
+import { RouteComponentProps } from "@react/router";
 
 export type TLocationState = {
     from?: Location;
