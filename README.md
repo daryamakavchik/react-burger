@@ -51,5 +51,6 @@ npm run start
 ```
 
 ## To Do
+- [ ] fix login error page bug
 - [ ] make the website responsive
 - [ ] work on sorting in the Order history tab
