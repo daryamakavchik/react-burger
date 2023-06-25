@@ -34,7 +34,7 @@ export const ProfilePage:FC = () => {
                   onClick={() => setHistoryLinkActive(false)}
                   activeClassName={styles.textactive}
                 >
-                  <span>Профиль</span>
+                  <span>Account</span>
                 </NavLink>
               </li>
               <li>
@@ -67,7 +67,7 @@ export const ProfilePage:FC = () => {
                   activeClassName={styles.textactive}
                   onClick={logout}
                 >
-                  <span>Exit</span>
+                  <span>Logout</span>
                 </NavLink>
               </li>
             </ul>

@@ -41,7 +41,6 @@ export const ResetPasswordPage:FC = () => {
       <form className={styles.form} onSubmit={(e) => saveUserPassword(e)}>
       <div className={styles.password}>
         <PasswordInput
-          // placeholder={"Введите новый пароль"}
           onChange={onPasswordChange}
           value={passwordValue}
           name={"password"}

@@ -191,6 +191,8 @@ export const loginUser: AppThunk =
           dispatch(loginSuccess(res.user));
           const accessToken = res.accessToken.split("Bearer ")[1];
           const refreshToken = res.refreshToken;
+          console.log(`access ${accessToken}`);
+          console.log(`refresh ${refreshToken}`);
           setCookie("token", accessToken, {});
           localStorage.setItem("refreshToken", refreshToken);
         } else {
@@ -301,6 +303,7 @@ export const refreshTokenAction: AppThunk = () => (dispatch) => {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + getCookie("token"),
+          "Origin-Allow-Credentials": "true",
         },
       });
     })

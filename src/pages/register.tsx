@@ -9,8 +9,8 @@ export const RegisterPage:FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [emailValue, setEmailValue] = useState<string>("E-mail");
-  const [passwordValue, setPasswordValue] = useState("password");
+  const [emailValue, setEmailValue] = useState<string>("");
+  const [passwordValue, setPasswordValue] = useState("");
   const [nameValue, setNameValue] = useState("");
 
   const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,6 +22,7 @@ export const RegisterPage:FC = () => {
   };
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
+    console.log('kkk');
   };
 
   const redirectOnSuccess = () => {
@@ -56,18 +57,18 @@ export const RegisterPage:FC = () => {
         size={"default"}
       />
       <div className={styles.email}>
-        <EmailInput value={''} onChange={onEmailChange} name={"email"} />
+        <EmailInput value={emailValue} onChange={onEmailChange} name={"email"} />
       </div>
       <div className={styles.password}>
         <PasswordInput
           // className={styles.password}
           onChange={onPasswordChange}
           name={"password"}
-          value={''}
+          value={passwordValue}
         />
       </div>
       <div className={styles.button}>
-        <Button htmlType="button" type="primary" size="large">
+        <Button htmlType="submit" type="primary" size="large">
           Sign up
         </Button>
       </div>
