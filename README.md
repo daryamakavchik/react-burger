@@ -16,25 +16,16 @@
 - log out of personal account
 - recover a forgotten password
 
-<p align="center">MAIN PAGE</p>
+
 <img width="1396" alt="drag" src="https://github.com/daryamakavchik/react-burger/assets/90967822/96066dbe-5aeb-44ad-8009-616cfa752ec4">
 </br>
-
-<p align="center">LOGIN PAGE</p>
 <img width="1396" alt="login" src="https://github.com/daryamakavchik/react-burger/assets/90967822/21701ea3-723f-41cb-977b-0b3ed2799769">
 </br>
-
-<p align="center">COMPLETE ORDER</p>
 <img width="1396" alt="order" src="https://github.com/daryamakavchik/react-burger/assets/90967822/27c33297-c277-4103-beb7-a83ddaaf989b">
 </br>
-
-<p align="center">ACCOUNT PAGE</p>
 <img width="1396" alt="account" src="https://github.com/daryamakavchik/react-burger/assets/90967822/6e0bc300-e67b-4864-a53b-dd98e7d4d697">
 </br>
-
-<p align="center">ORDER FEED</p>
 <img width="1396" alt="feed" src="https://github.com/daryamakavchik/react-burger/assets/90967822/e5b94445-021c-4888-8bb6-78f61d7067de">
-
 
 ## Tech Stack:
 ![HTML](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
