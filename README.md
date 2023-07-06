@@ -16,10 +16,19 @@
 - log out of personal account
 - recover a forgotten password
 
+MAIN PAGE
 <img width="1396" alt="drag" src="https://github.com/daryamakavchik/react-burger/assets/90967822/96066dbe-5aeb-44ad-8009-616cfa752ec4">
+
+LOGIN PAGE
 <img width="1396" alt="login" src="https://github.com/daryamakavchik/react-burger/assets/90967822/21701ea3-723f-41cb-977b-0b3ed2799769">
+
+COMPLETE ORDER
 <img width="1396" alt="order" src="https://github.com/daryamakavchik/react-burger/assets/90967822/27c33297-c277-4103-beb7-a83ddaaf989b">
+
+ACCOUNT PAGE
 <img width="1396" alt="account" src="https://github.com/daryamakavchik/react-burger/assets/90967822/6e0bc300-e67b-4864-a53b-dd98e7d4d697">
+
+ORDER FEED
 <img width="1396" alt="feed" src="https://github.com/daryamakavchik/react-burger/assets/90967822/e5b94445-021c-4888-8bb6-78f61d7067de">
 
 
