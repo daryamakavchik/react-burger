@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ed80637d7e4ff8e2afc2d41a48c62761",
+    "revision": "c71e94e9841c4c2f2d210e9fbd0bb621",
     "url": "/react-burger/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-burger/static/css/2.d6abe649.chunk.css"
   },
   {
-    "revision": "820c2d7a13872aab9d20",
+    "revision": "92ea37b9049d4783805e",
     "url": "/react-burger/static/css/main.4edd46d0.chunk.css"
   },
   {
@@ -20,12 +20,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-burger/static/js/2.b1ddadb0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "820c2d7a13872aab9d20",
-    "url": "/react-burger/static/js/main.d50c0b7d.chunk.js"
+    "revision": "92ea37b9049d4783805e",
+    "url": "/react-burger/static/js/main.8fc6d587.chunk.js"
   },
   {
     "revision": "4e0e34f265fae8f33b01b27ae29d9d6f",
-    "url": "/react-burger/static/js/main.d50c0b7d.chunk.js.LICENSE.txt"
+    "url": "/react-burger/static/js/main.8fc6d587.chunk.js.LICENSE.txt"
   },
   {
     "revision": "f6d3cecc108dd2d2d92a",
