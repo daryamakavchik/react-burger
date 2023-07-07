@@ -10,11 +10,11 @@
 - arrange the ingredients in the right order
 - log in / register
 - place an order
-- get acquainted with the details of both orders and ingredients
-- view the order history (all users' and his own)
+- learn the details about orders and ingredients
+- view order history (everyone's and user's own)
 - edit profile information
 - log out of personal account
-- recover a forgotten password
+- recover password
 
 <img width="1396" alt="login" src="https://github.com/daryamakavchik/react-burger/assets/90967822/21701ea3-723f-41cb-977b-0b3ed2799769">
 </br>
@@ -39,8 +39,14 @@
 * React DnD
 * WebSocket
 
-Backend, database and API were developed by Yandex Practicum team and are stored on the company's server separately from this project.
-Some pages are protected by authorization, API data transfer passes through a secure connection.
+## Notes
+- Backend, database and API were developed by Yandex Practicum team and are stored on the company's server separately from this project
+- Websocket connection to API provides real-time order feed update
+- Different routes protect pages for authorized and guest users
+- After succesful authorization a user is redirected to the last page he requested
+- Modals have their unique URLs and can be opened as separate pages when reloaded or with direct link
+- Modals can be closed with the 'X' button, click outside modal or 'Esc' key
+- User authorization is implemented with JWT and refresh token (becomes stale in 20 minutes)
 
 ## Installation
 
@@ -60,6 +66,6 @@ npm run start
 ```
 
 ## To Do
-- [ ] fix login error page bug
+- [ ] fix login error page bug and 404 page bug
 - [ ] make the website responsive
 - [ ] work on sorting in the Order history tab
