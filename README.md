@@ -46,7 +46,7 @@
 - After succesful authorization a user is redirected to the last page he requested
 - Modals have their unique URLs and can be opened as separate pages when reloaded or with direct link
 - Modals can be closed with the 'X' button, click outside modal or 'Esc' key
-- User authorization is implemented with JWT and refresh token (becomes stale in 20 minutes)
+- User authorization is implemented with JWT and refresh token (expires in 20 minutes)
 
 ## Installation
 
