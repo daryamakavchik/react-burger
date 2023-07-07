@@ -6,15 +6,15 @@
 ## Description
 "Stellar Burgers" is a portfolio project created as an assignment for [Yandex.Practicum](https://practicum.yandex.com/web/ "Web Development Program"). It is an interactive application where a user can:
 
+- log in / register
 - create a unique burger by dragging items from left to right
 - arrange the ingredients in the right order
-- log in / register
 - place an order
 - learn the details about orders and ingredients
 - view order history (everyone's and user's own)
 - edit profile information
-- log out of personal account
 - recover password
+- log out of personal account
 
 <img width="1396" alt="login" src="https://github.com/daryamakavchik/react-burger/assets/90967822/21701ea3-723f-41cb-977b-0b3ed2799769">
 </br>
